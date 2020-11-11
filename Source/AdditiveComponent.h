@@ -11,6 +11,7 @@
 #pragma once
 
 #include <JuceHeader.h>
+#include "HarmonicEditor.h"
 
 //==============================================================================
 /*
@@ -25,6 +26,8 @@ public:
     void resized() override;
 
 private:
+    
+    HarmonicEditor harmonicEditor;
     
     juce::Slider shiftSlider;
     juce::Slider stretchSlider;
