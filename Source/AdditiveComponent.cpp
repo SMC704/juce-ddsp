@@ -14,6 +14,9 @@
 //==============================================================================
 AdditiveComponent::AdditiveComponent()
 {
+    addAndMakeVisible(harmonicEditor);
+    harmonicEditor.setBounds(0, 0, 100, 100);
+    
     shiftSlider.setSliderStyle(juce::Slider::SliderStyle::RotaryHorizontalVerticalDrag);
     shiftSlider.setTextBoxStyle(juce::Slider::NoTextBox, true, 0, 0);
     shiftSlider.setRange(0.0f, 10.0f, 0.1f);
@@ -72,6 +75,7 @@ void AdditiveComponent::resized()
     grid.columnGap = juce::Grid::Px(10.0f);
 
     grid.items = {
+        juce::GridItem (harmonicEditor).withArea(2, 2, 6, 12),
         juce::GridItem (shiftSlider).withArea(6, 2, 9, 4),
         juce::GridItem (stretchSlider).withArea(6, 4, 9, 6),
         juce::GridItem (ampSlider).withArea(6, 10, 9, 12)

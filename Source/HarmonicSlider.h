@@ -1,8 +1,8 @@
 /*
   ==============================================================================
 
-    AdditiveComponent.h
-    Created: 7 Nov 2020 2:08:52am
+    HarmonicSlider.h
+    Created: 10 Nov 2020 4:48:26pm
     Author:  Robin Otterbein
 
   ==============================================================================
@@ -11,27 +11,28 @@
 #pragma once
 
 #include <JuceHeader.h>
-#include "HarmonicEditor.h"
 
 //==============================================================================
 /*
 */
-class AdditiveComponent  : public juce::Component
+class HarmonicSlider  : public juce::Component
 {
 public:
-    AdditiveComponent();
-    ~AdditiveComponent() override;
+    HarmonicSlider();
+    ~HarmonicSlider() override;
 
     void paint (juce::Graphics&) override;
     void resized() override;
 
+    void setValue(float);
+
 private:
+    bool isEntered;
+    bool isDown;
     
-    HarmonicEditor harmonicEditor;
+    juce::Colour colour;
+    juce::Rectangle<int> rectangle;
+    float value;
     
-    juce::Slider shiftSlider;
-    juce::Slider stretchSlider;
-    juce::Slider ampSlider;
-    
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (AdditiveComponent)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (HarmonicSlider)
 };
