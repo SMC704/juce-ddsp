@@ -19,6 +19,9 @@
 class HarmonicEditor  : public juce::Component
 {
 public:
+
+	typedef std::vector<double> harmVector;
+
     HarmonicEditor();
     ~HarmonicEditor() override;
 
@@ -31,6 +34,8 @@ public:
     void mouseUp(const juce::MouseEvent&) override;
     void mouseDrag(const juce::MouseEvent&) override;
 
+	harmVector& getHarmonicValues();
+
 private:
     
     bool isEntered;
@@ -38,6 +43,8 @@ private:
     
     int nHarmonics;
     juce::OwnedArray<HarmonicSlider> harmonicSliders;
+
+	harmVector harmonicValues;
     
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (HarmonicEditor)
 };
