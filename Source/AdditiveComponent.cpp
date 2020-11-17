@@ -14,7 +14,7 @@
 //==============================================================================
 AdditiveComponent::AdditiveComponent()
 {
-    addAndMakeVisible(harmonicEditor);
+    addChildAndSetID(&harmonicEditor, "harmonicEditor");
     harmonicEditor.setBounds(0, 0, 100, 100);
     
     shiftSlider.setSliderStyle(juce::Slider::SliderStyle::RotaryHorizontalVerticalDrag);

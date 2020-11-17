@@ -14,13 +14,13 @@
 //==============================================================================
 MainComponent::MainComponent()
 {
-    addAndMakeVisible(inputComponent);
-    addAndMakeVisible(modelComponent);
-    addAndMakeVisible(additiveComponent);
-    addAndMakeVisible(subtractiveComponent);
-    addAndMakeVisible(reverbComponent);
-    addAndMakeVisible(spectogramComponent);
-    addAndMakeVisible(outputComponent);
+    addChildAndSetID(&inputComponent, "input");
+    addChildAndSetID(&modelComponent, "model");
+    addChildAndSetID(&additiveComponent, "additive");
+    addChildAndSetID(&subtractiveComponent, "subtractive");
+    addChildAndSetID(&reverbComponent, "reverb");
+    addChildAndSetID(&spectogramComponent, "spectogram");
+    addChildAndSetID(&outputComponent, "output");
     inputComponent.setBounds(0, 0, 200, 200);
     modelComponent.setBounds(0, 0, 200, 200);
     additiveComponent.setBounds(0, 0, 200, 200);
