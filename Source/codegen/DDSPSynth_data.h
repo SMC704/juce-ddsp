@@ -1,0 +1,30 @@
+//
+//  Academic License - for use in teaching, academic research, and meeting
+//  course requirements at degree granting institutions only.  Not for
+//  government, commercial, or other organizational use.
+//
+//  DDSPSynth_data.h
+//
+//  Code generation for function 'DDSPSynth_data'
+//
+
+
+#ifndef DDSPSYNTH_DATA_H
+#define DDSPSYNTH_DATA_H
+
+// Include files
+#include <cstddef>
+#include <cstdlib>
+#include "rtwtypes.h"
+#include "omp.h"
+#include "DDSPSynth_types.h"
+
+// Variable Declarations
+extern unsigned int state[625];
+extern omp_nest_lock_t emlrtNestLockGlobal;
+extern boolean_T isInitialized_DDSPSynth;
+
+#define MAX_THREADS                    omp_get_max_threads()
+#endif
+
+// End of code generation (DDSPSynth_data.h)

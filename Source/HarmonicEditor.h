@@ -12,7 +12,6 @@
 
 #include <JuceHeader.h>
 #include "HarmonicSlider.h"
-#include "DDSPDefinitions.h";
 
 //==============================================================================
 /*
@@ -33,7 +32,12 @@ public:
     void mouseUp(const juce::MouseEvent&) override;
     void mouseDrag(const juce::MouseEvent&) override;
 
-	harmVector& getHarmonicValues();
+	struct Listener
+	{
+		virtual void onValueChange(double harmonics[50]) = 0;
+	};
+
+	void setListener(Listener* pTheListener);
 
 private:
     
@@ -42,7 +46,9 @@ private:
     
     juce::OwnedArray<HarmonicSlider> harmonicSliders;
 
-	harmVector harmonicValues;
+	double harmonicValues[50];
+	int nHarmonics = 50;
+	Listener* pListener = NULL;
     
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (HarmonicEditor)
 };

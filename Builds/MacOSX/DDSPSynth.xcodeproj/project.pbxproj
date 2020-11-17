@@ -73,6 +73,94 @@
 			isa = PBXBuildFile;
 			fileRef = 09AFAFD553B8C83D0D1D0459;
 		};
+		D56550B888AF52A394676813 = {
+			isa = PBXBuildFile;
+			fileRef = BCF42E417843AECD28CB2608;
+		};
+		2219DF7DEC97821E7FC065A7 = {
+			isa = PBXBuildFile;
+			fileRef = 44C699A5533F7D9D6123CB02;
+		};
+		DB48695E229B9206970C0DB5 = {
+			isa = PBXBuildFile;
+			fileRef = 8CD468D78520E0A30FA6B761;
+		};
+		410A822FC8463D29F4FEC52A = {
+			isa = PBXBuildFile;
+			fileRef = 6FC8318CD223D31CE27FCA30;
+		};
+		E835B4155A6B9A198CA7B9FA = {
+			isa = PBXBuildFile;
+			fileRef = 6B95774C42222D0152835826;
+		};
+		97ABEECED203D9D9D59245E6 = {
+			isa = PBXBuildFile;
+			fileRef = 8E3B827D037C0F8A407A6C91;
+		};
+		989F31DCF1AE2A109E07C6A2 = {
+			isa = PBXBuildFile;
+			fileRef = F84133F4EFE2CFCDA4E1F8E3;
+		};
+		29D6EA25A33F0B175EFE6F77 = {
+			isa = PBXBuildFile;
+			fileRef = 564543AFB39671000EED074D;
+		};
+		0B65DAA4E4E13914495D6C22 = {
+			isa = PBXBuildFile;
+			fileRef = 9E7023A1AD2910B74010AAAA;
+		};
+		4B72848ECF911678F6B3610C = {
+			isa = PBXBuildFile;
+			fileRef = B1EF7B7EF56951BF00714329;
+		};
+		D6D7016B4A08A9E4B281548A = {
+			isa = PBXBuildFile;
+			fileRef = F0456363B6097D1F54C8E11F;
+		};
+		0B80C4D9172D5F62E501F4AE = {
+			isa = PBXBuildFile;
+			fileRef = 54A948387C1DA3BDCE391AC3;
+		};
+		D0A9E74A6AB748E30B86BD1A = {
+			isa = PBXBuildFile;
+			fileRef = 44F4E3F90F9CA57610922EA5;
+		};
+		6E44BDADE503AFF6C060A329 = {
+			isa = PBXBuildFile;
+			fileRef = 3F519248320B3AB8EA262D9F;
+		};
+		85539060AE17517912C8FBC5 = {
+			isa = PBXBuildFile;
+			fileRef = 28CAABE2507961366D00294B;
+		};
+		C5CFAA6EA517C5AFA44A89D5 = {
+			isa = PBXBuildFile;
+			fileRef = F79B085690AAF35F709B3AB2;
+		};
+		F6836B987B7C8F2D36E6037B = {
+			isa = PBXBuildFile;
+			fileRef = 78CC7CF94B0E61A2C6FAC604;
+		};
+		767EB6AC7BFAED6DB1025D1C = {
+			isa = PBXBuildFile;
+			fileRef = B39A4D8A206AFCD2306D4A87;
+		};
+		A900A173AE02A42DA7231204 = {
+			isa = PBXBuildFile;
+			fileRef = 0406BC1CF3E5285C81935FEA;
+		};
+		9B0D41F4363D63851D8D4E2E = {
+			isa = PBXBuildFile;
+			fileRef = 9F8212DFC1785EC050F046EA;
+		};
+		D6F4E0D447044C22CCD22D5B = {
+			isa = PBXBuildFile;
+			fileRef = A3AC5E37EB93CF46290456F6;
+		};
+		F6E4E87E92440B4455478A78 = {
+			isa = PBXBuildFile;
+			fileRef = 88D0D1ACE79B89DD47924301;
+		};
 		F6982829FDF604039CE59B27 = {
 			isa = PBXBuildFile;
 			fileRef = E2E6A4DBCAE76720F164861E;
@@ -197,12 +285,26 @@
 			isa = PBXBuildFile;
 			fileRef = AFA66E82029952F775AFC402;
 		};
+		02050B99AD5AB3FA8A19EA58 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = tmwtypes.h;
+			path = ../../Source/codegen/tmwtypes.h;
+			sourceTree = "SOURCE_ROOT";
+		};
 		025E699F2585B0D34E26E742 = {
 			isa = PBXFileReference;
 			lastKnownFileType = file;
 			name = "juce_audio_basics";
 			path = "~/JUCE/modules/juce_audio_basics";
 			sourceTree = "<absolute>";
+		};
+		0406BC1CF3E5285C81935FEA = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = useConstantDim.cpp;
+			path = ../../Source/codegen/useConstantDim.cpp;
+			sourceTree = "SOURCE_ROOT";
 		};
 		05D3FFC6E930FB9D01ABB521 = {
 			isa = PBXFileReference;
@@ -218,6 +320,13 @@
 			path = "../../JuceLibraryCode/include_juce_analytics.cpp";
 			sourceTree = "SOURCE_ROOT";
 		};
+		08A508854A6A5438929D36AC = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = "DDSPSynth_initialize.h";
+			path = "../../Source/codegen/DDSPSynth_initialize.h";
+			sourceTree = "SOURCE_ROOT";
+		};
 		09AFAFD553B8C83D0D1D0459 = {
 			isa = PBXFileReference;
 			lastKnownFileType = file.nib;
@@ -225,11 +334,25 @@
 			path = RecentFilesMenuTemplate.nib;
 			sourceTree = "SOURCE_ROOT";
 		};
+		0C75222C75554E6A4E6ECB11 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = subtractive.h;
+			path = ../../Source/codegen/subtractive.h;
+			sourceTree = "SOURCE_ROOT";
+		};
 		0D12812DFB15CB5F979BDE93 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
 			name = OutputComponent.h;
 			path = ../../Source/OutputComponent.h;
+			sourceTree = "SOURCE_ROOT";
+		};
+		0D37DBA5EA8B5E72AB615845 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = rtwtypes.h;
+			path = ../../Source/codegen/rtwtypes.h;
 			sourceTree = "SOURCE_ROOT";
 		};
 		1027A6D67A559A0F80FE156F = {
@@ -253,11 +376,39 @@
 			path = ../../Source/InputComponent.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
+		20B47FFE5BF52DEF91A953E2 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = "eml_rand_mt19937ar_stateful.h";
+			path = "../../Source/codegen/eml_rand_mt19937ar_stateful.h";
+			sourceTree = "SOURCE_ROOT";
+		};
 		225763BD7DFD748DB8F76AA8 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = "include_juce_audio_plugin_client_utils.cpp";
 			path = "../../JuceLibraryCode/include_juce_audio_plugin_client_utils.cpp";
+			sourceTree = "SOURCE_ROOT";
+		};
+		25EBD08CB5ED872C9701C940 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = "coder_array.h";
+			path = "../../Source/codegen/coder_array.h";
+			sourceTree = "SOURCE_ROOT";
+		};
+		28CAABE2507961366D00294B = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = "rt_nonfinite.cpp";
+			path = "../../Source/codegen/rt_nonfinite.cpp";
+			sourceTree = "SOURCE_ROOT";
+		};
+		2974DDBD61418D83A597C814 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = gencoswin.h;
+			path = ../../Source/codegen/gencoswin.h;
 			sourceTree = "SOURCE_ROOT";
 		};
 		2D9FD2A7AB83FC0F8022817B = {
@@ -288,6 +439,13 @@
 			path = System/Library/Frameworks/QuartzCore.framework;
 			sourceTree = SDKROOT;
 		};
+		35F72DEF773AB53703D5CADC = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = "DDSPSynth_terminate.h";
+			path = "../../Source/codegen/DDSPSynth_terminate.h";
+			sourceTree = "SOURCE_ROOT";
+		};
 		38F9890B117BD481B5E966C1 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
@@ -309,6 +467,13 @@
 			path = "~/JUCE/modules/juce_gui_extra";
 			sourceTree = "<absolute>";
 		};
+		3ADC6D250537A289533CB1DF = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = useConstantDim.h;
+			path = ../../Source/codegen/useConstantDim.h;
+			sourceTree = "SOURCE_ROOT";
+		};
 		3B31551CC70C157BA75BFD7F = {
 			isa = PBXFileReference;
 			lastKnownFileType = wrapper.framework;
@@ -323,11 +488,39 @@
 			path = ../../Source/SpectogramComponent.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
+		3F3601EB994E6EC4E6359A8B = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = "DDSPSynth_data.h";
+			path = "../../Source/codegen/DDSPSynth_data.h";
+			sourceTree = "SOURCE_ROOT";
+		};
+		3F519248320B3AB8EA262D9F = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = rfft.cpp;
+			path = ../../Source/codegen/rfft.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
 		41B044507CB180AD93357CF0 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = "include_juce_audio_plugin_client_VST3.cpp";
 			path = "../../JuceLibraryCode/include_juce_audio_plugin_client_VST3.cpp";
+			sourceTree = "SOURCE_ROOT";
+		};
+		44C699A5533F7D9D6123CB02 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = "DDSPSynth_data.cpp";
+			path = "../../Source/codegen/DDSPSynth_data.cpp";
+			sourceTree = "SOURCE_ROOT";
+		};
+		44F4E3F90F9CA57610922EA5 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = rand.cpp;
+			path = ../../Source/codegen/rand.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
 		45988032DD8EBCC5C7CBD376 = {
@@ -372,6 +565,27 @@
 			path = "~/JUCE/modules/juce_gui_basics";
 			sourceTree = "<absolute>";
 		};
+		54A948387C1DA3BDCE391AC3 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = irfft.cpp;
+			path = ../../Source/codegen/irfft.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
+		564543AFB39671000EED074D = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = FFTImplementationCallback.cpp;
+			path = ../../Source/codegen/FFTImplementationCallback.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
+		570A8DCEEF2D7B91BA74104E = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = DDSPSound.h;
+			path = ../../Source/DDSPSound.h;
+			sourceTree = "SOURCE_ROOT";
+		};
 		59C150ABBA076FA40C977B1F = {
 			isa = PBXFileReference;
 			lastKnownFileType = wrapper.framework;
@@ -407,12 +621,40 @@
 			path = "Info-AU.plist";
 			sourceTree = "SOURCE_ROOT";
 		};
+		6B95774C42222D0152835826 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = "DDSPSynth_terminate.cpp";
+			path = "../../Source/codegen/DDSPSynth_terminate.cpp";
+			sourceTree = "SOURCE_ROOT";
+		};
 		6CF38DBA7C9ED4B13123B7DF = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.objcpp;
 			name = "include_juce_audio_plugin_client_AU_2.mm";
 			path = "../../JuceLibraryCode/include_juce_audio_plugin_client_AU_2.mm";
 			sourceTree = "SOURCE_ROOT";
+		};
+		6FC8318CD223D31CE27FCA30 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = "DDSPSynth_rtwutil.cpp";
+			path = "../../Source/codegen/DDSPSynth_rtwutil.cpp";
+			sourceTree = "SOURCE_ROOT";
+		};
+		71A8CFDE912454C5F6130DAE = {
+			isa = PBXFileReference;
+			lastKnownFileType = image.png;
+			name = "background_texture.png";
+			path = "../../Resources/background_texture.png";
+			sourceTree = "SOURCE_ROOT";
+		};
+		71B063F3C45E3FCD2BD35382 = {
+			isa = PBXFileReference;
+			lastKnownFileType = file;
+			name = "juce_audio_plugin_client";
+			path = "~/JUCE/modules/juce_audio_plugin_client";
+			sourceTree = "<absolute>";
 		};
 		73DB2077D71BD9906C6A9B1E = {
 			isa = PBXFileReference;
@@ -428,11 +670,25 @@
 			path = ../../Source/SubtractiveComponent.h;
 			sourceTree = "SOURCE_ROOT";
 		};
+		74B6CD3A7B303D9BE0D6CD68 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = rfft.h;
+			path = ../../Source/codegen/rfft.h;
+			sourceTree = "SOURCE_ROOT";
+		};
 		7762A969C5AD95E70428F213 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
 			name = SpectogramComponent.h;
 			path = ../../Source/SpectogramComponent.h;
+			sourceTree = "SOURCE_ROOT";
+		};
+		78CC7CF94B0E61A2C6FAC604 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = rtGetNaN.cpp;
+			path = ../../Source/codegen/rtGetNaN.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
 		7A3DE431E4B06A60D437753F = {
@@ -463,6 +719,41 @@
 			path = "../../JuceLibraryCode/include_juce_audio_plugin_client_Standalone.cpp";
 			sourceTree = "SOURCE_ROOT";
 		};
+		88D0D1ACE79B89DD47924301 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = DDSPVoice.cpp;
+			path = ../../Source/DDSPVoice.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
+		8B37CB8D805DC75320F833C2 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = rand.h;
+			path = ../../Source/codegen/rand.h;
+			sourceTree = "SOURCE_ROOT";
+		};
+		8C53939BC3315DB34C6770C0 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = HarmonicEditor.h;
+			path = ../../Source/HarmonicEditor.h;
+			sourceTree = "SOURCE_ROOT";
+		};
+		8C8D46EE85522346D52F98D4 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = irfft.h;
+			path = ../../Source/codegen/irfft.h;
+			sourceTree = "SOURCE_ROOT";
+		};
+		8E3B827D037C0F8A407A6C91 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = "eml_rand_mt19937ar_stateful.cpp";
+			path = "../../Source/codegen/eml_rand_mt19937ar_stateful.cpp";
+			sourceTree = "SOURCE_ROOT";
+		};
 		964FAA82ED145EFA03DD0181 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.objcpp;
@@ -484,6 +775,27 @@
 			path = "../../JuceLibraryCode/include_juce_dsp.mm";
 			sourceTree = "SOURCE_ROOT";
 		};
+		9E7023A1AD2910B74010AAAA = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = gencoswin.cpp;
+			path = ../../Source/codegen/gencoswin.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
+		9F8212DFC1785EC050F046EA = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = HarmonicEditor.cpp;
+			path = ../../Source/HarmonicEditor.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
+		A36D427B0C72AA9A37035FD5 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = rtGetInf.h;
+			path = ../../Source/codegen/rtGetInf.h;
+			sourceTree = "SOURCE_ROOT";
+		};
 		A48C9FF587F40B150DB8B4E5 = {
 			isa = PBXFileReference;
 			lastKnownFileType = file;
@@ -498,19 +810,19 @@
 			path = System/Library/Frameworks/CoreAudioKit.framework;
 			sourceTree = SDKROOT;
 		};
+		AB473C04AACE48DFF2A4F3F5 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = FFTImplementationCallback.h;
+			path = ../../Source/codegen/FFTImplementationCallback.h;
+			sourceTree = "SOURCE_ROOT";
+		};
 		AB583E8FC7615222B2F2FA4F = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.objcpp;
 			name = "include_juce_graphics.mm";
 			path = "../../JuceLibraryCode/include_juce_graphics.mm";
 			sourceTree = "SOURCE_ROOT";
-		};
-		AF2197905DCDB3A4AFCE694F = {
-			isa = PBXFileReference;
-			lastKnownFileType = file;
-			name = "juce_audio_formats";
-			path = "~/JUCE/modules/juce_audio_formats";
-			sourceTree = "<absolute>";
 		};
 		AFA66E82029952F775AFC402 = {
 			isa = PBXFileReference;
@@ -524,6 +836,104 @@
 			lastKnownFileType = sourcecode.c.h;
 			name = JuceHeader.h;
 			path = ../../JuceLibraryCode/JuceHeader.h;
+			sourceTree = "SOURCE_ROOT";
+		};
+		B1EF7B7EF56951BF00714329 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = hann.cpp;
+			path = ../../Source/codegen/hann.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
+		BCF42E417843AECD28CB2608 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = additive.cpp;
+			path = ../../Source/codegen/additive.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
+		BD7066BBF54A3F71D857DE13 = {
+			isa = PBXFileReference;
+			lastKnownFileType = wrapper.framework;
+			name = CoreMIDI.framework;
+			path = System/Library/Frameworks/CoreMIDI.framework;
+			sourceTree = SDKROOT;
+		};
+		CAA98A61DB8854E7A231643A = {
+			isa = PBXFileReference;
+			explicitFileType = wrapper.cfbundle;
+			includeInIndex = 0;
+			path = DDSPSynth.vst3;
+			sourceTree = "BUILT_PRODUCTS_DIR";
+		};
+		5727B81F80559538636720C7 = {
+			isa = PBXFileReference;
+			explicitFileType = wrapper.cfbundle;
+			includeInIndex = 0;
+			path = DDSPSynth.component;
+			sourceTree = "BUILT_PRODUCTS_DIR";
+		};
+		8CD468D78520E0A30FA6B761 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = "DDSPSynth_initialize.cpp";
+			path = "../../Source/codegen/DDSPSynth_initialize.cpp";
+			sourceTree = "SOURCE_ROOT";
+		};
+		9CCD48527557C463A9274640 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = hann.h;
+			path = ../../Source/codegen/hann.h;
+			sourceTree = "SOURCE_ROOT";
+		};
+		A3AC5E37EB93CF46290456F6 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = HarmonicSlider.cpp;
+			path = ../../Source/HarmonicSlider.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
+		A78FC3D46AE9A13864A0F6AE = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = HarmonicSlider.h;
+			path = ../../Source/HarmonicSlider.h;
+			sourceTree = "SOURCE_ROOT";
+		};
+		A7FEB22D490D6FD91716C385 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = "rt_nonfinite.h";
+			path = "../../Source/codegen/rt_nonfinite.h";
+			sourceTree = "SOURCE_ROOT";
+		};
+		AF2197905DCDB3A4AFCE694F = {
+			isa = PBXFileReference;
+			lastKnownFileType = file;
+			name = "juce_audio_formats";
+			path = "~/JUCE/modules/juce_audio_formats";
+			sourceTree = "<absolute>";
+		};
+		B2A389A03B9C47B9F7F72EB0 = {
+			isa = PBXFileReference;
+			lastKnownFileType = file;
+			name = "juce_audio_processors";
+			path = "~/JUCE/modules/juce_audio_processors";
+			sourceTree = "<absolute>";
+		};
+		B39A4D8A206AFCD2306D4A87 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = subtractive.cpp;
+			path = ../../Source/codegen/subtractive.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
+		B6712AC6E683598635529CCE = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = "DDSPSynth_rtwutil.h";
+			path = "../../Source/codegen/DDSPSynth_rtwutil.h";
 			sourceTree = "SOURCE_ROOT";
 		};
 		B88A35915D79E362F893ECCC = {
@@ -547,13 +957,6 @@
 			path = ../../Source/PluginProcessor.h;
 			sourceTree = "SOURCE_ROOT";
 		};
-		BD7066BBF54A3F71D857DE13 = {
-			isa = PBXFileReference;
-			lastKnownFileType = wrapper.framework;
-			name = CoreMIDI.framework;
-			path = System/Library/Frameworks/CoreMIDI.framework;
-			sourceTree = SDKROOT;
-		};
 		BF0A9A0775CA6C68262846DC = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
@@ -568,46 +971,25 @@
 			path = "../../JuceLibraryCode/include_juce_audio_processors.mm";
 			sourceTree = "SOURCE_ROOT";
 		};
-		C6C06C23276934DBD532599E = {
+		C072B0473E33EEEA8F61DBC2 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
-			name = BinaryData.h;
-			path = ../../JuceLibraryCode/BinaryData.h;
+			name = additive.h;
+			path = ../../Source/codegen/additive.h;
 			sourceTree = "SOURCE_ROOT";
-		};
-		CAA98A61DB8854E7A231643A = {
-			isa = PBXFileReference;
-			explicitFileType = wrapper.cfbundle;
-			includeInIndex = 0;
-			path = DDSPSynth.vst3;
-			sourceTree = "BUILT_PRODUCTS_DIR";
-		};
-		5727B81F80559538636720C7 = {
-			isa = PBXFileReference;
-			explicitFileType = wrapper.cfbundle;
-			includeInIndex = 0;
-			path = DDSPSynth.component;
-			sourceTree = "BUILT_PRODUCTS_DIR";
-		};
-		71B063F3C45E3FCD2BD35382 = {
-			isa = PBXFileReference;
-			lastKnownFileType = file;
-			name = "juce_audio_plugin_client";
-			path = "~/JUCE/modules/juce_audio_plugin_client";
-			sourceTree = "<absolute>";
-		};
-		B2A389A03B9C47B9F7F72EB0 = {
-			isa = PBXFileReference;
-			lastKnownFileType = file;
-			name = "juce_audio_processors";
-			path = "~/JUCE/modules/juce_audio_processors";
-			sourceTree = "<absolute>";
 		};
 		C47BDBA6786CD5CD96223481 = {
 			isa = PBXFileReference;
 			lastKnownFileType = file.r;
 			name = "include_juce_audio_plugin_client_AU.r";
 			path = "../../JuceLibraryCode/include_juce_audio_plugin_client_AU.r";
+			sourceTree = "SOURCE_ROOT";
+		};
+		C6C06C23276934DBD532599E = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = BinaryData.h;
+			path = ../../JuceLibraryCode/BinaryData.h;
 			sourceTree = "SOURCE_ROOT";
 		};
 		C746A4107FC18F5215778E13 = {
@@ -622,6 +1004,20 @@
 			lastKnownFileType = sourcecode.c.h;
 			name = InputComponent.h;
 			path = ../../Source/InputComponent.h;
+			sourceTree = "SOURCE_ROOT";
+		};
+		C949B4D6068D0245728D3C9D = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = fft.h;
+			path = ../../Source/codegen/fft.h;
+			sourceTree = "SOURCE_ROOT";
+		};
+		D024FD2E53193FD86A7911E8 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = "DDSPSynth_types.h";
+			path = "../../Source/codegen/DDSPSynth_types.h";
 			sourceTree = "SOURCE_ROOT";
 		};
 		D290356A6140C2C2CB97D31C = {
@@ -643,6 +1039,13 @@
 			lastKnownFileType = sourcecode.cpp.objcpp;
 			name = "include_juce_audio_plugin_client_AU_1.mm";
 			path = "../../JuceLibraryCode/include_juce_audio_plugin_client_AU_1.mm";
+			sourceTree = "SOURCE_ROOT";
+		};
+		DD891A5D50E02C8379310175 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = ifft.h;
+			path = ../../Source/codegen/ifft.h;
 			sourceTree = "SOURCE_ROOT";
 		};
 		DDE7DD9CFE8E4BA3EDCB2780 = {
@@ -701,11 +1104,11 @@
 			path = ../../Source/PluginEditor.h;
 			sourceTree = "SOURCE_ROOT";
 		};
-		F02AC2BB20D7E47CF4F7C5C6 = {
+		F0456363B6097D1F54C8E11F = {
 			isa = PBXFileReference;
-			lastKnownFileType = image.png;
-			name = "background_texture.png";
-			path = "../../../../../Documents/AAU SMC/Semester 1/Foundations of SMC/GUI/background_texture.png";
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = ifft.cpp;
+			path = ../../Source/codegen/ifft.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
 		F0814C6C83875D117DFCCBCF = {
@@ -713,6 +1116,13 @@
 			lastKnownFileType = sourcecode.cpp.objcpp;
 			name = "include_juce_gui_basics.mm";
 			path = "../../JuceLibraryCode/include_juce_gui_basics.mm";
+			sourceTree = "SOURCE_ROOT";
+		};
+		F0FFA04F6B6DEA8E2B91BA96 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = rtGetNaN.h;
+			path = ../../Source/codegen/rtGetNaN.h;
 			sourceTree = "SOURCE_ROOT";
 		};
 		F1DBD341F523339F5B2895F1 = {
@@ -729,11 +1139,32 @@
 			path = "../../JuceLibraryCode/include_juce_events.mm";
 			sourceTree = "SOURCE_ROOT";
 		};
+		F79B085690AAF35F709B3AB2 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = rtGetInf.cpp;
+			path = ../../Source/codegen/rtGetInf.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
 		F82BB01B153E2CC3755EBDE6 = {
 			isa = PBXFileReference;
 			lastKnownFileType = text.plist.xml;
 			name = "Info-Standalone_Plugin.plist";
 			path = "Info-Standalone_Plugin.plist";
+			sourceTree = "SOURCE_ROOT";
+		};
+		F84133F4EFE2CFCDA4E1F8E3 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = fft.cpp;
+			path = ../../Source/codegen/fft.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
+		F912D7445EAA0CA00AD6C7EC = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = DDSPVoice.h;
+			path = ../../Source/DDSPVoice.h;
 			sourceTree = "SOURCE_ROOT";
 		};
 		FD6789CFBB6513221C44471F = {
@@ -780,7 +1211,7 @@
 		C46D5F697253CB3A0BB0B3F3 = {
 			isa = PBXGroup;
 			children = (
-				F02AC2BB20D7E47CF4F7C5C6,
+				71A8CFDE912454C5F6130DAE,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -788,6 +1219,55 @@
 		B47A5744A54DA34CF324EC9F = {
 			isa = PBXGroup;
 			children = (
+				BCF42E417843AECD28CB2608,
+				C072B0473E33EEEA8F61DBC2,
+				25EBD08CB5ED872C9701C940,
+				44C699A5533F7D9D6123CB02,
+				3F3601EB994E6EC4E6359A8B,
+				8CD468D78520E0A30FA6B761,
+				08A508854A6A5438929D36AC,
+				6FC8318CD223D31CE27FCA30,
+				B6712AC6E683598635529CCE,
+				6B95774C42222D0152835826,
+				35F72DEF773AB53703D5CADC,
+				D024FD2E53193FD86A7911E8,
+				8E3B827D037C0F8A407A6C91,
+				20B47FFE5BF52DEF91A953E2,
+				F84133F4EFE2CFCDA4E1F8E3,
+				C949B4D6068D0245728D3C9D,
+				564543AFB39671000EED074D,
+				AB473C04AACE48DFF2A4F3F5,
+				9E7023A1AD2910B74010AAAA,
+				2974DDBD61418D83A597C814,
+				B1EF7B7EF56951BF00714329,
+				9CCD48527557C463A9274640,
+				F0456363B6097D1F54C8E11F,
+				DD891A5D50E02C8379310175,
+				54A948387C1DA3BDCE391AC3,
+				8C8D46EE85522346D52F98D4,
+				44F4E3F90F9CA57610922EA5,
+				8B37CB8D805DC75320F833C2,
+				3F519248320B3AB8EA262D9F,
+				74B6CD3A7B303D9BE0D6CD68,
+				28CAABE2507961366D00294B,
+				A7FEB22D490D6FD91716C385,
+				F79B085690AAF35F709B3AB2,
+				A36D427B0C72AA9A37035FD5,
+				78CC7CF94B0E61A2C6FAC604,
+				F0FFA04F6B6DEA8E2B91BA96,
+				0D37DBA5EA8B5E72AB615845,
+				B39A4D8A206AFCD2306D4A87,
+				0C75222C75554E6A4E6ECB11,
+				02050B99AD5AB3FA8A19EA58,
+				0406BC1CF3E5285C81935FEA,
+				3ADC6D250537A289533CB1DF,
+				570A8DCEEF2D7B91BA74104E,
+				9F8212DFC1785EC050F046EA,
+				8C53939BC3315DB34C6770C0,
+				A3AC5E37EB93CF46290456F6,
+				A78FC3D46AE9A13864A0F6AE,
+				88D0D1ACE79B89DD47924301,
+				F912D7445EAA0CA00AD6C7EC,
 				D8FB82E6BB980FE8454CA0D7,
 				C46D5F697253CB3A0BB0B3F3,
 			);
@@ -1000,8 +1480,8 @@
 					"JucePlugin_ManufacturerEmail=\\\"\\\"",
 					"JucePlugin_ManufacturerCode=0x4d616e75",
 					"JucePlugin_PluginCode=0x58757068",
-					"JucePlugin_IsSynth=0",
-					"JucePlugin_WantsMidiInput=0",
+					"JucePlugin_IsSynth=1",
+					"JucePlugin_WantsMidiInput=1",
 					"JucePlugin_ProducesMidiOutput=0",
 					"JucePlugin_IsMidiEffect=0",
 					"JucePlugin_EditorRequiresKeyboardFocus=0",
@@ -1009,15 +1489,15 @@
 					"JucePlugin_VersionCode=0x10000",
 					"JucePlugin_VersionString=\\\"1.0.0\\\"",
 					"JucePlugin_VSTUniqueID=JucePlugin_PluginCode",
-					"JucePlugin_VSTCategory=kPlugCategEffect",
-					"JucePlugin_Vst3Category=\\\"Fx\\\"",
-					"JucePlugin_AUMainType='aufx'",
+					"JucePlugin_VSTCategory=kPlugCategSynth",
+					"JucePlugin_Vst3Category=\\\"Instrument|Synth\\\"",
+					"JucePlugin_AUMainType='aumu'",
 					"JucePlugin_AUSubType=JucePlugin_PluginCode",
 					"JucePlugin_AUExportPrefix=DDSPSynthAU",
 					"JucePlugin_AUExportPrefixQuoted=\\\"DDSPSynthAU\\\"",
 					"JucePlugin_AUManufacturerCode=JucePlugin_ManufacturerCode",
 					"JucePlugin_CFBundleIdentifier=com.yourcompany.DDSPSynth",
-					"JucePlugin_RTASCategory=0",
+					"JucePlugin_RTASCategory=2048",
 					"JucePlugin_RTASManufacturerCode=JucePlugin_ManufacturerCode",
 					"JucePlugin_RTASProductId=JucePlugin_PluginCode",
 					"JucePlugin_RTASDisableBypass=0",
@@ -1025,14 +1505,17 @@
 					"JucePlugin_AAXIdentifier=com.yourcompany.DDSPSynth",
 					"JucePlugin_AAXManufacturerCode=JucePlugin_ManufacturerCode",
 					"JucePlugin_AAXProductId=JucePlugin_PluginCode",
-					"JucePlugin_AAXCategory=0",
+					"JucePlugin_AAXCategory=2048",
 					"JucePlugin_AAXDisableBypass=0",
 					"JucePlugin_AAXDisableMultiMono=0",
-					"JucePlugin_IAAType=0x61757278",
+					"JucePlugin_IAAType=0x61757269",
 					"JucePlugin_IAASubType=JucePlugin_PluginCode",
 					"JucePlugin_IAAName=\\\"yourcompany:\\ DDSPSynth\\\"",
 					"JucePlugin_VSTNumMidiInputs=16",
 					"JucePlugin_VSTNumMidiOutputs=16",
+					"JucePlugin_MaxNumInputChannels=1",
+					"JucePlugin_MaxNumOutputChannels=2",
+					"JucePlugin_PreferredChannelConfigurations={1,\\ 2}",
 					"JUCE_STANDALONE_APPLICATION=JucePlugin_Build_Standalone",
 				);
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
@@ -1120,8 +1603,8 @@
 					"JucePlugin_ManufacturerEmail=\\\"\\\"",
 					"JucePlugin_ManufacturerCode=0x4d616e75",
 					"JucePlugin_PluginCode=0x58757068",
-					"JucePlugin_IsSynth=0",
-					"JucePlugin_WantsMidiInput=0",
+					"JucePlugin_IsSynth=1",
+					"JucePlugin_WantsMidiInput=1",
 					"JucePlugin_ProducesMidiOutput=0",
 					"JucePlugin_IsMidiEffect=0",
 					"JucePlugin_EditorRequiresKeyboardFocus=0",
@@ -1129,15 +1612,15 @@
 					"JucePlugin_VersionCode=0x10000",
 					"JucePlugin_VersionString=\\\"1.0.0\\\"",
 					"JucePlugin_VSTUniqueID=JucePlugin_PluginCode",
-					"JucePlugin_VSTCategory=kPlugCategEffect",
-					"JucePlugin_Vst3Category=\\\"Fx\\\"",
-					"JucePlugin_AUMainType='aufx'",
+					"JucePlugin_VSTCategory=kPlugCategSynth",
+					"JucePlugin_Vst3Category=\\\"Instrument|Synth\\\"",
+					"JucePlugin_AUMainType='aumu'",
 					"JucePlugin_AUSubType=JucePlugin_PluginCode",
 					"JucePlugin_AUExportPrefix=DDSPSynthAU",
 					"JucePlugin_AUExportPrefixQuoted=\\\"DDSPSynthAU\\\"",
 					"JucePlugin_AUManufacturerCode=JucePlugin_ManufacturerCode",
 					"JucePlugin_CFBundleIdentifier=com.yourcompany.DDSPSynth",
-					"JucePlugin_RTASCategory=0",
+					"JucePlugin_RTASCategory=2048",
 					"JucePlugin_RTASManufacturerCode=JucePlugin_ManufacturerCode",
 					"JucePlugin_RTASProductId=JucePlugin_PluginCode",
 					"JucePlugin_RTASDisableBypass=0",
@@ -1145,14 +1628,17 @@
 					"JucePlugin_AAXIdentifier=com.yourcompany.DDSPSynth",
 					"JucePlugin_AAXManufacturerCode=JucePlugin_ManufacturerCode",
 					"JucePlugin_AAXProductId=JucePlugin_PluginCode",
-					"JucePlugin_AAXCategory=0",
+					"JucePlugin_AAXCategory=2048",
 					"JucePlugin_AAXDisableBypass=0",
 					"JucePlugin_AAXDisableMultiMono=0",
-					"JucePlugin_IAAType=0x61757278",
+					"JucePlugin_IAAType=0x61757269",
 					"JucePlugin_IAASubType=JucePlugin_PluginCode",
 					"JucePlugin_IAAName=\\\"yourcompany:\\ DDSPSynth\\\"",
 					"JucePlugin_VSTNumMidiInputs=16",
 					"JucePlugin_VSTNumMidiOutputs=16",
+					"JucePlugin_MaxNumInputChannels=1",
+					"JucePlugin_MaxNumOutputChannels=2",
+					"JucePlugin_PreferredChannelConfigurations={1,\\ 2}",
 					"JUCE_STANDALONE_APPLICATION=JucePlugin_Build_Standalone",
 				);
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
@@ -1241,8 +1727,8 @@
 					"JucePlugin_ManufacturerEmail=\\\"\\\"",
 					"JucePlugin_ManufacturerCode=0x4d616e75",
 					"JucePlugin_PluginCode=0x58757068",
-					"JucePlugin_IsSynth=0",
-					"JucePlugin_WantsMidiInput=0",
+					"JucePlugin_IsSynth=1",
+					"JucePlugin_WantsMidiInput=1",
 					"JucePlugin_ProducesMidiOutput=0",
 					"JucePlugin_IsMidiEffect=0",
 					"JucePlugin_EditorRequiresKeyboardFocus=0",
@@ -1250,15 +1736,15 @@
 					"JucePlugin_VersionCode=0x10000",
 					"JucePlugin_VersionString=\\\"1.0.0\\\"",
 					"JucePlugin_VSTUniqueID=JucePlugin_PluginCode",
-					"JucePlugin_VSTCategory=kPlugCategEffect",
-					"JucePlugin_Vst3Category=\\\"Fx\\\"",
-					"JucePlugin_AUMainType='aufx'",
+					"JucePlugin_VSTCategory=kPlugCategSynth",
+					"JucePlugin_Vst3Category=\\\"Instrument|Synth\\\"",
+					"JucePlugin_AUMainType='aumu'",
 					"JucePlugin_AUSubType=JucePlugin_PluginCode",
 					"JucePlugin_AUExportPrefix=DDSPSynthAU",
 					"JucePlugin_AUExportPrefixQuoted=\\\"DDSPSynthAU\\\"",
 					"JucePlugin_AUManufacturerCode=JucePlugin_ManufacturerCode",
 					"JucePlugin_CFBundleIdentifier=com.yourcompany.DDSPSynth",
-					"JucePlugin_RTASCategory=0",
+					"JucePlugin_RTASCategory=2048",
 					"JucePlugin_RTASManufacturerCode=JucePlugin_ManufacturerCode",
 					"JucePlugin_RTASProductId=JucePlugin_PluginCode",
 					"JucePlugin_RTASDisableBypass=0",
@@ -1266,14 +1752,17 @@
 					"JucePlugin_AAXIdentifier=com.yourcompany.DDSPSynth",
 					"JucePlugin_AAXManufacturerCode=JucePlugin_ManufacturerCode",
 					"JucePlugin_AAXProductId=JucePlugin_PluginCode",
-					"JucePlugin_AAXCategory=0",
+					"JucePlugin_AAXCategory=2048",
 					"JucePlugin_AAXDisableBypass=0",
 					"JucePlugin_AAXDisableMultiMono=0",
-					"JucePlugin_IAAType=0x61757278",
+					"JucePlugin_IAAType=0x61757269",
 					"JucePlugin_IAASubType=JucePlugin_PluginCode",
 					"JucePlugin_IAAName=\\\"yourcompany:\\ DDSPSynth\\\"",
 					"JucePlugin_VSTNumMidiInputs=16",
 					"JucePlugin_VSTNumMidiOutputs=16",
+					"JucePlugin_MaxNumInputChannels=1",
+					"JucePlugin_MaxNumOutputChannels=2",
+					"JucePlugin_PreferredChannelConfigurations={1,\\ 2}",
 					"JUCE_STANDALONE_APPLICATION=JucePlugin_Build_Standalone",
 				);
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
@@ -1362,8 +1851,8 @@
 					"JucePlugin_ManufacturerEmail=\\\"\\\"",
 					"JucePlugin_ManufacturerCode=0x4d616e75",
 					"JucePlugin_PluginCode=0x58757068",
-					"JucePlugin_IsSynth=0",
-					"JucePlugin_WantsMidiInput=0",
+					"JucePlugin_IsSynth=1",
+					"JucePlugin_WantsMidiInput=1",
 					"JucePlugin_ProducesMidiOutput=0",
 					"JucePlugin_IsMidiEffect=0",
 					"JucePlugin_EditorRequiresKeyboardFocus=0",
@@ -1371,15 +1860,15 @@
 					"JucePlugin_VersionCode=0x10000",
 					"JucePlugin_VersionString=\\\"1.0.0\\\"",
 					"JucePlugin_VSTUniqueID=JucePlugin_PluginCode",
-					"JucePlugin_VSTCategory=kPlugCategEffect",
-					"JucePlugin_Vst3Category=\\\"Fx\\\"",
-					"JucePlugin_AUMainType='aufx'",
+					"JucePlugin_VSTCategory=kPlugCategSynth",
+					"JucePlugin_Vst3Category=\\\"Instrument|Synth\\\"",
+					"JucePlugin_AUMainType='aumu'",
 					"JucePlugin_AUSubType=JucePlugin_PluginCode",
 					"JucePlugin_AUExportPrefix=DDSPSynthAU",
 					"JucePlugin_AUExportPrefixQuoted=\\\"DDSPSynthAU\\\"",
 					"JucePlugin_AUManufacturerCode=JucePlugin_ManufacturerCode",
 					"JucePlugin_CFBundleIdentifier=com.yourcompany.DDSPSynth",
-					"JucePlugin_RTASCategory=0",
+					"JucePlugin_RTASCategory=2048",
 					"JucePlugin_RTASManufacturerCode=JucePlugin_ManufacturerCode",
 					"JucePlugin_RTASProductId=JucePlugin_PluginCode",
 					"JucePlugin_RTASDisableBypass=0",
@@ -1387,14 +1876,17 @@
 					"JucePlugin_AAXIdentifier=com.yourcompany.DDSPSynth",
 					"JucePlugin_AAXManufacturerCode=JucePlugin_ManufacturerCode",
 					"JucePlugin_AAXProductId=JucePlugin_PluginCode",
-					"JucePlugin_AAXCategory=0",
+					"JucePlugin_AAXCategory=2048",
 					"JucePlugin_AAXDisableBypass=0",
 					"JucePlugin_AAXDisableMultiMono=0",
-					"JucePlugin_IAAType=0x61757278",
+					"JucePlugin_IAAType=0x61757269",
 					"JucePlugin_IAASubType=JucePlugin_PluginCode",
 					"JucePlugin_IAAName=\\\"yourcompany:\\ DDSPSynth\\\"",
 					"JucePlugin_VSTNumMidiInputs=16",
 					"JucePlugin_VSTNumMidiOutputs=16",
+					"JucePlugin_MaxNumInputChannels=1",
+					"JucePlugin_MaxNumOutputChannels=2",
+					"JucePlugin_PreferredChannelConfigurations={1,\\ 2}",
 					"JUCE_STANDALONE_APPLICATION=JucePlugin_Build_Standalone",
 				);
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
@@ -1482,8 +1974,8 @@
 					"JucePlugin_ManufacturerEmail=\\\"\\\"",
 					"JucePlugin_ManufacturerCode=0x4d616e75",
 					"JucePlugin_PluginCode=0x58757068",
-					"JucePlugin_IsSynth=0",
-					"JucePlugin_WantsMidiInput=0",
+					"JucePlugin_IsSynth=1",
+					"JucePlugin_WantsMidiInput=1",
 					"JucePlugin_ProducesMidiOutput=0",
 					"JucePlugin_IsMidiEffect=0",
 					"JucePlugin_EditorRequiresKeyboardFocus=0",
@@ -1491,15 +1983,15 @@
 					"JucePlugin_VersionCode=0x10000",
 					"JucePlugin_VersionString=\\\"1.0.0\\\"",
 					"JucePlugin_VSTUniqueID=JucePlugin_PluginCode",
-					"JucePlugin_VSTCategory=kPlugCategEffect",
-					"JucePlugin_Vst3Category=\\\"Fx\\\"",
-					"JucePlugin_AUMainType='aufx'",
+					"JucePlugin_VSTCategory=kPlugCategSynth",
+					"JucePlugin_Vst3Category=\\\"Instrument|Synth\\\"",
+					"JucePlugin_AUMainType='aumu'",
 					"JucePlugin_AUSubType=JucePlugin_PluginCode",
 					"JucePlugin_AUExportPrefix=DDSPSynthAU",
 					"JucePlugin_AUExportPrefixQuoted=\\\"DDSPSynthAU\\\"",
 					"JucePlugin_AUManufacturerCode=JucePlugin_ManufacturerCode",
 					"JucePlugin_CFBundleIdentifier=com.yourcompany.DDSPSynth",
-					"JucePlugin_RTASCategory=0",
+					"JucePlugin_RTASCategory=2048",
 					"JucePlugin_RTASManufacturerCode=JucePlugin_ManufacturerCode",
 					"JucePlugin_RTASProductId=JucePlugin_PluginCode",
 					"JucePlugin_RTASDisableBypass=0",
@@ -1507,14 +1999,17 @@
 					"JucePlugin_AAXIdentifier=com.yourcompany.DDSPSynth",
 					"JucePlugin_AAXManufacturerCode=JucePlugin_ManufacturerCode",
 					"JucePlugin_AAXProductId=JucePlugin_PluginCode",
-					"JucePlugin_AAXCategory=0",
+					"JucePlugin_AAXCategory=2048",
 					"JucePlugin_AAXDisableBypass=0",
 					"JucePlugin_AAXDisableMultiMono=0",
-					"JucePlugin_IAAType=0x61757278",
+					"JucePlugin_IAAType=0x61757269",
 					"JucePlugin_IAASubType=JucePlugin_PluginCode",
 					"JucePlugin_IAAName=\\\"yourcompany:\\ DDSPSynth\\\"",
 					"JucePlugin_VSTNumMidiInputs=16",
 					"JucePlugin_VSTNumMidiOutputs=16",
+					"JucePlugin_MaxNumInputChannels=1",
+					"JucePlugin_MaxNumOutputChannels=2",
+					"JucePlugin_PreferredChannelConfigurations={1,\\ 2}",
 					"JUCE_STANDALONE_APPLICATION=JucePlugin_Build_Standalone",
 				);
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
@@ -1596,8 +2091,8 @@
 					"JucePlugin_ManufacturerEmail=\\\"\\\"",
 					"JucePlugin_ManufacturerCode=0x4d616e75",
 					"JucePlugin_PluginCode=0x58757068",
-					"JucePlugin_IsSynth=0",
-					"JucePlugin_WantsMidiInput=0",
+					"JucePlugin_IsSynth=1",
+					"JucePlugin_WantsMidiInput=1",
 					"JucePlugin_ProducesMidiOutput=0",
 					"JucePlugin_IsMidiEffect=0",
 					"JucePlugin_EditorRequiresKeyboardFocus=0",
@@ -1605,15 +2100,15 @@
 					"JucePlugin_VersionCode=0x10000",
 					"JucePlugin_VersionString=\\\"1.0.0\\\"",
 					"JucePlugin_VSTUniqueID=JucePlugin_PluginCode",
-					"JucePlugin_VSTCategory=kPlugCategEffect",
-					"JucePlugin_Vst3Category=\\\"Fx\\\"",
-					"JucePlugin_AUMainType='aufx'",
+					"JucePlugin_VSTCategory=kPlugCategSynth",
+					"JucePlugin_Vst3Category=\\\"Instrument|Synth\\\"",
+					"JucePlugin_AUMainType='aumu'",
 					"JucePlugin_AUSubType=JucePlugin_PluginCode",
 					"JucePlugin_AUExportPrefix=DDSPSynthAU",
 					"JucePlugin_AUExportPrefixQuoted=\\\"DDSPSynthAU\\\"",
 					"JucePlugin_AUManufacturerCode=JucePlugin_ManufacturerCode",
 					"JucePlugin_CFBundleIdentifier=com.yourcompany.DDSPSynth",
-					"JucePlugin_RTASCategory=0",
+					"JucePlugin_RTASCategory=2048",
 					"JucePlugin_RTASManufacturerCode=JucePlugin_ManufacturerCode",
 					"JucePlugin_RTASProductId=JucePlugin_PluginCode",
 					"JucePlugin_RTASDisableBypass=0",
@@ -1621,14 +2116,17 @@
 					"JucePlugin_AAXIdentifier=com.yourcompany.DDSPSynth",
 					"JucePlugin_AAXManufacturerCode=JucePlugin_ManufacturerCode",
 					"JucePlugin_AAXProductId=JucePlugin_PluginCode",
-					"JucePlugin_AAXCategory=0",
+					"JucePlugin_AAXCategory=2048",
 					"JucePlugin_AAXDisableBypass=0",
 					"JucePlugin_AAXDisableMultiMono=0",
-					"JucePlugin_IAAType=0x61757278",
+					"JucePlugin_IAAType=0x61757269",
 					"JucePlugin_IAASubType=JucePlugin_PluginCode",
 					"JucePlugin_IAAName=\\\"yourcompany:\\ DDSPSynth\\\"",
 					"JucePlugin_VSTNumMidiInputs=16",
 					"JucePlugin_VSTNumMidiOutputs=16",
+					"JucePlugin_MaxNumInputChannels=1",
+					"JucePlugin_MaxNumOutputChannels=2",
+					"JucePlugin_PreferredChannelConfigurations={1,\\ 2}",
 					"JUCE_STANDALONE_APPLICATION=JucePlugin_Build_Standalone",
 				);
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
@@ -1712,8 +2210,8 @@
 					"JucePlugin_ManufacturerEmail=\\\"\\\"",
 					"JucePlugin_ManufacturerCode=0x4d616e75",
 					"JucePlugin_PluginCode=0x58757068",
-					"JucePlugin_IsSynth=0",
-					"JucePlugin_WantsMidiInput=0",
+					"JucePlugin_IsSynth=1",
+					"JucePlugin_WantsMidiInput=1",
 					"JucePlugin_ProducesMidiOutput=0",
 					"JucePlugin_IsMidiEffect=0",
 					"JucePlugin_EditorRequiresKeyboardFocus=0",
@@ -1721,15 +2219,15 @@
 					"JucePlugin_VersionCode=0x10000",
 					"JucePlugin_VersionString=\\\"1.0.0\\\"",
 					"JucePlugin_VSTUniqueID=JucePlugin_PluginCode",
-					"JucePlugin_VSTCategory=kPlugCategEffect",
-					"JucePlugin_Vst3Category=\\\"Fx\\\"",
-					"JucePlugin_AUMainType='aufx'",
+					"JucePlugin_VSTCategory=kPlugCategSynth",
+					"JucePlugin_Vst3Category=\\\"Instrument|Synth\\\"",
+					"JucePlugin_AUMainType='aumu'",
 					"JucePlugin_AUSubType=JucePlugin_PluginCode",
 					"JucePlugin_AUExportPrefix=DDSPSynthAU",
 					"JucePlugin_AUExportPrefixQuoted=\\\"DDSPSynthAU\\\"",
 					"JucePlugin_AUManufacturerCode=JucePlugin_ManufacturerCode",
 					"JucePlugin_CFBundleIdentifier=com.yourcompany.DDSPSynth",
-					"JucePlugin_RTASCategory=0",
+					"JucePlugin_RTASCategory=2048",
 					"JucePlugin_RTASManufacturerCode=JucePlugin_ManufacturerCode",
 					"JucePlugin_RTASProductId=JucePlugin_PluginCode",
 					"JucePlugin_RTASDisableBypass=0",
@@ -1737,14 +2235,17 @@
 					"JucePlugin_AAXIdentifier=com.yourcompany.DDSPSynth",
 					"JucePlugin_AAXManufacturerCode=JucePlugin_ManufacturerCode",
 					"JucePlugin_AAXProductId=JucePlugin_PluginCode",
-					"JucePlugin_AAXCategory=0",
+					"JucePlugin_AAXCategory=2048",
 					"JucePlugin_AAXDisableBypass=0",
 					"JucePlugin_AAXDisableMultiMono=0",
-					"JucePlugin_IAAType=0x61757278",
+					"JucePlugin_IAAType=0x61757269",
 					"JucePlugin_IAASubType=JucePlugin_PluginCode",
 					"JucePlugin_IAAName=\\\"yourcompany:\\ DDSPSynth\\\"",
 					"JucePlugin_VSTNumMidiInputs=16",
 					"JucePlugin_VSTNumMidiOutputs=16",
+					"JucePlugin_MaxNumInputChannels=1",
+					"JucePlugin_MaxNumOutputChannels=2",
+					"JucePlugin_PreferredChannelConfigurations={1,\\ 2}",
 					"JUCE_STANDALONE_APPLICATION=JucePlugin_Build_Standalone",
 				);
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
@@ -1826,8 +2327,8 @@
 					"JucePlugin_ManufacturerEmail=\\\"\\\"",
 					"JucePlugin_ManufacturerCode=0x4d616e75",
 					"JucePlugin_PluginCode=0x58757068",
-					"JucePlugin_IsSynth=0",
-					"JucePlugin_WantsMidiInput=0",
+					"JucePlugin_IsSynth=1",
+					"JucePlugin_WantsMidiInput=1",
 					"JucePlugin_ProducesMidiOutput=0",
 					"JucePlugin_IsMidiEffect=0",
 					"JucePlugin_EditorRequiresKeyboardFocus=0",
@@ -1835,15 +2336,15 @@
 					"JucePlugin_VersionCode=0x10000",
 					"JucePlugin_VersionString=\\\"1.0.0\\\"",
 					"JucePlugin_VSTUniqueID=JucePlugin_PluginCode",
-					"JucePlugin_VSTCategory=kPlugCategEffect",
-					"JucePlugin_Vst3Category=\\\"Fx\\\"",
-					"JucePlugin_AUMainType='aufx'",
+					"JucePlugin_VSTCategory=kPlugCategSynth",
+					"JucePlugin_Vst3Category=\\\"Instrument|Synth\\\"",
+					"JucePlugin_AUMainType='aumu'",
 					"JucePlugin_AUSubType=JucePlugin_PluginCode",
 					"JucePlugin_AUExportPrefix=DDSPSynthAU",
 					"JucePlugin_AUExportPrefixQuoted=\\\"DDSPSynthAU\\\"",
 					"JucePlugin_AUManufacturerCode=JucePlugin_ManufacturerCode",
 					"JucePlugin_CFBundleIdentifier=com.yourcompany.DDSPSynth",
-					"JucePlugin_RTASCategory=0",
+					"JucePlugin_RTASCategory=2048",
 					"JucePlugin_RTASManufacturerCode=JucePlugin_ManufacturerCode",
 					"JucePlugin_RTASProductId=JucePlugin_PluginCode",
 					"JucePlugin_RTASDisableBypass=0",
@@ -1851,14 +2352,17 @@
 					"JucePlugin_AAXIdentifier=com.yourcompany.DDSPSynth",
 					"JucePlugin_AAXManufacturerCode=JucePlugin_ManufacturerCode",
 					"JucePlugin_AAXProductId=JucePlugin_PluginCode",
-					"JucePlugin_AAXCategory=0",
+					"JucePlugin_AAXCategory=2048",
 					"JucePlugin_AAXDisableBypass=0",
 					"JucePlugin_AAXDisableMultiMono=0",
-					"JucePlugin_IAAType=0x61757278",
+					"JucePlugin_IAAType=0x61757269",
 					"JucePlugin_IAASubType=JucePlugin_PluginCode",
 					"JucePlugin_IAAName=\\\"yourcompany:\\ DDSPSynth\\\"",
 					"JucePlugin_VSTNumMidiInputs=16",
 					"JucePlugin_VSTNumMidiOutputs=16",
+					"JucePlugin_MaxNumInputChannels=1",
+					"JucePlugin_MaxNumOutputChannels=2",
+					"JucePlugin_PreferredChannelConfigurations={1,\\ 2}",
 					"JUCE_STANDALONE_APPLICATION=JucePlugin_Build_Standalone",
 				);
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
@@ -2219,6 +2723,28 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D56550B888AF52A394676813,
+				2219DF7DEC97821E7FC065A7,
+				DB48695E229B9206970C0DB5,
+				410A822FC8463D29F4FEC52A,
+				E835B4155A6B9A198CA7B9FA,
+				97ABEECED203D9D9D59245E6,
+				989F31DCF1AE2A109E07C6A2,
+				29D6EA25A33F0B175EFE6F77,
+				0B65DAA4E4E13914495D6C22,
+				4B72848ECF911678F6B3610C,
+				D6D7016B4A08A9E4B281548A,
+				0B80C4D9172D5F62E501F4AE,
+				D0A9E74A6AB748E30B86BD1A,
+				6E44BDADE503AFF6C060A329,
+				85539060AE17517912C8FBC5,
+				C5CFAA6EA517C5AFA44A89D5,
+				F6836B987B7C8F2D36E6037B,
+				767EB6AC7BFAED6DB1025D1C,
+				A900A173AE02A42DA7231204,
+				9B0D41F4363D63851D8D4E2E,
+				D6F4E0D447044C22CCD22D5B,
+				F6E4E87E92440B4455478A78,
 				F6982829FDF604039CE59B27,
 				3610F5339822ADC0C99FB809,
 				17D72AF46BA9AD0EE4BCEC3F,

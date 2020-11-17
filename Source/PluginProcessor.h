@@ -9,11 +9,12 @@
 #pragma once
 
 #include <JuceHeader.h>
-
+#include "DDSPVoice.h"
+#include "HarmonicEditor.h"
 //==============================================================================
 /**
 */
-class DdspsynthAudioProcessor  : public juce::AudioProcessor
+class DdspsynthAudioProcessor : public juce::AudioProcessor, public HarmonicEditor::Listener
 {
 public:
     //==============================================================================
@@ -53,7 +54,13 @@ public:
     void getStateInformation (juce::MemoryBlock& destData) override;
     void setStateInformation (const void* data, int sizeInBytes) override;
 
+	void onValueChange(double harmonics[50]) override;
+
 private:
     //==============================================================================
+	DDSPVoice voice;
+	juce::MidiKeyboardState keyboardState;
+	juce::Synthesiser synth;
+
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (DdspsynthAudioProcessor)
 };

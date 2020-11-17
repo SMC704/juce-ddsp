@@ -19,7 +19,7 @@ HarmonicEditor::HarmonicEditor()
     
     for (int i=0; i < nHarmonics; i++) {
         harmonicSliders.add(new HarmonicSlider());
-		harmonicValues.push_back(0.5);
+		harmonicValues[i] = 0.5;
     }
     
     for (HarmonicSlider *harmonicSlider: harmonicSliders) {
@@ -37,6 +37,14 @@ HarmonicEditor::~HarmonicEditor()
 void HarmonicEditor::paint (juce::Graphics& g)
 {
 
+}
+
+void HarmonicEditor::setListener(HarmonicEditor::Listener* pTheListener)
+{
+	pListener = pTheListener;
+	if (pListener != NULL) {
+		pListener->onValueChange(harmonicValues);
+	}
 }
 
 void HarmonicEditor::resized()
@@ -92,12 +100,12 @@ void HarmonicEditor::mouseDrag(const juce::MouseEvent &event)
         float newValue = float(relativePositionY) / float(editorHeight);
         if(nActiveSlider >= 0 && nActiveSlider < nHarmonics) {
             harmonicSliders[nActiveSlider]->setValue(newValue);
+			harmonicValues[nActiveSlider] = newValue;
         }
+
+		if (pListener != NULL) {
+			pListener->onValueChange(harmonicValues);
+		}
         repaint();
     }
-}
-
-harmVector& HarmonicEditor::getHarmonicValues()
-{
-	return harmonicValues;
 }
