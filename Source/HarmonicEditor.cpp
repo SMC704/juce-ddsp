@@ -17,8 +17,6 @@ HarmonicEditor::HarmonicEditor()
     isEntered = false;
     isDown = false;
     
-    nHarmonics = 50;
-    
     for (int i=0; i < nHarmonics; i++) {
         harmonicSliders.add(new HarmonicSlider());
 		harmonicValues.push_back(0.5);
@@ -99,7 +97,7 @@ void HarmonicEditor::mouseDrag(const juce::MouseEvent &event)
     }
 }
 
-HarmonicEditor::harmVector& HarmonicEditor::getHarmonicValues()
+harmVector& HarmonicEditor::getHarmonicValues()
 {
 	return harmonicValues;
 }

@@ -12,6 +12,7 @@
 
 #include <JuceHeader.h>
 #include "HarmonicSlider.h"
+#include "DDSPDefinitions.h";
 
 //==============================================================================
 /*
@@ -19,8 +20,6 @@
 class HarmonicEditor  : public juce::Component
 {
 public:
-
-	typedef std::vector<double> harmVector;
 
     HarmonicEditor();
     ~HarmonicEditor() override;
@@ -41,7 +40,6 @@ private:
     bool isEntered;
     bool isDown;
     
-    int nHarmonics;
     juce::OwnedArray<HarmonicSlider> harmonicSliders;
 
 	harmVector harmonicValues;
