@@ -11,10 +11,12 @@
 #pragma once
 
 #include <JuceHeader.h>
+using namespace juce;
 
 //==============================================================================
 /*
 */
+
 class AdditiveComponent  : public juce::Component
 {
 public:
@@ -26,9 +28,14 @@ public:
 
 private:
     
-    juce::Slider shiftSlider;
-    juce::Slider stretchSlider;
-    juce::Slider ampSlider;
+    Slider shiftSlider;
+    Slider stretchSlider;
+    Slider ampSlider;
+    Label shiftSliderLabel;
+    Label stretchSliderLabel;
+    Label ampSliderLabel;
+    ToggleButton moduleToggle;
+    
     
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (AdditiveComponent)
 };
