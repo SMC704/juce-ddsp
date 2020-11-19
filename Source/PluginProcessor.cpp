@@ -19,7 +19,8 @@ DdspsynthAudioProcessor::DdspsynthAudioProcessor()
                       #endif
                        .withOutput ("Output", juce::AudioChannelSet::stereo(), true)
                      #endif
-                       )
+                       ),
+    forwardFFT (fftOrder)
 #endif
 {
 }
@@ -150,9 +151,14 @@ void DdspsynthAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, ju
     // interleaved by keeping the same state.
     for (int channel = 0; channel < totalNumInputChannels; ++channel)
     {
-        auto* channelData = buffer.getWritePointer (channel);
+        auto* channelData = buffer.getReadPointer (0);
 
-        // ..do something to the data...
+        for (auto i = 0; i < buffer.getNumSamples(); ++i)
+        {
+            pushNextSampleIntoFifo (channelData[i]);
+        }
+        
+        buffer.clear();
     }
 }
 
@@ -186,4 +192,26 @@ void DdspsynthAudioProcessor::setStateInformation (const void* data, int sizeInB
 juce::AudioProcessor* JUCE_CALLTYPE createPluginFilter()
 {
     return new DdspsynthAudioProcessor();
+}
+
+//===============================================================================
+// Spectrogram methods
+
+void DdspsynthAudioProcessor::pushNextSampleIntoFifo (float sample) noexcept
+{
+    // if the fifo contains enough data, set a flag to say
+    // that the next line should now be rendered..
+    if (fifoIndex == fftSize)
+    {
+        if (! nextFFTBlockReady)
+        {
+            juce::zeromem (fftData, sizeof (fftData));
+            memcpy (fftData, fifo, sizeof (fifo));
+            nextFFTBlockReady = true;
+        }
+
+        fifoIndex = 0;
+    }
+
+    fifo[fifoIndex++] = sample;
 }

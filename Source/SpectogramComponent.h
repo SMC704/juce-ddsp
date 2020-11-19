@@ -23,7 +23,12 @@ public:
 
     void paint (juce::Graphics&) override;
     void resized() override;
+    
+    void drawNextLineOfSpectrogram(int fftSize, float* fftData, juce::dsp::FFT& forwardFFT, int fftOrder);
 
 private:
+    
+    juce::Image spectrogramImage;
+    
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (SpectogramComponent)
 };
