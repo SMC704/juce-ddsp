@@ -26,9 +26,15 @@ public:
 
 private:
     
+    juce::ToggleButton onoffButton;
+    juce::Label nameLabel;
+    juce::Label onoffLabel;
     juce::Slider shiftSlider;
+    juce::Label shiftLabel;
     juce::Slider stretchSlider;
+    juce::Label stretchLabel;
     juce::Slider ampSlider;
+    juce::Label ampLabel;
     
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (AdditiveComponent)
 };

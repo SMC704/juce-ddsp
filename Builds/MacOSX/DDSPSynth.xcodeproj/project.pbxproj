@@ -309,6 +309,13 @@
 			path = "~/JUCE/modules/juce_gui_extra";
 			sourceTree = "<absolute>";
 		};
+		3968DF538333723E0F34EF10 = {
+			isa = PBXFileReference;
+			lastKnownFileType = image.png;
+			name = trumpet.png;
+			path = ../../Resources/trumpet.png;
+			sourceTree = "SOURCE_ROOT";
+		};
 		3B31551CC70C157BA75BFD7F = {
 			isa = PBXFileReference;
 			lastKnownFileType = wrapper.framework;
@@ -414,6 +421,20 @@
 			path = "../../JuceLibraryCode/include_juce_audio_plugin_client_AU_2.mm";
 			sourceTree = "SOURCE_ROOT";
 		};
+		71A8CFDE912454C5F6130DAE = {
+			isa = PBXFileReference;
+			lastKnownFileType = image.png;
+			name = "background_texture.png";
+			path = "../../Resources/background_texture.png";
+			sourceTree = "SOURCE_ROOT";
+		};
+		71B063F3C45E3FCD2BD35382 = {
+			isa = PBXFileReference;
+			lastKnownFileType = file;
+			name = "juce_audio_plugin_client";
+			path = "~/JUCE/modules/juce_audio_plugin_client";
+			sourceTree = "<absolute>";
+		};
 		73DB2077D71BD9906C6A9B1E = {
 			isa = PBXFileReference;
 			lastKnownFileType = file;
@@ -456,11 +477,32 @@
 			path = "../../JuceLibraryCode/include_juce_audio_formats.mm";
 			sourceTree = "SOURCE_ROOT";
 		};
+		7FDF825F0BCBE7263891759B = {
+			isa = PBXFileReference;
+			lastKnownFileType = image.png;
+			name = placeholder.png;
+			path = ../../Resources/placeholder.png;
+			sourceTree = "SOURCE_ROOT";
+		};
 		86CFED619239A12B53326DD0 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = "include_juce_audio_plugin_client_Standalone.cpp";
 			path = "../../JuceLibraryCode/include_juce_audio_plugin_client_Standalone.cpp";
+			sourceTree = "SOURCE_ROOT";
+		};
+		89B229C895AA000D0AD30B2E = {
+			isa = PBXFileReference;
+			lastKnownFileType = image.png;
+			name = "background_texture_dark.png";
+			path = "../../Resources/background_texture_dark.png";
+			sourceTree = "SOURCE_ROOT";
+		};
+		90AA88C45ECFC21A62B4B8D3 = {
+			isa = PBXFileReference;
+			lastKnownFileType = image.png;
+			name = saxophone.png;
+			path = ../../Resources/saxophone.png;
 			sourceTree = "SOURCE_ROOT";
 		};
 		964FAA82ED145EFA03DD0181 = {
@@ -505,13 +547,6 @@
 			path = "../../JuceLibraryCode/include_juce_graphics.mm";
 			sourceTree = "SOURCE_ROOT";
 		};
-		AF2197905DCDB3A4AFCE694F = {
-			isa = PBXFileReference;
-			lastKnownFileType = file;
-			name = "juce_audio_formats";
-			path = "~/JUCE/modules/juce_audio_formats";
-			sourceTree = "<absolute>";
-		};
 		AFA66E82029952F775AFC402 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.objcpp;
@@ -554,27 +589,6 @@
 			path = System/Library/Frameworks/CoreMIDI.framework;
 			sourceTree = SDKROOT;
 		};
-		BF0A9A0775CA6C68262846DC = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.c.h;
-			name = JucePluginDefines.h;
-			path = ../../JuceLibraryCode/JucePluginDefines.h;
-			sourceTree = "SOURCE_ROOT";
-		};
-		BF75930373DEFC1661E534AE = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.cpp.objcpp;
-			name = "include_juce_audio_processors.mm";
-			path = "../../JuceLibraryCode/include_juce_audio_processors.mm";
-			sourceTree = "SOURCE_ROOT";
-		};
-		C6C06C23276934DBD532599E = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.c.h;
-			name = BinaryData.h;
-			path = ../../JuceLibraryCode/BinaryData.h;
-			sourceTree = "SOURCE_ROOT";
-		};
 		CAA98A61DB8854E7A231643A = {
 			isa = PBXFileReference;
 			explicitFileType = wrapper.cfbundle;
@@ -589,11 +603,11 @@
 			path = DDSPSynth.component;
 			sourceTree = "BUILT_PRODUCTS_DIR";
 		};
-		71B063F3C45E3FCD2BD35382 = {
+		AF2197905DCDB3A4AFCE694F = {
 			isa = PBXFileReference;
 			lastKnownFileType = file;
-			name = "juce_audio_plugin_client";
-			path = "~/JUCE/modules/juce_audio_plugin_client";
+			name = "juce_audio_formats";
+			path = "~/JUCE/modules/juce_audio_formats";
 			sourceTree = "<absolute>";
 		};
 		B2A389A03B9C47B9F7F72EB0 = {
@@ -603,11 +617,32 @@
 			path = "~/JUCE/modules/juce_audio_processors";
 			sourceTree = "<absolute>";
 		};
+		BF0A9A0775CA6C68262846DC = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = JucePluginDefines.h;
+			path = ../../JuceLibraryCode/JucePluginDefines.h;
+			sourceTree = "SOURCE_ROOT";
+		};
+		BF75930373DEFC1661E534AE = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.objcpp;
+			name = "include_juce_audio_processors.mm";
+			path = "../../JuceLibraryCode/include_juce_audio_processors.mm";
+			sourceTree = "SOURCE_ROOT";
+		};
 		C47BDBA6786CD5CD96223481 = {
 			isa = PBXFileReference;
 			lastKnownFileType = file.r;
 			name = "include_juce_audio_plugin_client_AU.r";
 			path = "../../JuceLibraryCode/include_juce_audio_plugin_client_AU.r";
+			sourceTree = "SOURCE_ROOT";
+		};
+		C6C06C23276934DBD532599E = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = BinaryData.h;
+			path = ../../JuceLibraryCode/BinaryData.h;
 			sourceTree = "SOURCE_ROOT";
 		};
 		C746A4107FC18F5215778E13 = {
@@ -622,6 +657,20 @@
 			lastKnownFileType = sourcecode.c.h;
 			name = InputComponent.h;
 			path = ../../Source/InputComponent.h;
+			sourceTree = "SOURCE_ROOT";
+		};
+		C9D9DDE6877E63A09451A6EE = {
+			isa = PBXFileReference;
+			lastKnownFileType = image.png;
+			name = flute.png;
+			path = ../../Resources/flute.png;
+			sourceTree = "SOURCE_ROOT";
+		};
+		CC35A78472D319CAE900CA76 = {
+			isa = PBXFileReference;
+			lastKnownFileType = image.png;
+			name = violin.png;
+			path = ../../Resources/violin.png;
 			sourceTree = "SOURCE_ROOT";
 		};
 		D290356A6140C2C2CB97D31C = {
@@ -701,13 +750,6 @@
 			path = ../../Source/PluginEditor.h;
 			sourceTree = "SOURCE_ROOT";
 		};
-		F02AC2BB20D7E47CF4F7C5C6 = {
-			isa = PBXFileReference;
-			lastKnownFileType = image.png;
-			name = "background_texture.png";
-			path = "../../../../../Documents/AAU SMC/Semester 1/Foundations of SMC/GUI/background_texture.png";
-			sourceTree = "SOURCE_ROOT";
-		};
 		F0814C6C83875D117DFCCBCF = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.objcpp;
@@ -780,7 +822,13 @@
 		C46D5F697253CB3A0BB0B3F3 = {
 			isa = PBXGroup;
 			children = (
-				F02AC2BB20D7E47CF4F7C5C6,
+				89B229C895AA000D0AD30B2E,
+				C9D9DDE6877E63A09451A6EE,
+				7FDF825F0BCBE7263891759B,
+				90AA88C45ECFC21A62B4B8D3,
+				3968DF538333723E0F34EF10,
+				CC35A78472D319CAE900CA76,
+				71A8CFDE912454C5F6130DAE,
 			);
 			name = Resources;
 			sourceTree = "<group>";

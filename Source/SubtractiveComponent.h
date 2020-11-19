@@ -25,5 +25,18 @@ public:
     void resized() override;
 
 private:
+
+    juce::ToggleButton onoffButton;
+    juce::Label nameLabel;
+    juce::Label onoffLabel;
+    juce::Slider ampSlider;
+    juce::Label ampLabel;
+    juce::Slider amoutSlider;
+    juce::Label amountLabel;
+    juce::Slider rateSlider;
+    juce::Label rateLabel;
+    juce::Slider colourSlider;
+    juce::Label colourLabel;
+
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (SubtractiveComponent)
 };
