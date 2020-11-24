@@ -23,7 +23,7 @@ DDSPVoice::DDSPVoice()
 	}
 
 	for (int i = 0; i < 4096; i++) {
-		amplitudes[i] = 1;
+		amplitudes[i] = 1 + sin(2 * juce::double_Pi * 1024 * i/1024);
 		f0[i] = 440;
 	}
 	for (int i = 0; i < 50; i++) {
@@ -82,6 +82,6 @@ void DDSPVoice::renderNextBlock(juce::AudioSampleBuffer & outputBuffer, int star
 void DDSPVoice::setHarmonics(double harms[50])
 {
 	for (int i = 0; i < 50; i++) {
-		harmonics[i] = harms[i];
+		harmonics[i] = 1 - harms[i];
 	}
 }
