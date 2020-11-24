@@ -21,7 +21,6 @@
 void DDSPSynth_initialize()
 {
   rt_InitInfAndNaN();
-  omp_init_nest_lock(&emlrtNestLockGlobal);
   c_eml_rand_mt19937ar_stateful_i();
   isInitialized_DDSPSynth = true;
 }

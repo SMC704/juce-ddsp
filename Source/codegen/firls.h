@@ -3,26 +3,24 @@
 //  course requirements at degree granting institutions only.  Not for
 //  government, commercial, or other organizational use.
 //
-//  gencoswin.h
+//  firls.h
 //
-//  Code generation for function 'gencoswin'
+//  Code generation for function 'firls'
 //
 
 
-#ifndef GENCOSWIN_H
-#define GENCOSWIN_H
+#ifndef FIRLS_H
+#define FIRLS_H
 
 // Include files
 #include <cstddef>
 #include <cstdlib>
 #include "rtwtypes.h"
-#include "omp.h"
 #include "DDSPSynth_types.h"
-#define MAX_THREADS                    omp_get_max_threads()
 
 // Function Declarations
-extern void calc_window(double m, double n, double w_data[], int w_size[1]);
+extern void firls(const double varargin_3[64], double h_data[], int h_size[2]);
 
 #endif
 
-// End of code generation (gencoswin.h)
+// End of code generation (firls.h)

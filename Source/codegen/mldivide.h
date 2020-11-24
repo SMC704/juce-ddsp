@@ -3,27 +3,24 @@
 //  course requirements at degree granting institutions only.  Not for
 //  government, commercial, or other organizational use.
 //
-//  DDSPSynth_rtwutil.h
+//  mldivide.h
 //
-//  Code generation for function 'DDSPSynth_rtwutil'
+//  Code generation for function 'mldivide'
 //
 
 
-#ifndef DDSPSYNTH_RTWUTIL_H
-#define DDSPSYNTH_RTWUTIL_H
+#ifndef MLDIVIDE_H
+#define MLDIVIDE_H
 
 // Include files
 #include <cstddef>
 #include <cstdlib>
 #include "rtwtypes.h"
-#include "omp.h"
 #include "DDSPSynth_types.h"
-#define MAX_THREADS                    omp_get_max_threads()
 
 // Function Declarations
-extern int div_s32_floor(int numerator, int denominator);
-extern double rt_powd_snf(double u0, double u1);
+extern void mldiv(const double A_data[], double B_data[]);
 
 #endif
 
-// End of code generation (DDSPSynth_rtwutil.h)
+// End of code generation (mldivide.h)

@@ -9,15 +9,25 @@
 */
 
 #include "DDSPVoice.h"
+#include "codegen/additive.h"
+#include "codegen/subtractive.h"
 
 DDSPVoice::DDSPVoice()
 {
-	for (int i = 0; i < 1024; i++) {
+	for (int i = 65; i
+                       \
+                        \
+                         \
+                          --> 0;) {
+		magnitudes[i] = -10;
+	}
+
+	for (int i = 0; i < 4096; i++) {
 		amplitudes[i] = 1;
 		f0[i] = 440;
-		for (int j = 0; j < 50; j++) {
-			harmonics[i * 50 + j] = 0.5;
-		}
+	}
+	for (int i = 0; i < 50; i++) {
+		harmonics[i] = 0.5;
 	}
 }
 
@@ -41,26 +51,37 @@ void DDSPVoice::stopNote(float, bool allowTailOff)
 
 void DDSPVoice::renderNextBlock(juce::AudioSampleBuffer & outputBuffer, int startSample, int numSamples)
 {
-	double harms[1024 * 50];
-	for (int i = 0; i < 1024 * 50; i++) {
-		harms[i] = harmonics[i];
+	// generated additive synth code overwrites passed harmonics
+	// so create copy before passing
+	double harms_copy[50];
+	for (int i = 0; i < 50; i++) {
+		harms_copy[i] = harmonics[i];
 	}
-	additive(getSampleRate(), amplitudes, harms, f0, phaseBuffer_in, audioBuffer, phaseBuffer_out);
+
+	int audio_size[1];
+
+
+	for (int i = 0; i < numSamples + 65; i++) {
+		noise[i] = r.nextDouble();
+	}
+	additive(numSamples, getSampleRate(), amplitudes, harms_copy, f0, phaseBuffer_in, addBuffer, audio_size, phaseBuffer_out);
+	jassert(numSamples == audio_size[0]);
+	subtractive(numSamples, magnitudes, noise, subBuffer);
 	for (int i = 0; i < 50; ++i) {
 		phaseBuffer_in[i] = phaseBuffer_out[i];
 	}
 
-	for (int i = 0; i < 1024 && i < outputBuffer.getNumSamples(); i++) {
-		*(outputBuffer.getWritePointer(0, i)) = (float)audioBuffer[i];
-		*(outputBuffer.getWritePointer(1, i)) = (float)audioBuffer[i];
+
+
+	for (int i = 0; i < numSamples && i < 4096; i++) {
+		float val = (float)(addBuffer[i] + subBuffer[i]);
+		*(outputBuffer.getWritePointer(0, i)) = val;
+		*(outputBuffer.getWritePointer(1, i)) = val;
 	}
 }
 void DDSPVoice::setHarmonics(double harms[50])
 {
-	for (int i = 0; i < 1024; i++) {
-		for (int j = 0; j < 50; j++) {
-			harmonics[i * 50 + j] = harms[i];
-		}
+	for (int i = 0; i < 50; i++) {
+		harmonics[i] = harms[i];
 	}
 }
-;

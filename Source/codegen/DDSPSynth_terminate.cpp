@@ -19,7 +19,7 @@
 // Function Definitions
 void DDSPSynth_terminate()
 {
-  omp_destroy_nest_lock(&emlrtNestLockGlobal);
+  // (no terminate code required)
   isInitialized_DDSPSynth = false;
 }
 

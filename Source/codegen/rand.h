@@ -16,12 +16,10 @@
 #include <cstddef>
 #include <cstdlib>
 #include "rtwtypes.h"
-#include "omp.h"
 #include "DDSPSynth_types.h"
-#define MAX_THREADS                    omp_get_max_threads()
 
 // Function Declarations
-extern void b_rand(double varargin_2, coder::array<double, 2U> &r);
+extern void b_rand(double varargin_1, coder::array<double, 1U> &r);
 
 #endif
 

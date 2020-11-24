@@ -16,15 +16,13 @@
 #include <cstddef>
 #include <cstdlib>
 #include "rtwtypes.h"
-#include "omp.h"
 #include "DDSPSynth_types.h"
-#define MAX_THREADS                    omp_get_max_threads()
 
 // Function Declarations
-extern void additive(double sample_rate, double amplitudes[1024], double
-                     harmonic_distribution[51200], const double f0[1024], const
-                     double prev_phases[50], double audio[1024], double
-                     last_phases[50]);
+extern void additive(int n_samples, double sample_rate, const double amplitudes
+                     [4096], double harmonic_distribution[50], const double f0
+                     [4096], const double prev_phases[50], double audio_data[],
+                     int audio_size[1], double last_phases[50]);
 
 #endif
 

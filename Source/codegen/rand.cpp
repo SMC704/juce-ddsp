@@ -17,13 +17,13 @@
 #include "subtractive.h"
 
 // Function Definitions
-void b_rand(double varargin_2, coder::array<double, 2U> &r)
+void b_rand(double varargin_1, coder::array<double, 1U> &r)
 {
   int i;
   unsigned int u[2];
   unsigned int y;
-  i = static_cast<int>(varargin_2);
-  r.set_size(1, i);
+  i = static_cast<int>(varargin_1);
+  r.set_size(i);
   for (int k = 0; k < i; k++) {
     double b_r;
 

@@ -5,64 +5,44 @@
               pluginCharacteristicsValue="pluginIsSynth,pluginWantsMidiIn"
               pluginChannelConfigs="{1, 2}">
   <MAINGROUP id="wP40jo" name="DDSPSynth">
-    <FILE id="WOx8Ej" name="additive.cpp" compile="1" resource="0" file="Source/codegen/additive.cpp"/>
-    <FILE id="yjxgvt" name="additive.h" compile="0" resource="0" file="Source/codegen/additive.h"/>
-    <FILE id="JwNw4n" name="coder_array.h" compile="0" resource="0" file="Source/codegen/coder_array.h"/>
-    <FILE id="U4dZE8" name="DDSPSynth_data.cpp" compile="1" resource="0"
+    <FILE id="q2r0E7" name="additive.cpp" compile="1" resource="0" file="Source/codegen/additive.cpp"/>
+    <FILE id="CzBd0G" name="additive.h" compile="0" resource="0" file="Source/codegen/additive.h"/>
+    <FILE id="izZrOR" name="coder_array.h" compile="0" resource="0" file="Source/codegen/coder_array.h"/>
+    <FILE id="N8ceUN" name="DDSPSynth_data.cpp" compile="1" resource="0"
           file="Source/codegen/DDSPSynth_data.cpp"/>
-    <FILE id="h81yTg" name="DDSPSynth_data.h" compile="0" resource="0"
+    <FILE id="zq7VGG" name="DDSPSynth_data.h" compile="0" resource="0"
           file="Source/codegen/DDSPSynth_data.h"/>
-    <FILE id="YL2T9U" name="DDSPSynth_initialize.cpp" compile="1" resource="0"
+    <FILE id="PGGQNJ" name="DDSPSynth_initialize.cpp" compile="1" resource="0"
           file="Source/codegen/DDSPSynth_initialize.cpp"/>
-    <FILE id="Bh66bH" name="DDSPSynth_initialize.h" compile="0" resource="0"
+    <FILE id="DfuiP3" name="DDSPSynth_initialize.h" compile="0" resource="0"
           file="Source/codegen/DDSPSynth_initialize.h"/>
-    <FILE id="E133e6" name="DDSPSynth_rtwutil.cpp" compile="1" resource="0"
-          file="Source/codegen/DDSPSynth_rtwutil.cpp"/>
-    <FILE id="lo97wR" name="DDSPSynth_rtwutil.h" compile="0" resource="0"
-          file="Source/codegen/DDSPSynth_rtwutil.h"/>
-    <FILE id="It0xSJ" name="DDSPSynth_terminate.cpp" compile="1" resource="0"
+    <FILE id="ZG8l8a" name="DDSPSynth_terminate.cpp" compile="1" resource="0"
           file="Source/codegen/DDSPSynth_terminate.cpp"/>
-    <FILE id="WW1XIW" name="DDSPSynth_terminate.h" compile="0" resource="0"
+    <FILE id="HXsGrA" name="DDSPSynth_terminate.h" compile="0" resource="0"
           file="Source/codegen/DDSPSynth_terminate.h"/>
-    <FILE id="EFz320" name="DDSPSynth_types.h" compile="0" resource="0"
+    <FILE id="lIkbIz" name="DDSPSynth_types.h" compile="0" resource="0"
           file="Source/codegen/DDSPSynth_types.h"/>
-    <FILE id="XoQJPp" name="eml_rand_mt19937ar_stateful.cpp" compile="1"
+    <FILE id="RIo9dv" name="eml_rand_mt19937ar_stateful.cpp" compile="1"
           resource="0" file="Source/codegen/eml_rand_mt19937ar_stateful.cpp"/>
-    <FILE id="uLT8Iu" name="eml_rand_mt19937ar_stateful.h" compile="0"
+    <FILE id="yuoLWs" name="eml_rand_mt19937ar_stateful.h" compile="0"
           resource="0" file="Source/codegen/eml_rand_mt19937ar_stateful.h"/>
-    <FILE id="rR1sN4" name="fft.cpp" compile="1" resource="0" file="Source/codegen/fft.cpp"/>
-    <FILE id="rdxox5" name="fft.h" compile="0" resource="0" file="Source/codegen/fft.h"/>
-    <FILE id="I59ZDd" name="FFTImplementationCallback.cpp" compile="1"
-          resource="0" file="Source/codegen/FFTImplementationCallback.cpp"/>
-    <FILE id="jVlNq2" name="FFTImplementationCallback.h" compile="0" resource="0"
-          file="Source/codegen/FFTImplementationCallback.h"/>
-    <FILE id="z8uboL" name="gencoswin.cpp" compile="1" resource="0" file="Source/codegen/gencoswin.cpp"/>
-    <FILE id="s8BtKQ" name="gencoswin.h" compile="0" resource="0" file="Source/codegen/gencoswin.h"/>
-    <FILE id="dxAu7o" name="hann.cpp" compile="1" resource="0" file="Source/codegen/hann.cpp"/>
-    <FILE id="mLLiqA" name="hann.h" compile="0" resource="0" file="Source/codegen/hann.h"/>
-    <FILE id="twVlZ1" name="ifft.cpp" compile="1" resource="0" file="Source/codegen/ifft.cpp"/>
-    <FILE id="I1UPbA" name="ifft.h" compile="0" resource="0" file="Source/codegen/ifft.h"/>
-    <FILE id="KFQBhZ" name="irfft.cpp" compile="1" resource="0" file="Source/codegen/irfft.cpp"/>
-    <FILE id="nCwMOa" name="irfft.h" compile="0" resource="0" file="Source/codegen/irfft.h"/>
-    <FILE id="pcy8KY" name="rand.cpp" compile="1" resource="0" file="Source/codegen/rand.cpp"/>
-    <FILE id="sCsKMf" name="rand.h" compile="0" resource="0" file="Source/codegen/rand.h"/>
-    <FILE id="kM7zsP" name="rfft.cpp" compile="1" resource="0" file="Source/codegen/rfft.cpp"/>
-    <FILE id="J9LCHw" name="rfft.h" compile="0" resource="0" file="Source/codegen/rfft.h"/>
-    <FILE id="bbR70Y" name="rt_nonfinite.cpp" compile="1" resource="0"
+    <FILE id="MD8T6y" name="firls.cpp" compile="1" resource="0" file="Source/codegen/firls.cpp"/>
+    <FILE id="BPSi3q" name="firls.h" compile="0" resource="0" file="Source/codegen/firls.h"/>
+    <FILE id="ajkNgf" name="mldivide.cpp" compile="1" resource="0" file="Source/codegen/mldivide.cpp"/>
+    <FILE id="i1OimB" name="mldivide.h" compile="0" resource="0" file="Source/codegen/mldivide.h"/>
+    <FILE id="VqSetD" name="rand.cpp" compile="1" resource="0" file="Source/codegen/rand.cpp"/>
+    <FILE id="F5ARon" name="rand.h" compile="0" resource="0" file="Source/codegen/rand.h"/>
+    <FILE id="sCO0Fw" name="rt_nonfinite.cpp" compile="1" resource="0"
           file="Source/codegen/rt_nonfinite.cpp"/>
-    <FILE id="UF9cVb" name="rt_nonfinite.h" compile="0" resource="0" file="Source/codegen/rt_nonfinite.h"/>
-    <FILE id="lwAqTU" name="rtGetInf.cpp" compile="1" resource="0" file="Source/codegen/rtGetInf.cpp"/>
-    <FILE id="MLS85j" name="rtGetInf.h" compile="0" resource="0" file="Source/codegen/rtGetInf.h"/>
-    <FILE id="fMiyda" name="rtGetNaN.cpp" compile="1" resource="0" file="Source/codegen/rtGetNaN.cpp"/>
-    <FILE id="tKhIzJ" name="rtGetNaN.h" compile="0" resource="0" file="Source/codegen/rtGetNaN.h"/>
-    <FILE id="nQlW81" name="rtwtypes.h" compile="0" resource="0" file="Source/codegen/rtwtypes.h"/>
-    <FILE id="PtE8hW" name="subtractive.cpp" compile="1" resource="0" file="Source/codegen/subtractive.cpp"/>
-    <FILE id="B2y6Yu" name="subtractive.h" compile="0" resource="0" file="Source/codegen/subtractive.h"/>
+    <FILE id="P6hWEi" name="rt_nonfinite.h" compile="0" resource="0" file="Source/codegen/rt_nonfinite.h"/>
+    <FILE id="h17PQ5" name="rtGetInf.cpp" compile="1" resource="0" file="Source/codegen/rtGetInf.cpp"/>
+    <FILE id="O6aUJu" name="rtGetInf.h" compile="0" resource="0" file="Source/codegen/rtGetInf.h"/>
+    <FILE id="KYvycg" name="rtGetNaN.cpp" compile="1" resource="0" file="Source/codegen/rtGetNaN.cpp"/>
+    <FILE id="E3HeQC" name="rtGetNaN.h" compile="0" resource="0" file="Source/codegen/rtGetNaN.h"/>
+    <FILE id="Zn1ncd" name="rtwtypes.h" compile="0" resource="0" file="Source/codegen/rtwtypes.h"/>
+    <FILE id="SE90EJ" name="subtractive.cpp" compile="1" resource="0" file="Source/codegen/subtractive.cpp"/>
+    <FILE id="DG9dfG" name="subtractive.h" compile="0" resource="0" file="Source/codegen/subtractive.h"/>
     <FILE id="y9nzb8" name="tmwtypes.h" compile="0" resource="0" file="Source/codegen/tmwtypes.h"/>
-    <FILE id="jGPVxo" name="useConstantDim.cpp" compile="1" resource="0"
-          file="Source/codegen/useConstantDim.cpp"/>
-    <FILE id="Aig75u" name="useConstantDim.h" compile="0" resource="0"
-          file="Source/codegen/useConstantDim.h"/>
     <FILE id="y0tjIb" name="DDSPSound.h" compile="0" resource="0" file="Source/DDSPSound.h"/>
     <FILE id="MYkN1O" name="HarmonicEditor.cpp" compile="1" resource="0"
           file="Source/HarmonicEditor.cpp"/>

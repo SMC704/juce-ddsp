@@ -11,7 +11,6 @@
 #pragma once
 
 #include <JuceHeader.h>
-#include "codegen/additive.h"
 #include "DDSPSound.h"
 #include "HarmonicEditor.h"
 
@@ -39,8 +38,13 @@ public:
 private:
 	double phaseBuffer_in[50];
 	double phaseBuffer_out[50];
-	double amplitudes[1024];
-	double f0[1024];
-	double harmonics[1024 * 50];
-	double audioBuffer[1024];
+	double amplitudes[4096];
+	double f0[4096];
+	double harmonics[50];
+	double addBuffer[4096];
+	double subBuffer[4096];
+	double magnitudes[65];
+	double noise[4096+65];
+
+	juce::Random r;
 };

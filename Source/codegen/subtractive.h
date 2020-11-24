@@ -16,13 +16,11 @@
 #include <cstddef>
 #include <cstdlib>
 #include "rtwtypes.h"
-#include "omp.h"
 #include "DDSPSynth_types.h"
-#define MAX_THREADS                    omp_get_max_threads()
 
 // Function Declarations
-extern void subtractive(double n_samples, double window_size, const double
-  magnitudes[1024], coder::array<double, 2U> &out);
+extern void subtractive(double n_samples, double magnitudes[65], const double
+	b_signal[4161], double out[4096]);
 
 #endif
 
