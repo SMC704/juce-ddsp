@@ -54,7 +54,9 @@
     <GROUP id="{D8B71657-2B6B-68DF-F380-CA4760A753A4}" name="Resources">
       <FILE id="dB5v7w" name="background_texture.png" compile="0" resource="1"
             file="../../../Documents/AAU SMC/Semester 1/Foundations of SMC/GUI/background_texture.png"/>
-      <FILE id="WrE2yQ" name="background_texture_dark.png" compile="0" resource="1"
+      <FILE id="CTUhfN" name="background_texture_dark_headline.png" compile="0"
+            resource="1" file="Resources/background_texture_dark_headline.png"/>
+      <FILE id="XmRyh2" name="background_texture_dark.png" compile="0" resource="1"
             file="Resources/background_texture_dark.png"/>
     </GROUP>
   </MAINGROUP>

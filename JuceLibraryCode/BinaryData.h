@@ -11,11 +11,14 @@ namespace BinaryData
     extern const char*   background_texture_png;
     const int            background_texture_pngSize = 296713;
 
+    extern const char*   background_texture_dark_headline_png;
+    const int            background_texture_dark_headline_pngSize = 280033;
+
     extern const char*   background_texture_dark_png;
-    const int            background_texture_dark_pngSize = 199506;
+    const int            background_texture_dark_pngSize = 264393;
 
     // Number of elements in the namedResourceList and originalFileNames arrays.
-    const int namedResourceListSize = 2;
+    const int namedResourceListSize = 3;
 
     // Points to the start of a list of resource names.
     extern const char* namedResourceList[];
