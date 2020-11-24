@@ -42,7 +42,9 @@ private:
     // access the processor object that created it.
     DdspsynthAudioProcessor& audioProcessor;
     
-    juce::Image backgroundTexture = juce::ImageFileFormat::loadFrom(BinaryData::background_texture_dark_png, BinaryData::background_texture_dark_pngSize);
+    juce::Image backgroundTexture = juce::ImageFileFormat::
+        loadFrom(BinaryData::background_texture_dark_headline_png, 
+            BinaryData::background_texture_dark_headline_pngSize);
     
     MainComponent mainComponent;
     

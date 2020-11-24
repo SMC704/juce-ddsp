@@ -148,6 +148,8 @@
     <ClCompile Include="..\..\Source\ReverbComponent.cpp"/>
     <ClCompile Include="..\..\Source\SpectogramComponent.cpp"/>
     <ClCompile Include="..\..\Source\OutputComponent.cpp"/>
+    <ClCompile Include="..\..\Source\HarmonicEditor.cpp"/>
+    <ClCompile Include="..\..\Source\HarmonicSlider.cpp"/>
     <ClCompile Include="..\..\..\..\..\..\..\Documents\JUCE\juce-6.0.4-windows\JUCE\modules\juce_analytics\analytics\juce_Analytics.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -2171,6 +2173,8 @@
     <ClInclude Include="..\..\Source\ReverbComponent.h"/>
     <ClInclude Include="..\..\Source\SpectogramComponent.h"/>
     <ClInclude Include="..\..\Source\OutputComponent.h"/>
+    <ClInclude Include="..\..\Source\HarmonicEditor.h"/>
+    <ClInclude Include="..\..\Source\HarmonicSlider.h"/>
     <ClInclude Include="..\..\..\..\..\..\..\Documents\JUCE\juce-6.0.4-windows\JUCE\modules\juce_analytics\analytics\juce_Analytics.h"/>
     <ClInclude Include="..\..\..\..\..\..\..\Documents\JUCE\juce-6.0.4-windows\JUCE\modules\juce_analytics\analytics\juce_ButtonTracker.h"/>
     <ClInclude Include="..\..\..\..\..\..\..\Documents\JUCE\juce-6.0.4-windows\JUCE\modules\juce_analytics\destinations\juce_AnalyticsDestination.h"/>
@@ -2967,6 +2971,7 @@
     <None Include="..\..\Resources\trumpet.png"/>
     <None Include="..\..\Resources\violin.png"/>
     <None Include="..\..\Resources\background_texture.png"/>
+    <None Include="..\..\Resources\background_texture_dark_headline.png"/>
     <None Include="..\..\..\..\..\..\..\Documents\JUCE\juce-6.0.4-windows\JUCE\modules\juce_audio_devices\native\oboe\CMakeLists.txt"/>
     <None Include="..\..\..\..\..\..\..\Documents\JUCE\juce-6.0.4-windows\JUCE\modules\juce_audio_devices\native\oboe\readme.md"/>
     <None Include="..\..\..\..\..\..\..\Documents\JUCE\juce-6.0.4-windows\JUCE\modules\juce_audio_formats\codecs\flac\Flac Licence.txt"/>

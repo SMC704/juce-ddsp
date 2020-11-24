@@ -27,10 +27,17 @@ void SpectogramComponent::paint (juce::Graphics& g)
     g.setColour (juce::Colours::white);
     g.drawRect (getLocalBounds(), 3);   // draw an outline around the component
 
+    /*
     g.setColour (juce::Colours::white);
     g.setFont (14.0f);
     g.drawText ("Spectogram", getLocalBounds(),
                 juce::Justification::centred, true);   // draw some placeholder text
+                */
+
+    g.fillAll(juce::Colours::transparentBlack);
+
+    g.setOpacity(1.0f);
+    g.drawImage(spectrogramImage, getLocalBounds().toFloat());
 }
 
 void SpectogramComponent::resized()
@@ -41,12 +48,12 @@ void SpectogramComponent::drawNextLineOfSpectrogram(int fftSize, float* fftData,
 {
     auto rightHandEdge = spectrogramImage.getWidth() - 1;
     auto imageHeight   = spectrogramImage.getHeight();
-    
-    float extractedFftData [2 * fftSize];
+
+    juce::Array<float> extractedFftData = juce::Array<float>();
     
     for (int i = 0; i < (2 * fftSize - 1); ++i)
     {
-        extractedFftData[i] = *fftData;
+        extractedFftData.add(*fftData);
         fftData++;
     }
     
@@ -54,11 +61,11 @@ void SpectogramComponent::drawNextLineOfSpectrogram(int fftSize, float* fftData,
     spectrogramImage.moveImageSection (0, 0, 1, 0, rightHandEdge, imageHeight);
 
     // then render our FFT data..
-    forwardFFT.performFrequencyOnlyForwardTransform (extractedFftData);
+    forwardFFT.performFrequencyOnlyForwardTransform (extractedFftData.getRawDataPointer());
 
     // find the range of values produced, so we can scale our rendering to
     // show up the detail clearly
-    auto maxLevel = juce::FloatVectorOperations::findMinAndMax (extractedFftData, fftSize / 2);
+    auto maxLevel = juce::FloatVectorOperations::findMinAndMax (extractedFftData.getRawDataPointer(), fftSize / 2);
 
     for (auto y = 1; y < imageHeight; ++y)
     {

@@ -117,6 +117,14 @@
 			isa = PBXBuildFile;
 			fileRef = 1447D1548A04BFACEAA14C05;
 		};
+		9B0D41F4363D63851D8D4E2E = {
+			isa = PBXBuildFile;
+			fileRef = 9F8212DFC1785EC050F046EA;
+		};
+		D6F4E0D447044C22CCD22D5B = {
+			isa = PBXBuildFile;
+			fileRef = A3AC5E37EB93CF46290456F6;
+		};
 		FC2C0EEA2B3CDA2D9225D05D = {
 			isa = PBXBuildFile;
 			fileRef = 2EB8FDDF5116727A5656253D;
@@ -509,6 +517,34 @@
 			path = "../../JuceLibraryCode/include_juce_audio_plugin_client_Standalone.cpp";
 			sourceTree = "SOURCE_ROOT";
 		};
+		89B229C895AA000D0AD30B2E = {
+			isa = PBXFileReference;
+			lastKnownFileType = image.png;
+			name = "background_texture_dark.png";
+			path = "../../Resources/background_texture_dark.png";
+			sourceTree = "SOURCE_ROOT";
+		};
+		8C53939BC3315DB34C6770C0 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = HarmonicEditor.h;
+			path = ../../Source/HarmonicEditor.h;
+			sourceTree = "SOURCE_ROOT";
+		};
+		9051C0D8A2D5714838C9E822 = {
+			isa = PBXFileReference;
+			lastKnownFileType = image.png;
+			name = "background_texture_dark_headline.png";
+			path = "../../Resources/background_texture_dark_headline.png";
+			sourceTree = "SOURCE_ROOT";
+		};
+		90AA88C45ECFC21A62B4B8D3 = {
+			isa = PBXFileReference;
+			lastKnownFileType = image.png;
+			name = saxophone.png;
+			path = ../../Resources/saxophone.png;
+			sourceTree = "SOURCE_ROOT";
+		};
 		964FAA82ED145EFA03DD0181 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.objcpp;
@@ -600,18 +636,25 @@
 			path = DDSPSynth.component;
 			sourceTree = "BUILT_PRODUCTS_DIR";
 		};
-		89B229C895AA000D0AD30B2E = {
+		9F8212DFC1785EC050F046EA = {
 			isa = PBXFileReference;
-			lastKnownFileType = image.png;
-			name = "background_texture_dark.png";
-			path = "../../Resources/background_texture_dark.png";
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = HarmonicEditor.cpp;
+			path = ../../Source/HarmonicEditor.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
-		90AA88C45ECFC21A62B4B8D3 = {
+		A3AC5E37EB93CF46290456F6 = {
 			isa = PBXFileReference;
-			lastKnownFileType = image.png;
-			name = saxophone.png;
-			path = ../../Resources/saxophone.png;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = HarmonicSlider.cpp;
+			path = ../../Source/HarmonicSlider.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
+		A78FC3D46AE9A13864A0F6AE = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = HarmonicSlider.h;
+			path = ../../Source/HarmonicSlider.h;
 			sourceTree = "SOURCE_ROOT";
 		};
 		AF2197905DCDB3A4AFCE694F = {
@@ -835,6 +878,10 @@
 				7762A969C5AD95E70428F213,
 				1447D1548A04BFACEAA14C05,
 				0D12812DFB15CB5F979BDE93,
+				9F8212DFC1785EC050F046EA,
+				8C53939BC3315DB34C6770C0,
+				A3AC5E37EB93CF46290456F6,
+				A78FC3D46AE9A13864A0F6AE,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -849,6 +896,7 @@
 				3968DF538333723E0F34EF10,
 				CC35A78472D319CAE900CA76,
 				71A8CFDE912454C5F6130DAE,
+				9051C0D8A2D5714838C9E822,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -2298,6 +2346,8 @@
 				A9954B3B3D578F7DF20CF25D,
 				2C233771C311C9C7B30BF4C7,
 				21A30C859249F8B48DEFFC7F,
+				9B0D41F4363D63851D8D4E2E,
+				D6F4E0D447044C22CCD22D5B,
 				FC2C0EEA2B3CDA2D9225D05D,
 				BE7505DBC4D008418095E0C5,
 				B698C2772065C744B5ACD030,

@@ -496,6 +496,12 @@
     <ClCompile Include="..\..\Source\OutputComponent.cpp">
       <Filter>DDSPSynth\Source</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\HarmonicEditor.cpp">
+      <Filter>DDSPSynth\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\HarmonicSlider.cpp">
+      <Filter>DDSPSynth\Source</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\..\..\..\..\..\Documents\JUCE\juce-6.0.4-windows\JUCE\modules\juce_analytics\analytics\juce_Analytics.cpp">
       <Filter>JUCE Modules\juce_analytics\analytics</Filter>
     </ClCompile>
@@ -2686,6 +2692,12 @@
       <Filter>DDSPSynth\Source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\OutputComponent.h">
+      <Filter>DDSPSynth\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\HarmonicEditor.h">
+      <Filter>DDSPSynth\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\HarmonicSlider.h">
       <Filter>DDSPSynth\Source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\..\..\..\Documents\JUCE\juce-6.0.4-windows\JUCE\modules\juce_analytics\analytics\juce_Analytics.h">
@@ -5070,6 +5082,9 @@
       <Filter>DDSPSynth\Resources</Filter>
     </None>
     <None Include="..\..\Resources\background_texture.png">
+      <Filter>DDSPSynth\Resources</Filter>
+    </None>
+    <None Include="..\..\Resources\background_texture_dark_headline.png">
       <Filter>DDSPSynth\Resources</Filter>
     </None>
     <None Include="..\..\..\..\..\..\..\Documents\JUCE\juce-6.0.4-windows\JUCE\modules\juce_audio_devices\native\oboe\CMakeLists.txt">

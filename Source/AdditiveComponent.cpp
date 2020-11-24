@@ -165,7 +165,11 @@ void AdditiveComponent::resized()
             .withMargin(juce::GridItem::Margin::Margin(0, -20.0f, 0, 0))
             .withArea(5, 2),
 
-        //juce::GridItem (ampSlider).withArea(6, 10, 9, 12)
+        juce::GridItem(harmonicEditor).withSize(360.0f, 130.0f)
+            .withAlignSelf(juce::GridItem::AlignSelf::start)
+            .withJustifySelf(juce::GridItem::JustifySelf::start)
+            .withMargin(juce::GridItem::Margin::Margin(50.0f, 30.0f, 30.0f, 30.0f))
+            .withArea(1, 1),
     };
 
     grid.performLayout (getLocalBounds());
