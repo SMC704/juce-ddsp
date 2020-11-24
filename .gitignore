@@ -18,6 +18,9 @@
 *.opensdf
 *.VC.db
 *.VC.opendb
+*.xcodeproj
+*.vcxproj
+*.vcxproj.filters
 xcuserdata
 *.xccheckout
 *.xcscmblueprint
