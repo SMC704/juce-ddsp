@@ -44,14 +44,6 @@
     <FILE id="DG9dfG" name="subtractive.h" compile="0" resource="0" file="Source/codegen/subtractive.h"/>
     <FILE id="y9nzb8" name="tmwtypes.h" compile="0" resource="0" file="Source/codegen/tmwtypes.h"/>
     <FILE id="y0tjIb" name="DDSPSound.h" compile="0" resource="0" file="Source/DDSPSound.h"/>
-    <FILE id="MYkN1O" name="HarmonicEditor.cpp" compile="1" resource="0"
-          file="Source/HarmonicEditor.cpp"/>
-    <FILE id="yAqAFC" name="HarmonicEditor.h" compile="0" resource="0"
-          file="Source/HarmonicEditor.h"/>
-    <FILE id="YS49f7" name="HarmonicSlider.cpp" compile="1" resource="0"
-          file="Source/HarmonicSlider.cpp"/>
-    <FILE id="d3fPmP" name="HarmonicSlider.h" compile="0" resource="0"
-          file="Source/HarmonicSlider.h"/>
     <FILE id="ai2xbW" name="DDSPVoice.cpp" compile="1" resource="0" file="Source/DDSPVoice.cpp"/>
     <FILE id="JT1ych" name="DDSPVoice.h" compile="0" resource="0" file="Source/DDSPVoice.h"/>
     <GROUP id="{21B404C6-B1A3-96E0-24F7-18E3D850093A}" name="Source">

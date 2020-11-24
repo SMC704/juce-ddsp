@@ -12,7 +12,7 @@
 #include "HarmonicEditor.h"
 
 //==============================================================================
-DdspsynthAudioProcessor::DdspsynthAudioProcessor()
+DdspsynthAudioProcessor::DdspsynthAudioProcessor() : forwardFFT(fftOrder)
 #ifndef JucePlugin_PreferredChannelConfigurations
      : AudioProcessor (BusesProperties()
                      #if ! JucePlugin_IsMidiEffect
@@ -22,7 +22,7 @@ DdspsynthAudioProcessor::DdspsynthAudioProcessor()
                        .withOutput ("Output", juce::AudioChannelSet::stereo(), true)
                      #endif
                        ),
-    forwardFFT (fftOrder)
+    
 #endif
 {
 	synth.addVoice(&voice);
@@ -138,6 +138,9 @@ bool DdspsynthAudioProcessor::isBusesLayoutSupported (const BusesLayout& layouts
 void DdspsynthAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce::MidiBuffer& midiMessages)
 {
 	synth.renderNextBlock(buffer, midiMessages, 0, buffer.getNumSamples());
+	for (int i = 0; i < buffer.getNumSamples(); i++) {
+		this->pushNextSampleIntoFifo(*(buffer.getReadPointer(0, i)));
+	}
 }
 
 //==============================================================================

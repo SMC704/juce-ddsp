@@ -149,8 +149,6 @@
     <ClCompile Include="..\..\Source\codegen\rtGetInf.cpp"/>
     <ClCompile Include="..\..\Source\codegen\rtGetNaN.cpp"/>
     <ClCompile Include="..\..\Source\codegen\subtractive.cpp"/>
-    <ClCompile Include="..\..\Source\HarmonicEditor.cpp"/>
-    <ClCompile Include="..\..\Source\HarmonicSlider.cpp"/>
     <ClCompile Include="..\..\Source\DDSPVoice.cpp"/>
     <ClCompile Include="..\..\Source\PluginProcessor.cpp"/>
     <ClCompile Include="..\..\Source\PluginEditor.cpp"/>
@@ -158,10 +156,13 @@
     <ClCompile Include="..\..\Source\InputComponent.cpp"/>
     <ClCompile Include="..\..\Source\ModelComponent.cpp"/>
     <ClCompile Include="..\..\Source\AdditiveComponent.cpp"/>
+    <ClCompile Include="..\..\Source\CustomLookAndFeel.cpp"/>
     <ClCompile Include="..\..\Source\SubtractiveComponent.cpp"/>
     <ClCompile Include="..\..\Source\ReverbComponent.cpp"/>
     <ClCompile Include="..\..\Source\SpectogramComponent.cpp"/>
     <ClCompile Include="..\..\Source\OutputComponent.cpp"/>
+    <ClCompile Include="..\..\Source\HarmonicEditor.cpp"/>
+    <ClCompile Include="..\..\Source\HarmonicSlider.cpp"/>
     <ClCompile Include="..\..\..\..\..\..\..\..\JUCE\modules\juce_analytics\analytics\juce_Analytics.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -2191,19 +2192,20 @@
     <ClInclude Include="..\..\Source\codegen\subtractive.h"/>
     <ClInclude Include="..\..\Source\codegen\tmwtypes.h"/>
     <ClInclude Include="..\..\Source\DDSPSound.h"/>
-    <ClInclude Include="..\..\Source\HarmonicEditor.h"/>
-    <ClInclude Include="..\..\Source\HarmonicSlider.h"/>
     <ClInclude Include="..\..\Source\DDSPVoice.h"/>
     <ClInclude Include="..\..\Source\PluginProcessor.h"/>
     <ClInclude Include="..\..\Source\PluginEditor.h"/>
     <ClInclude Include="..\..\Source\MainComponent.h"/>
     <ClInclude Include="..\..\Source\InputComponent.h"/>
     <ClInclude Include="..\..\Source\ModelComponent.h"/>
+    <ClInclude Include="..\..\Source\CustomLookAndFeel.h"/>
     <ClInclude Include="..\..\Source\AdditiveComponent.h"/>
     <ClInclude Include="..\..\Source\SubtractiveComponent.h"/>
     <ClInclude Include="..\..\Source\ReverbComponent.h"/>
     <ClInclude Include="..\..\Source\SpectogramComponent.h"/>
     <ClInclude Include="..\..\Source\OutputComponent.h"/>
+    <ClInclude Include="..\..\Source\HarmonicEditor.h"/>
+    <ClInclude Include="..\..\Source\HarmonicSlider.h"/>
     <ClInclude Include="..\..\..\..\..\..\..\..\JUCE\modules\juce_analytics\analytics\juce_Analytics.h"/>
     <ClInclude Include="..\..\..\..\..\..\..\..\JUCE\modules\juce_analytics\analytics\juce_ButtonTracker.h"/>
     <ClInclude Include="..\..\..\..\..\..\..\..\JUCE\modules\juce_analytics\destinations\juce_AnalyticsDestination.h"/>
@@ -2993,7 +2995,14 @@
     <ClInclude Include="..\..\JuceLibraryCode\JucePluginDefines.h"/>
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\Resources\background_texture_dark.png"/>
+    <None Include="..\..\Resources\flute.png"/>
+    <None Include="..\..\Resources\placeholder.png"/>
+    <None Include="..\..\Resources\saxophone.png"/>
+    <None Include="..\..\Resources\trumpet.png"/>
+    <None Include="..\..\Resources\violin.png"/>
     <None Include="..\..\Resources\background_texture.png"/>
+    <None Include="..\..\Resources\background_texture_dark_headline.png"/>
     <None Include="..\..\..\..\..\..\..\..\JUCE\modules\juce_audio_devices\native\oboe\CMakeLists.txt"/>
     <None Include="..\..\..\..\..\..\..\..\JUCE\modules\juce_audio_devices\native\oboe\readme.md"/>
     <None Include="..\..\..\..\..\..\..\..\JUCE\modules\juce_audio_formats\codecs\flac\Flac Licence.txt"/>

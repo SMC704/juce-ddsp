@@ -121,14 +121,6 @@
 			isa = PBXBuildFile;
 			fileRef = B39A4D8A206AFCD2306D4A87;
 		};
-		9B0D41F4363D63851D8D4E2E = {
-			isa = PBXBuildFile;
-			fileRef = 9F8212DFC1785EC050F046EA;
-		};
-		D6F4E0D447044C22CCD22D5B = {
-			isa = PBXBuildFile;
-			fileRef = A3AC5E37EB93CF46290456F6;
-		};
 		F6E4E87E92440B4455478A78 = {
 			isa = PBXBuildFile;
 			fileRef = 88D0D1ACE79B89DD47924301;
@@ -542,6 +534,13 @@
 			path = "~/JUCE/modules/juce_gui_basics";
 			sourceTree = "<absolute>";
 		};
+		54F869B030B8ECCE8139113F = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = CustomLookAndFeel.h;
+			path = ../../Source/CustomLookAndFeel.h;
+			sourceTree = "SOURCE_ROOT";
+		};
 		570A8DCEEF2D7B91BA74104E = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
@@ -689,6 +688,13 @@
 			path = ../../Source/DDSPVoice.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
+		89B229C895AA000D0AD30B2E = {
+			isa = PBXFileReference;
+			lastKnownFileType = image.png;
+			name = "background_texture_dark.png";
+			path = "../../Resources/background_texture_dark.png";
+			sourceTree = "SOURCE_ROOT";
+		};
 		8B37CB8D805DC75320F833C2 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
@@ -701,6 +707,20 @@
 			lastKnownFileType = sourcecode.c.h;
 			name = HarmonicEditor.h;
 			path = ../../Source/HarmonicEditor.h;
+			sourceTree = "SOURCE_ROOT";
+		};
+		9051C0D8A2D5714838C9E822 = {
+			isa = PBXFileReference;
+			lastKnownFileType = image.png;
+			name = "background_texture_dark_headline.png";
+			path = "../../Resources/background_texture_dark_headline.png";
+			sourceTree = "SOURCE_ROOT";
+		};
+		90AA88C45ECFC21A62B4B8D3 = {
+			isa = PBXFileReference;
+			lastKnownFileType = image.png;
+			name = saxophone.png;
+			path = ../../Resources/saxophone.png;
 			sourceTree = "SOURCE_ROOT";
 		};
 		964FAA82ED145EFA03DD0181 = {
@@ -773,11 +793,11 @@
 			path = "../../JuceLibraryCode/include_juce_gui_extra.mm";
 			sourceTree = "SOURCE_ROOT";
 		};
-		AFC8648A4D3DAFD623A7CB6C = {
+		B96F8EF8E2ED25F5B2CA1DBB = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
-			name = JuceHeader.h;
-			path = ../../JuceLibraryCode/JuceHeader.h;
+			name = PluginProcessor.h;
+			path = ../../Source/PluginProcessor.h;
 			sourceTree = "SOURCE_ROOT";
 		};
 		BCF42E417843AECD28CB2608 = {
@@ -836,6 +856,20 @@
 			path = "../../JuceLibraryCode/include_juce_graphics.mm";
 			sourceTree = "SOURCE_ROOT";
 		};
+		AF2197905DCDB3A4AFCE694F = {
+			isa = PBXFileReference;
+			lastKnownFileType = file;
+			name = "juce_audio_formats";
+			path = "~/JUCE/modules/juce_audio_formats";
+			sourceTree = "<absolute>";
+		};
+		AFC8648A4D3DAFD623A7CB6C = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = JuceHeader.h;
+			path = ../../JuceLibraryCode/JuceHeader.h;
+			sourceTree = "SOURCE_ROOT";
+		};
 		B2A389A03B9C47B9F7F72EB0 = {
 			isa = PBXFileReference;
 			lastKnownFileType = file;
@@ -857,69 +891,6 @@
 			path = ../../Source/AdditiveComponent.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
-		B96F8EF8E2ED25F5B2CA1DBB = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.c.h;
-			name = PluginProcessor.h;
-			path = ../../Source/PluginProcessor.h;
-			sourceTree = "SOURCE_ROOT";
-		};
-		BD7066BBF54A3F71D857DE13 = {
-			isa = PBXFileReference;
-			lastKnownFileType = wrapper.framework;
-			name = CoreMIDI.framework;
-			path = System/Library/Frameworks/CoreMIDI.framework;
-			sourceTree = SDKROOT;
-		};
-		CAA98A61DB8854E7A231643A = {
-			isa = PBXFileReference;
-			explicitFileType = wrapper.cfbundle;
-			includeInIndex = 0;
-			path = DDSPSynth.vst3;
-			sourceTree = "BUILT_PRODUCTS_DIR";
-		};
-		5727B81F80559538636720C7 = {
-			isa = PBXFileReference;
-			explicitFileType = wrapper.cfbundle;
-			includeInIndex = 0;
-			path = DDSPSynth.component;
-			sourceTree = "BUILT_PRODUCTS_DIR";
-		};
-		9F8212DFC1785EC050F046EA = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.cpp.cpp;
-			name = HarmonicEditor.cpp;
-			path = ../../Source/HarmonicEditor.cpp;
-			sourceTree = "SOURCE_ROOT";
-		};
-		A3AC5E37EB93CF46290456F6 = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.cpp.cpp;
-			name = HarmonicSlider.cpp;
-			path = ../../Source/HarmonicSlider.cpp;
-			sourceTree = "SOURCE_ROOT";
-		};
-		A78FC3D46AE9A13864A0F6AE = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.c.h;
-			name = HarmonicSlider.h;
-			path = ../../Source/HarmonicSlider.h;
-			sourceTree = "SOURCE_ROOT";
-		};
-		AF2197905DCDB3A4AFCE694F = {
-			isa = PBXFileReference;
-			lastKnownFileType = file;
-			name = "juce_audio_formats";
-			path = "~/JUCE/modules/juce_audio_formats";
-			sourceTree = "<absolute>";
-		};
-		B2A389A03B9C47B9F7F72EB0 = {
-			isa = PBXFileReference;
-			lastKnownFileType = file;
-			name = "juce_audio_processors";
-			path = "~/JUCE/modules/juce_audio_processors";
-			sourceTree = "<absolute>";
-		};
 		B8B8C35E4A771AAB91B39BF3 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.objcpp;
@@ -939,6 +910,13 @@
 			lastKnownFileType = sourcecode.cpp.objcpp;
 			name = "include_juce_audio_processors.mm";
 			path = "../../JuceLibraryCode/include_juce_audio_processors.mm";
+			sourceTree = "SOURCE_ROOT";
+		};
+		C072B0473E33EEEA8F61DBC2 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = additive.h;
+			path = ../../Source/codegen/additive.h;
 			sourceTree = "SOURCE_ROOT";
 		};
 		C47BDBA6786CD5CD96223481 = {
@@ -967,6 +945,20 @@
 			lastKnownFileType = sourcecode.c.h;
 			name = InputComponent.h;
 			path = ../../Source/InputComponent.h;
+			sourceTree = "SOURCE_ROOT";
+		};
+		C9D9DDE6877E63A09451A6EE = {
+			isa = PBXFileReference;
+			lastKnownFileType = image.png;
+			name = flute.png;
+			path = ../../Resources/flute.png;
+			sourceTree = "SOURCE_ROOT";
+		};
+		CC35A78472D319CAE900CA76 = {
+			isa = PBXFileReference;
+			lastKnownFileType = image.png;
+			name = violin.png;
+			path = ../../Resources/violin.png;
 			sourceTree = "SOURCE_ROOT";
 		};
 		D024FD2E53193FD86A7911E8 = {
@@ -1166,7 +1158,14 @@
 		C46D5F697253CB3A0BB0B3F3 = {
 			isa = PBXGroup;
 			children = (
+				89B229C895AA000D0AD30B2E,
+				C9D9DDE6877E63A09451A6EE,
+				7FDF825F0BCBE7263891759B,
+				90AA88C45ECFC21A62B4B8D3,
+				3968DF538333723E0F34EF10,
+				CC35A78472D319CAE900CA76,
 				71A8CFDE912454C5F6130DAE,
+				9051C0D8A2D5714838C9E822,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -1203,10 +1202,6 @@
 				0C75222C75554E6A4E6ECB11,
 				02050B99AD5AB3FA8A19EA58,
 				570A8DCEEF2D7B91BA74104E,
-				9F8212DFC1785EC050F046EA,
-				8C53939BC3315DB34C6770C0,
-				A3AC5E37EB93CF46290456F6,
-				A78FC3D46AE9A13864A0F6AE,
 				88D0D1ACE79B89DD47924301,
 				F912D7445EAA0CA00AD6C7EC,
 				D8FB82E6BB980FE8454CA0D7,
@@ -2676,8 +2671,6 @@
 				C5CFAA6EA517C5AFA44A89D5,
 				F6836B987B7C8F2D36E6037B,
 				767EB6AC7BFAED6DB1025D1C,
-				9B0D41F4363D63851D8D4E2E,
-				D6F4E0D447044C22CCD22D5B,
 				F6E4E87E92440B4455478A78,
 				F6982829FDF604039CE59B27,
 				3610F5339822ADC0C99FB809,

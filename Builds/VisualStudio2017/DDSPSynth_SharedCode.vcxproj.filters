@@ -499,12 +499,6 @@
     <ClCompile Include="..\..\Source\codegen\subtractive.cpp">
       <Filter>DDSPSynth</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\HarmonicEditor.cpp">
-      <Filter>DDSPSynth</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\HarmonicSlider.cpp">
-      <Filter>DDSPSynth</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Source\DDSPVoice.cpp">
       <Filter>DDSPSynth</Filter>
     </ClCompile>
@@ -526,6 +520,9 @@
     <ClCompile Include="..\..\Source\AdditiveComponent.cpp">
       <Filter>DDSPSynth\Source</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\CustomLookAndFeel.cpp">
+      <Filter>DDSPSynth\Source</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\SubtractiveComponent.cpp">
       <Filter>DDSPSynth\Source</Filter>
     </ClCompile>
@@ -536,6 +533,12 @@
       <Filter>DDSPSynth\Source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\OutputComponent.cpp">
+      <Filter>DDSPSynth\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\HarmonicEditor.cpp">
+      <Filter>DDSPSynth\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\HarmonicSlider.cpp">
       <Filter>DDSPSynth\Source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\..\..\..\..\JUCE\modules\juce_analytics\analytics\juce_Analytics.cpp">
@@ -2748,12 +2751,6 @@
     <ClInclude Include="..\..\Source\DDSPSound.h">
       <Filter>DDSPSynth</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\HarmonicEditor.h">
-      <Filter>DDSPSynth</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\HarmonicSlider.h">
-      <Filter>DDSPSynth</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Source\DDSPVoice.h">
       <Filter>DDSPSynth</Filter>
     </ClInclude>
@@ -2772,6 +2769,9 @@
     <ClInclude Include="..\..\Source\ModelComponent.h">
       <Filter>DDSPSynth\Source</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Source\CustomLookAndFeel.h">
+      <Filter>DDSPSynth\Source</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\AdditiveComponent.h">
       <Filter>DDSPSynth\Source</Filter>
     </ClInclude>
@@ -2785,6 +2785,12 @@
       <Filter>DDSPSynth\Source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\OutputComponent.h">
+      <Filter>DDSPSynth\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\HarmonicEditor.h">
+      <Filter>DDSPSynth\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\HarmonicSlider.h">
       <Filter>DDSPSynth\Source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\..\..\..\..\JUCE\modules\juce_analytics\analytics\juce_Analytics.h">
@@ -5150,7 +5156,28 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\Resources\background_texture_dark.png">
+      <Filter>DDSPSynth\Resources</Filter>
+    </None>
+    <None Include="..\..\Resources\flute.png">
+      <Filter>DDSPSynth\Resources</Filter>
+    </None>
+    <None Include="..\..\Resources\placeholder.png">
+      <Filter>DDSPSynth\Resources</Filter>
+    </None>
+    <None Include="..\..\Resources\saxophone.png">
+      <Filter>DDSPSynth\Resources</Filter>
+    </None>
+    <None Include="..\..\Resources\trumpet.png">
+      <Filter>DDSPSynth\Resources</Filter>
+    </None>
+    <None Include="..\..\Resources\violin.png">
+      <Filter>DDSPSynth\Resources</Filter>
+    </None>
     <None Include="..\..\Resources\background_texture.png">
+      <Filter>DDSPSynth\Resources</Filter>
+    </None>
+    <None Include="..\..\Resources\background_texture_dark_headline.png">
       <Filter>DDSPSynth\Resources</Filter>
     </None>
     <None Include="..\..\..\..\..\..\..\..\JUCE\modules\juce_audio_devices\native\oboe\CMakeLists.txt">
