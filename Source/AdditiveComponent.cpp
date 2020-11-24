@@ -29,6 +29,9 @@ AdditiveComponent::AdditiveComponent()
     nameLabel.setText("Additive", juce::NotificationType::dontSendNotification);
     nameLabel.setFont(20.0f);
 
+    addAndMakeVisible(harmonicEditor);
+    harmonicEditor.setBounds(0, 0, 100, 100);
+    
     shiftSlider.setSliderStyle(juce::Slider::SliderStyle::RotaryHorizontalVerticalDrag);
     shiftSlider.setTextBoxStyle(juce::Slider::NoTextBox, true, 0, 0);
     shiftSlider.setPopupDisplayEnabled(true, true, this);

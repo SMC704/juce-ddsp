@@ -76,3 +76,10 @@ void MainComponent::resized()
     
     grid.performLayout (getLocalBounds());
 }
+
+//==============================================================================
+// Spectrogram methods
+void MainComponent::drawNextLineOfSpectrogram(int fftSize, float* fftData, juce::dsp::FFT& forwardFFT, int fftOrder)
+{
+    spectogramComponent.drawNextLineOfSpectrogram(fftSize, fftData, forwardFFT, fftOrder);
+}

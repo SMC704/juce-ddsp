@@ -46,6 +46,14 @@
             file="Source/OutputComponent.cpp"/>
       <FILE id="KKz0y1" name="OutputComponent.h" compile="0" resource="0"
             file="Source/OutputComponent.h"/>
+      <FILE id="gAk87t" name="HarmonicEditor.cpp" compile="1" resource="0"
+            file="Source/HarmonicEditor.cpp"/>
+      <FILE id="XzG1Y9" name="HarmonicEditor.h" compile="0" resource="0"
+            file="Source/HarmonicEditor.h"/>
+      <FILE id="IvGhuu" name="HarmonicSlider.cpp" compile="1" resource="0"
+            file="Source/HarmonicSlider.cpp"/>
+      <FILE id="w8qR97" name="HarmonicSlider.h" compile="0" resource="0"
+            file="Source/HarmonicSlider.h"/>
     </GROUP>
     <GROUP id="{D8B71657-2B6B-68DF-F380-CA4760A753A4}" name="Resources">
       <FILE id="T8UIeB" name="background_texture_dark.png" compile="0" resource="1"
@@ -61,7 +69,7 @@
   </MAINGROUP>
   <JUCEOPTIONS JUCE_STRICT_REFCOUNTEDPOINTER="1" JUCE_VST3_CAN_REPLACE_VST2="0"/>
   <EXPORTFORMATS>
-    <XCODE_MAC targetFolder="Builds/MacOSX">
+    <XCODE_MAC targetFolder="Builds/MacOSX" microphonePermissionNeeded="1">
       <CONFIGURATIONS>
         <CONFIGURATION isDebug="1" name="Debug" targetName="DDSPSynth"/>
         <CONFIGURATION isDebug="0" name="Release" targetName="DDSPSynth"/>

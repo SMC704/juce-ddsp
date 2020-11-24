@@ -1,8 +1,8 @@
 /*
   ==============================================================================
 
-    SpectogramComponent.h
-    Created: 7 Nov 2020 2:10:03am
+    HarmonicSlider.h
+    Created: 10 Nov 2020 4:48:26pm
     Author:  Robin Otterbein
 
   ==============================================================================
@@ -15,20 +15,24 @@
 //==============================================================================
 /*
 */
-class SpectogramComponent  : public juce::Component
+class HarmonicSlider  : public juce::Component
 {
 public:
-    SpectogramComponent();
-    ~SpectogramComponent() override;
+    HarmonicSlider();
+    ~HarmonicSlider() override;
 
     void paint (juce::Graphics&) override;
     void resized() override;
-    
-    void drawNextLineOfSpectrogram(int fftSize, float* fftData, juce::dsp::FFT& forwardFFT, int fftOrder);
+
+    void setValue(float);
 
 private:
+    bool isEntered;
+    bool isDown;
     
-    juce::Image spectrogramImage;
+    juce::Colour colour;
+    juce::Rectangle<int> rectangle;
+    float value;
     
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (SpectogramComponent)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (HarmonicSlider)
 };

@@ -18,6 +18,7 @@ DdspsynthAudioProcessorEditor::DdspsynthAudioProcessorEditor (DdspsynthAudioProc
     backgroundTexture = backgroundTexture.rescaled(900, 600);
     addAndMakeVisible(mainComponent);
     mainComponent.setBounds(20, 20, 860, 560);
+    startTimerHz (60);
     setSize (900, 600);
     
     mainComponent.setLookAndFeel(&otherLookAndFeel);
@@ -39,4 +40,18 @@ void DdspsynthAudioProcessorEditor::paint (juce::Graphics& g)
 void DdspsynthAudioProcessorEditor::resized()
 {
     
+}
+
+//===============================================================================
+// Spectrogram methods
+void DdspsynthAudioProcessorEditor::timerCallback()
+{
+    if (audioProcessor.getNextFFTBlockReady())
+    {
+        mainComponent.drawNextLineOfSpectrogram(audioProcessor.getFftSize(),
+                                                audioProcessor.getFftData(),
+                                                *audioProcessor.getForwardFFT(),
+                                                audioProcessor.getFftOrder());
+        audioProcessor.setNextFFTBlockReady(false);
+    }
 }

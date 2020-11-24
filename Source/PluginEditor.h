@@ -22,8 +22,9 @@
 
 
 //==============================================================================
-
-class DdspsynthAudioProcessorEditor  : public juce::AudioProcessorEditor
+/**
+*/
+class DdspsynthAudioProcessorEditor  : public juce::AudioProcessorEditor, private juce::Timer
 {
 public:
     DdspsynthAudioProcessorEditor (DdspsynthAudioProcessor&);
@@ -32,6 +33,9 @@ public:
     //==============================================================================
     void paint (juce::Graphics&) override;
     void resized() override;
+    
+    //==============================================================================
+    void timerCallback() override;
 
 private:
     // This reference is provided as a quick way for your editor to

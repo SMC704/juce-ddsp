@@ -11,7 +11,7 @@
 #pragma once
 
 #include <JuceHeader.h>
-using namespace juce;
+#include "HarmonicEditor.h"
 
 //==============================================================================
 /*
@@ -31,6 +31,8 @@ private:
     juce::ToggleButton onoffButton;
     juce::Label nameLabel;
     juce::Label onoffLabel;
+    HarmonicEditor harmonicEditor;
+    
     juce::Slider shiftSlider;
     juce::Label shiftLabel;
     juce::Slider stretchSlider;
