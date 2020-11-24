@@ -11,10 +11,12 @@
 #pragma once
 
 #include <JuceHeader.h>
+using namespace juce;
 
 //==============================================================================
 /*
 */
+
 class AdditiveComponent  : public juce::Component
 {
 public:

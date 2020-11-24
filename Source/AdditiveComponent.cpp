@@ -31,6 +31,8 @@ AdditiveComponent::AdditiveComponent()
 
     shiftSlider.setSliderStyle(juce::Slider::SliderStyle::RotaryHorizontalVerticalDrag);
     shiftSlider.setTextBoxStyle(juce::Slider::NoTextBox, true, 0, 0);
+    shiftSlider.setPopupDisplayEnabled(true, true, this);
+    shiftSlider.setTextValueSuffix (" Hz or whatever");
     shiftSlider.setRange(0.0f, 10.0f, 0.1f);
     shiftSlider.setValue(5.0f);
     addAndMakeVisible(shiftSlider);
@@ -44,6 +46,8 @@ AdditiveComponent::AdditiveComponent()
 
     stretchSlider.setSliderStyle(juce::Slider::SliderStyle::RotaryHorizontalVerticalDrag);
     stretchSlider.setTextBoxStyle(juce::Slider::NoTextBox, true, 0, 0);
+    stretchSlider.setPopupDisplayEnabled(true, true, this);
+    stretchSlider.setTextValueSuffix (" Hz or whatever");
     stretchSlider.setRange(0.0f, 10.0f, 0.1f);
     stretchSlider.setValue(5.0f);
     addAndMakeVisible(stretchSlider);
@@ -57,6 +61,8 @@ AdditiveComponent::AdditiveComponent()
  
     ampSlider.setSliderStyle(juce::Slider::SliderStyle::RotaryHorizontalVerticalDrag);
     ampSlider.setTextBoxStyle(juce::Slider::NoTextBox, true, 0, 0);
+    ampSlider.setPopupDisplayEnabled(true, true, this);
+    ampSlider.setTextValueSuffix (" Hz or whatever");
     ampSlider.setRange(0.0f, 10.0f, 0.1f);
     ampSlider.setValue(5.0f);
     addAndMakeVisible(ampSlider);
@@ -160,4 +166,5 @@ void AdditiveComponent::resized()
     };
 
     grid.performLayout (getLocalBounds());
+    
 }

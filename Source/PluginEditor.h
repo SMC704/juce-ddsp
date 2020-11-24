@@ -18,10 +18,11 @@
 #include "SpectogramComponent.h"
 #include "OutputComponent.h"
 #include "MainComponent.h"
+#include "CustomLookAndFeel.h"
+
 
 //==============================================================================
-/**
-*/
+
 class DdspsynthAudioProcessorEditor  : public juce::AudioProcessorEditor
 {
 public:
@@ -40,6 +41,8 @@ private:
     juce::Image backgroundTexture = juce::ImageFileFormat::loadFrom(BinaryData::background_texture_dark_png, BinaryData::background_texture_dark_pngSize);
     
     MainComponent mainComponent;
-
+    
+    OtherLookAndFeel otherLookAndFeel;
+    
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (DdspsynthAudioProcessorEditor)
 };

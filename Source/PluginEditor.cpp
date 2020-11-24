@@ -13,10 +13,14 @@
 DdspsynthAudioProcessorEditor::DdspsynthAudioProcessorEditor (DdspsynthAudioProcessor& p)
     : AudioProcessorEditor (&p), audioProcessor (p)
 {
+    LookAndFeel::getDefaultLookAndFeel().setDefaultSansSerifTypefaceName("Avenir Next");
+
     backgroundTexture = backgroundTexture.rescaled(900, 600);
     addAndMakeVisible(mainComponent);
     mainComponent.setBounds(20, 20, 860, 560);
     setSize (900, 600);
+    
+    mainComponent.setLookAndFeel(&otherLookAndFeel);
 }
 
 DdspsynthAudioProcessorEditor::~DdspsynthAudioProcessorEditor()
