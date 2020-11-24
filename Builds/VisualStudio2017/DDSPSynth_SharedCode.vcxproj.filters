@@ -472,37 +472,19 @@
     <ClCompile Include="..\..\Source\codegen\DDSPSynth_initialize.cpp">
       <Filter>DDSPSynth</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\codegen\DDSPSynth_rtwutil.cpp">
-      <Filter>DDSPSynth</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Source\codegen\DDSPSynth_terminate.cpp">
       <Filter>DDSPSynth</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\codegen\eml_rand_mt19937ar_stateful.cpp">
       <Filter>DDSPSynth</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\codegen\fft.cpp">
+    <ClCompile Include="..\..\Source\codegen\firls.cpp">
       <Filter>DDSPSynth</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\codegen\FFTImplementationCallback.cpp">
-      <Filter>DDSPSynth</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\codegen\gencoswin.cpp">
-      <Filter>DDSPSynth</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\codegen\hann.cpp">
-      <Filter>DDSPSynth</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\codegen\ifft.cpp">
-      <Filter>DDSPSynth</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\codegen\irfft.cpp">
+    <ClCompile Include="..\..\Source\codegen\mldivide.cpp">
       <Filter>DDSPSynth</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\codegen\rand.cpp">
-      <Filter>DDSPSynth</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\codegen\rfft.cpp">
       <Filter>DDSPSynth</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\codegen\rt_nonfinite.cpp">
@@ -515,9 +497,6 @@
       <Filter>DDSPSynth</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\codegen\subtractive.cpp">
-      <Filter>DDSPSynth</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\codegen\useConstantDim.cpp">
       <Filter>DDSPSynth</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\HarmonicEditor.cpp">
@@ -2730,9 +2709,6 @@
     <ClInclude Include="..\..\Source\codegen\DDSPSynth_initialize.h">
       <Filter>DDSPSynth</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\codegen\DDSPSynth_rtwutil.h">
-      <Filter>DDSPSynth</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Source\codegen\DDSPSynth_terminate.h">
       <Filter>DDSPSynth</Filter>
     </ClInclude>
@@ -2742,28 +2718,13 @@
     <ClInclude Include="..\..\Source\codegen\eml_rand_mt19937ar_stateful.h">
       <Filter>DDSPSynth</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\codegen\fft.h">
+    <ClInclude Include="..\..\Source\codegen\firls.h">
       <Filter>DDSPSynth</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\codegen\FFTImplementationCallback.h">
-      <Filter>DDSPSynth</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\codegen\gencoswin.h">
-      <Filter>DDSPSynth</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\codegen\hann.h">
-      <Filter>DDSPSynth</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\codegen\ifft.h">
-      <Filter>DDSPSynth</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\codegen\irfft.h">
+    <ClInclude Include="..\..\Source\codegen\mldivide.h">
       <Filter>DDSPSynth</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\codegen\rand.h">
-      <Filter>DDSPSynth</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\codegen\rfft.h">
       <Filter>DDSPSynth</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\codegen\rt_nonfinite.h">
@@ -2782,9 +2743,6 @@
       <Filter>DDSPSynth</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\codegen\tmwtypes.h">
-      <Filter>DDSPSynth</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\codegen\useConstantDim.h">
       <Filter>DDSPSynth</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\DDSPSound.h">
