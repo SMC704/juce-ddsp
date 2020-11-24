@@ -31,6 +31,9 @@ public:
 
     void paint (juce::Graphics&) override;
     void resized() override;
+    
+    //===============================================================================
+    void drawNextLineOfSpectrogram(int fftSize, float* fftData, juce::dsp::FFT& forwardFFT, int fftOrder);
 
 private:
     

@@ -157,6 +157,10 @@
 			isa = PBXBuildFile;
 			fileRef = B88A35915D79E362F893ECCC;
 		};
+		282FE7BD70737D2117D8CEA2 = {
+			isa = PBXBuildFile;
+			fileRef = 3B37124069487E5A13881F05;
+		};
 		407593C46FF99D11CD86D4F4 = {
 			isa = PBXBuildFile;
 			fileRef = FD6789CFBB6513221C44471F;
@@ -172,6 +176,14 @@
 		21A30C859249F8B48DEFFC7F = {
 			isa = PBXBuildFile;
 			fileRef = 1447D1548A04BFACEAA14C05;
+		};
+		9B0D41F4363D63851D8D4E2E = {
+			isa = PBXBuildFile;
+			fileRef = 9F8212DFC1785EC050F046EA;
+		};
+		D6F4E0D447044C22CCD22D5B = {
+			isa = PBXBuildFile;
+			fileRef = A3AC5E37EB93CF46290456F6;
 		};
 		FC2C0EEA2B3CDA2D9225D05D = {
 			isa = PBXBuildFile;
@@ -432,12 +444,26 @@
 			path = "~/JUCE/modules/juce_gui_extra";
 			sourceTree = "<absolute>";
 		};
+		3968DF538333723E0F34EF10 = {
+			isa = PBXFileReference;
+			lastKnownFileType = image.png;
+			name = trumpet.png;
+			path = ../../Resources/trumpet.png;
+			sourceTree = "SOURCE_ROOT";
+		};
 		3B31551CC70C157BA75BFD7F = {
 			isa = PBXFileReference;
 			lastKnownFileType = wrapper.framework;
 			name = AudioToolbox.framework;
 			path = System/Library/Frameworks/AudioToolbox.framework;
 			sourceTree = SDKROOT;
+		};
+		3B37124069487E5A13881F05 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = CustomLookAndFeel.cpp;
+			path = ../../Source/CustomLookAndFeel.cpp;
+			sourceTree = "SOURCE_ROOT";
 		};
 		3E65B03BC2A95467602B852B = {
 			isa = PBXFileReference;
@@ -642,6 +668,13 @@
 			path = "../../JuceLibraryCode/include_juce_audio_formats.mm";
 			sourceTree = "SOURCE_ROOT";
 		};
+		7FDF825F0BCBE7263891759B = {
+			isa = PBXFileReference;
+			lastKnownFileType = image.png;
+			name = placeholder.png;
+			path = ../../Resources/placeholder.png;
+			sourceTree = "SOURCE_ROOT";
+		};
 		86CFED619239A12B53326DD0 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
@@ -732,13 +765,6 @@
 			name = HarmonicSlider.h;
 			path = ../../Source/HarmonicSlider.h;
 			sourceTree = "SOURCE_ROOT";
-		};
-		AF2197905DCDB3A4AFCE694F = {
-			isa = PBXFileReference;
-			lastKnownFileType = file;
-			name = "juce_audio_formats";
-			path = "~/JUCE/modules/juce_audio_formats";
-			sourceTree = "<absolute>";
 		};
 		AFA66E82029952F775AFC402 = {
 			isa = PBXFileReference;
@@ -831,18 +857,74 @@
 			path = ../../Source/AdditiveComponent.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
-		B8B8C35E4A771AAB91B39BF3 = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.cpp.objcpp;
-			name = "include_juce_audio_plugin_client_VST_utils.mm";
-			path = "../../JuceLibraryCode/include_juce_audio_plugin_client_VST_utils.mm";
-			sourceTree = "SOURCE_ROOT";
-		};
 		B96F8EF8E2ED25F5B2CA1DBB = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
 			name = PluginProcessor.h;
 			path = ../../Source/PluginProcessor.h;
+			sourceTree = "SOURCE_ROOT";
+		};
+		BD7066BBF54A3F71D857DE13 = {
+			isa = PBXFileReference;
+			lastKnownFileType = wrapper.framework;
+			name = CoreMIDI.framework;
+			path = System/Library/Frameworks/CoreMIDI.framework;
+			sourceTree = SDKROOT;
+		};
+		CAA98A61DB8854E7A231643A = {
+			isa = PBXFileReference;
+			explicitFileType = wrapper.cfbundle;
+			includeInIndex = 0;
+			path = DDSPSynth.vst3;
+			sourceTree = "BUILT_PRODUCTS_DIR";
+		};
+		5727B81F80559538636720C7 = {
+			isa = PBXFileReference;
+			explicitFileType = wrapper.cfbundle;
+			includeInIndex = 0;
+			path = DDSPSynth.component;
+			sourceTree = "BUILT_PRODUCTS_DIR";
+		};
+		9F8212DFC1785EC050F046EA = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = HarmonicEditor.cpp;
+			path = ../../Source/HarmonicEditor.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
+		A3AC5E37EB93CF46290456F6 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = HarmonicSlider.cpp;
+			path = ../../Source/HarmonicSlider.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
+		A78FC3D46AE9A13864A0F6AE = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = HarmonicSlider.h;
+			path = ../../Source/HarmonicSlider.h;
+			sourceTree = "SOURCE_ROOT";
+		};
+		AF2197905DCDB3A4AFCE694F = {
+			isa = PBXFileReference;
+			lastKnownFileType = file;
+			name = "juce_audio_formats";
+			path = "~/JUCE/modules/juce_audio_formats";
+			sourceTree = "<absolute>";
+		};
+		B2A389A03B9C47B9F7F72EB0 = {
+			isa = PBXFileReference;
+			lastKnownFileType = file;
+			name = "juce_audio_processors";
+			path = "~/JUCE/modules/juce_audio_processors";
+			sourceTree = "<absolute>";
+		};
+		B8B8C35E4A771AAB91B39BF3 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.objcpp;
+			name = "include_juce_audio_plugin_client_VST_utils.mm";
+			path = "../../JuceLibraryCode/include_juce_audio_plugin_client_VST_utils.mm";
 			sourceTree = "SOURCE_ROOT";
 		};
 		BF0A9A0775CA6C68262846DC = {
@@ -857,13 +939,6 @@
 			lastKnownFileType = sourcecode.cpp.objcpp;
 			name = "include_juce_audio_processors.mm";
 			path = "../../JuceLibraryCode/include_juce_audio_processors.mm";
-			sourceTree = "SOURCE_ROOT";
-		};
-		C072B0473E33EEEA8F61DBC2 = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.c.h;
-			name = additive.h;
-			path = ../../Source/codegen/additive.h;
 			sourceTree = "SOURCE_ROOT";
 		};
 		C47BDBA6786CD5CD96223481 = {
@@ -1069,6 +1144,8 @@
 				38FEF7905E09AD5EC5121618,
 				5CE118D43A7EBAD9F6E1EDCB,
 				B88A35915D79E362F893ECCC,
+				3B37124069487E5A13881F05,
+				54F869B030B8ECCE8139113F,
 				D4E7D9FF0CDADEAC2772D3C8,
 				FD6789CFBB6513221C44471F,
 				743B5775347022DE9CD2DB53,
@@ -1078,6 +1155,10 @@
 				7762A969C5AD95E70428F213,
 				1447D1548A04BFACEAA14C05,
 				0D12812DFB15CB5F979BDE93,
+				9F8212DFC1785EC050F046EA,
+				8C53939BC3315DB34C6770C0,
+				A3AC5E37EB93CF46290456F6,
+				A78FC3D46AE9A13864A0F6AE,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -2604,10 +2685,13 @@
 				8E340051EB285B6F90D46AC4,
 				7F6617C63079E7843D1BB90D,
 				FF7A68A022BAED744891142F,
+				282FE7BD70737D2117D8CEA2,
 				407593C46FF99D11CD86D4F4,
 				A9954B3B3D578F7DF20CF25D,
 				2C233771C311C9C7B30BF4C7,
 				21A30C859249F8B48DEFFC7F,
+				9B0D41F4363D63851D8D4E2E,
+				D6F4E0D447044C22CCD22D5B,
 				FC2C0EEA2B3CDA2D9225D05D,
 				BE7505DBC4D008418095E0C5,
 				B698C2772065C744B5ACD030,

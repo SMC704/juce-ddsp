@@ -21,7 +21,8 @@ DdspsynthAudioProcessor::DdspsynthAudioProcessor()
                       #endif
                        .withOutput ("Output", juce::AudioChannelSet::stereo(), true)
                      #endif
-                       )
+                       ),
+    forwardFFT (fftOrder)
 #endif
 {
 	synth.addVoice(&voice);
@@ -170,6 +171,29 @@ juce::AudioProcessor* JUCE_CALLTYPE createPluginFilter()
 {
     return new DdspsynthAudioProcessor();
 }
+
+//===============================================================================
+// Spectrogram methods
+
+void DdspsynthAudioProcessor::pushNextSampleIntoFifo (float sample) noexcept
+{
+    // if the fifo contains enough data, set a flag to say
+    // that the next line should now be rendered..
+    if (fifoIndex == fftSize)
+    {
+        if (! nextFFTBlockReady)
+        {
+            juce::zeromem (fftData, sizeof (fftData));
+            memcpy (fftData, fifo, sizeof (fifo));
+            nextFFTBlockReady = true;
+        }
+
+        fifoIndex = 0;
+    }
+
+    fifo[fifoIndex++] = sample;
+}
+
 
 void DdspsynthAudioProcessor::onValueChange(double harmonics[50])
 {

@@ -25,5 +25,17 @@ public:
     void resized() override;
 
 private:
+
+    juce::ToggleButton onoffButton;
+    juce::Label nameLabel;
+    juce::Label onoffLabel;
+    juce::Slider drywetSlider;
+    juce::Label drywetLabel;
+    juce::Slider sizeSlider;
+    juce::Label sizeLabel;
+    juce::Slider glowSlider;
+    juce::Label glowLabel;
+
+
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ReverbComponent)
 };

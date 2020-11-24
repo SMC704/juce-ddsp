@@ -14,6 +14,8 @@
 DdspsynthAudioProcessorEditor::DdspsynthAudioProcessorEditor (DdspsynthAudioProcessor& p)
     : AudioProcessorEditor (&p), audioProcessor (p)
 {
+    //LookAndFeel::getDefaultLookAndFeel().setDefaultSansSerifTypefaceName("Avenir Next");
+
     backgroundTexture = backgroundTexture.rescaled(900, 600);
     addAndMakeVisible(mainComponent);
 	auto additive = mainComponent.findChildWithID("additive");
@@ -22,11 +24,15 @@ DdspsynthAudioProcessorEditor::DdspsynthAudioProcessorEditor (DdspsynthAudioProc
 	harmEditor->setListener(&p);
 	
     mainComponent.setBounds(20, 20, 860, 560);
+    startTimerHz (60);
     setSize (900, 600);
+    
+    mainComponent.setLookAndFeel(&otherLookAndFeel);
 }
 
 DdspsynthAudioProcessorEditor::~DdspsynthAudioProcessorEditor()
 {
+    mainComponent.setLookAndFeel(nullptr);
 }
 
 //==============================================================================
@@ -40,4 +46,18 @@ void DdspsynthAudioProcessorEditor::paint (juce::Graphics& g)
 void DdspsynthAudioProcessorEditor::resized()
 {
     
+}
+
+//===============================================================================
+// Spectrogram methods
+void DdspsynthAudioProcessorEditor::timerCallback()
+{
+    if (audioProcessor.getNextFFTBlockReady())
+    {
+        mainComponent.drawNextLineOfSpectrogram(audioProcessor.getFftSize(),
+                                                audioProcessor.getFftData(),
+                                                *audioProcessor.getForwardFFT(),
+                                                audioProcessor.getFftOrder());
+        audioProcessor.setNextFFTBlockReady(false);
+    }
 }

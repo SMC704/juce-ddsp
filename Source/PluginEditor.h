@@ -18,11 +18,13 @@
 #include "SpectogramComponent.h"
 #include "OutputComponent.h"
 #include "MainComponent.h"
+#include "CustomLookAndFeel.h"
+
 
 //==============================================================================
 /**
 */
-class DdspsynthAudioProcessorEditor  : public juce::AudioProcessorEditor
+class DdspsynthAudioProcessorEditor  : public juce::AudioProcessorEditor, private juce::Timer
 {
 public:
     DdspsynthAudioProcessorEditor (DdspsynthAudioProcessor&);
@@ -31,15 +33,22 @@ public:
     //==============================================================================
     void paint (juce::Graphics&) override;
     void resized() override;
+    
+    //==============================================================================
+    void timerCallback() override;
 
 private:
     // This reference is provided as a quick way for your editor to
     // access the processor object that created it.
     DdspsynthAudioProcessor& audioProcessor;
     
-    juce::Image backgroundTexture = juce::ImageFileFormat::loadFrom(BinaryData::background_texture_png, BinaryData::background_texture_pngSize);
+    juce::Image backgroundTexture = juce::ImageFileFormat::
+        loadFrom(BinaryData::background_texture_dark_headline_png, 
+            BinaryData::background_texture_dark_headline_pngSize);
     
     MainComponent mainComponent;
-
+    
+    OtherLookAndFeel otherLookAndFeel;
+    
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (DdspsynthAudioProcessorEditor)
 };
