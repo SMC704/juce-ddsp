@@ -14,18 +14,19 @@
 //==============================================================================
 DdspsynthAudioProcessor::DdspsynthAudioProcessor() : forwardFFT(fftOrder)
 #ifndef JucePlugin_PreferredChannelConfigurations
-     : AudioProcessor (BusesProperties()
-                     #if ! JucePlugin_IsMidiEffect
-                      #if ! JucePlugin_IsSynth
-                       .withInput  ("Input",  juce::AudioChannelSet::mono(), true)
-                      #endif
-                       .withOutput ("Output", juce::AudioChannelSet::stereo(), true)
-                     #endif
-                       ),
-    
+    : AudioProcessor(BusesProperties()
+#if ! JucePlugin_IsMidiEffect
+#if ! JucePlugin_IsSynth
+        .withInput("Input", juce::AudioChannelSet::mono(), true)
+#endif
+        .withOutput("Output", juce::AudioChannelSet::stereo(), true)
+#endif
+    ),
+
 #endif
 {
-	synth.addVoice(&voice);
+    voice = new DDSPVoice();
+	synth.addVoice(voice);
 
 	synth.addSound(new DDSPSound());
 }
@@ -200,5 +201,5 @@ void DdspsynthAudioProcessor::pushNextSampleIntoFifo (float sample) noexcept
 
 void DdspsynthAudioProcessor::onValueChange(double harmonics[50])
 {
-	voice.setHarmonics(harmonics);
+	voice->setHarmonics(harmonics);
 }

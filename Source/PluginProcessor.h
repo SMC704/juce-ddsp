@@ -82,7 +82,7 @@ private:
     bool nextFFTBlockReady = false;
     
     //==============================================================================
-	DDSPVoice voice;
+	DDSPVoice* voice;
 	juce::MidiKeyboardState keyboardState;
 	juce::Synthesiser synth;
 
