@@ -65,7 +65,7 @@ void InputComponent::resized()
     grid.columnGap = juce::Grid::Px(10.0f);
 
     float buttonDimHeigth = 25.0f;
-    float buttonDimWidth = 60.0f; 
+    float buttonDimWidth = 50.0f; 
 
     grid.items = {
 

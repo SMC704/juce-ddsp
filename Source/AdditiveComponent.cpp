@@ -110,7 +110,7 @@ void AdditiveComponent::resized()
     grid.rowGap = juce::Grid::Px(10.0f);
     grid.columnGap = juce::Grid::Px(10.0f);
 
-    float sliderDim = 60.0f;
+    float sliderDim = 50.0f;
 
     grid.items = {
 
@@ -147,7 +147,7 @@ void AdditiveComponent::resized()
         juce::GridItem(stretchLabel).withSize(65.0f, 30.0f)
             .withAlignSelf(juce::GridItem::AlignSelf::end)
             .withJustifySelf(juce::GridItem::JustifySelf::end)
-            .withMargin(juce::GridItem::Margin::Margin(0, -8.0f, 0, 0))
+            .withMargin(juce::GridItem::Margin::Margin(0, -12.0f, 0, 0))
             .withArea(5, 1),
 
         juce::GridItem(ampSlider).withSize(sliderDim, sliderDim)
@@ -159,7 +159,7 @@ void AdditiveComponent::resized()
         juce::GridItem(ampLabel).withSize(65.0f, 30.0f)
             .withAlignSelf(juce::GridItem::AlignSelf::end)
             .withJustifySelf(juce::GridItem::JustifySelf::end)
-            .withMargin(juce::GridItem::Margin::Margin(0, -15.0f, 0, 0))
+            .withMargin(juce::GridItem::Margin::Margin(0, -20.0f, 0, 0))
             .withArea(5, 2),
 
         //juce::GridItem (ampSlider).withArea(6, 10, 9, 12)

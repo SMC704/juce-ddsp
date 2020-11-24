@@ -481,6 +481,9 @@
     <ClCompile Include="..\..\Source\AdditiveComponent.cpp">
       <Filter>DDSPSynth\Source</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\CustomLookAndFeel.cpp">
+      <Filter>DDSPSynth\Source</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\SubtractiveComponent.cpp">
       <Filter>DDSPSynth\Source</Filter>
     </ClCompile>
@@ -2665,6 +2668,9 @@
       <Filter>DDSPSynth\Source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\ModelComponent.h">
+      <Filter>DDSPSynth\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\CustomLookAndFeel.h">
       <Filter>DDSPSynth\Source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\AdditiveComponent.h">

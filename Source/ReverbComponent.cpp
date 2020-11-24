@@ -108,7 +108,7 @@ void ReverbComponent::resized()
     grid.rowGap = juce::Grid::Px(10.0f);
     grid.columnGap = juce::Grid::Px(10.0f);
 
-    float sliderDim = 60.0f;
+    float sliderDim = 50.0f;
 
     grid.items = {
 
@@ -121,10 +121,10 @@ void ReverbComponent::resized()
         juce::GridItem(onoffButton).withSize(40.0f, 30.0f)
             .withAlignSelf(juce::GridItem::AlignSelf::start)
             .withJustifySelf(juce::GridItem::JustifySelf::end)
-            .withMargin(juce::GridItem::Margin::Margin(10.0f))
+            .withMargin(juce::GridItem::Margin::Margin(10.0f, 0, 10.0f, 0))
             .withArea(1, 3),
 
-        juce::GridItem(drywetSlider).withSize(80.0f, 80.0f)
+        juce::GridItem(drywetSlider).withSize(70.0f, 70.0f)
             .withAlignSelf(juce::GridItem::AlignSelf::start)
             .withJustifySelf(juce::GridItem::JustifySelf::center)
             .withMargin(juce::GridItem::Margin::Margin(10.0f, 0, 0, 0))
@@ -139,25 +139,25 @@ void ReverbComponent::resized()
         juce::GridItem(sizeSlider).withSize(sliderDim, sliderDim)
             .withAlignSelf(juce::GridItem::AlignSelf::center)
             .withJustifySelf(juce::GridItem::JustifySelf::start)
-            .withMargin(juce::GridItem::Margin::Margin(10.0f, 0, 10.0f, 0))
+            .withMargin(juce::GridItem::Margin::Margin(0.0f, 0.0f, 10.0f, 10.0f))
             .withArea(6, 1),
 
         juce::GridItem(sizeLabel).withSize(65.0f, 30.0f)
             .withAlignSelf(juce::GridItem::AlignSelf::center)
             .withJustifySelf(juce::GridItem::JustifySelf::start)
-            .withMargin(juce::GridItem::Margin::Margin(10.0f, 0, 0, 11.0f))
+            .withMargin(juce::GridItem::Margin::Margin(10.0f, 0, 0, 16.0f))
             .withArea(7, 1),
 
         juce::GridItem(glowSlider).withSize(sliderDim, sliderDim)
             .withAlignSelf(juce::GridItem::AlignSelf::center)
             .withJustifySelf(juce::GridItem::JustifySelf::end)
-            .withMargin(juce::GridItem::Margin::Margin(10.0f, 0, 10.0f, 0))
+            .withMargin(juce::GridItem::Margin::Margin(0.0f, 10.0f, 10.0f, 0))
             .withArea(6, 3),
 
         juce::GridItem(glowLabel).withSize(65.0f, 30.0f)
             .withAlignSelf(juce::GridItem::AlignSelf::center)
             .withJustifySelf(juce::GridItem::JustifySelf::center)
-            .withMargin(juce::GridItem::Margin::Margin(10.0f, 0, 0, 1.0f))
+            .withMargin(juce::GridItem::Margin::Margin(10.0f, 10.0f, 0, 1.0f))
             .withArea(7, 3),
     };
 

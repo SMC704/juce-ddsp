@@ -31,6 +31,7 @@ private:
     juce::Label onoffLabel;
     juce::Slider ampSlider;
     juce::Label ampLabel;
+    juce::Label lfoLabel;
     juce::Slider amoutSlider;
     juce::Label amountLabel;
     juce::Slider rateSlider;

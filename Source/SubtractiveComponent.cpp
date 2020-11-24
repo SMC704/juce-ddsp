@@ -42,6 +42,12 @@ SubtractiveComponent::SubtractiveComponent()
     ampLabel.setText("Amp", juce::NotificationType::dontSendNotification);
     ampLabel.setFont(fontDim);
 
+    addAndMakeVisible(lfoLabel);
+    lfoLabel.setColour(juce::Label::textColourId, juce::Colours::white);
+    lfoLabel.setJustificationType(juce::Justification::topLeft);
+    lfoLabel.setText("L\nF\nO", juce::NotificationType::dontSendNotification);
+    lfoLabel.setFont(20.0f);
+
     amoutSlider.setSliderStyle(juce::Slider::SliderStyle::RotaryHorizontalVerticalDrag);
     amoutSlider.setTextBoxStyle(juce::Slider::NoTextBox, true, 0, 0);
     amoutSlider.setRange(0.0f, 10.0f, 0.1f);
@@ -121,7 +127,7 @@ void SubtractiveComponent::resized()
     grid.rowGap = juce::Grid::Px(10.0f);
     grid.columnGap = juce::Grid::Px(10.0f);
 
-    float sliderDim = 60.0f;
+    float sliderDim = 50.0f;
         
     grid.items = {
 
@@ -137,7 +143,7 @@ void SubtractiveComponent::resized()
             .withMargin(juce::GridItem::Margin::Margin(10.0f))
             .withArea(1, 2),
 
-        juce::GridItem(colourSlider).withSize(80.0f, 80.0f)
+        juce::GridItem(colourSlider).withSize(70.0f, 70.0f)
             .withAlignSelf(juce::GridItem::AlignSelf::center)
             .withJustifySelf(juce::GridItem::JustifySelf::end)
             .withMargin(juce::GridItem::Margin::Margin(0.0f))
@@ -146,7 +152,7 @@ void SubtractiveComponent::resized()
         juce::GridItem(colourLabel).withSize(65.0f, 30.0f)
             .withAlignSelf(juce::GridItem::AlignSelf::start)
             .withJustifySelf(juce::GridItem::JustifySelf::end)
-            .withMargin(juce::GridItem::Margin::Margin(10.0f, 0, 0, 0))
+            .withMargin(juce::GridItem::Margin::Margin(20.0f, -5.0f, 0, 0))
             .withArea(5, 1),
 
         juce::GridItem(ampSlider).withSize(sliderDim, sliderDim)
@@ -158,19 +164,25 @@ void SubtractiveComponent::resized()
         juce::GridItem(ampLabel).withSize(65.0f, 30.0f)
             .withAlignSelf(juce::GridItem::AlignSelf::start)
             .withJustifySelf(juce::GridItem::JustifySelf::start)
-            .withMargin(juce::GridItem::Margin::Margin(10.0f, 0, 0, 30.0f))
+            .withMargin(juce::GridItem::Margin::Margin(15.0f, 0, 0, 25.0f))
             .withArea(8, 1),
+
+        juce::GridItem(lfoLabel).withSize(30.0f, 100.0f)
+            .withAlignSelf(juce::GridItem::AlignSelf::center)
+            .withJustifySelf(juce::GridItem::JustifySelf::center)
+            .withMargin(juce::GridItem::Margin::Margin(20.0f, 35.0f, 0, 0))
+            .withArea(6, 2),
 
         juce::GridItem(rateSlider).withSize(sliderDim, sliderDim)
             .withAlignSelf(juce::GridItem::AlignSelf::center)
             .withJustifySelf(juce::GridItem::JustifySelf::end)
-            .withMargin(juce::GridItem::Margin::Margin(10.0f, 20.0f, 0, 0))
+            .withMargin(juce::GridItem::Margin::Margin(0.0f, 20.0f, 0, 0))
             .withArea(4, 2),
 
         juce::GridItem(rateLabel).withSize(65.0f, 30.0f)
             .withAlignSelf(juce::GridItem::AlignSelf::start)
             .withJustifySelf(juce::GridItem::JustifySelf::end)
-            .withMargin(juce::GridItem::Margin::Margin(10.0f, 5.0f, 0, 0))
+            .withMargin(juce::GridItem::Margin::Margin(10.0f, 0.0f, 0, 0))
             .withArea(5, 2),
 
         juce::GridItem(amoutSlider).withSize(sliderDim, sliderDim)
@@ -182,7 +194,7 @@ void SubtractiveComponent::resized()
         juce::GridItem(amountLabel).withSize(65.0f, 30.0f)
             .withAlignSelf(juce::GridItem::AlignSelf::start)
             .withJustifySelf(juce::GridItem::JustifySelf::end)
-            .withMargin(juce::GridItem::Margin::Margin(10.0f, 15.0f, 0, 0))
+            .withMargin(juce::GridItem::Margin::Margin(15.0f, 10.0f, 0, 0))
             .withArea(8, 2),
     };
 

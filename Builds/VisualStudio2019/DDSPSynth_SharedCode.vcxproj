@@ -143,6 +143,7 @@
     <ClCompile Include="..\..\Source\InputComponent.cpp"/>
     <ClCompile Include="..\..\Source\ModelComponent.cpp"/>
     <ClCompile Include="..\..\Source\AdditiveComponent.cpp"/>
+    <ClCompile Include="..\..\Source\CustomLookAndFeel.cpp"/>
     <ClCompile Include="..\..\Source\SubtractiveComponent.cpp"/>
     <ClCompile Include="..\..\Source\ReverbComponent.cpp"/>
     <ClCompile Include="..\..\Source\SpectogramComponent.cpp"/>
@@ -2164,6 +2165,7 @@
     <ClInclude Include="..\..\Source\MainComponent.h"/>
     <ClInclude Include="..\..\Source\InputComponent.h"/>
     <ClInclude Include="..\..\Source\ModelComponent.h"/>
+    <ClInclude Include="..\..\Source\CustomLookAndFeel.h"/>
     <ClInclude Include="..\..\Source\AdditiveComponent.h"/>
     <ClInclude Include="..\..\Source\SubtractiveComponent.h"/>
     <ClInclude Include="..\..\Source\ReverbComponent.h"/>

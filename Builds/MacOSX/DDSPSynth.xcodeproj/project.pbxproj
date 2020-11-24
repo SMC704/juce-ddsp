@@ -97,6 +97,10 @@
 			isa = PBXBuildFile;
 			fileRef = B88A35915D79E362F893ECCC;
 		};
+		282FE7BD70737D2117D8CEA2 = {
+			isa = PBXBuildFile;
+			fileRef = 3B37124069487E5A13881F05;
+		};
 		407593C46FF99D11CD86D4F4 = {
 			isa = PBXBuildFile;
 			fileRef = FD6789CFBB6513221C44471F;
@@ -323,6 +327,13 @@
 			path = System/Library/Frameworks/AudioToolbox.framework;
 			sourceTree = SDKROOT;
 		};
+		3B37124069487E5A13881F05 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = CustomLookAndFeel.cpp;
+			path = ../../Source/CustomLookAndFeel.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
 		3E65B03BC2A95467602B852B = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
@@ -378,6 +389,13 @@
 			name = "juce_gui_basics";
 			path = "~/JUCE/modules/juce_gui_basics";
 			sourceTree = "<absolute>";
+		};
+		54F869B030B8ECCE8139113F = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = CustomLookAndFeel.h;
+			path = ../../Source/CustomLookAndFeel.h;
+			sourceTree = "SOURCE_ROOT";
 		};
 		59C150ABBA076FA40C977B1F = {
 			isa = PBXFileReference;
@@ -491,20 +509,6 @@
 			path = "../../JuceLibraryCode/include_juce_audio_plugin_client_Standalone.cpp";
 			sourceTree = "SOURCE_ROOT";
 		};
-		89B229C895AA000D0AD30B2E = {
-			isa = PBXFileReference;
-			lastKnownFileType = image.png;
-			name = "background_texture_dark.png";
-			path = "../../Resources/background_texture_dark.png";
-			sourceTree = "SOURCE_ROOT";
-		};
-		90AA88C45ECFC21A62B4B8D3 = {
-			isa = PBXFileReference;
-			lastKnownFileType = image.png;
-			name = saxophone.png;
-			path = ../../Resources/saxophone.png;
-			sourceTree = "SOURCE_ROOT";
-		};
 		964FAA82ED145EFA03DD0181 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.objcpp;
@@ -568,13 +572,6 @@
 			path = ../../Source/AdditiveComponent.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
-		B8B8C35E4A771AAB91B39BF3 = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.cpp.objcpp;
-			name = "include_juce_audio_plugin_client_VST_utils.mm";
-			path = "../../JuceLibraryCode/include_juce_audio_plugin_client_VST_utils.mm";
-			sourceTree = "SOURCE_ROOT";
-		};
 		B96F8EF8E2ED25F5B2CA1DBB = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
@@ -603,6 +600,20 @@
 			path = DDSPSynth.component;
 			sourceTree = "BUILT_PRODUCTS_DIR";
 		};
+		89B229C895AA000D0AD30B2E = {
+			isa = PBXFileReference;
+			lastKnownFileType = image.png;
+			name = "background_texture_dark.png";
+			path = "../../Resources/background_texture_dark.png";
+			sourceTree = "SOURCE_ROOT";
+		};
+		90AA88C45ECFC21A62B4B8D3 = {
+			isa = PBXFileReference;
+			lastKnownFileType = image.png;
+			name = saxophone.png;
+			path = ../../Resources/saxophone.png;
+			sourceTree = "SOURCE_ROOT";
+		};
 		AF2197905DCDB3A4AFCE694F = {
 			isa = PBXFileReference;
 			lastKnownFileType = file;
@@ -616,6 +627,13 @@
 			name = "juce_audio_processors";
 			path = "~/JUCE/modules/juce_audio_processors";
 			sourceTree = "<absolute>";
+		};
+		B8B8C35E4A771AAB91B39BF3 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.objcpp;
+			name = "include_juce_audio_plugin_client_VST_utils.mm";
+			path = "../../JuceLibraryCode/include_juce_audio_plugin_client_VST_utils.mm";
+			sourceTree = "SOURCE_ROOT";
 		};
 		BF0A9A0775CA6C68262846DC = {
 			isa = PBXFileReference;
@@ -806,6 +824,8 @@
 				38FEF7905E09AD5EC5121618,
 				5CE118D43A7EBAD9F6E1EDCB,
 				B88A35915D79E362F893ECCC,
+				3B37124069487E5A13881F05,
+				54F869B030B8ECCE8139113F,
 				D4E7D9FF0CDADEAC2772D3C8,
 				FD6789CFBB6513221C44471F,
 				743B5775347022DE9CD2DB53,
@@ -2273,6 +2293,7 @@
 				8E340051EB285B6F90D46AC4,
 				7F6617C63079E7843D1BB90D,
 				FF7A68A022BAED744891142F,
+				282FE7BD70737D2117D8CEA2,
 				407593C46FF99D11CD86D4F4,
 				A9954B3B3D578F7DF20CF25D,
 				2C233771C311C9C7B30BF4C7,

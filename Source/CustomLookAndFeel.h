@@ -20,7 +20,9 @@ class OtherLookAndFeel : public juce::LookAndFeel_V4
 public:
     
     // method for changing the visual appearance of rotary sliders
-    void drawRotarySlider (juce::Graphics &g, int x, int y, int width, int height, float sliderPosProportional, float rotaryStartAngle, float rotaryEndAngle, juce::Slider &slider) override
+    void drawRotarySlider (juce::Graphics &g, int x, int y, int width, int height, 
+        float sliderPosProportional, float rotaryStartAngle, float rotaryEndAngle, 
+        juce::Slider &slider) override
     {
         // values to feed the method
         auto radius = (float) juce::jmin (width / 2, height / 2) - 4.0f;

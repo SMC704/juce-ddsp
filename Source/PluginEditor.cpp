@@ -13,7 +13,7 @@
 DdspsynthAudioProcessorEditor::DdspsynthAudioProcessorEditor (DdspsynthAudioProcessor& p)
     : AudioProcessorEditor (&p), audioProcessor (p)
 {
-    LookAndFeel::getDefaultLookAndFeel().setDefaultSansSerifTypefaceName("Avenir Next");
+    //LookAndFeel::getDefaultLookAndFeel().setDefaultSansSerifTypefaceName("Avenir Next");
 
     backgroundTexture = backgroundTexture.rescaled(900, 600);
     addAndMakeVisible(mainComponent);
@@ -25,6 +25,7 @@ DdspsynthAudioProcessorEditor::DdspsynthAudioProcessorEditor (DdspsynthAudioProc
 
 DdspsynthAudioProcessorEditor::~DdspsynthAudioProcessorEditor()
 {
+    mainComponent.setLookAndFeel(nullptr);
 }
 
 //==============================================================================

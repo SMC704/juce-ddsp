@@ -24,6 +24,10 @@
             file="Source/ModelComponent.h"/>
       <FILE id="IQQWkT" name="AdditiveComponent.cpp" compile="1" resource="0"
             file="Source/AdditiveComponent.cpp"/>
+      <FILE id="LmvF4T" name="CustomLookAndFeel.cpp" compile="1" resource="0"
+            file="Source/CustomLookAndFeel.cpp"/>
+      <FILE id="zAHJDi" name="CustomLookAndFeel.h" compile="0" resource="0"
+            file="Source/CustomLookAndFeel.h"/>
       <FILE id="ypukOM" name="AdditiveComponent.h" compile="0" resource="0"
             file="Source/AdditiveComponent.h"/>
       <FILE id="F5kMmB" name="SubtractiveComponent.cpp" compile="1" resource="0"

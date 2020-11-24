@@ -32,7 +32,7 @@ OutputComponent::OutputComponent()
     addAndMakeVisible(masterLabel);
     masterLabel.setColour(juce::Label::textColourId, juce::Colours::white);
     masterLabel.setJustificationType(juce::Justification::topLeft);
-    masterLabel.setText("Robin", juce::NotificationType::dontSendNotification);
+    masterLabel.setText("Master", juce::NotificationType::dontSendNotification);
     masterLabel.setFont(fontDim);
 }
 
@@ -72,7 +72,7 @@ void OutputComponent::resized()
     grid.rowGap = juce::Grid::Px(10.0f);
     grid.columnGap = juce::Grid::Px(10.0f);
 
-    float sliderDim = 60.0f;
+    float sliderDim = 50.0f;
 
     grid.items = {
 
@@ -85,13 +85,13 @@ void OutputComponent::resized()
         juce::GridItem(masterSlider).withSize(sliderDim, sliderDim)
             .withAlignSelf(juce::GridItem::AlignSelf::start)
             .withJustifySelf(juce::GridItem::JustifySelf::start)
-            .withMargin(juce::GridItem::Margin::Margin(0, 0, 0, 0))
+            .withMargin(juce::GridItem::Margin::Margin(5.0f, 0, 0, -10.0f))
             .withArea(1, 2),
 
         juce::GridItem(masterLabel).withSize(65.0f, 30.0f)
             .withAlignSelf(juce::GridItem::AlignSelf::end)
             .withJustifySelf(juce::GridItem::JustifySelf::end)
-            .withMargin(juce::GridItem::Margin::Margin(0, -15.0f, -5.0f, 0))
+            .withMargin(juce::GridItem::Margin::Margin(0, -5.0f, -5.0f, 0))
             .withArea(2, 2),
 
     };
