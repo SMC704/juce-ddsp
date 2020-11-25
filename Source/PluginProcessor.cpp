@@ -214,3 +214,13 @@ void DdspsynthAudioProcessor::onSubAmpChange(double subAmp)
     voice->setSubAmp(subAmp);
 }
 
+void DdspsynthAudioProcessor::onAddAmpChange(double addAmp)
+{
+    voice->setAddAmp(addAmp);
+}
+
+void DdspsynthAudioProcessor::onOutAmpChange(double outAmp)
+{
+    voice->setOutAmp(outAmp);
+}
+

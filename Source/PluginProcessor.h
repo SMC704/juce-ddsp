@@ -76,6 +76,8 @@ public:
 
     void onNoiseColorChange(double color);
     void onSubAmpChange(double subAmp);
+    void onAddAmpChange(double addAmp);
+    void onOutAmpChange(double outAmp);
 
 private:
     juce::dsp::FFT forwardFFT;

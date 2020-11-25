@@ -31,8 +31,10 @@ SubtractiveComponent::SubtractiveComponent()
 
     ampSlider.setSliderStyle(juce::Slider::SliderStyle::RotaryHorizontalVerticalDrag);
     ampSlider.setTextBoxStyle(juce::Slider::NoTextBox, true, 0, 0);
-    ampSlider.setRange(0.0f, 1.0f, 0.1f);
-    ampSlider.setValue(0.8f);
+    ampSlider.setPopupDisplayEnabled(true, true, this);
+    ampSlider.setTextValueSuffix (" dB");
+    ampSlider.setRange(-60.0f, 0.0f, 0.01f);
+    ampSlider.setValue(-10.0f);
     addAndMakeVisible(ampSlider);
     ampSlider.setBounds(0, 0, 100, 100);
     ampSlider.addListener(this);
@@ -51,6 +53,8 @@ SubtractiveComponent::SubtractiveComponent()
 
     amoutSlider.setSliderStyle(juce::Slider::SliderStyle::RotaryHorizontalVerticalDrag);
     amoutSlider.setTextBoxStyle(juce::Slider::NoTextBox, true, 0, 0);
+    amoutSlider.setPopupDisplayEnabled(true, true, this);
+    amoutSlider.setTextValueSuffix (" Modulation Amount");
     amoutSlider.setRange(0.0f, 10.0f, 0.1f);
     amoutSlider.setValue(5.0f);
     addAndMakeVisible(amoutSlider);
@@ -64,6 +68,8 @@ SubtractiveComponent::SubtractiveComponent()
 
     rateSlider.setSliderStyle(juce::Slider::SliderStyle::RotaryHorizontalVerticalDrag);
     rateSlider.setTextBoxStyle(juce::Slider::NoTextBox, true, 0, 0);
+    rateSlider.setPopupDisplayEnabled(true, true, this);
+    rateSlider.setTextValueSuffix (" Modulation Rate");
     rateSlider.setRange(0.0f, 10.0f, 0.1f);
     rateSlider.setValue(5.0f);
     addAndMakeVisible(rateSlider);
@@ -77,6 +83,8 @@ SubtractiveComponent::SubtractiveComponent()
 
     colourSlider.setSliderStyle(juce::Slider::SliderStyle::RotaryHorizontalVerticalDrag);
     colourSlider.setTextBoxStyle(juce::Slider::NoTextBox, true, 0, 0);
+    colourSlider.setPopupDisplayEnabled(true, true, this);
+    colourSlider.setTextValueSuffix (" Noise Colour");
     colourSlider.setRange(-1.0f, 1.0f, 0.01f);
     colourSlider.setValue(0.0f);
     addAndMakeVisible(colourSlider);

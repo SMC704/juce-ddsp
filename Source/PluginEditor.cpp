@@ -18,12 +18,16 @@ DdspsynthAudioProcessorEditor::DdspsynthAudioProcessorEditor (DdspsynthAudioProc
 
     backgroundTexture = backgroundTexture.rescaled(900, 600);
     addAndMakeVisible(mainComponent);
-	auto additive = mainComponent.findChildWithID("additive");
+	auto additive = (AdditiveComponent*)mainComponent.findChildWithID("additive");
 	auto harmEditor = (HarmonicEditor*)(additive->findChildWithID("harmonicEditor"));
     auto subtractive = (SubtractiveComponent*)(mainComponent.findChildWithID("subtractive"));
+    auto output = (OutputComponent*)mainComponent.findChildWithID("output");
+
 
 	harmEditor->setListener(&p);
     subtractive->setSubtractiveListener(this);
+    additive->setAdditiveListener(this);
+    output->setOutputListener(this);
 	
     mainComponent.setBounds(20, 20, 860, 560);
     startTimerHz (60);
@@ -73,4 +77,14 @@ void DdspsynthAudioProcessorEditor::onNoiseColorChange(double color)
 void DdspsynthAudioProcessorEditor::onSubAmpChange(double subAmp)
 {
     audioProcessor.onSubAmpChange(subAmp);
+}
+
+void DdspsynthAudioProcessorEditor::onAddAmpChange(double addAmp)
+{
+    audioProcessor.onAddAmpChange(addAmp);
+}
+
+void DdspsynthAudioProcessorEditor::onOutAmpChange(double outAmp)
+{
+    audioProcessor.onOutAmpChange(outAmp);
 }

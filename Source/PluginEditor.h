@@ -24,7 +24,7 @@
 //==============================================================================
 /**
 */
-class DdspsynthAudioProcessorEditor  : public juce::AudioProcessorEditor, private juce::Timer, public SubtractiveComponent::SubtractiveListener
+class DdspsynthAudioProcessorEditor  : public juce::AudioProcessorEditor, private juce::Timer, public SubtractiveComponent::SubtractiveListener, public AdditiveComponent::AdditiveListener, public OutputComponent::OutputListener
 {
 public:
     DdspsynthAudioProcessorEditor (DdspsynthAudioProcessor&);
@@ -56,4 +56,10 @@ private:
         // Inherited via SubtractiveListener
         virtual void onNoiseColorChange(double color) override;
         virtual void onSubAmpChange(double subAmp) override;
+    
+        // Inherited via AdditiveListener
+        virtual void onAddAmpChange(double addAmp) override;
+    
+        // Inherited via OutputListener
+        virtual void onOutAmpChange(double outAmp) override;
 };

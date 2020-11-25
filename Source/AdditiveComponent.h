@@ -17,14 +17,23 @@
 /*
 */
 
-class AdditiveComponent  : public juce::Component
+class AdditiveComponent  : public juce::Component, public juce::Slider::Listener
 {
 public:
     AdditiveComponent();
     ~AdditiveComponent() override;
-
+    
     void paint (juce::Graphics&) override;
     void resized() override;
+    
+    void sliderValueChanged(juce::Slider* slider) override;
+    
+    struct AdditiveListener
+    {
+        virtual void onAddAmpChange(double addAmp) = 0;
+    };
+
+    void setAdditiveListener(AdditiveListener* addListener);
 
 private:
     
@@ -39,6 +48,11 @@ private:
     juce::Label stretchLabel;
     juce::Slider ampSlider;
     juce::Label ampLabel;
+    
+    double addAmp = 0;
+    
+    AdditiveListener* additiveListener = NULL;
+
     
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (AdditiveComponent)
 };

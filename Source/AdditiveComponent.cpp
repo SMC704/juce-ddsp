@@ -35,7 +35,7 @@ AdditiveComponent::AdditiveComponent()
     shiftSlider.setSliderStyle(juce::Slider::SliderStyle::RotaryHorizontalVerticalDrag);
     shiftSlider.setTextBoxStyle(juce::Slider::NoTextBox, true, 0, 0);
     shiftSlider.setPopupDisplayEnabled(true, true, this);
-    shiftSlider.setTextValueSuffix (" Hz or whatever");
+    shiftSlider.setTextValueSuffix (" Partial-shift Amount");
     shiftSlider.setRange(0.0f, 10.0f, 0.1f);
     shiftSlider.setValue(5.0f);
     addAndMakeVisible(shiftSlider);
@@ -50,7 +50,7 @@ AdditiveComponent::AdditiveComponent()
     stretchSlider.setSliderStyle(juce::Slider::SliderStyle::RotaryHorizontalVerticalDrag);
     stretchSlider.setTextBoxStyle(juce::Slider::NoTextBox, true, 0, 0);
     stretchSlider.setPopupDisplayEnabled(true, true, this);
-    stretchSlider.setTextValueSuffix (" Hz or whatever");
+    stretchSlider.setTextValueSuffix (" Partial-stretch Amount");
     stretchSlider.setRange(0.0f, 10.0f, 0.1f);
     stretchSlider.setValue(5.0f);
     addAndMakeVisible(stretchSlider);
@@ -65,11 +65,13 @@ AdditiveComponent::AdditiveComponent()
     ampSlider.setSliderStyle(juce::Slider::SliderStyle::RotaryHorizontalVerticalDrag);
     ampSlider.setTextBoxStyle(juce::Slider::NoTextBox, true, 0, 0);
     ampSlider.setPopupDisplayEnabled(true, true, this);
-    ampSlider.setTextValueSuffix (" Hz or whatever");
-    ampSlider.setRange(0.0f, 10.0f, 0.1f);
-    ampSlider.setValue(5.0f);
+    ampSlider.setTextValueSuffix (" dB");
+    ampSlider.setRange(-60.0f, 0.0f, 0.1f);
+    ampSlider.setValue(-8.0f);
     addAndMakeVisible(ampSlider);
     ampSlider.setBounds(0, 0, 100, 100);
+    ampSlider.addListener(this);
+
 
     addAndMakeVisible(ampLabel);
     ampLabel.setColour(juce::Label::textColourId, juce::Colours::white);
@@ -174,4 +176,21 @@ void AdditiveComponent::resized()
 
     grid.performLayout (getLocalBounds());
     
+}
+
+void AdditiveComponent::sliderValueChanged(juce::Slider* slider)
+{
+   
+    if (slider == &ampSlider) {
+        addAmp = ampSlider.getValue();
+        if (additiveListener != NULL)
+            additiveListener->onAddAmpChange(addAmp);
+    }
+}
+
+void AdditiveComponent::setAdditiveListener(AdditiveListener* addListener)
+{
+    additiveListener = addListener;
+    if (additiveListener != NULL)
+        additiveListener->onAddAmpChange(0);
 }

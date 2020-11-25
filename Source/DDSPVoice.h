@@ -36,6 +36,8 @@ public:
 	void setHarmonics(double harms[50]);
 	void setNoiseColor(double color);
     void setSubAmp(double subAmp);
+    void setAddAmp(double addAmp);
+    void setOutAmp(double outAmp);
 
 private:
 	double phaseBuffer_in[50];
@@ -50,6 +52,8 @@ private:
 	double shift = 0;
 	double stretch = 0;
     double subAmp = 0;
+    double addAmp = 0;
+    double outAmp = 0;
 
 	bool tailoff = false;
 
