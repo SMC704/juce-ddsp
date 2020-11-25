@@ -11,6 +11,7 @@
 #include <JuceHeader.h>
 #include "DDSPVoice.h"
 #include "HarmonicEditor.h"
+#include "SubtractiveComponent.h"
 #include "AdditiveComponent.h"
 //==============================================================================
 /**
@@ -76,6 +77,8 @@ public:
     
     void onShiftValueChange(double shiftValue) override;
     void onStretchValueChange(double stretchValue) override;
+
+    void onNoiseColorChange(double color);
 
 private:
     juce::dsp::FFT forwardFFT;

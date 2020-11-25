@@ -24,7 +24,7 @@
 //==============================================================================
 /**
 */
-class DdspsynthAudioProcessorEditor  : public juce::AudioProcessorEditor, private juce::Timer
+class DdspsynthAudioProcessorEditor  : public juce::AudioProcessorEditor, private juce::Timer, public SubtractiveComponent::SubtractiveListener
 {
 public:
     DdspsynthAudioProcessorEditor (DdspsynthAudioProcessor&);
@@ -50,5 +50,9 @@ private:
     
     OtherLookAndFeel otherLookAndFeel;
     
+    
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (DdspsynthAudioProcessorEditor)
+
+        // Inherited via SubtractiveListener
+        virtual void onNoiseColorChange(double color) override;
 };

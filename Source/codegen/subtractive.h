@@ -19,8 +19,8 @@
 #include "DDSPSynth_types.h"
 
 // Function Declarations
-extern void subtractive(double n_samples, double magnitudes[65], const double
-	b_signal[4161], double out[4096]);
+extern void subtractive(double n_samples, double magnitudes[65], double color,
+  double out[4096]);
 
 #endif
 

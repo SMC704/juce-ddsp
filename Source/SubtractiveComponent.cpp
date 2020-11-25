@@ -76,10 +76,11 @@ SubtractiveComponent::SubtractiveComponent()
 
     colourSlider.setSliderStyle(juce::Slider::SliderStyle::RotaryHorizontalVerticalDrag);
     colourSlider.setTextBoxStyle(juce::Slider::NoTextBox, true, 0, 0);
-    colourSlider.setRange(0.0f, 10.0f, 0.1f);
-    colourSlider.setValue(5.0f);
+    colourSlider.setRange(-1.0f, 1.0f, 0.01f);
+    colourSlider.setValue(0.0f);
     addAndMakeVisible(colourSlider);
     colourSlider.setBounds(0, 0, 100, 100);
+    colourSlider.addListener(this);
 
     addAndMakeVisible(colourLabel);
     colourLabel.setColour(juce::Label::textColourId, juce::Colours::white);
@@ -201,4 +202,20 @@ void SubtractiveComponent::resized()
 
     grid.performLayout(getLocalBounds());
     
+}
+
+void SubtractiveComponent::sliderValueChanged(juce::Slider* slider) 
+{
+    if (slider == &colourSlider) {
+        noiseColor = colourSlider.getValue();
+        if (subtractiveListener != NULL)
+            subtractiveListener->onNoiseColorChange(noiseColor);
+    }
+}
+
+void SubtractiveComponent::setSubtractiveListener(SubtractiveListener* subListener)
+{
+    subtractiveListener = subListener;
+    if (subtractiveListener != NULL)
+        subtractiveListener->onNoiseColorChange(0);
 }
