@@ -36,6 +36,9 @@ DDSPVoice::DDSPVoice()
 	adsr_params.sustain = 1;
 	adsr_params.release = 0.5;
 	adsr.setParameters(adsr_params);
+    
+    shift = 0.0;
+    stretch = 0.0;
 }
 
 bool DDSPVoice::canPlaySound(juce::SynthesiserSound * sound)
@@ -74,8 +77,8 @@ void DDSPVoice::renderNextBlock(juce::AudioSampleBuffer & outputBuffer, int star
 	}
 
 	int audio_size[1];
-
-	additive(numSamples, getSampleRate(), amplitudes, harms_copy, f0, phaseBuffer_in, addBuffer, audio_size, phaseBuffer_out);
+    
+	additive(numSamples, getSampleRate(), amplitudes, harms_copy, f0, phaseBuffer_in, shift, stretch, addBuffer, audio_size, phaseBuffer_out);
 	jassert(numSamples == audio_size[0]);
 
 	if (subtractiveOnOff)
@@ -92,20 +95,13 @@ void DDSPVoice::renderNextBlock(juce::AudioSampleBuffer & outputBuffer, int star
 		phaseBuffer_in[i] = phaseBuffer_out[i];
 	}
 
-	for (int i = 0; i < numSamples && i < 4096; i++) {
+	for (int i = startSample; i < startSample + numSamples && i < 4096; i++) {
 		if (!adsr.isActive()) {
 			// We are at the end of the release part
-
 			clearCurrentNote();
-
-			// fill the buffer with zeros and leave loop
-			for (int j = i; j < numSamples && j < 4096; j++) {
-				*(outputBuffer.getWritePointer(0, i)) = 0;
-				*(outputBuffer.getWritePointer(1, i)) = 0;
-			}
 			break;
 		}
-		float val = adsr.getNextSample() * (float)(addBuffer[i] + subBuffer[i]);
+		float val = adsr.getNextSample() * (float)(addBuffer[i-startSample] + subBuffer[i-startSample]);
 
 		*(outputBuffer.getWritePointer(0, i)) = val;
 		*(outputBuffer.getWritePointer(1, i)) = val;

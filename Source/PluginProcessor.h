@@ -12,10 +12,11 @@
 #include "DDSPVoice.h"
 #include "HarmonicEditor.h"
 #include "SubtractiveComponent.h"
+#include "AdditiveComponent.h"
 //==============================================================================
 /**
 */
-class DdspsynthAudioProcessor : public juce::AudioProcessor, public HarmonicEditor::Listener
+class DdspsynthAudioProcessor : public juce::AudioProcessor, public HarmonicEditor::Listener, public AdditiveComponent::Listener
 {
 public:
     //==============================================================================
@@ -73,6 +74,9 @@ public:
     };
 
 	void onValueChange(double harmonics[50]) override;
+    
+    void onShiftValueChange(double shiftValue) override;
+    void onStretchValueChange(double stretchValue) override;
 
     void onNoiseColorChange(double color);
 

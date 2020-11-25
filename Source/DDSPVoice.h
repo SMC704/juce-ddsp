@@ -36,6 +36,10 @@ public:
 	void setHarmonics(double harms[50]);
 
 	void setNoiseColor(double color);
+    
+    void setShift(double _shift) { shift = _shift; };
+    void setStretch(double _stretch) { stretch = _stretch; };
+
 
 	void setOnOffSubtractive(bool button);
 
@@ -49,6 +53,8 @@ private:
 	double subBuffer[4096];
 	double magnitudes[65];
 	double color = -1;
+	double shift = 0;
+	double stretch = 0;
 	bool subtractiveOnOff = false;
 
 	bool tailoff = false;

@@ -209,6 +209,15 @@ void DdspsynthAudioProcessor::onNoiseColorChange(double color)
     voice->setNoiseColor(color);
 }
 
+void DdspsynthAudioProcessor::onShiftValueChange(double shiftValue)
+{
+    voice->setShift(shiftValue);
+}
+
+void DdspsynthAudioProcessor::onStretchValueChange(double stretchValue)
+{
+    voice->setStretch(stretchValue);
+}
 void DdspsynthAudioProcessor::subtractiveOnOff(bool button)
 {
     voice->setOnOffSubtractive(button);
