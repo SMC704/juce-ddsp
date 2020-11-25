@@ -22,6 +22,54 @@
 
 #endif
 
+// Type Definitions
+class b_dsp_ColoredNoise
+{
+ public:
+  b_dsp_ColoredNoise *init();
+  void step(double varargout_1[4161]);
+  void setupAndReset();
+  void setup();
+  void release();
+ protected:
+  void stepImpl(double out[4161]);
+  double pFilterStates[10];
+ private:
+  int isInitialized;
+  boolean_T isSetupComplete;
+};
+
+class c_dsp_ColoredNoise
+{
+ public:
+  c_dsp_ColoredNoise *init();
+  void step(double varargout_1[4161]);
+  void setupAndReset();
+  void setup();
+  void release();
+ protected:
+  void stepImpl(double out[4161]);
+  double pFilterStates[255];
+ private:
+  int isInitialized;
+  boolean_T isSetupComplete;
+};
+
+class dsp_ColoredNoise
+{
+ public:
+  dsp_ColoredNoise *init();
+  void step(double varargout_1[4161]);
+  void setupAndReset();
+  void setup();
+  void release();
+ protected:
+  static void stepImpl(double out[4161]);
+ private:
+  int isInitialized;
+  boolean_T isSetupComplete;
+};
+
 #ifdef _MSC_VER
 
 #pragma warning(pop)

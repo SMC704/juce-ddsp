@@ -34,6 +34,7 @@ public:
 	void renderNextBlock(juce::AudioSampleBuffer& outputBuffer, int startSample, int numSamples) override;
 
 	void setHarmonics(double harms[50]);
+	void setNoiseColor(double color);
 
 private:
 	double phaseBuffer_in[50];
@@ -44,7 +45,7 @@ private:
 	double addBuffer[4096];
 	double subBuffer[4096];
 	double magnitudes[65];
-	double noise[4096+65];
+	double color = -1;
 
 	bool tailoff = false;
 

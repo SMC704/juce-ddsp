@@ -203,3 +203,9 @@ void DdspsynthAudioProcessor::onValueChange(double harmonics[50])
 {
 	voice->setHarmonics(harmonics);
 }
+
+void DdspsynthAudioProcessor::onNoiseColorChange(double color)
+{
+    voice->setNoiseColor(color);
+}
+

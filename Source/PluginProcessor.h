@@ -11,6 +11,7 @@
 #include <JuceHeader.h>
 #include "DDSPVoice.h"
 #include "HarmonicEditor.h"
+#include "SubtractiveComponent.h"
 //==============================================================================
 /**
 */
@@ -72,6 +73,8 @@ public:
     };
 
 	void onValueChange(double harmonics[50]) override;
+
+    void onNoiseColorChange(double color);
 
 private:
     juce::dsp::FFT forwardFFT;
