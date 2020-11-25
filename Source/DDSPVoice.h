@@ -35,6 +35,9 @@ public:
 
 	void setHarmonics(double harms[50]);
 	void setNoiseColor(double color);
+    
+    void setShift(double _shift) { shift = _shift; };
+    void setStretch(double _stretch) { stretch = _stretch; };
 
 private:
 	double phaseBuffer_in[50];

@@ -35,11 +35,12 @@ AdditiveComponent::AdditiveComponent()
     shiftSlider.setSliderStyle(juce::Slider::SliderStyle::RotaryHorizontalVerticalDrag);
     shiftSlider.setTextBoxStyle(juce::Slider::NoTextBox, true, 0, 0);
     shiftSlider.setPopupDisplayEnabled(true, true, this);
-    shiftSlider.setTextValueSuffix (" Hz or whatever");
-    shiftSlider.setRange(0.0f, 10.0f, 0.1f);
-    shiftSlider.setValue(5.0f);
+    //shiftSlider.setTextValueSuffix (" Halftones");
+    shiftSlider.setRange(-12.0f, 12.0f, 0.01f);
+    shiftSlider.setValue(0);
     addAndMakeVisible(shiftSlider);
     shiftSlider.setBounds(0, 0, 100, 100);
+    shiftSlider.addListener(this);
 
     addAndMakeVisible(shiftLabel);
     shiftLabel.setColour(juce::Label::textColourId, juce::Colours::white);
@@ -50,11 +51,12 @@ AdditiveComponent::AdditiveComponent()
     stretchSlider.setSliderStyle(juce::Slider::SliderStyle::RotaryHorizontalVerticalDrag);
     stretchSlider.setTextBoxStyle(juce::Slider::NoTextBox, true, 0, 0);
     stretchSlider.setPopupDisplayEnabled(true, true, this);
-    stretchSlider.setTextValueSuffix (" Hz or whatever");
-    stretchSlider.setRange(0.0f, 10.0f, 0.1f);
-    stretchSlider.setValue(5.0f);
+    //stretchSlider.setTextValueSuffix (" ");
+    stretchSlider.setRange(-1.0f, 1.0f, 0.01f);
+    stretchSlider.setValue(0.0f);
     addAndMakeVisible(stretchSlider);
     stretchSlider.setBounds(0, 0, 100, 100);
+    stretchSlider.addListener(this);
 
     addAndMakeVisible(stretchLabel);
     stretchLabel.setColour(juce::Label::textColourId, juce::Colours::white);
@@ -76,6 +78,9 @@ AdditiveComponent::AdditiveComponent()
     ampLabel.setJustificationType(juce::Justification::topLeft);
     ampLabel.setText("Amp", juce::NotificationType::dontSendNotification);
     ampLabel.setFont(fontDim);
+    
+    shiftValue = 0;
+    stretchValue = 0;
 }
 
 AdditiveComponent::~AdditiveComponent()
@@ -174,4 +179,29 @@ void AdditiveComponent::resized()
 
     grid.performLayout (getLocalBounds());
     
+}
+
+void AdditiveComponent::setListener(AdditiveComponent::Listener* _pListener)
+{
+    pListener = _pListener;
+    if (pListener != NULL) {
+        pListener->onShiftValueChange(shiftValue);
+        pListener->onStretchValueChange(stretchValue);
+    }
+}
+
+void AdditiveComponent::sliderValueChanged (juce::Slider* slider)
+{
+    if (pListener != NULL) {
+        if (slider == &shiftSlider)
+        {
+            shiftValue = slider->getValue();
+            pListener->onShiftValueChange(shiftValue);
+        }
+        else if (slider == &stretchSlider)
+        {
+            stretchValue = slider->getValue();
+            pListener->onStretchValueChange(stretchValue);
+        }
+    }
 }
