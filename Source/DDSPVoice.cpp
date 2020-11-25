@@ -23,7 +23,7 @@ DDSPVoice::DDSPVoice()
 	}
 
 	for (int i = 0; i < 4096; i++) {
-		amplitudes[i] = 1 + sin(2 * juce::double_Pi * 1024 * i/1024);
+		amplitudes[i] = 2;
 		f0[i] = 440;
 	}
 	for (int i = 0; i < 50; i++) {
@@ -31,7 +31,9 @@ DDSPVoice::DDSPVoice()
 	}
 
 	adsr.setSampleRate(getSampleRate());
-	adsr_params.attack = 1;
+	adsr_params.attack = 0.1;
+	adsr_params.decay = 0.1;
+	adsr_params.sustain = 1;
 	adsr_params.release = 0.5;
 	adsr.setParameters(adsr_params);
 }
@@ -47,15 +49,17 @@ void DDSPVoice::startNote(int midiNoteNumber, float velocity, juce::SynthesiserS
 	adsr.noteOn();
 
 	double freq = juce::MidiMessage::getMidiNoteInHertz(midiNoteNumber);
-	for (int i = 0; i < 1024; i++) {
+	for (int i = 0; i < 4096; i++) {
 		f0[i] = freq;
 	}
 }
 
 void DDSPVoice::stopNote(float, bool allowTailOff)
 {
-	adsr.noteOff();
-	tailoff = true;
+	if (allowTailOff)
+		adsr.noteOff();
+	else
+		adsr.reset();
 }
 
 void DDSPVoice::renderNextBlock(juce::AudioSampleBuffer & outputBuffer, int startSample, int numSamples)
@@ -83,15 +87,22 @@ void DDSPVoice::renderNextBlock(juce::AudioSampleBuffer & outputBuffer, int star
 	}
 
 	for (int i = 0; i < numSamples && i < 4096; i++) {
-		float val = adsr.getNextSample() * (float)(addBuffer[i] + subBuffer[i]);
-		*(outputBuffer.getWritePointer(0, i)) = val;
-		*(outputBuffer.getWritePointer(1, i)) = val;
+		if (!adsr.isActive()) {
+			// We are at the end of the release part
 
-		if (tailoff && !adsr.isActive()) {
-			tailoff = false;
 			clearCurrentNote();
+
+			// fill the buffer with zeros and leave loop
+			for (int j = i; j < numSamples && j < 4096; j++) {
+				*(outputBuffer.getWritePointer(0, i)) = 0;
+				*(outputBuffer.getWritePointer(1, i)) = 0;
+			}
 			break;
 		}
+		float val = adsr.getNextSample() * (float)(addBuffer[i] + subBuffer[i]);
+
+		*(outputBuffer.getWritePointer(0, i)) = val;
+		*(outputBuffer.getWritePointer(1, i)) = val;
 	}
 }
 void DDSPVoice::setHarmonics(double harms[50])
