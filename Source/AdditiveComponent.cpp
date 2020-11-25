@@ -120,55 +120,55 @@ void AdditiveComponent::resized()
         juce::GridItem(nameLabel).withSize(100.0f, 30.0f)
             .withAlignSelf(juce::GridItem::AlignSelf::start)
             .withJustifySelf(juce::GridItem::JustifySelf::start)
-            .withMargin(juce::GridItem::Margin::Margin(10.0f))
+            .withMargin(juce::GridItem::Margin(10.0f))
             .withArea(1, 1),
 
         juce::GridItem(onoffButton).withSize(40.0f, 30.0f)
             .withAlignSelf(juce::GridItem::AlignSelf::start)
             .withJustifySelf(juce::GridItem::JustifySelf::end)
-            .withMargin(juce::GridItem::Margin::Margin(10.0f))
+            .withMargin(juce::GridItem::Margin(10.0f))
             .withArea(1, 3),
 
         juce::GridItem(shiftSlider).withSize(sliderDim, sliderDim)
             .withAlignSelf(juce::GridItem::AlignSelf::start)
             .withJustifySelf(juce::GridItem::JustifySelf::center)
-            .withMargin(juce::GridItem::Margin::Margin(10.0f, 0, 0, 0))
+            .withMargin(juce::GridItem::Margin(10.0f, 0, 0, 0))
             .withArea(4, 1),
 
         juce::GridItem(shiftLabel).withSize(65.0f, 30.0f)
             .withAlignSelf(juce::GridItem::AlignSelf::end)
             .withJustifySelf(juce::GridItem::JustifySelf::center)
-            .withMargin(juce::GridItem::Margin::Margin(0, 0, 0, 24.0f))
+            .withMargin(juce::GridItem::Margin(0, 0, 0, 24.0f))
             .withArea(5, 1),
 
         juce::GridItem(stretchSlider).withSize(sliderDim, sliderDim)
             .withAlignSelf(juce::GridItem::AlignSelf::start)
             .withJustifySelf(juce::GridItem::JustifySelf::end)
-            .withMargin(juce::GridItem::Margin::Margin(10.0f, 0, 0, 0))
+            .withMargin(juce::GridItem::Margin(10.0f, 0, 0, 0))
             .withArea(4, 1),
 
         juce::GridItem(stretchLabel).withSize(65.0f, 30.0f)
             .withAlignSelf(juce::GridItem::AlignSelf::end)
             .withJustifySelf(juce::GridItem::JustifySelf::end)
-            .withMargin(juce::GridItem::Margin::Margin(0, -12.0f, 0, 0))
+            .withMargin(juce::GridItem::Margin(0, -12.0f, 0, 0))
             .withArea(5, 1),
 
         juce::GridItem(ampSlider).withSize(sliderDim, sliderDim)
             .withAlignSelf(juce::GridItem::AlignSelf::start)
             .withJustifySelf(juce::GridItem::JustifySelf::end)
-            .withMargin(juce::GridItem::Margin::Margin(10.0f, 0, 0, 0))
+            .withMargin(juce::GridItem::Margin(10.0f, 0, 0, 0))
             .withArea(4, 2),
 
         juce::GridItem(ampLabel).withSize(65.0f, 30.0f)
             .withAlignSelf(juce::GridItem::AlignSelf::end)
             .withJustifySelf(juce::GridItem::JustifySelf::end)
-            .withMargin(juce::GridItem::Margin::Margin(0, -20.0f, 0, 0))
+            .withMargin(juce::GridItem::Margin(0, -20.0f, 0, 0))
             .withArea(5, 2),
 
         juce::GridItem(harmonicEditor).withSize(360.0f, 130.0f)
             .withAlignSelf(juce::GridItem::AlignSelf::start)
             .withJustifySelf(juce::GridItem::JustifySelf::start)
-            .withMargin(juce::GridItem::Margin::Margin(50.0f, 30.0f, 30.0f, 30.0f))
+            .withMargin(juce::GridItem::Margin(50.0f, 30.0f, 30.0f, 30.0f))
             .withArea(1, 1),
     };
 

@@ -162,61 +162,61 @@ void ModelComponent::resized()
         juce::GridItem(nameLabel).withSize(60.0f, 30.0f)
             .withAlignSelf(juce::GridItem::AlignSelf::start)
             .withJustifySelf(juce::GridItem::JustifySelf::start)
-            .withMargin(juce::GridItem::Margin::Margin(10.0f))
+            .withMargin(juce::GridItem::Margin(10.0f))
             .withArea(1, 1),
 
         juce::GridItem(onoffButton).withSize(40.0f, 30.0f)
             .withAlignSelf(juce::GridItem::AlignSelf::start)
             .withJustifySelf(juce::GridItem::JustifySelf::end)
-            .withMargin(juce::GridItem::Margin::Margin(10.0f))
+            .withMargin(juce::GridItem::Margin(10.0f))
             .withArea(1, 2),
 
         juce::GridItem(violinButton).withSize(buttonDim, buttonDim)
             .withAlignSelf(juce::GridItem::AlignSelf::start)
             .withJustifySelf(juce::GridItem::JustifySelf::end)
-            .withMargin(juce::GridItem::Margin::Margin(-20.f, 0, 0, 0))
+            .withMargin(juce::GridItem::Margin(-20.f, 0, 0, 0))
             .withArea(2, 1),
 
         juce::GridItem(fluteButton).withSize(buttonDim, buttonDim)
             .withAlignSelf(juce::GridItem::AlignSelf::start)
             .withJustifySelf(juce::GridItem::JustifySelf::start)
-            .withMargin(juce::GridItem::Margin::Margin(-20.f, 0, 0, 0))
+            .withMargin(juce::GridItem::Margin(-20.f, 0, 0, 0))
             .withArea(2, 2),
 
         juce::GridItem(saxophoneButton).withSize(buttonDim, buttonDim)
             .withAlignSelf(juce::GridItem::AlignSelf::start)
             .withJustifySelf(juce::GridItem::JustifySelf::end)
-            .withMargin(juce::GridItem::Margin::Margin(-20.f, 0, 0, 0))
+            .withMargin(juce::GridItem::Margin(-20.f, 0, 0, 0))
             .withArea(3, 1),
 
         juce::GridItem(trumpetButton).withSize(buttonDim, buttonDim)
             .withAlignSelf(juce::GridItem::AlignSelf::start)
             .withJustifySelf(juce::GridItem::JustifySelf::start)
-            .withMargin(juce::GridItem::Margin::Margin(-20.f, 0, 0, 0))
+            .withMargin(juce::GridItem::Margin(-20.f, 0, 0, 0))
             .withArea(3,2),
 
         juce::GridItem(extra1Button).withSize(buttonDim, buttonDim)
             .withAlignSelf(juce::GridItem::AlignSelf::start)
             .withJustifySelf(juce::GridItem::JustifySelf::end)
-            .withMargin(juce::GridItem::Margin::Margin(-20.f, 0, 0, 0))
+            .withMargin(juce::GridItem::Margin(-20.f, 0, 0, 0))
             .withArea(4, 1),
 
         juce::GridItem(extra2Button).withSize(buttonDim, buttonDim)
             .withAlignSelf(juce::GridItem::AlignSelf::start)
             .withJustifySelf(juce::GridItem::JustifySelf::start)
-            .withMargin(juce::GridItem::Margin::Margin(-20.f, 0, 0, 0))
+            .withMargin(juce::GridItem::Margin(-20.f, 0, 0, 0))
             .withArea(4,2),
 
         juce::GridItem(extra3Button).withSize(buttonDim, buttonDim)
             .withAlignSelf(juce::GridItem::AlignSelf::start)
             .withJustifySelf(juce::GridItem::JustifySelf::end)
-            .withMargin(juce::GridItem::Margin::Margin(-20.f, 0, 0, 0))
+            .withMargin(juce::GridItem::Margin(-20.f, 0, 0, 0))
             .withArea(5,1),
 
         juce::GridItem(extra4Button).withSize(buttonDim, buttonDim)
             .withAlignSelf(juce::GridItem::AlignSelf::start)
             .withJustifySelf(juce::GridItem::JustifySelf::start)
-            .withMargin(juce::GridItem::Margin::Margin(-20.f, 0, 0, 0))
+            .withMargin(juce::GridItem::Margin(-20.f, 0, 0, 0))
             .withArea(5,2),
     };
 

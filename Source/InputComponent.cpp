@@ -72,19 +72,19 @@ void InputComponent::resized()
         juce::GridItem(nameLabel).withSize(100.0f, 30.0f)
             .withAlignSelf(juce::GridItem::AlignSelf::start)
             .withJustifySelf(juce::GridItem::JustifySelf::start)
-            .withMargin(juce::GridItem::Margin::Margin(10.0f))
+            .withMargin(juce::GridItem::Margin(10.0f))
             .withArea(1, 1),
 
          juce::GridItem(midiButton).withSize(buttonDimWidth, buttonDimHeigth)
             .withAlignSelf(juce::GridItem::AlignSelf::start)
             .withJustifySelf(juce::GridItem::JustifySelf::start)
-            .withMargin(juce::GridItem::Margin::Margin(-17.0f, 0, 0 , -35.0f))
+            .withMargin(juce::GridItem::Margin(-17.0f, 0, 0 , -35.0f))
             .withArea(2, 2),
 
         juce::GridItem(lineButton).withSize(buttonDimWidth, buttonDimHeigth)
             .withAlignSelf(juce::GridItem::AlignSelf::start)
             .withJustifySelf(juce::GridItem::JustifySelf::center)
-            .withMargin(juce::GridItem::Margin::Margin(-17.0f, 0, 0 , 20.0f))
+            .withMargin(juce::GridItem::Margin(-17.0f, 0, 0 , 20.0f))
             .withArea(2, 2),
 
     };
