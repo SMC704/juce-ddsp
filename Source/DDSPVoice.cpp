@@ -29,6 +29,11 @@ DDSPVoice::DDSPVoice()
 	for (int i = 0; i < 50; i++) {
 		harmonics[i] = 0.5;
 	}
+
+	adsr.setSampleRate(getSampleRate());
+	adsr_params.attack = 1;
+	adsr_params.release = 0.5;
+	adsr.setParameters(adsr_params);
 }
 
 bool DDSPVoice::canPlaySound(juce::SynthesiserSound * sound)
@@ -38,6 +43,9 @@ bool DDSPVoice::canPlaySound(juce::SynthesiserSound * sound)
 
 void DDSPVoice::startNote(int midiNoteNumber, float velocity, juce::SynthesiserSound * sound, int)
 {
+	adsr.reset();
+	adsr.noteOn();
+
 	double freq = juce::MidiMessage::getMidiNoteInHertz(midiNoteNumber);
 	for (int i = 0; i < 1024; i++) {
 		f0[i] = freq;
@@ -46,11 +54,14 @@ void DDSPVoice::startNote(int midiNoteNumber, float velocity, juce::SynthesiserS
 
 void DDSPVoice::stopNote(float, bool allowTailOff)
 {
-	clearCurrentNote();
+	adsr.noteOff();
+	tailoff = true;
 }
 
 void DDSPVoice::renderNextBlock(juce::AudioSampleBuffer & outputBuffer, int startSample, int numSamples)
 {
+	if (!adsr.isActive()) return;
+	
 	// generated additive synth code overwrites passed harmonics
 	// so create copy before passing
 	double harms_copy[50];
@@ -71,12 +82,16 @@ void DDSPVoice::renderNextBlock(juce::AudioSampleBuffer & outputBuffer, int star
 		phaseBuffer_in[i] = phaseBuffer_out[i];
 	}
 
-
-
 	for (int i = 0; i < numSamples && i < 4096; i++) {
-		float val = (float)(addBuffer[i] + subBuffer[i]);
+		float val = adsr.getNextSample() * (float)(addBuffer[i] + subBuffer[i]);
 		*(outputBuffer.getWritePointer(0, i)) = val;
 		*(outputBuffer.getWritePointer(1, i)) = val;
+
+		if (tailoff && !adsr.isActive()) {
+			tailoff = false;
+			clearCurrentNote();
+			break;
+		}
 	}
 }
 void DDSPVoice::setHarmonics(double harms[50])
