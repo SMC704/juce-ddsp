@@ -108,6 +108,14 @@ void DDSPVoice::renderNextBlock(juce::AudioSampleBuffer & outputBuffer, int star
 void DDSPVoice::setHarmonics(double harms[50])
 {
 	for (int i = 0; i < 50; i++) {
-		harmonics[i] = 1 - harms[i];
+        
+        float value = 1 - harms[i];
+        
+        if (value > 1.0f)
+            value = 1.0f;
+        if (value < 0.0f)
+            value = 0.0f;
+        
+		harmonics[i] = value;
 	}
 }

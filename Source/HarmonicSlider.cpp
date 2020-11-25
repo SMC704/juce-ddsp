@@ -33,7 +33,6 @@ void HarmonicSlider::paint (juce::Graphics& g)
 
 void HarmonicSlider::resized()
 {
-    DBG(value);
     rectangle = juce::Rectangle<int>(0, getHeight()*value, getWidth(), getHeight()*(1-value)+1);
 }
 
