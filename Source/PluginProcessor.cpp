@@ -209,3 +209,8 @@ void DdspsynthAudioProcessor::onNoiseColorChange(double color)
     voice->setNoiseColor(color);
 }
 
+void DdspsynthAudioProcessor::onSubAmpChange(double subAmp)
+{
+    voice->setSubAmp(subAmp);
+}
+

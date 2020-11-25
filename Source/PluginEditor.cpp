@@ -69,3 +69,8 @@ void DdspsynthAudioProcessorEditor::onNoiseColorChange(double color)
 {
     audioProcessor.onNoiseColorChange(color);
 }
+
+void DdspsynthAudioProcessorEditor::onSubAmpChange(double subAmp)
+{
+    audioProcessor.onSubAmpChange(subAmp);
+}

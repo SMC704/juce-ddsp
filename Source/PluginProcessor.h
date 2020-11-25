@@ -75,6 +75,7 @@ public:
 	void onValueChange(double harmonics[50]) override;
 
     void onNoiseColorChange(double color);
+    void onSubAmpChange(double subAmp);
 
 private:
     juce::dsp::FFT forwardFFT;

@@ -95,7 +95,7 @@ void DDSPVoice::renderNextBlock(juce::AudioSampleBuffer & outputBuffer, int star
 			}
 			break;
 		}
-		float val = adsr.getNextSample() * (float)(addBuffer[i] + subBuffer[i]);
+		float val = adsr.getNextSample() * (float)(addBuffer[i] + subBuffer[i]*subAmp);
 
 		*(outputBuffer.getWritePointer(0, i)) = val;
 		*(outputBuffer.getWritePointer(1, i)) = val;
@@ -119,4 +119,9 @@ void DDSPVoice::setHarmonics(double harms[50])
 void DDSPVoice::setNoiseColor(double _color) 
 {
 	color = _color;
+}
+
+void DDSPVoice::setSubAmp(double _subAmp)
+{
+    subAmp = _subAmp;
 }

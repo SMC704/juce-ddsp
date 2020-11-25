@@ -31,10 +31,11 @@ SubtractiveComponent::SubtractiveComponent()
 
     ampSlider.setSliderStyle(juce::Slider::SliderStyle::RotaryHorizontalVerticalDrag);
     ampSlider.setTextBoxStyle(juce::Slider::NoTextBox, true, 0, 0);
-    ampSlider.setRange(0.0f, 10.0f, 0.1f);
-    ampSlider.setValue(5.0f);
+    ampSlider.setRange(0.0f, 1.0f, 0.1f);
+    ampSlider.setValue(0.8f);
     addAndMakeVisible(ampSlider);
     ampSlider.setBounds(0, 0, 100, 100);
+    ampSlider.addListener(this);
 
     addAndMakeVisible(ampLabel);
     ampLabel.setColour(juce::Label::textColourId, juce::Colours::white);
@@ -204,12 +205,18 @@ void SubtractiveComponent::resized()
     
 }
 
-void SubtractiveComponent::sliderValueChanged(juce::Slider* slider) 
+void SubtractiveComponent::sliderValueChanged(juce::Slider* slider)
 {
     if (slider == &colourSlider) {
         noiseColor = colourSlider.getValue();
         if (subtractiveListener != NULL)
             subtractiveListener->onNoiseColorChange(noiseColor);
+    }
+    
+    if (slider == &ampSlider) {
+        subAmp = ampSlider.getValue();
+        if (subtractiveListener != NULL)
+            subtractiveListener->onSubAmpChange(subAmp);
     }
 }
 
