@@ -76,6 +76,8 @@ public:
 
     void onNoiseColorChange(double color);
 
+    void subtractiveOnOff(bool button);
+
 private:
     juce::dsp::FFT forwardFFT;
     

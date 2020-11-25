@@ -15,7 +15,7 @@
 //==============================================================================
 /*
 */
-class SubtractiveComponent  : public juce::Component, public juce::Slider::Listener 
+class SubtractiveComponent  : public juce::Component, public juce::Slider::Listener, public juce::ToggleButton::Listener
 {
 public:
     SubtractiveComponent();
@@ -24,11 +24,11 @@ public:
     void paint (juce::Graphics&) override;
     void resized() override;
 
-    void sliderValueChanged(juce::Slider* slider) override;
 
     struct SubtractiveListener
     {
         virtual void onNoiseColorChange(double color) = 0;
+        virtual void onOnOffChange(bool onOff) = 0;
     };
 
     void setSubtractiveListener(SubtractiveListener* subListener);
@@ -54,4 +54,9 @@ private:
     SubtractiveListener* subtractiveListener = NULL;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (SubtractiveComponent)
+
+        // Inherited via Listener
+        void buttonClicked(juce::Button*) override;
+        void sliderValueChanged(juce::Slider* slider) override;
+
 };

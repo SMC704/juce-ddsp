@@ -62,7 +62,17 @@ void DDSPVoice::renderNextBlock(juce::AudioSampleBuffer & outputBuffer, int star
 
 	additive(numSamples, getSampleRate(), amplitudes, harms_copy, f0, phaseBuffer_in, addBuffer, audio_size, phaseBuffer_out);
 	jassert(numSamples == audio_size[0]);
-	subtractive(numSamples, magnitudes, color, subBuffer);
+
+	if (subtractiveOnOff)
+	{
+		subtractive(numSamples, magnitudes, color, subBuffer);
+	}
+	else {
+		for (int i = 0; i < 4096; i++)
+		{
+			subBuffer[i] = 0;
+		}
+	}
 	for (int i = 0; i < 50; ++i) {
 		phaseBuffer_in[i] = phaseBuffer_out[i];
 	}
@@ -85,4 +95,9 @@ void DDSPVoice::setHarmonics(double harms[50])
 void DDSPVoice::setNoiseColor(double _color) 
 {
 	color = _color;
+}
+
+void DDSPVoice::setOnOffSubtractive(bool _button)
+{
+	subtractiveOnOff = _button;
 }

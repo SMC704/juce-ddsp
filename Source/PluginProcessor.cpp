@@ -209,3 +209,7 @@ void DdspsynthAudioProcessor::onNoiseColorChange(double color)
     voice->setNoiseColor(color);
 }
 
+void DdspsynthAudioProcessor::subtractiveOnOff(bool button)
+{
+    voice->setOnOffSubtractive(button);
+}

@@ -34,7 +34,10 @@ public:
 	void renderNextBlock(juce::AudioSampleBuffer& outputBuffer, int startSample, int numSamples) override;
 
 	void setHarmonics(double harms[50]);
+
 	void setNoiseColor(double color);
+
+	void setOnOffSubtractive(bool button);
 
 private:
 	double phaseBuffer_in[50];
@@ -46,6 +49,7 @@ private:
 	double subBuffer[4096];
 	double magnitudes[65];
 	double color = -1;
+	bool subtractiveOnOff = false;
 
 	juce::Random r;
 };
