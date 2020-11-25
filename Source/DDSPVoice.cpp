@@ -29,6 +29,9 @@ DDSPVoice::DDSPVoice()
 	for (int i = 0; i < 50; i++) {
 		harmonics[i] = 0.5;
 	}
+    
+    shift = 0.0;
+    stretch = 0.0;
 }
 
 bool DDSPVoice::canPlaySound(juce::SynthesiserSound * sound)
@@ -64,7 +67,8 @@ void DDSPVoice::renderNextBlock(juce::AudioSampleBuffer & outputBuffer, int star
 	for (int i = 0; i < numSamples + 65; i++) {
 		noise[i] = r.nextDouble();
 	}
-	additive(numSamples, getSampleRate(), amplitudes, harms_copy, f0, phaseBuffer_in, addBuffer, audio_size, phaseBuffer_out);
+    
+	additive(numSamples, getSampleRate(), amplitudes, harms_copy, f0, phaseBuffer_in, shift, stretch, addBuffer, audio_size, phaseBuffer_out);
 	jassert(numSamples == audio_size[0]);
 	subtractive(numSamples, magnitudes, noise, subBuffer);
 	for (int i = 0; i < 50; ++i) {

@@ -18,10 +18,11 @@ DdspsynthAudioProcessorEditor::DdspsynthAudioProcessorEditor (DdspsynthAudioProc
 
     backgroundTexture = backgroundTexture.rescaled(900, 600);
     addAndMakeVisible(mainComponent);
-	auto additive = mainComponent.findChildWithID("additive");
+	auto additive = (AdditiveComponent*)mainComponent.findChildWithID("additive");
 	auto harmEditor = (HarmonicEditor*)(additive->findChildWithID("harmonicEditor"));
 
 	harmEditor->setListener(&p);
+    additive->setListener(&p);
 	
     mainComponent.setBounds(20, 20, 860, 560);
     startTimerHz (60);

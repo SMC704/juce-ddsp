@@ -203,3 +203,13 @@ void DdspsynthAudioProcessor::onValueChange(double harmonics[50])
 {
 	voice->setHarmonics(harmonics);
 }
+
+void DdspsynthAudioProcessor::onShiftValueChange(double shiftValue)
+{
+    voice->setShift(shiftValue);
+}
+
+void DdspsynthAudioProcessor::onStretchValueChange(double stretchValue)
+{
+    voice->setStretch(stretchValue);
+}

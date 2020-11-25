@@ -34,6 +34,9 @@ public:
 	void renderNextBlock(juce::AudioSampleBuffer& outputBuffer, int startSample, int numSamples) override;
 
 	void setHarmonics(double harms[50]);
+    
+    void setShift(double _shift) { shift = _shift; };
+    void setStretch(double _stretch) { stretch = _stretch; };
 
 private:
 	double phaseBuffer_in[50];
@@ -45,6 +48,8 @@ private:
 	double subBuffer[4096];
 	double magnitudes[65];
 	double noise[4096+65];
+    double shift;
+    double stretch;
 
 	juce::Random r;
 };
