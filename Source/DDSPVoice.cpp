@@ -23,12 +23,19 @@ DDSPVoice::DDSPVoice()
 	}
 
 	for (int i = 0; i < 4096; i++) {
-		amplitudes[i] = 1;
+		amplitudes[i] = 2;
 		f0[i] = 440;
 	}
 	for (int i = 0; i < 50; i++) {
 		harmonics[i] = 0.5;
 	}
+
+	adsr.setSampleRate(getSampleRate());
+	adsr_params.attack = 0.1;
+	adsr_params.decay = 0.1;
+	adsr_params.sustain = 1;
+	adsr_params.release = 0.5;
+	adsr.setParameters(adsr_params);
 }
 
 bool DDSPVoice::canPlaySound(juce::SynthesiserSound * sound)
@@ -38,19 +45,27 @@ bool DDSPVoice::canPlaySound(juce::SynthesiserSound * sound)
 
 void DDSPVoice::startNote(int midiNoteNumber, float velocity, juce::SynthesiserSound * sound, int)
 {
+	adsr.reset();
+	adsr.noteOn();
+
 	double freq = juce::MidiMessage::getMidiNoteInHertz(midiNoteNumber);
-	for (int i = 0; i < 1024; i++) {
+	for (int i = 0; i < 4096; i++) {
 		f0[i] = freq;
 	}
 }
 
 void DDSPVoice::stopNote(float, bool allowTailOff)
 {
-	clearCurrentNote();
+	if (allowTailOff)
+		adsr.noteOff();
+	else
+		adsr.reset();
 }
 
 void DDSPVoice::renderNextBlock(juce::AudioSampleBuffer & outputBuffer, int startSample, int numSamples)
 {
+	if (!adsr.isActive()) return;
+	
 	// generated additive synth code overwrites passed harmonics
 	// so create copy before passing
 	double harms_copy[50];
@@ -77,10 +92,21 @@ void DDSPVoice::renderNextBlock(juce::AudioSampleBuffer & outputBuffer, int star
 		phaseBuffer_in[i] = phaseBuffer_out[i];
 	}
 
-
-
 	for (int i = 0; i < numSamples && i < 4096; i++) {
-		float val = (float)(addBuffer[i]*0.1 + subBuffer[i]);
+		if (!adsr.isActive()) {
+			// We are at the end of the release part
+
+			clearCurrentNote();
+
+			// fill the buffer with zeros and leave loop
+			for (int j = i; j < numSamples && j < 4096; j++) {
+				*(outputBuffer.getWritePointer(0, i)) = 0;
+				*(outputBuffer.getWritePointer(1, i)) = 0;
+			}
+			break;
+		}
+		float val = adsr.getNextSample() * (float)(addBuffer[i] + subBuffer[i]);
+
 		*(outputBuffer.getWritePointer(0, i)) = val;
 		*(outputBuffer.getWritePointer(1, i)) = val;
 	}
@@ -88,7 +114,15 @@ void DDSPVoice::renderNextBlock(juce::AudioSampleBuffer & outputBuffer, int star
 void DDSPVoice::setHarmonics(double harms[50])
 {
 	for (int i = 0; i < 50; i++) {
-		harmonics[i] = harms[i];
+        
+        float value = 1 - harms[i];
+        
+        if (value > 1.0f)
+            value = 1.0f;
+        if (value < 0.0f)
+            value = 0.0f;
+        
+		harmonics[i] = value;
 	}
 }
 

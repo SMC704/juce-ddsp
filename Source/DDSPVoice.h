@@ -51,5 +51,9 @@ private:
 	double color = -1;
 	bool subtractiveOnOff = false;
 
+	bool tailoff = false;
+
+	juce::ADSR adsr;
+	juce::ADSR::Parameters adsr_params;
 	juce::Random r;
 };

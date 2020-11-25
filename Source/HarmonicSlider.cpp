@@ -39,6 +39,13 @@ void HarmonicSlider::resized()
 void HarmonicSlider::setValue(float newValue)
 {
     value = newValue;
+    
+    if (value > 1.0f)
+        value = 1.0f;
+    
+    if (value < 0.0f)
+        value = 0.0f;
+    
     repaint();
     resized();
 }
