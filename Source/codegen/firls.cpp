@@ -31,11 +31,11 @@ void firls(const double varargin_3[64], double h_data[], int h_size[2])
   double b_data[66];
   unsigned char I1_data[4225];
   signed char I2_data[4225];
+  double y_data[4096];
   double b0_data[66];
-  double x_data[65];
-  coder::array<double, 1U> r;
-  double b_x_data[65];
-  double tmp_data[4225];
+  double b_y_data[65];
+  double c_y_data[65];
+  static double tmp_data[4225];
   double b_tmp_data[4225];
   double c_tmp_data[4225];
   double d_tmp_data[4225];
@@ -57,6 +57,10 @@ void firls(const double varargin_3[64], double h_data[], int h_size[2])
   std::memcpy(&k_data[0], &b_k_data[0], 64U * sizeof(signed char));
   b0 = 0.0;
   std::memset(&b_data[0], 0, 64U * sizeof(double));
+  for (i = 0; i < 64; i++) {
+    y_data[i] = 6.2831853071795862 * static_cast<double>(k_data[i]);
+  }
+
   for (I1_data_tmp = 0; I1_data_tmp < 32; I1_data_tmp++) {
     double m_s_tmp;
     double m_s_tmp_tmp;
@@ -74,67 +78,60 @@ void firls(const double varargin_3[64], double h_data[], int h_size[2])
     b1 = varargin_3[s] - b1_tmp;
     b0 += b1 * b_m_s_tmp + m_s / 2.0 * (m_s_tmp_tmp * m_s_tmp_tmp - m_s_tmp *
       m_s_tmp);
-    r.set_size(64);
     for (i = 0; i < 64; i++) {
-      r[i] = 6.2831853071795862 * static_cast<double>(k_data[i]);
-    }
-
-    s = r.size(0);
-    for (i = 0; i < s; i++) {
-      x_data[i] = r[i] * m_s_tmp_tmp;
+      b_y_data[i] = y_data[i] * m_s_tmp_tmp;
     }
 
     for (s = 0; s < 64; s++) {
-      x_data[s] = std::cos(x_data[s]);
+      b_y_data[s] = std::cos(b_y_data[s]);
     }
 
-    s = r.size(0);
-    for (i = 0; i < s; i++) {
-      b_x_data[i] = r[i] * m_s_tmp;
+    for (i = 0; i < 64; i++) {
+      c_y_data[i] = y_data[i] * m_s_tmp;
     }
 
     for (s = 0; s < 64; s++) {
-      b_x_data[s] = std::cos(b_x_data[s]);
+      c_y_data[s] = std::cos(c_y_data[s]);
     }
 
     a = m_s / 39.478417604357432;
     for (i = 0; i < 64; i++) {
-      b_data[i] += a * (x_data[i] - b_x_data[i]) / static_cast<double>(k_data[i]
-        * k_data[i]);
+      b_data[i] += a * (b_y_data[i] - c_y_data[i]) / static_cast<double>
+        (k_data[i] * k_data[i]);
+    }
+
+    for (i = 0; i < 64; i++) {
+      b_y_data[i] = 2.0 * static_cast<double>(k_data[i]) * m_s_tmp_tmp;
     }
 
     a = m_s_tmp_tmp * (m_s * m_s_tmp_tmp + b1);
-    for (i = 0; i < 64; i++) {
-      x_data[i] = 2.0 * static_cast<double>(k_data[i]) * m_s_tmp_tmp;
+    for (s = 0; s < 64; s++) {
+      if (std::abs(b_y_data[s]) < 1.0020841800044864E-292) {
+        b_y_data[s] = 1.0;
+      } else {
+        m_s = 3.1415926535897931 * b_y_data[s];
+        m_s = std::sin(m_s) / m_s;
+        b_y_data[s] = m_s;
+      }
     }
 
-    for (s = 0; s < 64; s++) {
-      if (std::abs(x_data[s]) < 1.0020841800044864E-292) {
-        x_data[s] = 1.0;
-      } else {
-        m_s = 3.1415926535897931 * x_data[s];
-        m_s = std::sin(m_s) / m_s;
-        x_data[s] = m_s;
-      }
+    for (i = 0; i < 64; i++) {
+      c_y_data[i] = 2.0 * static_cast<double>(k_data[i]) * m_s_tmp;
     }
 
     b_m_s_tmp = m_s_tmp * (b1_tmp + b1);
-    for (i = 0; i < 64; i++) {
-      b_x_data[i] = 2.0 * static_cast<double>(k_data[i]) * m_s_tmp;
-    }
-
     for (s = 0; s < 64; s++) {
-      if (std::abs(b_x_data[s]) < 1.0020841800044864E-292) {
-        b_x_data[s] = 1.0;
+      if (std::abs(c_y_data[s]) < 1.0020841800044864E-292) {
+        c_y_data[s] = 1.0;
       } else {
-        m_s = 3.1415926535897931 * b_x_data[s];
+        m_s = 3.1415926535897931 * c_y_data[s];
         m_s = std::sin(m_s) / m_s;
-        b_x_data[s] = m_s;
+        c_y_data[s] = m_s;
       }
     }
 
     for (i = 0; i < 64; i++) {
-      b_data[i] += a * x_data[i] - b_m_s_tmp * b_x_data[i];
+      b_data[i] += a * b_y_data[i] - b_m_s_tmp * c_y_data[i];
     }
 
     for (i = 0; i < 4225; i++) {
@@ -203,14 +200,14 @@ void firls(const double varargin_3[64], double h_data[], int h_size[2])
   b0_data[0] = b0;
   std::memcpy(&b0_data[1], &b_data[0], 64U * sizeof(double));
   std::memcpy(&b_data[0], &b0_data[0], 65U * sizeof(double));
-  std::memcpy(&x_data[0], &b_data[0], 65U * sizeof(double));
-  mldiv(G_data, x_data);
+  std::memcpy(&b_y_data[0], &b_data[0], 65U * sizeof(double));
+  mldiv(G_data, b_y_data);
   h_size[0] = 1;
   h_size[1] = 129;
-  h_data[64] = x_data[0];
+  h_data[64] = b_y_data[0];
   for (i = 0; i < 64; i++) {
-    h_data[i] = x_data[64 - i] / 2.0;
-    h_data[i + 65] = x_data[i + 1] / 2.0;
+    h_data[i] = b_y_data[64 - i] / 2.0;
+    h_data[i + 65] = b_y_data[i + 1] / 2.0;
   }
 }
 

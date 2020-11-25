@@ -2,6 +2,9 @@
 
 <Project ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
+    <Filter Include="DDSPSynth\Source\DDSP">
+      <UniqueIdentifier>{A0E2CC57-5BD7-1880-FBF6-2D61A6369CE7}</UniqueIdentifier>
+    </Filter>
     <Filter Include="DDSPSynth\Source">
       <UniqueIdentifier>{40D0E09C-5C24-97C3-0DA6-9214196DBDDF}</UniqueIdentifier>
     </Filter>
@@ -464,43 +467,52 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Source\codegen\additive.cpp">
-      <Filter>DDSPSynth</Filter>
+      <Filter>DDSPSynth\Source\DDSP</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\codegen\ColoredNoise.cpp">
+      <Filter>DDSPSynth\Source\DDSP</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\codegen\DDSPSynth_data.cpp">
-      <Filter>DDSPSynth</Filter>
+      <Filter>DDSPSynth\Source\DDSP</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\codegen\DDSPSynth_initialize.cpp">
-      <Filter>DDSPSynth</Filter>
+      <Filter>DDSPSynth\Source\DDSP</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\codegen\DDSPSynth_terminate.cpp">
-      <Filter>DDSPSynth</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\codegen\eml_rand_mt19937ar_stateful.cpp">
-      <Filter>DDSPSynth</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\codegen\firls.cpp">
-      <Filter>DDSPSynth</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\codegen\mldivide.cpp">
-      <Filter>DDSPSynth</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\codegen\rand.cpp">
-      <Filter>DDSPSynth</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\codegen\rt_nonfinite.cpp">
-      <Filter>DDSPSynth</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\codegen\rtGetInf.cpp">
-      <Filter>DDSPSynth</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\codegen\rtGetNaN.cpp">
-      <Filter>DDSPSynth</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\codegen\subtractive.cpp">
-      <Filter>DDSPSynth</Filter>
+      <Filter>DDSPSynth\Source\DDSP</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\DDSPVoice.cpp">
-      <Filter>DDSPSynth</Filter>
+      <Filter>DDSPSynth\Source\DDSP</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\codegen\eml_rand_mt19937ar_stateful.cpp">
+      <Filter>DDSPSynth\Source\DDSP</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\codegen\firls.cpp">
+      <Filter>DDSPSynth\Source\DDSP</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\codegen\mldivide.cpp">
+      <Filter>DDSPSynth\Source\DDSP</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\codegen\rand.cpp">
+      <Filter>DDSPSynth\Source\DDSP</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\codegen\randn.cpp">
+      <Filter>DDSPSynth\Source\DDSP</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\codegen\rt_nonfinite.cpp">
+      <Filter>DDSPSynth\Source\DDSP</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\codegen\rtGetInf.cpp">
+      <Filter>DDSPSynth\Source\DDSP</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\codegen\rtGetNaN.cpp">
+      <Filter>DDSPSynth\Source\DDSP</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\codegen\subtractive.cpp">
+      <Filter>DDSPSynth\Source\DDSP</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\codegen\SystemCore.cpp">
+      <Filter>DDSPSynth\Source\DDSP</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\PluginProcessor.cpp">
       <Filter>DDSPSynth\Source</Filter>
@@ -2701,58 +2713,67 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Source\codegen\additive.h">
-      <Filter>DDSPSynth</Filter>
+      <Filter>DDSPSynth\Source\DDSP</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\codegen\coder_array.h">
-      <Filter>DDSPSynth</Filter>
+      <Filter>DDSPSynth\Source\DDSP</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\codegen\DDSPSynth_data.h">
-      <Filter>DDSPSynth</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\codegen\DDSPSynth_initialize.h">
-      <Filter>DDSPSynth</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\codegen\DDSPSynth_terminate.h">
-      <Filter>DDSPSynth</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\codegen\DDSPSynth_types.h">
-      <Filter>DDSPSynth</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\codegen\eml_rand_mt19937ar_stateful.h">
-      <Filter>DDSPSynth</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\codegen\firls.h">
-      <Filter>DDSPSynth</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\codegen\mldivide.h">
-      <Filter>DDSPSynth</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\codegen\rand.h">
-      <Filter>DDSPSynth</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\codegen\rt_nonfinite.h">
-      <Filter>DDSPSynth</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\codegen\rtGetInf.h">
-      <Filter>DDSPSynth</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\codegen\rtGetNaN.h">
-      <Filter>DDSPSynth</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\codegen\rtwtypes.h">
-      <Filter>DDSPSynth</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\codegen\subtractive.h">
-      <Filter>DDSPSynth</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\codegen\tmwtypes.h">
-      <Filter>DDSPSynth</Filter>
+    <ClInclude Include="..\..\Source\codegen\ColoredNoise.h">
+      <Filter>DDSPSynth\Source\DDSP</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\DDSPSound.h">
-      <Filter>DDSPSynth</Filter>
+      <Filter>DDSPSynth\Source\DDSP</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\codegen\DDSPSynth_data.h">
+      <Filter>DDSPSynth\Source\DDSP</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\codegen\DDSPSynth_initialize.h">
+      <Filter>DDSPSynth\Source\DDSP</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\codegen\DDSPSynth_terminate.h">
+      <Filter>DDSPSynth\Source\DDSP</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\codegen\DDSPSynth_types.h">
+      <Filter>DDSPSynth\Source\DDSP</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\DDSPVoice.h">
-      <Filter>DDSPSynth</Filter>
+      <Filter>DDSPSynth\Source\DDSP</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\codegen\eml_rand_mt19937ar_stateful.h">
+      <Filter>DDSPSynth\Source\DDSP</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\codegen\firls.h">
+      <Filter>DDSPSynth\Source\DDSP</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\codegen\mldivide.h">
+      <Filter>DDSPSynth\Source\DDSP</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\codegen\rand.h">
+      <Filter>DDSPSynth\Source\DDSP</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\codegen\randn.h">
+      <Filter>DDSPSynth\Source\DDSP</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\codegen\rt_nonfinite.h">
+      <Filter>DDSPSynth\Source\DDSP</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\codegen\rtGetInf.h">
+      <Filter>DDSPSynth\Source\DDSP</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\codegen\rtGetNaN.h">
+      <Filter>DDSPSynth\Source\DDSP</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\codegen\rtwtypes.h">
+      <Filter>DDSPSynth\Source\DDSP</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\codegen\subtractive.h">
+      <Filter>DDSPSynth\Source\DDSP</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\codegen\SystemCore.h">
+      <Filter>DDSPSynth\Source\DDSP</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\codegen\tmwtypes.h">
+      <Filter>DDSPSynth\Source\DDSP</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\PluginProcessor.h">
       <Filter>DDSPSynth\Source</Filter>

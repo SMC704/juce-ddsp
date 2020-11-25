@@ -60,13 +60,9 @@ void DDSPVoice::renderNextBlock(juce::AudioSampleBuffer & outputBuffer, int star
 
 	int audio_size[1];
 
-
-	for (int i = 0; i < numSamples + 65; i++) {
-		noise[i] = r.nextDouble();
-	}
 	additive(numSamples, getSampleRate(), amplitudes, harms_copy, f0, phaseBuffer_in, addBuffer, audio_size, phaseBuffer_out);
 	jassert(numSamples == audio_size[0]);
-	subtractive(numSamples, magnitudes, noise, subBuffer);
+	subtractive(numSamples, magnitudes, color, subBuffer);
 	for (int i = 0; i < 50; ++i) {
 		phaseBuffer_in[i] = phaseBuffer_out[i];
 	}
@@ -74,7 +70,7 @@ void DDSPVoice::renderNextBlock(juce::AudioSampleBuffer & outputBuffer, int star
 
 
 	for (int i = 0; i < numSamples && i < 4096; i++) {
-		float val = (float)(addBuffer[i] + subBuffer[i]);
+		float val = (float)(addBuffer[i]*0.1 + subBuffer[i]);
 		*(outputBuffer.getWritePointer(0, i)) = val;
 		*(outputBuffer.getWritePointer(1, i)) = val;
 	}
@@ -84,4 +80,9 @@ void DDSPVoice::setHarmonics(double harms[50])
 	for (int i = 0; i < 50; i++) {
 		harmonics[i] = harms[i];
 	}
+}
+
+void DDSPVoice::setNoiseColor(double _color) 
+{
+	color = _color;
 }

@@ -138,18 +138,21 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Source\codegen\additive.cpp"/>
+    <ClCompile Include="..\..\Source\codegen\ColoredNoise.cpp"/>
     <ClCompile Include="..\..\Source\codegen\DDSPSynth_data.cpp"/>
     <ClCompile Include="..\..\Source\codegen\DDSPSynth_initialize.cpp"/>
     <ClCompile Include="..\..\Source\codegen\DDSPSynth_terminate.cpp"/>
+    <ClCompile Include="..\..\Source\DDSPVoice.cpp"/>
     <ClCompile Include="..\..\Source\codegen\eml_rand_mt19937ar_stateful.cpp"/>
     <ClCompile Include="..\..\Source\codegen\firls.cpp"/>
     <ClCompile Include="..\..\Source\codegen\mldivide.cpp"/>
     <ClCompile Include="..\..\Source\codegen\rand.cpp"/>
+    <ClCompile Include="..\..\Source\codegen\randn.cpp"/>
     <ClCompile Include="..\..\Source\codegen\rt_nonfinite.cpp"/>
     <ClCompile Include="..\..\Source\codegen\rtGetInf.cpp"/>
     <ClCompile Include="..\..\Source\codegen\rtGetNaN.cpp"/>
     <ClCompile Include="..\..\Source\codegen\subtractive.cpp"/>
-    <ClCompile Include="..\..\Source\DDSPVoice.cpp"/>
+    <ClCompile Include="..\..\Source\codegen\SystemCore.cpp"/>
     <ClCompile Include="..\..\Source\PluginProcessor.cpp"/>
     <ClCompile Include="..\..\Source\PluginEditor.cpp"/>
     <ClCompile Include="..\..\Source\MainComponent.cpp"/>
@@ -2177,22 +2180,25 @@
   <ItemGroup>
     <ClInclude Include="..\..\Source\codegen\additive.h"/>
     <ClInclude Include="..\..\Source\codegen\coder_array.h"/>
+    <ClInclude Include="..\..\Source\codegen\ColoredNoise.h"/>
+    <ClInclude Include="..\..\Source\DDSPSound.h"/>
     <ClInclude Include="..\..\Source\codegen\DDSPSynth_data.h"/>
     <ClInclude Include="..\..\Source\codegen\DDSPSynth_initialize.h"/>
     <ClInclude Include="..\..\Source\codegen\DDSPSynth_terminate.h"/>
     <ClInclude Include="..\..\Source\codegen\DDSPSynth_types.h"/>
+    <ClInclude Include="..\..\Source\DDSPVoice.h"/>
     <ClInclude Include="..\..\Source\codegen\eml_rand_mt19937ar_stateful.h"/>
     <ClInclude Include="..\..\Source\codegen\firls.h"/>
     <ClInclude Include="..\..\Source\codegen\mldivide.h"/>
     <ClInclude Include="..\..\Source\codegen\rand.h"/>
+    <ClInclude Include="..\..\Source\codegen\randn.h"/>
     <ClInclude Include="..\..\Source\codegen\rt_nonfinite.h"/>
     <ClInclude Include="..\..\Source\codegen\rtGetInf.h"/>
     <ClInclude Include="..\..\Source\codegen\rtGetNaN.h"/>
     <ClInclude Include="..\..\Source\codegen\rtwtypes.h"/>
     <ClInclude Include="..\..\Source\codegen\subtractive.h"/>
+    <ClInclude Include="..\..\Source\codegen\SystemCore.h"/>
     <ClInclude Include="..\..\Source\codegen\tmwtypes.h"/>
-    <ClInclude Include="..\..\Source\DDSPSound.h"/>
-    <ClInclude Include="..\..\Source\DDSPVoice.h"/>
     <ClInclude Include="..\..\Source\PluginProcessor.h"/>
     <ClInclude Include="..\..\Source\PluginEditor.h"/>
     <ClInclude Include="..\..\Source\MainComponent.h"/>

@@ -20,8 +20,10 @@ DdspsynthAudioProcessorEditor::DdspsynthAudioProcessorEditor (DdspsynthAudioProc
     addAndMakeVisible(mainComponent);
 	auto additive = mainComponent.findChildWithID("additive");
 	auto harmEditor = (HarmonicEditor*)(additive->findChildWithID("harmonicEditor"));
+    auto subtractive = (SubtractiveComponent*)(mainComponent.findChildWithID("subtractive"));
 
 	harmEditor->setListener(&p);
+    subtractive->setSubtractiveListener(this);
 	
     mainComponent.setBounds(20, 20, 860, 560);
     startTimerHz (60);
@@ -60,4 +62,10 @@ void DdspsynthAudioProcessorEditor::timerCallback()
                                                 audioProcessor.getFftOrder());
         audioProcessor.setNextFFTBlockReady(false);
     }
+}
+
+
+void DdspsynthAudioProcessorEditor::onNoiseColorChange(double color)
+{
+    audioProcessor.onNoiseColorChange(color);
 }
