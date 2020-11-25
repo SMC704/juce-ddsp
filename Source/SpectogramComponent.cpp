@@ -24,9 +24,6 @@ SpectogramComponent::~SpectogramComponent()
 
 void SpectogramComponent::paint (juce::Graphics& g)
 {
-    g.setColour (juce::Colours::white);
-    g.drawRect (getLocalBounds(), 3);   // draw an outline around the component
-
     /*
     g.setColour (juce::Colours::white);
     g.setFont (14.0f);
@@ -38,6 +35,9 @@ void SpectogramComponent::paint (juce::Graphics& g)
 
     g.setOpacity(1.0f);
     g.drawImage(spectrogramImage, getLocalBounds().toFloat());
+    
+    g.setColour (juce::Colours::white);
+    g.drawRect (getLocalBounds(), 3);   // draw an outline around the component
 }
 
 void SpectogramComponent::resized()

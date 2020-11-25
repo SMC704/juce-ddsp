@@ -77,11 +77,6 @@ void DDSPVoice::renderNextBlock(juce::AudioSampleBuffer & outputBuffer, int star
 	}
 
 	int audio_size[1];
-
-
-	for (int i = 0; i < numSamples + 65; i++) {
-		noise[i] = r.nextDouble();
-	}
     
 	additive(numSamples, getSampleRate(), amplitudes, harms_copy, f0, phaseBuffer_in, shift, stretch, addBuffer, audio_size, phaseBuffer_out);
 	jassert(numSamples == audio_size[0]);
