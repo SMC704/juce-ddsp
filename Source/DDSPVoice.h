@@ -46,5 +46,9 @@ private:
 	double magnitudes[65];
 	double noise[4096+65];
 
+	bool tailoff = false;
+
+	juce::ADSR adsr;
+	juce::ADSR::Parameters adsr_params;
 	juce::Random r;
 };
