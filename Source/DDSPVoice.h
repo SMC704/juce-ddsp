@@ -46,6 +46,8 @@ private:
 	double subBuffer[4096];
 	double magnitudes[65];
 	double color = -1;
+	double shift = 0;
+	double stretch = 0;
 
 	bool tailoff = false;
 
