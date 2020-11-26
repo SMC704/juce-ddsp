@@ -39,6 +39,9 @@ DDSPVoice::DDSPVoice()
 	adsr_params.sustain = 1;
 	adsr_params.release = 0.5;
 	adsr.setParameters(adsr_params);
+    
+    shift = 0.0;
+    stretch = 0.0;
 }
 
 bool DDSPVoice::canPlaySound(juce::SynthesiserSound * sound)
@@ -121,7 +124,7 @@ void DDSPVoice::setHarmonics(double harms[50])
 	}
 }
 
-void DDSPVoice::setNoiseColor(double _color) 
+void DDSPVoice::setNoiseColor(double _color)
 {
 	color = _color;
 }

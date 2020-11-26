@@ -31,6 +31,8 @@ public:
     struct AdditiveListener
     {
         virtual void onAddAmpChange(double addAmp) = 0;
+        virtual void onShiftValueChange(double shiftValue) = 0;
+        virtual void onStretchValueChange(double stretchValue) = 0;
     };
 
     void setAdditiveListener(AdditiveListener* addListener);
@@ -42,14 +44,16 @@ private:
     juce::Label onoffLabel;
     HarmonicEditor harmonicEditor;
     
-    juce::Slider shiftSlider;
     juce::Label shiftLabel;
+    
     juce::Slider stretchSlider;
     juce::Label stretchLabel;
     juce::Slider ampSlider;
-    juce::Label ampLabel;
+    
     
     double addAmp = 0;
+    double shiftValue;
+    double stretchValue;
     
     AdditiveListener* additiveListener = NULL;
 

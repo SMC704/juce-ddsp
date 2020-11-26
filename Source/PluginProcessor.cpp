@@ -224,3 +224,15 @@ void DdspsynthAudioProcessor::onOutAmpChange(double outAmp)
     voice->setOutAmp(outAmp);
 }
 
+}
+
+void DdspsynthAudioProcessor::onShiftValueChange(double shiftValue)
+{
+    voice->setShift(shiftValue);
+}
+
+void DdspsynthAudioProcessor::onStretchValueChange(double stretchValue)
+{
+    voice->setStretch(stretchValue);
+}
+
