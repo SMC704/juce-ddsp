@@ -11,6 +11,9 @@
 #include "DDSPVoice.h"
 #include "codegen/additive.h"
 #include "codegen/subtractive.h"
+#include <math.h>
+#include <stdlib.h>
+
 
 DDSPVoice::DDSPVoice()
 {
@@ -110,7 +113,9 @@ void DDSPVoice::renderNextBlock(juce::AudioSampleBuffer & outputBuffer, int star
 			clearCurrentNote();
 			break;
 		}
-		float val = adsr.getNextSample() * (float)(addBuffer[i-startSample] + subBuffer[i-startSample]);
+		float val = adsr.getNextSample() * (float)(addBuffer[i-startSample]*std::pow(10, addAmp/20)) + (subBuffer[i-startSample]*std::pow(10, subAmp/20));
+        
+		val = val * std::pow(10, outAmp/20);
 
 		*(outputBuffer.getWritePointer(0, i)) = val;
 		*(outputBuffer.getWritePointer(1, i)) = val;
@@ -136,6 +141,20 @@ void DDSPVoice::setNoiseColor(double _color)
 	color = _color;
 }
 
+void DDSPVoice::setSubAmp(double _subAmp)
+{
+    subAmp = _subAmp;
+}
+
+void DDSPVoice::setAddAmp(double _addAmp)
+{
+    addAmp = _addAmp;
+}
+
+void DDSPVoice::setOutAmp(double _outAmp)
+{
+    outAmp = _outAmp;
+}
 void DDSPVoice::setOnOffSubtractive(bool _button)
 {
 	subtractiveOnOff = _button;

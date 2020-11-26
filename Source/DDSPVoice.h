@@ -36,10 +36,13 @@ public:
 	void setHarmonics(double harms[50]);
 
 	void setNoiseColor(double color);
-    
-    void setShift(double _shift) { shift = _shift; };
+	void setSubAmp(double subAmp);
+	void setAddAmp(double addAmp);
+	void setOutAmp(double outAmp);
+	
+	void setShift(double _shift) { shift = _shift; };
 
-    void setStretch(double _stretch) { stretch = _stretch; };
+	void setStretch(double _stretch) { stretch = _stretch; };
 
 	void setOnOffSubtractive(bool button);
 
@@ -57,6 +60,9 @@ private:
 	double color = -1;
 	double shift = 0;
 	double stretch = 0;
+	double subAmp = 0;
+	double addAmp = 0;
+	double outAmp = 0;
 	bool subtractiveOnOff = false;
 	bool additiveOnOff = false;
 

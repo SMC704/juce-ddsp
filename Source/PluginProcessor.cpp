@@ -210,6 +210,26 @@ void DdspsynthAudioProcessor::onNoiseColorChange(double color)
     voice->setNoiseColor(color);
 }
 
+void DdspsynthAudioProcessor::onOnOffSubChange(bool onOff)
+{
+    voice->setOnOffSubtractive(onOff);
+}
+
+void DdspsynthAudioProcessor::onSubAmpChange(double subAmp)
+{
+    voice->setSubAmp(subAmp);
+}
+
+void DdspsynthAudioProcessor::onAddAmpChange(double addAmp)
+{
+    voice->setAddAmp(addAmp);
+}
+
+void DdspsynthAudioProcessor::onOutAmpChange(double outAmp)
+{
+    voice->setOutAmp(outAmp);
+}
+
 void DdspsynthAudioProcessor::onShiftValueChange(double shiftValue)
 {
     voice->setShift(shiftValue);
@@ -218,10 +238,6 @@ void DdspsynthAudioProcessor::onShiftValueChange(double shiftValue)
 void DdspsynthAudioProcessor::onStretchValueChange(double stretchValue)
 {
     voice->setStretch(stretchValue);
-}
-void DdspsynthAudioProcessor::subtractiveOnOff(bool button)
-{
-    voice->setOnOffSubtractive(button);
 }
 
 void DdspsynthAudioProcessor::onOnOffAddChange(bool button)

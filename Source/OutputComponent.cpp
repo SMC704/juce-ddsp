@@ -24,16 +24,20 @@ OutputComponent::OutputComponent()
 
     masterSlider.setSliderStyle(juce::Slider::SliderStyle::RotaryHorizontalVerticalDrag);
     masterSlider.setTextBoxStyle(juce::Slider::NoTextBox, true, 0, 0);
-    masterSlider.setRange(0.0f, 10.0f, 0.1f);
-    masterSlider.setValue(5.0f);
+    masterSlider.setPopupDisplayEnabled(true, true, this);
+    masterSlider.setTextValueSuffix (" dB");
+    masterSlider.setRange(-60.0f, 0.0f, 0.1f);
+    masterSlider.setValue(-8.0f);
     addAndMakeVisible(masterSlider);
     masterSlider.setBounds(0, 0, 100, 100);
+    masterSlider.addListener(this);
 
     addAndMakeVisible(masterLabel);
     masterLabel.setColour(juce::Label::textColourId, juce::Colours::white);
     masterLabel.setJustificationType(juce::Justification::topLeft);
     masterLabel.setText("Master", juce::NotificationType::dontSendNotification);
     masterLabel.setFont(fontDim);
+
 }
 
 OutputComponent::~OutputComponent()
@@ -97,4 +101,21 @@ void OutputComponent::resized()
     };
 
     grid.performLayout(getLocalBounds());
+}
+
+void OutputComponent::sliderValueChanged(juce::Slider* slider)
+{
+   
+    if (slider == &masterSlider) {
+        outAmp = masterSlider.getValue();
+        if (outputListener != NULL)
+            outputListener->onOutAmpChange(outAmp);
+    }
+}
+
+void OutputComponent::setOutputListener(OutputListener* outListener)
+{
+    outputListener = outListener;
+    if (outputListener != NULL)
+        outputListener->onOutAmpChange(0);
 }

@@ -29,13 +29,13 @@ public:
     {
         virtual void onNoiseColorChange(double color) = 0;
         virtual void onOnOffSubChange(bool onOff) = 0;
+        virtual void onSubAmpChange(double subAmp) = 0;
     };
 
     void setSubtractiveListener(SubtractiveListener* subListener);
 
 private:
     
-
     juce::ToggleButton onoffButton;
     juce::Label nameLabel;
     juce::Label onoffLabel;
@@ -50,6 +50,7 @@ private:
     juce::Label colourLabel;
 
     double noiseColor = 0;
+    double subAmp = 0;
 
     SubtractiveListener* subtractiveListener = NULL;
 

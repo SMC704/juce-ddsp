@@ -68,11 +68,13 @@ AdditiveComponent::AdditiveComponent()
     ampSlider.setSliderStyle(juce::Slider::SliderStyle::RotaryHorizontalVerticalDrag);
     ampSlider.setTextBoxStyle(juce::Slider::NoTextBox, true, 0, 0);
     ampSlider.setPopupDisplayEnabled(true, true, this);
-    ampSlider.setTextValueSuffix (" Hz or whatever");
-    ampSlider.setRange(0.0f, 10.0f, 0.1f);
-    ampSlider.setValue(5.0f);
+    ampSlider.setTextValueSuffix (" dB");
+    ampSlider.setRange(-60.0f, 0.0f, 0.1f);
+    ampSlider.setValue(-8.0f);
     addAndMakeVisible(ampSlider);
     ampSlider.setBounds(0, 0, 100, 100);
+    ampSlider.addListener(this);
+
 
     addAndMakeVisible(ampLabel);
     ampLabel.setColour(juce::Label::textColourId, juce::Colours::white);
@@ -182,33 +184,37 @@ void AdditiveComponent::resized()
     
 }
 
-void AdditiveComponent::setListener(AdditiveComponent::AdditiveListener* _pListener)
+void AdditiveComponent::sliderValueChanged(juce::Slider* slider)
 {
-    pListener = _pListener;
-    if (pListener != NULL) {
-        pListener->onShiftValueChange(shiftValue);
-        pListener->onStretchValueChange(stretchValue);
-        pListener->onOnOffAddChange(onOffState);
-    }
-}
-
-void AdditiveComponent::sliderValueChanged (juce::Slider* slider)
-{
-    if (pListener != NULL) {
-        if (slider == &shiftSlider)
+   if (additiveListener != NULL) {
+        if (slider == &ampSlider) {
+            addAmp = ampSlider.getValue();
+            additiveListener->onAddAmpChange(addAmp);
+        }
+        else if (slider == &shiftSlider)
         {
             shiftValue = slider->getValue();
-            pListener->onShiftValueChange(shiftValue);
+            additiveListener->onShiftValueChange(shiftValue);
         }
         else if (slider == &stretchSlider)
         {
             stretchValue = slider->getValue();
-            pListener->onStretchValueChange(stretchValue);
+            additiveListener->onStretchValueChange(stretchValue);
         }
     }
 }
 
+void AdditiveComponent::setAdditiveListener(AdditiveListener* addListener)
+{
+    additiveListener = addListener;
+    if (additiveListener != NULL)
+        additiveListener->onAddAmpChange(0);
+        additiveListener->onShiftValueChange(shiftValue);
+        additiveListener->onStretchValueChange(stretchValue);
+        additiveListener->onOnOffAddChange(onOffState);
+}
+
 void AdditiveComponent::buttonClicked(juce::Button* button)
 {
-    pListener->onOnOffAddChange(button->getToggleState());
+    additiveListener->onOnOffAddChange(button->getToggleState());
 }
