@@ -78,9 +78,6 @@ public:
     void onSubAmpChange(double subAmp);
     void onAddAmpChange(double addAmp);
     void onOutAmpChange(double outAmp);
-    
-    void onShiftValueChange(double shiftValue) override;
-    void onStretchValueChange(double stretchValue) override;
 
 private:
     juce::dsp::FFT forwardFFT;
@@ -97,4 +94,3 @@ private:
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (DdspsynthAudioProcessor)
 };
-

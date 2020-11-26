@@ -38,9 +38,6 @@ public:
     void setSubAmp(double subAmp);
     void setAddAmp(double addAmp);
     void setOutAmp(double outAmp);
-    
-    void setShift(double _shift) { shift = _shift; };
-    void setStretch(double _stretch) { stretch = _stretch; };
 
 private:
 	double phaseBuffer_in[50];
