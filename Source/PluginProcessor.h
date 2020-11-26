@@ -16,7 +16,7 @@
 //==============================================================================
 /**
 */
-class DdspsynthAudioProcessor : public juce::AudioProcessor, public HarmonicEditor::Listener, public AdditiveComponent::Listener
+class DdspsynthAudioProcessor : public juce::AudioProcessor, public HarmonicEditor::Listener, public AdditiveComponent::AdditiveListener
 {
 public:
     //==============================================================================
@@ -76,11 +76,14 @@ public:
 	void onValueChange(double harmonics[50]) override;
     
     void onShiftValueChange(double shiftValue) override;
+
     void onStretchValueChange(double stretchValue) override;
 
     void onNoiseColorChange(double color);
 
     void subtractiveOnOff(bool button);
+
+    void onOnOffAddChange(bool button) override;
 
 private:
     juce::dsp::FFT forwardFFT;

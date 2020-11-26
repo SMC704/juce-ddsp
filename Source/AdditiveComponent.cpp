@@ -18,6 +18,7 @@ AdditiveComponent::AdditiveComponent()
 
     addAndMakeVisible(onoffButton);
     onoffButton.setBounds(0, 0, 50, 50);
+    onoffButton.addListener(this);
 
     addAndMakeVisible(onoffLabel);
     onoffLabel.setColour(juce::Label::textColourId, juce::Colours::white);
@@ -181,12 +182,13 @@ void AdditiveComponent::resized()
     
 }
 
-void AdditiveComponent::setListener(AdditiveComponent::Listener* _pListener)
+void AdditiveComponent::setListener(AdditiveComponent::AdditiveListener* _pListener)
 {
     pListener = _pListener;
     if (pListener != NULL) {
         pListener->onShiftValueChange(shiftValue);
         pListener->onStretchValueChange(stretchValue);
+        pListener->onOnOffAddChange(onOffState);
     }
 }
 
@@ -204,4 +206,9 @@ void AdditiveComponent::sliderValueChanged (juce::Slider* slider)
             pListener->onStretchValueChange(stretchValue);
         }
     }
+}
+
+void AdditiveComponent::buttonClicked(juce::Button* button)
+{
+    pListener->onOnOffAddChange(button->getToggleState());
 }

@@ -223,5 +223,5 @@ void SubtractiveComponent::setSubtractiveListener(SubtractiveListener* subListen
 
 void SubtractiveComponent::buttonClicked(juce::Button* button)
 {
-    subtractiveListener->onOnOffChange(button->getToggleState());
+    subtractiveListener->onOnOffSubChange(button->getToggleState());
 }

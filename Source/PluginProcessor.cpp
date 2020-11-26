@@ -33,6 +33,7 @@ DdspsynthAudioProcessor::DdspsynthAudioProcessor() : forwardFFT(fftOrder)
 
 DdspsynthAudioProcessor::~DdspsynthAudioProcessor()
 {
+
 }
 
 //==============================================================================
@@ -221,4 +222,9 @@ void DdspsynthAudioProcessor::onStretchValueChange(double stretchValue)
 void DdspsynthAudioProcessor::subtractiveOnOff(bool button)
 {
     voice->setOnOffSubtractive(button);
+}
+
+void DdspsynthAudioProcessor::onOnOffAddChange(bool button)
+{
+    voice->setOnOffAdditive(button);
 }

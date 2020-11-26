@@ -28,7 +28,7 @@ public:
     struct SubtractiveListener
     {
         virtual void onNoiseColorChange(double color) = 0;
-        virtual void onOnOffChange(bool onOff) = 0;
+        virtual void onOnOffSubChange(bool onOff) = 0;
     };
 
     void setSubtractiveListener(SubtractiveListener* subListener);

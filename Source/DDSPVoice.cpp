@@ -77,9 +77,18 @@ void DDSPVoice::renderNextBlock(juce::AudioSampleBuffer & outputBuffer, int star
 	}
 
 	int audio_size[1];
-    
-	additive(numSamples, getSampleRate(), amplitudes, harms_copy, f0, phaseBuffer_in, shift, stretch, addBuffer, audio_size, phaseBuffer_out);
-	jassert(numSamples == audio_size[0]);
+
+	if (additiveOnOff)
+	{
+		additive(numSamples, getSampleRate(), amplitudes, harms_copy, f0, phaseBuffer_in, shift, stretch, addBuffer, audio_size, phaseBuffer_out);
+		jassert(numSamples == audio_size[0]);
+	}
+	else {
+		for (int i = 0; i < 4096; i++)
+		{
+			addBuffer[i] = 0;
+		}
+	}
 
 	if (subtractiveOnOff)
 	{
@@ -130,4 +139,9 @@ void DDSPVoice::setNoiseColor(double _color)
 void DDSPVoice::setOnOffSubtractive(bool _button)
 {
 	subtractiveOnOff = _button;
+}
+
+void DDSPVoice::setOnOffAdditive(bool _button)
+{
+	additiveOnOff = _button;
 }
