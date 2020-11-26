@@ -74,6 +74,26 @@ void DdspsynthAudioProcessorEditor::onNoiseColorChange(double color)
     audioProcessor.onNoiseColorChange(color);
 }
 
+void DdspsynthAudioProcessorEditor::onOnOffSubChange(bool onOff)
+{
+    audioProcessor.onOnOffSubChange(onOff);
+}
+
+void DdspsynthAudioProcessorEditor::onShiftValueChange(double shiftValue)
+{
+    audioProcessor.onShiftValueChange(shiftValue);
+}
+
+void DdspsynthAudioProcessorEditor::onStretchValueChange(double stretchValue)
+{
+    audioProcessor.onStretchValueChange(stretchValue);
+}
+
+void DdspsynthAudioProcessorEditor::onOnOffAddChange(bool onOff)
+{
+    audioProcessor.onOnOffAddChange(onOff);
+}
+
 void DdspsynthAudioProcessorEditor::onSubAmpChange(double subAmp)
 {
     audioProcessor.onSubAmpChange(subAmp);
@@ -88,3 +108,5 @@ void DdspsynthAudioProcessorEditor::onOutAmpChange(double outAmp)
 {
     audioProcessor.onOutAmpChange(outAmp);
 }
+
+

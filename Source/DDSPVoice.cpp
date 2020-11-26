@@ -39,6 +39,9 @@ DDSPVoice::DDSPVoice()
 	adsr_params.sustain = 1;
 	adsr_params.release = 0.5;
 	adsr.setParameters(adsr_params);
+    
+    shift = 0.0;
+    stretch = 0.0;
 }
 
 bool DDSPVoice::canPlaySound(juce::SynthesiserSound * sound)
@@ -78,29 +81,41 @@ void DDSPVoice::renderNextBlock(juce::AudioSampleBuffer & outputBuffer, int star
 
 	int audio_size[1];
 
-	additive(numSamples, getSampleRate(), amplitudes, harms_copy, f0, phaseBuffer_in, shift, stretch, addBuffer, audio_size, phaseBuffer_out);
-	jassert(numSamples == audio_size[0]);
-	subtractive(numSamples, magnitudes, color, subBuffer);
+	if (additiveOnOff)
+	{
+		additive(numSamples, getSampleRate(), amplitudes, harms_copy, f0, phaseBuffer_in, shift, stretch, addBuffer, audio_size, phaseBuffer_out);
+		jassert(numSamples == audio_size[0]);
+	}
+	else {
+		for (int i = 0; i < 4096; i++)
+		{
+			addBuffer[i] = 0;
+		}
+	}
+
+	if (subtractiveOnOff)
+	{
+		subtractive(numSamples, magnitudes, color, subBuffer);
+	}
+	else {
+		for (int i = 0; i < 4096; i++)
+		{
+			subBuffer[i] = 0;
+		}
+	}
 	for (int i = 0; i < 50; ++i) {
 		phaseBuffer_in[i] = phaseBuffer_out[i];
 	}
 
-	for (int i = 0; i < numSamples && i < 4096; i++) {
+	for (int i = startSample; i < startSample + numSamples && i < 4096; i++) {
 		if (!adsr.isActive()) {
 			// We are at the end of the release part
-
 			clearCurrentNote();
-
-			// fill the buffer with zeros and leave loop
-			for (int j = i; j < numSamples && j < 4096; j++) {
-				*(outputBuffer.getWritePointer(0, i)) = 0;
-				*(outputBuffer.getWritePointer(1, i)) = 0;
-			}
 			break;
 		}
-		float val = adsr.getNextSample() * (float)(addBuffer[i]*std::pow(10, addAmp/20)) + (subBuffer[i]*std::pow(10, subAmp/20));
+		float val = adsr.getNextSample() * (float)(addBuffer[i-startSample]*std::pow(10, addAmp/20)) + (subBuffer[i-startSample]*std::pow(10, subAmp/20));
         
-        val = val * std::pow(10, outAmp/20);
+		val = val * std::pow(10, outAmp/20);
 
 		*(outputBuffer.getWritePointer(0, i)) = val;
 		*(outputBuffer.getWritePointer(1, i)) = val;
@@ -139,4 +154,13 @@ void DDSPVoice::setAddAmp(double _addAmp)
 void DDSPVoice::setOutAmp(double _outAmp)
 {
     outAmp = _outAmp;
+}
+void DDSPVoice::setOnOffSubtractive(bool _button)
+{
+	subtractiveOnOff = _button;
+}
+
+void DDSPVoice::setOnOffAdditive(bool _button)
+{
+	additiveOnOff = _button;
 }

@@ -18,6 +18,7 @@ SubtractiveComponent::SubtractiveComponent()
 
     addAndMakeVisible(onoffButton);
     onoffButton.setBounds(0, 0, 50, 50);
+    onoffButton.addListener(this);
 
     addAndMakeVisible(onoffLabel);
     onoffLabel.setColour(juce::Label::textColourId, juce::Colours::white);
@@ -233,4 +234,9 @@ void SubtractiveComponent::setSubtractiveListener(SubtractiveListener* subListen
     subtractiveListener = subListener;
     if (subtractiveListener != NULL)
         subtractiveListener->onNoiseColorChange(0);
+}
+
+void SubtractiveComponent::buttonClicked(juce::Button* button)
+{
+    subtractiveListener->onOnOffSubChange(button->getToggleState());
 }

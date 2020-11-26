@@ -12,6 +12,7 @@
 #include "DDSPVoice.h"
 #include "HarmonicEditor.h"
 #include "SubtractiveComponent.h"
+#include "AdditiveComponent.h"
 //==============================================================================
 /**
 */
@@ -72,12 +73,19 @@ public:
         fftSize  = 1 << fftOrder
     };
 
-	void onValueChange(double harmonics[50]) override;
+	void onValueChange(double harmonics[50]);
+    
+    void onShiftValueChange(double shiftValue);
+
+    void onStretchValueChange(double stretchValue);
 
     void onNoiseColorChange(double color);
+    void onOnOffSubChange(bool onOff);
     void onSubAmpChange(double subAmp);
     void onAddAmpChange(double addAmp);
     void onOutAmpChange(double outAmp);
+
+    void onOnOffAddChange(bool button);
 
 private:
     juce::dsp::FFT forwardFFT;

@@ -33,6 +33,7 @@ DdspsynthAudioProcessor::DdspsynthAudioProcessor() : forwardFFT(fftOrder)
 
 DdspsynthAudioProcessor::~DdspsynthAudioProcessor()
 {
+
 }
 
 //==============================================================================
@@ -209,6 +210,11 @@ void DdspsynthAudioProcessor::onNoiseColorChange(double color)
     voice->setNoiseColor(color);
 }
 
+void DdspsynthAudioProcessor::onOnOffSubChange(bool onOff)
+{
+    voice->setOnOffSubtractive(onOff);
+}
+
 void DdspsynthAudioProcessor::onSubAmpChange(double subAmp)
 {
     voice->setSubAmp(subAmp);
@@ -224,3 +230,17 @@ void DdspsynthAudioProcessor::onOutAmpChange(double outAmp)
     voice->setOutAmp(outAmp);
 }
 
+void DdspsynthAudioProcessor::onShiftValueChange(double shiftValue)
+{
+    voice->setShift(shiftValue);
+}
+
+void DdspsynthAudioProcessor::onStretchValueChange(double stretchValue)
+{
+    voice->setStretch(stretchValue);
+}
+
+void DdspsynthAudioProcessor::onOnOffAddChange(bool button)
+{
+    voice->setOnOffAdditive(button);
+}

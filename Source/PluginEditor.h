@@ -55,10 +55,14 @@ private:
 
         // Inherited via SubtractiveListener
         virtual void onNoiseColorChange(double color) override;
+        virtual void onOnOffSubChange(bool onOff) override;
         virtual void onSubAmpChange(double subAmp) override;
     
         // Inherited via AdditiveListener
         virtual void onAddAmpChange(double addAmp) override;
+        virtual void onShiftValueChange(double shiftValue) override;
+        virtual void onStretchValueChange(double stretchValue) override;
+        virtual void onOnOffAddChange(bool onOff) override;
     
         // Inherited via OutputListener
         virtual void onOutAmpChange(double outAmp) override;
