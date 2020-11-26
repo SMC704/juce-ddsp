@@ -10,6 +10,10 @@
 #include "DDSPVoice.h"
 #include "PluginEditor.h"
 #include "HarmonicEditor.h"
+#include "codegen/additive.h"
+#include "codegen/subtractive.h"
+#include "codegen/getPitch2.h"
+#include "codegen/getMagnitudes.h"
 
 //==============================================================================
 DdspsynthAudioProcessor::DdspsynthAudioProcessor() : forwardFFT(fftOrder)
@@ -43,29 +47,29 @@ const juce::String DdspsynthAudioProcessor::getName() const
 
 bool DdspsynthAudioProcessor::acceptsMidi() const
 {
-   #if JucePlugin_WantsMidiInput
+#if JucePlugin_WantsMidiInput
     return true;
-   #else
+#else
     return false;
-   #endif
+#endif
 }
 
 bool DdspsynthAudioProcessor::producesMidi() const
 {
-   #if JucePlugin_ProducesMidiOutput
+#if JucePlugin_ProducesMidiOutput
     return true;
-   #else
+#else
     return false;
-   #endif
+#endif
 }
 
 bool DdspsynthAudioProcessor::isMidiEffect() const
 {
-   #if JucePlugin_IsMidiEffect
+#if JucePlugin_IsMidiEffect
     return true;
-   #else
+#else
     return false;
-   #endif
+#endif
 }
 
 double DdspsynthAudioProcessor::getTailLengthSeconds() const
@@ -84,26 +88,32 @@ int DdspsynthAudioProcessor::getCurrentProgram()
     return 0;
 }
 
-void DdspsynthAudioProcessor::setCurrentProgram (int index)
+void DdspsynthAudioProcessor::setCurrentProgram(int index)
 {
 }
 
-const juce::String DdspsynthAudioProcessor::getProgramName (int index)
+const juce::String DdspsynthAudioProcessor::getProgramName(int index)
 {
     return {};
 }
 
-void DdspsynthAudioProcessor::changeProgramName (int index, const juce::String& newName)
+void DdspsynthAudioProcessor::changeProgramName(int index, const juce::String& newName)
 {
 }
 
 //==============================================================================
-void DdspsynthAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
+void DdspsynthAudioProcessor::prepareToPlay(double sampleRate, int samplesPerBlock)
 {
     // Use this method as the place to do any pre-playback
     // initialisation that you need..
-
-	synth.setCurrentPlaybackSampleRate(sampleRate);
+    for (int i = 0; i < 50; i++) {
+        harmonics[i] = 0.5;
+    }
+    fs = sampleRate;
+    synth.setCurrentPlaybackSampleRate(sampleRate);
+    for (int i = 0; i < 50; ++i) {
+        phaseBuffer_in[i] = 0;
+    }
 }
 
 void DdspsynthAudioProcessor::releaseResources()
@@ -113,35 +123,79 @@ void DdspsynthAudioProcessor::releaseResources()
 }
 
 #ifndef JucePlugin_PreferredChannelConfigurations
-bool DdspsynthAudioProcessor::isBusesLayoutSupported (const BusesLayout& layouts) const
+bool DdspsynthAudioProcessor::isBusesLayoutSupported(const BusesLayout& layouts) const
 {
-  #if JucePlugin_IsMidiEffect
-    juce::ignoreUnused (layouts);
+#if JucePlugin_IsMidiEffect
+    juce::ignoreUnused(layouts);
     return true;
-  #else
+#else
     // This is the place where you check if the layout is supported.
     // In this template code we only support mono or stereo.
     if (layouts.getMainOutputChannelSet() != juce::AudioChannelSet::mono()
-     && layouts.getMainOutputChannelSet() != juce::AudioChannelSet::stereo())
+        && layouts.getMainOutputChannelSet() != juce::AudioChannelSet::stereo())
         return false;
 
     // This checks if the input layout matches the output layout
    //#if ! JucePlugin_IsSynth
     if (layouts.getMainOutputChannelSet() != layouts.getMainInputChannelSet())
         return false;
-   //#endif
+    //#endif
 
     return true;
-  #endif
+#endif
 }
 #endif
 
-void DdspsynthAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce::MidiBuffer& midiMessages)
+void DdspsynthAudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, juce::MidiBuffer& midiMessages)
 {
-	synth.renderNextBlock(buffer, midiMessages, 0, buffer.getNumSamples());
-	for (int i = 0; i < buffer.getNumSamples(); i++) {
-		this->pushNextSampleIntoFifo(*(buffer.getReadPointer(0, i)));
-	}
+    if (inputIsLine) {
+        auto* inputL = buffer.getReadPointer(0);
+        int n_samples = buffer.getNumSamples();
+        
+        double rmsLevel = (double)buffer.getRMSLevel(0, 0, n_samples) * 10.0;
+        for (int i = 0; i < n_samples; i++) {
+            input[i] = (double)inputL[i];
+            amplitudes[i] = rmsLevel;
+        }
+         
+        getMagnitudes(n_samples, input, magnitudes);
+        for (int i = 0; i < 65; i++) {
+            magnitudes[i] = magnitudes[i] * rmsLevel;
+        }
+
+        double harms_copy[50];
+        for (int i = 0; i < 50; i++) {
+            harms_copy[i] = harmonics[i];
+        }
+
+        double f0 = getPitch2(n_samples, input, fs);
+
+        double f0_array[4096];
+        for (int i = 0; i < n_samples; i++) {
+            f0_array[i] = f0;
+        }
+
+        int audio_size[1];
+        additive(n_samples, fs, amplitudes, harmonics, f0_array, phaseBuffer_in, shift, stretch, addBuffer, audio_size, phaseBuffer_out);
+        for (int i = 0; i < 50; ++i) {
+            phaseBuffer_in[i] = phaseBuffer_out[i];
+        }
+        subtractive(n_samples, magnitudes, color, subBuffer);
+        
+        float* outL = buffer.getWritePointer(0);
+        float* outR = buffer.getWritePointer(1);
+
+        for (int i = 0; i < n_samples; i++) {
+            outL[i] = (float)addBuffer[i] + (float)subBuffer[i];
+            outR[i] = (float)addBuffer[i] + (float)subBuffer[i]; 
+        }
+    }
+    else { // input is Midi
+        synth.renderNextBlock(buffer, midiMessages, 0, buffer.getNumSamples());
+    }
+    for (int i = 0; i < buffer.getNumSamples(); i++) {
+        this->pushNextSampleIntoFifo(*(buffer.getReadPointer(0, i)));
+    }
 }
 
 //==============================================================================

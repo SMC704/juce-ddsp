@@ -3,14 +3,14 @@
 //  course requirements at degree granting institutions only.  Not for
 //  government, commercial, or other organizational use.
 //
-//  randn.h
+//  getMagnitudes.h
 //
-//  Code generation for function 'randn'
+//  Code generation for function 'getMagnitudes'
 //
 
 
-#ifndef RANDN_H
-#define RANDN_H
+#ifndef GETMAGNITUDES_H
+#define GETMAGNITUDES_H
 
 // Include files
 #include <cstddef>
@@ -21,8 +21,9 @@
 #define MAX_THREADS                    omp_get_max_threads()
 
 // Function Declarations
-extern void randn(double r[4161]);
+extern void getMagnitudes(int n_samples, const double input[4096], double
+  magnitudes[65]);
 
 #endif
 
-// End of code generation (randn.h)
+// End of code generation (getMagnitudes.h)

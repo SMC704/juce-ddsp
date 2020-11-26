@@ -13,6 +13,8 @@
 #include "eml_rand_mt19937ar_stateful.h"
 #include "DDSPSynth_data.h"
 #include "additive.h"
+#include "getMagnitudes.h"
+#include "getPitch2.h"
 #include "rt_nonfinite.h"
 #include "subtractive.h"
 #include <cstring>

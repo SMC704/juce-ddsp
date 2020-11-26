@@ -87,6 +87,22 @@ private:
     float fftData [2 * fftSize];
     int fifoIndex = 0;
     bool nextFFTBlockReady = false;
+
+    bool inputIsLine = true;
+    double fs;
+    double input[4096];
+
+    double phaseBuffer_in[50];
+    double phaseBuffer_out[50];
+    double amplitudes[4096];
+    double f0[4096];
+    double harmonics[50];
+    double addBuffer[4096];
+    double subBuffer[4096];
+    double magnitudes[65];
+    double color = -1;
+    double shift = 0;
+    double stretch = 0;
     
     //==============================================================================
 	DDSPVoice* voice;

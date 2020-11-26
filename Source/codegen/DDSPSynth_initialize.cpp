@@ -14,6 +14,8 @@
 #include "DDSPSynth_data.h"
 #include "additive.h"
 #include "eml_rand_mt19937ar_stateful.h"
+#include "getMagnitudes.h"
+#include "getPitch2.h"
 #include "rt_nonfinite.h"
 #include "subtractive.h"
 
@@ -21,6 +23,7 @@
 void DDSPSynth_initialize()
 {
   rt_InitInfAndNaN();
+  omp_init_nest_lock(&emlrtNestLockGlobal);
   c_eml_rand_mt19937ar_stateful_i();
   isInitialized_DDSPSynth = true;
 }

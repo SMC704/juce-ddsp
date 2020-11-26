@@ -52,6 +52,7 @@ private:
 	double shift = 0;
 	double stretch = 0;
 
+	bool inputIsLine = true;
 	bool tailoff = false;
 
 	juce::ADSR adsr;

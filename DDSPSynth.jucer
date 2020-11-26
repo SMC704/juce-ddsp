@@ -7,54 +7,79 @@
   <MAINGROUP id="wP40jo" name="DDSPSynth">
     <GROUP id="{21B404C6-B1A3-96E0-24F7-18E3D850093A}" name="Source">
       <GROUP id="{EC1CE48D-AFDF-312B-B94A-6D056A9FE965}" name="DDSP">
-        <FILE id="Wjttdj" name="additive.cpp" compile="1" resource="0" file="Source/codegen/additive.cpp"/>
-        <FILE id="eDiEqp" name="additive.h" compile="0" resource="0" file="Source/codegen/additive.h"/>
-        <FILE id="Y4LiCn" name="coder_array.h" compile="0" resource="0" file="Source/codegen/coder_array.h"/>
-        <FILE id="DtO4j2" name="ColoredNoise.cpp" compile="1" resource="0"
+        <FILE id="dNLZvp" name="additive.cpp" compile="1" resource="0" file="Source/codegen/additive.cpp"/>
+        <FILE id="cOtRH6" name="additive.h" compile="0" resource="0" file="Source/codegen/additive.h"/>
+        <FILE id="IB3UOJ" name="coder_array.h" compile="0" resource="0" file="Source/codegen/coder_array.h"/>
+        <FILE id="PXJXem" name="ColoredNoise.cpp" compile="1" resource="0"
               file="Source/codegen/ColoredNoise.cpp"/>
-        <FILE id="OjeyQy" name="ColoredNoise.h" compile="0" resource="0" file="Source/codegen/ColoredNoise.h"/>
-        <FILE id="zfV7Fj" name="DDSPSound.h" compile="0" resource="0" file="Source/DDSPSound.h"/>
-        <FILE id="ZaR07c" name="DDSPSynth_data.cpp" compile="1" resource="0"
+        <FILE id="aEGEIb" name="ColoredNoise.h" compile="0" resource="0" file="Source/codegen/ColoredNoise.h"/>
+        <FILE id="fa1kFI" name="DDSPSound.h" compile="0" resource="0" file="Source/DDSPSound.h"/>
+        <FILE id="L3ceb5" name="DDSPSynth_data.cpp" compile="1" resource="0"
               file="Source/codegen/DDSPSynth_data.cpp"/>
-        <FILE id="Cx25ES" name="DDSPSynth_data.h" compile="0" resource="0"
+        <FILE id="Prqyvj" name="DDSPSynth_data.h" compile="0" resource="0"
               file="Source/codegen/DDSPSynth_data.h"/>
-        <FILE id="PreySk" name="DDSPSynth_initialize.cpp" compile="1" resource="0"
+        <FILE id="drQQvR" name="DDSPSynth_initialize.cpp" compile="1" resource="0"
               file="Source/codegen/DDSPSynth_initialize.cpp"/>
-        <FILE id="lKbqZc" name="DDSPSynth_initialize.h" compile="0" resource="0"
+        <FILE id="Upydks" name="DDSPSynth_initialize.h" compile="0" resource="0"
               file="Source/codegen/DDSPSynth_initialize.h"/>
-        <FILE id="fhUxyk" name="DDSPSynth_terminate.cpp" compile="1" resource="0"
+        <FILE id="o7HuXS" name="DDSPSynth_rtwutil.cpp" compile="1" resource="0"
+              file="Source/codegen/DDSPSynth_rtwutil.cpp"/>
+        <FILE id="T2eQuQ" name="DDSPSynth_rtwutil.h" compile="0" resource="0"
+              file="Source/codegen/DDSPSynth_rtwutil.h"/>
+        <FILE id="SEmo6U" name="DDSPSynth_terminate.cpp" compile="1" resource="0"
               file="Source/codegen/DDSPSynth_terminate.cpp"/>
-        <FILE id="UdnMhl" name="DDSPSynth_terminate.h" compile="0" resource="0"
+        <FILE id="E5oPi2" name="DDSPSynth_terminate.h" compile="0" resource="0"
               file="Source/codegen/DDSPSynth_terminate.h"/>
-        <FILE id="YHmTJN" name="DDSPSynth_types.h" compile="0" resource="0"
+        <FILE id="xaXaq9" name="DDSPSynth_types.h" compile="0" resource="0"
               file="Source/codegen/DDSPSynth_types.h"/>
-        <FILE id="W1aKVv" name="DDSPVoice.cpp" compile="1" resource="0" file="Source/DDSPVoice.cpp"/>
-        <FILE id="dJBq0W" name="DDSPVoice.h" compile="0" resource="0" file="Source/DDSPVoice.h"/>
-        <FILE id="MhPljt" name="eml_rand_mt19937ar_stateful.cpp" compile="1"
+        <FILE id="Xm0FEG" name="DDSPVoice.cpp" compile="1" resource="0" file="Source/DDSPVoice.cpp"/>
+        <FILE id="oNrap0" name="DDSPVoice.h" compile="0" resource="0" file="Source/DDSPVoice.h"/>
+        <FILE id="vefe8I" name="eml_rand_mt19937ar_stateful.cpp" compile="1"
               resource="0" file="Source/codegen/eml_rand_mt19937ar_stateful.cpp"/>
-        <FILE id="WTTBRh" name="eml_rand_mt19937ar_stateful.h" compile="0"
+        <FILE id="uN3M5w" name="eml_rand_mt19937ar_stateful.h" compile="0"
               resource="0" file="Source/codegen/eml_rand_mt19937ar_stateful.h"/>
-        <FILE id="lr9KKd" name="firls.cpp" compile="1" resource="0" file="Source/codegen/firls.cpp"/>
-        <FILE id="goBThA" name="firls.h" compile="0" resource="0" file="Source/codegen/firls.h"/>
-        <FILE id="EnV0nq" name="mldivide.cpp" compile="1" resource="0" file="Source/codegen/mldivide.cpp"/>
-        <FILE id="ucbaqh" name="mldivide.h" compile="0" resource="0" file="Source/codegen/mldivide.h"/>
-        <FILE id="g4HZI4" name="rand.cpp" compile="1" resource="0" file="Source/codegen/rand.cpp"/>
-        <FILE id="PioHxc" name="rand.h" compile="0" resource="0" file="Source/codegen/rand.h"/>
-        <FILE id="gceWau" name="randn.cpp" compile="1" resource="0" file="Source/codegen/randn.cpp"/>
-        <FILE id="F3gVlR" name="randn.h" compile="0" resource="0" file="Source/codegen/randn.h"/>
-        <FILE id="LbU0vJ" name="rt_nonfinite.cpp" compile="1" resource="0"
+        <FILE id="RHvhVW" name="eml_setop.cpp" compile="1" resource="0" file="Source/codegen/eml_setop.cpp"/>
+        <FILE id="rJlmyt" name="eml_setop.h" compile="0" resource="0" file="Source/codegen/eml_setop.h"/>
+        <FILE id="ixGbkJ" name="fft.cpp" compile="1" resource="0" file="Source/codegen/fft.cpp"/>
+        <FILE id="uYcVjv" name="fft.h" compile="0" resource="0" file="Source/codegen/fft.h"/>
+        <FILE id="s8Wkh5" name="FFTImplementationCallback.cpp" compile="1"
+              resource="0" file="Source/codegen/FFTImplementationCallback.cpp"/>
+        <FILE id="FhTStR" name="FFTImplementationCallback.h" compile="0" resource="0"
+              file="Source/codegen/FFTImplementationCallback.h"/>
+        <FILE id="eKCyBo" name="findpeaks.cpp" compile="1" resource="0" file="Source/codegen/findpeaks.cpp"/>
+        <FILE id="OuuMjD" name="findpeaks.h" compile="0" resource="0" file="Source/codegen/findpeaks.h"/>
+        <FILE id="q1tGcd" name="firls.cpp" compile="1" resource="0" file="Source/codegen/firls.cpp"/>
+        <FILE id="cJ3IeI" name="firls.h" compile="0" resource="0" file="Source/codegen/firls.h"/>
+        <FILE id="t3zqxk" name="gencoswin.cpp" compile="1" resource="0" file="Source/codegen/gencoswin.cpp"/>
+        <FILE id="tH7ZUX" name="gencoswin.h" compile="0" resource="0" file="Source/codegen/gencoswin.h"/>
+        <FILE id="RsVh85" name="getMagnitudes.cpp" compile="1" resource="0"
+              file="Source/codegen/getMagnitudes.cpp"/>
+        <FILE id="ymIfZ5" name="getMagnitudes.h" compile="0" resource="0" file="Source/codegen/getMagnitudes.h"/>
+        <FILE id="vokYmX" name="getPitch2.cpp" compile="1" resource="0" file="Source/codegen/getPitch2.cpp"/>
+        <FILE id="UBlyO6" name="getPitch2.h" compile="0" resource="0" file="Source/codegen/getPitch2.h"/>
+        <FILE id="uNqFV3" name="hamming.cpp" compile="1" resource="0" file="Source/codegen/hamming.cpp"/>
+        <FILE id="IxT1RD" name="hamming.h" compile="0" resource="0" file="Source/codegen/hamming.h"/>
+        <FILE id="byAT5T" name="interp1.cpp" compile="1" resource="0" file="Source/codegen/interp1.cpp"/>
+        <FILE id="gZiwst" name="interp1.h" compile="0" resource="0" file="Source/codegen/interp1.h"/>
+        <FILE id="eqraqI" name="mldivide.cpp" compile="1" resource="0" file="Source/codegen/mldivide.cpp"/>
+        <FILE id="lePUQL" name="mldivide.h" compile="0" resource="0" file="Source/codegen/mldivide.h"/>
+        <FILE id="K1B4bx" name="rand.cpp" compile="1" resource="0" file="Source/codegen/rand.cpp"/>
+        <FILE id="tFvSGO" name="rand.h" compile="0" resource="0" file="Source/codegen/rand.h"/>
+        <FILE id="DVZ5Y7" name="randn.cpp" compile="1" resource="0" file="Source/codegen/randn.cpp"/>
+        <FILE id="oE4nLJ" name="randn.h" compile="0" resource="0" file="Source/codegen/randn.h"/>
+        <FILE id="nqZYS6" name="rt_nonfinite.cpp" compile="1" resource="0"
               file="Source/codegen/rt_nonfinite.cpp"/>
-        <FILE id="cnVU3x" name="rt_nonfinite.h" compile="0" resource="0" file="Source/codegen/rt_nonfinite.h"/>
-        <FILE id="nmFdnE" name="rtGetInf.cpp" compile="1" resource="0" file="Source/codegen/rtGetInf.cpp"/>
-        <FILE id="cUS7bg" name="rtGetInf.h" compile="0" resource="0" file="Source/codegen/rtGetInf.h"/>
-        <FILE id="dxGaCy" name="rtGetNaN.cpp" compile="1" resource="0" file="Source/codegen/rtGetNaN.cpp"/>
-        <FILE id="WB4e3t" name="rtGetNaN.h" compile="0" resource="0" file="Source/codegen/rtGetNaN.h"/>
-        <FILE id="S7nMfq" name="rtwtypes.h" compile="0" resource="0" file="Source/codegen/rtwtypes.h"/>
-        <FILE id="NpINNn" name="subtractive.cpp" compile="1" resource="0" file="Source/codegen/subtractive.cpp"/>
-        <FILE id="xYI3Li" name="subtractive.h" compile="0" resource="0" file="Source/codegen/subtractive.h"/>
-        <FILE id="IfywLa" name="SystemCore.cpp" compile="1" resource="0" file="Source/codegen/SystemCore.cpp"/>
-        <FILE id="u4A2CG" name="SystemCore.h" compile="0" resource="0" file="Source/codegen/SystemCore.h"/>
-        <FILE id="FP0Ikj" name="tmwtypes.h" compile="0" resource="0" file="Source/codegen/tmwtypes.h"/>
+        <FILE id="VUOksf" name="rt_nonfinite.h" compile="0" resource="0" file="Source/codegen/rt_nonfinite.h"/>
+        <FILE id="c8qMrk" name="rtGetInf.cpp" compile="1" resource="0" file="Source/codegen/rtGetInf.cpp"/>
+        <FILE id="W3LNDS" name="rtGetInf.h" compile="0" resource="0" file="Source/codegen/rtGetInf.h"/>
+        <FILE id="t66GYH" name="rtGetNaN.cpp" compile="1" resource="0" file="Source/codegen/rtGetNaN.cpp"/>
+        <FILE id="L7KMLP" name="rtGetNaN.h" compile="0" resource="0" file="Source/codegen/rtGetNaN.h"/>
+        <FILE id="zkN6rM" name="rtwtypes.h" compile="0" resource="0" file="Source/codegen/rtwtypes.h"/>
+        <FILE id="darzc5" name="subtractive.cpp" compile="1" resource="0" file="Source/codegen/subtractive.cpp"/>
+        <FILE id="xNaVI1" name="subtractive.h" compile="0" resource="0" file="Source/codegen/subtractive.h"/>
+        <FILE id="QVYDui" name="SystemCore.cpp" compile="1" resource="0" file="Source/codegen/SystemCore.cpp"/>
+        <FILE id="Uw30Vd" name="SystemCore.h" compile="0" resource="0" file="Source/codegen/SystemCore.h"/>
+        <FILE id="HiPVYq" name="tmwtypes.h" compile="0" resource="0" file="Source/codegen/tmwtypes.h"/>
       </GROUP>
       <FILE id="f6vy2M" name="PluginProcessor.cpp" compile="1" resource="0"
             file="Source/PluginProcessor.cpp"/>

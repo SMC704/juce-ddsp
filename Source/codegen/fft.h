@@ -3,14 +3,14 @@
 //  course requirements at degree granting institutions only.  Not for
 //  government, commercial, or other organizational use.
 //
-//  randn.h
+//  fft.h
 //
-//  Code generation for function 'randn'
+//  Code generation for function 'fft'
 //
 
 
-#ifndef RANDN_H
-#define RANDN_H
+#ifndef FFT_H
+#define FFT_H
 
 // Include files
 #include <cstddef>
@@ -21,8 +21,9 @@
 #define MAX_THREADS                    omp_get_max_threads()
 
 // Function Declarations
-extern void randn(double r[4161]);
+extern void fft(const double x_data[], const int x_size[1], double varargin_1,
+                coder::array<creal_T, 1U> &y);
 
 #endif
 
-// End of code generation (randn.h)
+// End of code generation (fft.h)

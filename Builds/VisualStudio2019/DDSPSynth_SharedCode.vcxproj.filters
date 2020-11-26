@@ -478,6 +478,9 @@
     <ClCompile Include="..\..\Source\codegen\DDSPSynth_initialize.cpp">
       <Filter>DDSPSynth\Source\DDSP</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\codegen\DDSPSynth_rtwutil.cpp">
+      <Filter>DDSPSynth\Source\DDSP</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\codegen\DDSPSynth_terminate.cpp">
       <Filter>DDSPSynth\Source\DDSP</Filter>
     </ClCompile>
@@ -487,7 +490,34 @@
     <ClCompile Include="..\..\Source\codegen\eml_rand_mt19937ar_stateful.cpp">
       <Filter>DDSPSynth\Source\DDSP</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\codegen\eml_setop.cpp">
+      <Filter>DDSPSynth\Source\DDSP</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\codegen\fft.cpp">
+      <Filter>DDSPSynth\Source\DDSP</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\codegen\FFTImplementationCallback.cpp">
+      <Filter>DDSPSynth\Source\DDSP</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\codegen\findpeaks.cpp">
+      <Filter>DDSPSynth\Source\DDSP</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\codegen\firls.cpp">
+      <Filter>DDSPSynth\Source\DDSP</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\codegen\gencoswin.cpp">
+      <Filter>DDSPSynth\Source\DDSP</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\codegen\getMagnitudes.cpp">
+      <Filter>DDSPSynth\Source\DDSP</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\codegen\getPitch2.cpp">
+      <Filter>DDSPSynth\Source\DDSP</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\codegen\hamming.cpp">
+      <Filter>DDSPSynth\Source\DDSP</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\codegen\interp1.cpp">
       <Filter>DDSPSynth\Source\DDSP</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\codegen\mldivide.cpp">
@@ -2730,6 +2760,9 @@
     <ClInclude Include="..\..\Source\codegen\DDSPSynth_initialize.h">
       <Filter>DDSPSynth\Source\DDSP</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Source\codegen\DDSPSynth_rtwutil.h">
+      <Filter>DDSPSynth\Source\DDSP</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\codegen\DDSPSynth_terminate.h">
       <Filter>DDSPSynth\Source\DDSP</Filter>
     </ClInclude>
@@ -2742,7 +2775,34 @@
     <ClInclude Include="..\..\Source\codegen\eml_rand_mt19937ar_stateful.h">
       <Filter>DDSPSynth\Source\DDSP</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Source\codegen\eml_setop.h">
+      <Filter>DDSPSynth\Source\DDSP</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\codegen\fft.h">
+      <Filter>DDSPSynth\Source\DDSP</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\codegen\FFTImplementationCallback.h">
+      <Filter>DDSPSynth\Source\DDSP</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\codegen\findpeaks.h">
+      <Filter>DDSPSynth\Source\DDSP</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\codegen\firls.h">
+      <Filter>DDSPSynth\Source\DDSP</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\codegen\gencoswin.h">
+      <Filter>DDSPSynth\Source\DDSP</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\codegen\getMagnitudes.h">
+      <Filter>DDSPSynth\Source\DDSP</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\codegen\getPitch2.h">
+      <Filter>DDSPSynth\Source\DDSP</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\codegen\hamming.h">
+      <Filter>DDSPSynth\Source\DDSP</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\codegen\interp1.h">
       <Filter>DDSPSynth\Source\DDSP</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\codegen\mldivide.h">

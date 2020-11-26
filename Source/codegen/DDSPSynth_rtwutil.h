@@ -3,14 +3,14 @@
 //  course requirements at degree granting institutions only.  Not for
 //  government, commercial, or other organizational use.
 //
-//  randn.h
+//  DDSPSynth_rtwutil.h
 //
-//  Code generation for function 'randn'
+//  Code generation for function 'DDSPSynth_rtwutil'
 //
 
 
-#ifndef RANDN_H
-#define RANDN_H
+#ifndef DDSPSYNTH_RTWUTIL_H
+#define DDSPSYNTH_RTWUTIL_H
 
 // Include files
 #include <cstddef>
@@ -21,8 +21,9 @@
 #define MAX_THREADS                    omp_get_max_threads()
 
 // Function Declarations
-extern void randn(double r[4161]);
+extern double rt_powd_snf(double u0, double u1);
+extern double rt_roundd_snf(double u);
 
 #endif
 
-// End of code generation (randn.h)
+// End of code generation (DDSPSynth_rtwutil.h)

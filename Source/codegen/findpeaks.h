@@ -3,14 +3,14 @@
 //  course requirements at degree granting institutions only.  Not for
 //  government, commercial, or other organizational use.
 //
-//  randn.h
+//  findpeaks.h
 //
-//  Code generation for function 'randn'
+//  Code generation for function 'findpeaks'
 //
 
 
-#ifndef RANDN_H
-#define RANDN_H
+#ifndef FINDPEAKS_H
+#define FINDPEAKS_H
 
 // Include files
 #include <cstddef>
@@ -21,8 +21,9 @@
 #define MAX_THREADS                    omp_get_max_threads()
 
 // Function Declarations
-extern void randn(double r[4161]);
+extern void findpeaks(const coder::array<double, 1U> &Yin, coder::array<double,
+                      1U> &Ypk, coder::array<double, 1U> &Xpk);
 
 #endif
 
-// End of code generation (randn.h)
+// End of code generation (findpeaks.h)

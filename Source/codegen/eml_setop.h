@@ -3,14 +3,14 @@
 //  course requirements at degree granting institutions only.  Not for
 //  government, commercial, or other organizational use.
 //
-//  randn.h
+//  eml_setop.h
 //
-//  Code generation for function 'randn'
+//  Code generation for function 'eml_setop'
 //
 
 
-#ifndef RANDN_H
-#define RANDN_H
+#ifndef EML_SETOP_H
+#define EML_SETOP_H
 
 // Include files
 #include <cstddef>
@@ -21,8 +21,10 @@
 #define MAX_THREADS                    omp_get_max_threads()
 
 // Function Declarations
-extern void randn(double r[4161]);
+extern void do_vectors(const coder::array<int, 1U> &a, const coder::array<int,
+  1U> &b, coder::array<int, 1U> &c, coder::array<int, 1U> &ia, coder::array<int,
+  1U> &ib);
 
 #endif
 
-// End of code generation (randn.h)
+// End of code generation (eml_setop.h)

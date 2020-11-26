@@ -12,6 +12,8 @@
 // Include files
 #include "ColoredNoise.h"
 #include "additive.h"
+#include "getMagnitudes.h"
+#include "getPitch2.h"
 #include "randn.h"
 #include "rt_nonfinite.h"
 #include "subtractive.h"

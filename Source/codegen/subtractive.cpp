@@ -17,75 +17,16 @@
 #include "SystemCore.h"
 #include "additive.h"
 #include "firls.h"
+#include "getMagnitudes.h"
+#include "getPitch2.h"
 #include "rt_nonfinite.h"
 #include <cmath>
 #include <cstring>
-#include <math.h>
-
-// Function Declarations
-static double rt_powd_snf(double u0, double u1);
-static void scale_fn(const double x[65], double y[65]);
 
 // Function Definitions
-static double rt_powd_snf(double u0, double u1)
+void subtractive(double n_samples, const double magnitudes[65], double color,
+                 double out[4096])
 {
-  double y;
-  if (rtIsNaN(u0) || rtIsNaN(u1)) {
-    y = rtNaN;
-  } else {
-    double d;
-    double d1;
-    d = std::abs(u0);
-    d1 = std::abs(u1);
-    if (rtIsInf(u1)) {
-      if (d == 1.0) {
-        y = 1.0;
-      } else if (d > 1.0) {
-        if (u1 > 0.0) {
-          y = rtInf;
-        } else {
-          y = 0.0;
-        }
-      } else if (u1 > 0.0) {
-        y = 0.0;
-      } else {
-        y = rtInf;
-      }
-    } else if (d1 == 0.0) {
-      y = 1.0;
-    } else if (d1 == 1.0) {
-      if (u1 > 0.0) {
-        y = u0;
-      } else {
-        y = 1.0 / u0;
-      }
-    } else if (u1 == 2.0) {
-      y = u0 * u0;
-    } else if ((u1 == 0.5) && (u0 >= 0.0)) {
-      y = std::sqrt(u0);
-    } else if ((u0 < 0.0) && (u1 > std::floor(u1))) {
-      y = rtNaN;
-    } else {
-      y = pow(u0, u1);
-    }
-  }
-
-  return y;
-}
-
-static void scale_fn(const double x[65], double y[65])
-{
-  for (int k = 0; k < 65; k++) {
-    y[k] = 2.0 * rt_powd_snf(1.0 / (std::exp(-x[k]) + 1.0), 2.3025850929940459)
-      + 1.0E-7;
-  }
-}
-
-void subtractive(double n_samples, double magnitudes[65], double color, double
-                 out[4096])
-{
-  int i;
-  double b_magnitudes[65];
   dsp_ColoredNoise white_n;
   b_dsp_ColoredNoise brown_n;
   c_dsp_ColoredNoise violet_n;
@@ -93,6 +34,7 @@ void subtractive(double n_samples, double magnitudes[65], double color, double
   static double brown_noise[4161];
   static double violet_noise[4161];
   double signal_tmp;
+  int i;
   int loop_ub;
   double b_data[129];
   int b_size[2];
@@ -103,14 +45,11 @@ void subtractive(double n_samples, double magnitudes[65], double color, double
 
   //  magnitudes: row = frames, column = freq responses
   //  magnitudes should be 65
-  //      normalize magnitudes
-  //      optional; colab examplees do not use it
-  for (i = 0; i < 65; i++) {
-    b_magnitudes[i] = magnitudes[i] + 1.0;
-  }
-
-  scale_fn(b_magnitudes, magnitudes);
-
+  //  %     normalize magnitudes
+  //      initial_bias = 1;
+  //
+  //  %     optional; colab examplees do not use it
+  //      magnitudes = scale_fn(magnitudes + initial_bias);
   //  generate white noise
   white_n.init();
   brown_n.init();

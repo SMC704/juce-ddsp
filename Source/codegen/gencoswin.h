@@ -3,14 +3,14 @@
 //  course requirements at degree granting institutions only.  Not for
 //  government, commercial, or other organizational use.
 //
-//  randn.h
+//  gencoswin.h
 //
-//  Code generation for function 'randn'
+//  Code generation for function 'gencoswin'
 //
 
 
-#ifndef RANDN_H
-#define RANDN_H
+#ifndef GENCOSWIN_H
+#define GENCOSWIN_H
 
 // Include files
 #include <cstddef>
@@ -21,8 +21,8 @@
 #define MAX_THREADS                    omp_get_max_threads()
 
 // Function Declarations
-extern void randn(double r[4161]);
+extern void sym_window(double n, coder::array<double, 1U> &w);
 
 #endif
 
-// End of code generation (randn.h)
+// End of code generation (gencoswin.h)

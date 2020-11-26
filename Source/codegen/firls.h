@@ -16,7 +16,9 @@
 #include <cstddef>
 #include <cstdlib>
 #include "rtwtypes.h"
+#include "omp.h"
 #include "DDSPSynth_types.h"
+#define MAX_THREADS                    omp_get_max_threads()
 
 // Function Declarations
 extern void firls(const double varargin_3[64], double h_data[], int h_size[2]);

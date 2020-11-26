@@ -3,14 +3,14 @@
 //  course requirements at degree granting institutions only.  Not for
 //  government, commercial, or other organizational use.
 //
-//  randn.h
+//  getPitch2.h
 //
-//  Code generation for function 'randn'
+//  Code generation for function 'getPitch2'
 //
 
 
-#ifndef RANDN_H
-#define RANDN_H
+#ifndef GETPITCH2_H
+#define GETPITCH2_H
 
 // Include files
 #include <cstddef>
@@ -21,8 +21,8 @@
 #define MAX_THREADS                    omp_get_max_threads()
 
 // Function Declarations
-extern void randn(double r[4161]);
+extern double getPitch2(int n_samples, const double input[4096], double fs);
 
 #endif
 
-// End of code generation (randn.h)
+// End of code generation (getPitch2.h)

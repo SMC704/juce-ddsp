@@ -16,7 +16,9 @@
 #include <cstddef>
 #include <cstdlib>
 #include "rtwtypes.h"
+#include "omp.h"
 #include "DDSPSynth_types.h"
+#define MAX_THREADS                    omp_get_max_threads()
 
 // Function Declarations
 extern void c_eml_rand_mt19937ar_stateful_i();

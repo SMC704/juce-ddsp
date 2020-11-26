@@ -3,14 +3,14 @@
 //  course requirements at degree granting institutions only.  Not for
 //  government, commercial, or other organizational use.
 //
-//  randn.h
+//  hamming.h
 //
-//  Code generation for function 'randn'
+//  Code generation for function 'hamming'
 //
 
 
-#ifndef RANDN_H
-#define RANDN_H
+#ifndef HAMMING_H
+#define HAMMING_H
 
 // Include files
 #include <cstddef>
@@ -21,8 +21,9 @@
 #define MAX_THREADS                    omp_get_max_threads()
 
 // Function Declarations
-extern void randn(double r[4161]);
+extern void b_hamming(double varargin_1, double w_data[], int w_size[1]);
+extern void hamming(int varargin_1, coder::array<double, 1U> &w);
 
 #endif
 
-// End of code generation (randn.h)
+// End of code generation (hamming.h)

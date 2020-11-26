@@ -67,7 +67,7 @@ void DDSPVoice::stopNote(float, bool allowTailOff)
 
 void DDSPVoice::renderNextBlock(juce::AudioSampleBuffer & outputBuffer, int startSample, int numSamples)
 {
-	if (!adsr.isActive()) return;
+	if (!adsr.isActive() && !inputIsLine) return;
 	
 	// generated additive synth code overwrites passed harmonics
 	// so create copy before passing
@@ -86,12 +86,16 @@ void DDSPVoice::renderNextBlock(juce::AudioSampleBuffer & outputBuffer, int star
 	}
 
 	for (int i = startSample; i < startSample + numSamples && i < 4096; i++) {
-		if (!adsr.isActive()) {
+		if (!adsr.isActive() && !inputIsLine) {
 			// We are at the end of the release part
 			clearCurrentNote();
 			break;
 		}
-		float val = adsr.getNextSample() * (float)(addBuffer[i-startSample] + subBuffer[i-startSample]);
+		float val = 0;
+		if (!inputIsLine)
+			val = adsr.getNextSample() * (float)(addBuffer[i - startSample] + subBuffer[i - startSample]);
+		else
+			val = (float)(addBuffer[i - startSample] + subBuffer[i - startSample]);
 
 		*(outputBuffer.getWritePointer(0, i)) = val;
 		*(outputBuffer.getWritePointer(1, i)) = val;

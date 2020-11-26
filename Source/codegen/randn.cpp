@@ -13,6 +13,8 @@
 #include "randn.h"
 #include "DDSPSynth_data.h"
 #include "additive.h"
+#include "getMagnitudes.h"
+#include "getPitch2.h"
 #include "rt_nonfinite.h"
 #include "subtractive.h"
 #include <cmath>
