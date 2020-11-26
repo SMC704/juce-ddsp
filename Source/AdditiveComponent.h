@@ -55,7 +55,7 @@ private:
     AdditiveListener* pListener = NULL;
     double shiftValue;
     double stretchValue;
-    bool onOffState;
+    bool onOffState = false;
     
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(AdditiveComponent)
 
