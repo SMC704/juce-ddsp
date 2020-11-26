@@ -70,3 +70,9 @@ void DdspsynthAudioProcessorEditor::onNoiseColorChange(double color)
 {
     audioProcessor.onNoiseColorChange(color);
 }
+
+void DdspsynthAudioProcessorEditor::onOnOffSubChange(bool button)
+{
+    audioProcessor.subtractiveOnOff(button);
+}
+

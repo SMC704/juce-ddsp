@@ -55,4 +55,5 @@ private:
 
         // Inherited via SubtractiveListener
         virtual void onNoiseColorChange(double color) override;
+        virtual void onOnOffSubChange(bool onOff) override;
 };

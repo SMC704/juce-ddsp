@@ -34,10 +34,16 @@ public:
 	void renderNextBlock(juce::AudioSampleBuffer& outputBuffer, int startSample, int numSamples) override;
 
 	void setHarmonics(double harms[50]);
+
 	void setNoiseColor(double color);
     
     void setShift(double _shift) { shift = _shift; };
+
     void setStretch(double _stretch) { stretch = _stretch; };
+
+	void setOnOffSubtractive(bool button);
+
+	void setOnOffAdditive(bool button);
 
 private:
 	double phaseBuffer_in[50];
@@ -51,6 +57,8 @@ private:
 	double color = -1;
 	double shift = 0;
 	double stretch = 0;
+	bool subtractiveOnOff = false;
+	bool additiveOnOff = false;
 
 	bool tailoff = false;
 
