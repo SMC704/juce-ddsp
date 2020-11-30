@@ -22,7 +22,7 @@ DDSPVoice::DDSPVoice()
                         \
                          \
                           --> 0;) {
-		magnitudes[i] = -10;
+		magnitudes[i] = 1;
 	}
 
 	for (int i = 0; i < 4096; i++) {
@@ -72,11 +72,15 @@ void DDSPVoice::renderNextBlock(juce::AudioSampleBuffer & outputBuffer, int star
 {
 	if (!adsr.isActive()) return;
 	
-	// generated additive synth code overwrites passed harmonics
+	// generated additive synth code overwrites passed harmonics & magnitudes
 	// so create copy before passing
 	double harms_copy[50];
+	double mags_copy[65];
 	for (int i = 0; i < 50; i++) {
 		harms_copy[i] = harmonics[i];
+	}
+	for (int i = 0; i < 65; i++) {
+		mags_copy[i] = magnitudes[i];
 	}
 
 	int audio_size[1];
@@ -95,7 +99,13 @@ void DDSPVoice::renderNextBlock(juce::AudioSampleBuffer & outputBuffer, int star
 
 	if (subtractiveOnOff)
 	{
-		subtractive(numSamples, magnitudes, color, subBuffer);
+		subtractive(numSamples, mags_copy, color, irBuffer_in, recalculateIR, subBuffer, irBuffer_out);
+		if (recalculateIR);
+		{
+			recalculateIR = false;
+			for (int i = 0; i < 129; i++)
+			irBuffer_in[i] = irBuffer_out[i];
+		}
 	}
 	else {
 		for (int i = 0; i < 4096; i++)

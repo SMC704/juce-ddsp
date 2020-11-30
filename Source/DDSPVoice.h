@@ -66,6 +66,10 @@ private:
 	bool subtractiveOnOff = false;
 	bool additiveOnOff = false;
 
+	double irBuffer_in[129];
+	double irBuffer_out[129];
+	bool recalculateIR = true;
+
 	bool tailoff = false;
 
 	juce::ADSR adsr;
