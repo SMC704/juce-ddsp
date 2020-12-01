@@ -20,7 +20,8 @@
 
 // Function Declarations
 extern void subtractive(double n_samples, double magnitudes[65], double color,
-  double out[4096]);
+	const double ir_coeffs[129], boolean_T recalculate_ir, double out[4096],
+	double b[129]);
 
 #endif
 
