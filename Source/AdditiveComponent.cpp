@@ -42,6 +42,8 @@ AdditiveComponent::AdditiveComponent()
     addAndMakeVisible(shiftSlider);
     shiftSlider.setBounds(0, 0, 100, 100);
     shiftSlider.addListener(this);
+    shiftSlider.setDoubleClickReturnValue(true, 0.0f);
+
 
     addAndMakeVisible(shiftLabel);
     shiftLabel.setColour(juce::Label::textColourId, juce::Colours::white);
@@ -58,6 +60,7 @@ AdditiveComponent::AdditiveComponent()
     addAndMakeVisible(stretchSlider);
     stretchSlider.setBounds(0, 0, 100, 100);
     stretchSlider.addListener(this);
+    stretchSlider.setDoubleClickReturnValue(true, 0.0f);
 
     addAndMakeVisible(stretchLabel);
     stretchLabel.setColour(juce::Label::textColourId, juce::Colours::white);
@@ -74,7 +77,7 @@ AdditiveComponent::AdditiveComponent()
     addAndMakeVisible(ampSlider);
     ampSlider.setBounds(0, 0, 100, 100);
     ampSlider.addListener(this);
-
+    ampSlider.setDoubleClickReturnValue(true, -8.0f);
 
     addAndMakeVisible(ampLabel);
     ampLabel.setColour(juce::Label::textColourId, juce::Colours::white);

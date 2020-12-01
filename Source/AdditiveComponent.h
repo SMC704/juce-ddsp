@@ -58,7 +58,7 @@ private:
     double addAmp = 0;
     double shiftValue;
     double stretchValue;
-    bool onOffState = false;
+    bool onOffState = true;
     
     AdditiveListener* additiveListener = NULL;
     
