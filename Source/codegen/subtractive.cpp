@@ -14,62 +14,99 @@
 #include "ColoredNoise.h"
 #include "DDSPSynth_data.h"
 #include "DDSPSynth_initialize.h"
-#include "DDSPSynth_rtwutil.h"
 #include "SystemCore.h"
 #include "additive.h"
-#include "firls.h"
-#include "rescale.h"
+#include "fft.h"
+#include "ifft.h"
 #include "rt_nonfinite.h"
 #include <cmath>
 #include <cstring>
+#include <math.h>
 
 // Function Declarations
-static void scale_fn(const double x[65], double y[65]);
+static double rt_powd_snf(double u0, double u1);
 
 // Function Definitions
-static void scale_fn(const double x[65], double y[65])
+static double rt_powd_snf(double u0, double u1)
 {
-  for (int k = 0; k < 65; k++) {
-    y[k] = 2.0 * rt_powd_snf(1.0 / (std::exp(-x[k]) + 1.0), 2.3025850929940459)
-      + 1.0E-7;
+  double y;
+  if (rtIsNaN(u0) || rtIsNaN(u1)) {
+    y = rtNaN;
+  } else {
+    double d;
+    double d1;
+    d = std::abs(u0);
+    d1 = std::abs(u1);
+    if (rtIsInf(u1)) {
+      if (d == 1.0) {
+        y = 1.0;
+      } else if (d > 1.0) {
+        if (u1 > 0.0) {
+          y = rtInf;
+        } else {
+          y = 0.0;
+        }
+      } else if (u1 > 0.0) {
+        y = 0.0;
+      } else {
+        y = rtInf;
+      }
+    } else if (d1 == 0.0) {
+      y = 1.0;
+    } else if (d1 == 1.0) {
+      if (u1 > 0.0) {
+        y = u0;
+      } else {
+        y = 1.0 / u0;
+      }
+    } else if (u1 == 2.0) {
+      y = u0 * u0;
+    } else if ((u1 == 0.5) && (u0 >= 0.0)) {
+      y = std::sqrt(u0);
+    } else if ((u0 < 0.0) && (u1 > std::floor(u1))) {
+      y = rtNaN;
+    } else {
+      y = pow(u0, u1);
+    }
   }
+
+  return y;
 }
 
-void subtractive(double n_samples, double magnitudes[65], double color, const
-                 double ir_coeffs[129], boolean_T recalculate_ir, double out
-                 [4096], double b[129])
+void subtractive(double n_samples, const double magnitudes[65], double color,
+                 double out[4096])
 {
-  int i;
-  double b_magnitudes[65];
   dsp_ColoredNoise white_n;
   b_dsp_ColoredNoise brown_n;
   c_dsp_ColoredNoise violet_n;
-  static double white_noise[4161];
-  static double brown_noise[4161];
-  static double violet_noise[4161];
-  double signal_tmp;
+  double white_noise[4096];
+  double brown_noise[4096];
+  double violet_noise[4096];
+  double mag_rel_bin_size;
+  int i;
   int loop_ub;
-  int tmp_size[2];
+  int white_noise_size[1];
+  coder::array<creal_T, 1U> r;
+  coder::array<double, 1U> noise_freq;
+  coder::array<double, 1U> mag_rescaled;
+  int idx;
+  double r1;
   int k;
-  int nx_m_nb;
-  int filtered_signal_tmp;
-  double inputMin;
-  double inputMax;
-  int filtered_signal_size[1];
+  double r3;
+  int eint;
+  coder::array<boolean_T, 1U> b_r1;
+  coder::array<short, 1U> r2;
   if (!isInitialized_DDSPSynth) {
     DDSPSynth_initialize();
   }
 
+  //  function [out, b] = subtractive(n_samples, magnitudes, color, ir_coeffs, recalculate_ir) 
   //  magnitudes: row = frames, column = freq responses
   //  magnitudes should be 65
   //      normalize magnitudes
+  //      initial_bias = 1;
   //      optional; colab examplees do not use it
-  for (i = 0; i < 65; i++) {
-    b_magnitudes[i] = magnitudes[i] + 1.0;
-  }
-
-  scale_fn(b_magnitudes, magnitudes);
-
+  //      magnitudes = scale_fn(magnitudes + initial_bias);
   //  generate white noise
   white_n.init();
   brown_n.init();
@@ -80,83 +117,21 @@ void subtractive(double n_samples, double magnitudes[65], double color, const
   white_n.release();
   brown_n.release();
   violet_n.release();
-  signal_tmp = std::abs(color);
-  for (i = 0; i < 4161; i++) {
-    white_noise[i] *= 1.0 - signal_tmp;
+  mag_rel_bin_size = std::abs(color);
+  for (i = 0; i < 4096; i++) {
+    white_noise[i] *= 1.0 - mag_rel_bin_size;
   }
 
   if (color > 0.0) {
-    for (i = 0; i < 4161; i++) {
+    for (i = 0; i < 4096; i++) {
       white_noise[i] += color * violet_noise[i];
     }
   }
 
   if (color < 0.0) {
-    for (i = 0; i < 4161; i++) {
-      white_noise[i] += signal_tmp * brown_noise[i];
+    for (i = 0; i < 4096; i++) {
+      white_noise[i] += mag_rel_bin_size * brown_noise[i];
     }
-  }
-
-  if (1.0 > n_samples + 65.0) {
-    loop_ub = 0;
-  } else {
-    loop_ub = static_cast<int>(n_samples + 65.0);
-  }
-
-  if (recalculate_ir) {
-    firls(*(double (*)[64])&magnitudes[0], b, tmp_size);
-  } else {
-    std::memcpy(&b[0], &ir_coeffs[0], 129U * sizeof(double));
-  }
-
-  if (0 <= loop_ub - 1) {
-    std::memset(&violet_noise[0], 0, loop_ub * sizeof(double));
-  }
-
-  if (loop_ub >= 258) {
-    for (k = 0; k < 129; k++) {
-      nx_m_nb = k + 1;
-      for (int j = nx_m_nb; j <= loop_ub; j++) {
-        violet_noise[j - 1] += b[k] * white_noise[(j - k) - 1];
-      }
-    }
-  } else {
-    int j;
-    int naxpy;
-    if (loop_ub > 129) {
-      nx_m_nb = loop_ub - 130;
-    } else {
-      nx_m_nb = -1;
-    }
-
-    for (k = 0; k <= nx_m_nb; k++) {
-      for (j = 0; j < 129; j++) {
-        filtered_signal_tmp = k + j;
-        violet_noise[filtered_signal_tmp] += white_noise[k] * b[j];
-      }
-    }
-
-    naxpy = (loop_ub - nx_m_nb) - 2;
-    i = nx_m_nb + 2;
-    for (k = i; k <= loop_ub; k++) {
-      for (j = 0; j <= naxpy; j++) {
-        filtered_signal_tmp = (k + j) - 1;
-        violet_noise[filtered_signal_tmp] += white_noise[k - 1] * b[j];
-      }
-
-      naxpy--;
-    }
-  }
-
-  std::memset(&out[0], 0, 4096U * sizeof(double));
-
-  //      out(1:n_samples) = filtered_signal(66:n_samples+65);
-  if (66.0 > n_samples + 65.0) {
-    i = 0;
-    nx_m_nb = 0;
-  } else {
-    i = 65;
-    nx_m_nb = static_cast<int>(n_samples + 65.0);
   }
 
   if (1.0 > n_samples) {
@@ -165,37 +140,85 @@ void subtractive(double n_samples, double magnitudes[65], double color, const
     loop_ub = static_cast<int>(n_samples);
   }
 
-  filtered_signal_tmp = nx_m_nb - i;
-  if (filtered_signal_tmp <= 2) {
-    if (filtered_signal_tmp == 1) {
-      inputMin = violet_noise[i];
-      inputMax = violet_noise[i];
+  white_noise_size[0] = loop_ub;
+  if (0 <= loop_ub - 1) {
+    std::memcpy(&brown_noise[0], &white_noise[0], loop_ub * sizeof(double));
+  }
+
+  fft(brown_noise, white_noise_size, 2.0 * (n_samples - 1.0), r);
+  noise_freq.set_size(r.size(0));
+  loop_ub = r.size(0);
+  for (i = 0; i < loop_ub; i++) {
+    noise_freq[i] = r[i].re;
+  }
+
+  mag_rel_bin_size = std::ceil(n_samples / 65.0);
+  loop_ub = static_cast<int>(65.0 * mag_rel_bin_size);
+  mag_rescaled.set_size(loop_ub);
+  for (i = 0; i < loop_ub; i++) {
+    mag_rescaled[i] = 0.0;
+  }
+
+  i = static_cast<int>(mag_rel_bin_size);
+  for (idx = 0; idx < 65; idx++) {
+    for (loop_ub = 0; loop_ub < i; loop_ub++) {
+      mag_rescaled[static_cast<int>((static_cast<double>(loop_ub) + 1.0) * (
+        static_cast<double>(idx) + 1.0)) - 1] = magnitudes[loop_ub];
+    }
+  }
+
+  loop_ub = static_cast<int>(static_cast<double>(noise_freq.size(0)) / 2.0 + 1.0);
+  mag_rescaled.set_size(loop_ub);
+  for (i = 0; i < loop_ub; i++) {
+    mag_rescaled[i] = noise_freq[i] * mag_rescaled[i];
+  }
+
+  ifft(mag_rescaled, n_samples * 2.0, r);
+  noise_freq.set_size(r.size(0));
+  loop_ub = r.size(0);
+  for (i = 0; i < loop_ub; i++) {
+    noise_freq[i] = r[i].re;
+  }
+
+  if (1.0 > n_samples) {
+    loop_ub = 0;
+    i = 0;
+  } else {
+    loop_ub = static_cast<int>(n_samples);
+    i = static_cast<int>(n_samples);
+  }
+
+  noise_freq.set_size(i);
+  if (loop_ub <= 2) {
+    if (loop_ub == 1) {
+      r1 = noise_freq[0];
+      r3 = noise_freq[0];
     } else {
-      inputMin = violet_noise[i + 1];
-      if ((!(violet_noise[i] > inputMin)) && ((!rtIsNaN(violet_noise[i])) ||
-           rtIsNaN(inputMin))) {
-        inputMin = violet_noise[i];
+      if ((noise_freq[0] > noise_freq[1]) || (rtIsNaN(noise_freq[0]) &&
+           (!rtIsNaN(noise_freq[1])))) {
+        r1 = noise_freq[1];
+      } else {
+        r1 = noise_freq[0];
       }
 
-      inputMax = violet_noise[i + 1];
-      if ((!(violet_noise[i] < inputMax)) && ((!rtIsNaN(violet_noise[i])) ||
-           rtIsNaN(violet_noise[i + 1]))) {
-        inputMax = violet_noise[i];
+      if ((noise_freq[0] < noise_freq[1]) || (rtIsNaN(noise_freq[0]) &&
+           (!rtIsNaN(noise_freq[1])))) {
+        r3 = noise_freq[1];
+      } else {
+        r3 = noise_freq[0];
       }
     }
   } else {
-    boolean_T b_b;
     boolean_T exitg1;
-    b_b = rtIsNaN(violet_noise[i]);
-    if (!b_b) {
-      nx_m_nb = 1;
+    if (!rtIsNaN(noise_freq[0])) {
+      idx = 1;
     } else {
-      nx_m_nb = 0;
+      idx = 0;
       k = 2;
       exitg1 = false;
-      while ((!exitg1) && (k <= filtered_signal_tmp)) {
-        if (!rtIsNaN(violet_noise[(i + k) - 1])) {
-          nx_m_nb = k;
+      while ((!exitg1) && (k <= loop_ub)) {
+        if (!rtIsNaN(noise_freq[k - 1])) {
+          idx = k;
           exitg1 = true;
         } else {
           k++;
@@ -203,28 +226,28 @@ void subtractive(double n_samples, double magnitudes[65], double color, const
       }
     }
 
-    if (nx_m_nb == 0) {
-      inputMin = violet_noise[i];
+    if (idx == 0) {
+      r1 = noise_freq[0];
     } else {
-      inputMin = violet_noise[(i + nx_m_nb) - 1];
-      nx_m_nb++;
-      for (k = nx_m_nb; k <= filtered_signal_tmp; k++) {
-        signal_tmp = violet_noise[(i + k) - 1];
-        if (inputMin > signal_tmp) {
-          inputMin = signal_tmp;
+      r1 = noise_freq[idx - 1];
+      i = idx + 1;
+      for (k = i; k <= loop_ub; k++) {
+        mag_rel_bin_size = noise_freq[k - 1];
+        if (r1 > mag_rel_bin_size) {
+          r1 = mag_rel_bin_size;
         }
       }
     }
 
-    if (!b_b) {
-      nx_m_nb = 1;
+    if (!rtIsNaN(noise_freq[0])) {
+      idx = 1;
     } else {
-      nx_m_nb = 0;
+      idx = 0;
       k = 2;
       exitg1 = false;
-      while ((!exitg1) && (k <= filtered_signal_tmp)) {
-        if (!rtIsNaN(violet_noise[(i + k) - 1])) {
-          nx_m_nb = k;
+      while ((!exitg1) && (k <= loop_ub)) {
+        if (!rtIsNaN(noise_freq[k - 1])) {
+          idx = k;
           exitg1 = true;
         } else {
           k++;
@@ -232,33 +255,132 @@ void subtractive(double n_samples, double magnitudes[65], double color, const
       }
     }
 
-    if (nx_m_nb == 0) {
-      inputMax = violet_noise[i];
+    if (idx == 0) {
+      r3 = noise_freq[0];
     } else {
-      inputMax = violet_noise[(i + nx_m_nb) - 1];
-      nx_m_nb++;
-      for (k = nx_m_nb; k <= filtered_signal_tmp; k++) {
-        signal_tmp = violet_noise[(i + k) - 1];
-        if (inputMax < signal_tmp) {
-          inputMax = signal_tmp;
+      r3 = noise_freq[idx - 1];
+      i = idx + 1;
+      for (k = i; k <= loop_ub; k++) {
+        mag_rel_bin_size = noise_freq[k - 1];
+        if (r3 < mag_rel_bin_size) {
+          r3 = mag_rel_bin_size;
         }
       }
     }
   }
 
-  for (nx_m_nb = 0; nx_m_nb < filtered_signal_tmp; nx_m_nb++) {
-    brown_noise[nx_m_nb] = violet_noise[i + nx_m_nb];
+  if (loop_ub != 0) {
+    double c1;
+    double iMin;
+    double iMax;
+    if ((0.0 < r3) || rtIsNaN(r3)) {
+      c1 = 0.0;
+    } else {
+      c1 = r3;
+    }
+
+    if ((c1 > r1) || rtIsNaN(r1)) {
+      mag_rel_bin_size = c1;
+    } else {
+      mag_rel_bin_size = r1;
+    }
+
+    for (i = 0; i < loop_ub; i++) {
+      noise_freq[i] = noise_freq[i] - mag_rel_bin_size;
+    }
+
+    iMin = r1 - mag_rel_bin_size;
+    iMax = r3 - mag_rel_bin_size;
+    c1 = std::abs(iMax);
+    mag_rel_bin_size = std::abs(iMin);
+    if ((c1 > mag_rel_bin_size) || rtIsNaN(mag_rel_bin_size)) {
+      mag_rel_bin_size = c1;
+    }
+
+    if ((!rtIsInf(mag_rel_bin_size)) && (!rtIsNaN(mag_rel_bin_size))) {
+      frexp(mag_rel_bin_size, &eint);
+    } else {
+      eint = 0;
+    }
+
+    r1 = rt_powd_snf(2.0, static_cast<double>(eint) - 1.0);
+    mag_rel_bin_size = (static_cast<double>(eint) + 1.0) / 2.0;
+    if (mag_rel_bin_size < 0.0) {
+      mag_rel_bin_size = std::ceil(mag_rel_bin_size);
+    } else {
+      mag_rel_bin_size = std::floor(mag_rel_bin_size);
+    }
+
+    r3 = rt_powd_snf(2.0, mag_rel_bin_size - 1.0);
+    if (iMin == iMax) {
+      b_r1.set_size(noise_freq.size(0));
+      loop_ub = noise_freq.size(0);
+      for (i = 0; i < loop_ub; i++) {
+        b_r1[i] = rtIsNaN(noise_freq[i]);
+      }
+
+      loop_ub = b_r1.size(0);
+      for (i = 0; i < loop_ub; i++) {
+        b_r1[i] = !b_r1[i];
+      }
+
+      loop_ub = b_r1.size(0) - 1;
+      idx = 0;
+      for (k = 0; k <= loop_ub; k++) {
+        if (b_r1[k]) {
+          idx++;
+        }
+      }
+
+      r2.set_size(idx);
+      idx = 0;
+      for (k = 0; k <= loop_ub; k++) {
+        if (b_r1[k]) {
+          r2[idx] = static_cast<short>(k + 1);
+          idx++;
+        }
+      }
+
+      loop_ub = r2.size(0);
+      for (i = 0; i < loop_ub; i++) {
+        noise_freq[r2[i] - 1] = -1.0;
+      }
+    } else {
+      c1 = iMax / r1;
+      mag_rel_bin_size = iMin / r1;
+      r1 = 2.0 / (iMax / r3 - iMin / r3) / r3;
+      mag_rel_bin_size = r3 * ((c1 * (-1.0 / r3) - mag_rel_bin_size * (1.0 / r3))
+        / (c1 - mag_rel_bin_size));
+      loop_ub = noise_freq.size(0);
+      for (i = 0; i < loop_ub; i++) {
+        noise_freq[i] = r1 * noise_freq[i] + mag_rel_bin_size;
+      }
+
+      loop_ub = noise_freq.size(0);
+      for (k = 0; k < loop_ub; k++) {
+        if (noise_freq[k] < -1.0) {
+          noise_freq[k] = -1.0;
+        }
+      }
+
+      loop_ub = noise_freq.size(0);
+      for (k = 0; k < loop_ub; k++) {
+        if (noise_freq[k] > 1.0) {
+          noise_freq[k] = 1.0;
+        }
+      }
+    }
   }
 
-  filtered_signal_size[0] = filtered_signal_tmp;
-  if (0 <= filtered_signal_tmp - 1) {
-    std::memcpy(&violet_noise[0], &brown_noise[0], filtered_signal_tmp * sizeof
-                (double));
+  std::memset(&out[0], 0, 4096U * sizeof(double));
+  if (1.0 > n_samples) {
+    loop_ub = 0;
+  } else {
+    loop_ub = static_cast<int>(n_samples);
   }
 
-  RESCALE(violet_noise, filtered_signal_size, inputMin, inputMax);
-  if (0 <= loop_ub - 1) {
-    std::memcpy(&out[0], &violet_noise[0], loop_ub * sizeof(double));
+  for (i = 0; i < loop_ub; i++) {
+    out[i] = noise_freq[i];
   }
 }
 

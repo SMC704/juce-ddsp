@@ -3,14 +3,14 @@
 //  course requirements at degree granting institutions only.  Not for
 //  government, commercial, or other organizational use.
 //
-//  randn.h
+//  ifft.h
 //
-//  Code generation for function 'randn'
+//  Code generation for function 'ifft'
 //
 
 
-#ifndef RANDN_H
-#define RANDN_H
+#ifndef IFFT_H
+#define IFFT_H
 
 // Include files
 #include <cstddef>
@@ -19,8 +19,9 @@
 #include "DDSPSynth_types.h"
 
 // Function Declarations
-extern void randn(double r[4096]);
+extern void ifft(const coder::array<double, 1U> &x, double varargin_1, coder::
+                 array<creal_T, 1U> &y);
 
 #endif
 
-// End of code generation (randn.h)
+// End of code generation (ifft.h)

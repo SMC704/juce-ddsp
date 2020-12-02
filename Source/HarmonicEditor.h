@@ -31,6 +31,7 @@ public:
     void mouseDown(const juce::MouseEvent&) override;
     void mouseUp(const juce::MouseEvent&) override;
     void mouseDrag(const juce::MouseEvent&) override;
+    void mouseDoubleClick(const juce::MouseEvent&) override;
 
 	struct Listener
 	{

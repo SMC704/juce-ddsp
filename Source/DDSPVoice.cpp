@@ -99,13 +99,7 @@ void DDSPVoice::renderNextBlock(juce::AudioSampleBuffer & outputBuffer, int star
 
 	if (subtractiveOnOff)
 	{
-		subtractive(numSamples, mags_copy, color, irBuffer_in, recalculateIR, subBuffer, irBuffer_out);
-		if (recalculateIR);
-		{
-			recalculateIR = false;
-			for (int i = 0; i < 129; i++)
-			irBuffer_in[i] = irBuffer_out[i];
-		}
+		subtractive(numSamples, mags_copy, color, subBuffer);
 	}
 	else {
 		for (int i = 0; i < 4096; i++)

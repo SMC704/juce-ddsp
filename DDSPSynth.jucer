@@ -38,8 +38,16 @@
               resource="0" file="Source/codegen/eml_rand_mt19937ar_stateful.cpp"/>
         <FILE id="WTTBRh" name="eml_rand_mt19937ar_stateful.h" compile="0"
               resource="0" file="Source/codegen/eml_rand_mt19937ar_stateful.h"/>
+        <FILE id="HwsgIV" name="fft.cpp" compile="1" resource="0" file="Source/codegen/fft.cpp"/>
+        <FILE id="uKlKTD" name="fft.h" compile="0" resource="0" file="Source/codegen/fft.h"/>
+        <FILE id="hFq1Dm" name="FFTImplementationCallback.cpp" compile="1"
+              resource="0" file="Source/codegen/FFTImplementationCallback.cpp"/>
+        <FILE id="OM4vcl" name="FFTImplementationCallback.h" compile="0" resource="0"
+              file="Source/codegen/FFTImplementationCallback.h"/>
         <FILE id="lr9KKd" name="firls.cpp" compile="1" resource="0" file="Source/codegen/firls.cpp"/>
         <FILE id="goBThA" name="firls.h" compile="0" resource="0" file="Source/codegen/firls.h"/>
+        <FILE id="Cy4xda" name="ifft.cpp" compile="1" resource="0" file="Source/codegen/ifft.cpp"/>
+        <FILE id="olw5Km" name="ifft.h" compile="0" resource="0" file="Source/codegen/ifft.h"/>
         <FILE id="EnV0nq" name="mldivide.cpp" compile="1" resource="0" file="Source/codegen/mldivide.cpp"/>
         <FILE id="ucbaqh" name="mldivide.h" compile="0" resource="0" file="Source/codegen/mldivide.h"/>
         <FILE id="g4HZI4" name="rand.cpp" compile="1" resource="0" file="Source/codegen/rand.cpp"/>

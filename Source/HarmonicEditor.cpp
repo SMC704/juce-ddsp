@@ -26,7 +26,6 @@ HarmonicEditor::HarmonicEditor()
         addAndMakeVisible(harmonicSlider);
         harmonicSlider->setBounds(0, 0, 100, 100);
         harmonicSlider->addMouseListener(this, true);
-        
     }
 }
 
@@ -106,6 +105,30 @@ void HarmonicEditor::mouseDrag(const juce::MouseEvent &event)
 		if (pListener != NULL) {
 			pListener->onValueChange(harmonicValues);
 		}
+        repaint();
+    }
+}
+
+void HarmonicEditor::mouseDoubleClick(const juce::MouseEvent& event)
+{
+    if (isEntered) {
+        int mousePositionX = event.getScreenX();
+        int mousePositionY = event.getScreenY();
+        int editorPositionX = getScreenX();
+        int editorPositionY = getScreenY();
+        int relativePositionX = mousePositionX - editorPositionX;
+        int relativePositionY = mousePositionY - editorPositionY;
+        int editorWidth = getWidth();
+        int editorHeight = getHeight();
+        int nActiveSlider = relativePositionX / (editorWidth / nHarmonics);
+        if (nActiveSlider >= 0 && nActiveSlider < nHarmonics) {
+            harmonicSliders[nActiveSlider]->setValue(0.5);
+            harmonicValues[nActiveSlider] = 0.5;
+        }
+
+        if (pListener != NULL) {
+            pListener->onValueChange(harmonicValues);
+        }
         repaint();
     }
 }

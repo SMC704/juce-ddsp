@@ -3,24 +3,20 @@
 //  course requirements at degree granting institutions only.  Not for
 //  government, commercial, or other organizational use.
 //
-//  randn.h
+//  FFTImplementationCallback.h
 //
-//  Code generation for function 'randn'
+//  Code generation for function 'FFTImplementationCallback'
 //
 
 
-#ifndef RANDN_H
-#define RANDN_H
+#ifndef FFTIMPLEMENTATIONCALLBACK_H
+#define FFTIMPLEMENTATIONCALLBACK_H
 
 // Include files
 #include <cstddef>
 #include <cstdlib>
 #include "rtwtypes.h"
 #include "DDSPSynth_types.h"
-
-// Function Declarations
-extern void randn(double r[4096]);
-
 #endif
 
-// End of code generation (randn.h)
+// End of code generation (FFTImplementationCallback.h)
