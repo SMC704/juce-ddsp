@@ -27,7 +27,7 @@ SubtractiveComponent::SubtractiveComponent()
     addAndMakeVisible(nameLabel);
     nameLabel.setColour(juce::Label::textColourId, juce::Colours::white);
     nameLabel.setJustificationType(juce::Justification::topLeft);
-    nameLabel.setText("Subtractive", juce::NotificationType::dontSendNotification);
+    nameLabel.setText("Noise", juce::NotificationType::dontSendNotification);
     nameLabel.setFont(20.0f);
 
     ampSlider.setSliderStyle(juce::Slider::SliderStyle::RotaryHorizontalVerticalDrag);
@@ -47,42 +47,6 @@ SubtractiveComponent::SubtractiveComponent()
     ampLabel.setText("Amp", juce::NotificationType::dontSendNotification);
     ampLabel.setFont(fontDim);
 
-    addAndMakeVisible(lfoLabel);
-    lfoLabel.setColour(juce::Label::textColourId, juce::Colours::white);
-    lfoLabel.setJustificationType(juce::Justification::topLeft);
-    lfoLabel.setText("L\nF\nO", juce::NotificationType::dontSendNotification);
-    lfoLabel.setFont(20.0f);
-
-    amoutSlider.setSliderStyle(juce::Slider::SliderStyle::RotaryHorizontalVerticalDrag);
-    amoutSlider.setTextBoxStyle(juce::Slider::NoTextBox, true, 0, 0);
-    amoutSlider.setPopupDisplayEnabled(true, true, this);
-    amoutSlider.setTextValueSuffix (" Modulation Amount");
-    amoutSlider.setRange(0.0f, 10.0f, 0.1f);
-    amoutSlider.setValue(5.0f);
-    addAndMakeVisible(amoutSlider);
-    amoutSlider.setBounds(0, 0, 100, 100);
-
-    addAndMakeVisible(amountLabel);
-    amountLabel.setColour(juce::Label::textColourId, juce::Colours::white);
-    amountLabel.setJustificationType(juce::Justification::topLeft);
-    amountLabel.setText("Amount", juce::NotificationType::dontSendNotification);
-    amountLabel.setFont(fontDim);
-
-    rateSlider.setSliderStyle(juce::Slider::SliderStyle::RotaryHorizontalVerticalDrag);
-    rateSlider.setTextBoxStyle(juce::Slider::NoTextBox, true, 0, 0);
-    rateSlider.setPopupDisplayEnabled(true, true, this);
-    rateSlider.setTextValueSuffix (" Modulation Rate");
-    rateSlider.setRange(0.0f, 10.0f, 0.1f);
-    rateSlider.setValue(5.0f);
-    addAndMakeVisible(rateSlider);
-    rateSlider.setBounds(0, 0, 100, 100);
-
-    addAndMakeVisible(rateLabel);
-    rateLabel.setColour(juce::Label::textColourId, juce::Colours::white);
-    rateLabel.setJustificationType(juce::Justification::topLeft);
-    rateLabel.setText("Rate", juce::NotificationType::dontSendNotification);
-    rateLabel.setFont(fontDim);
-
     colourSlider.setSliderStyle(juce::Slider::SliderStyle::RotaryHorizontalVerticalDrag);
     colourSlider.setTextBoxStyle(juce::Slider::NoTextBox, true, 0, 0);
     colourSlider.setPopupDisplayEnabled(true, true, this);
@@ -98,6 +62,7 @@ SubtractiveComponent::SubtractiveComponent()
     colourLabel.setColour(juce::Label::textColourId, juce::Colours::white);
     colourLabel.setJustificationType(juce::Justification::topLeft);
     colourLabel.setText("Colour", juce::NotificationType::dontSendNotification);
+
     colourLabel.setFont(fontDim);
 
 }
@@ -132,16 +97,16 @@ void SubtractiveComponent::resized()
         Track(Fr(1)), Track(Fr(1)), Track(Fr(1)), Track(Fr(1)),
         Track(Fr(1)), Track(Fr(1)), Track(Fr(1))
     };
-    //2 columns
+    //3 column
     grid.templateColumns = {
-        Track(Fr(1)), Track(Fr(1))
+        Track(Fr(1)), Track(Fr(1)), Track(Fr(1))
     };
 
     grid.rowGap = juce::Grid::Px(10.0f);
     grid.columnGap = juce::Grid::Px(10.0f);
 
     float sliderDim = 50.0f;
-        
+
     grid.items = {
 
         juce::GridItem(nameLabel).withSize(100.0f, 30.0f)
@@ -153,62 +118,32 @@ void SubtractiveComponent::resized()
         juce::GridItem(onoffButton).withSize(40.0f, 30.0f)
             .withAlignSelf(juce::GridItem::AlignSelf::start)
             .withJustifySelf(juce::GridItem::JustifySelf::end)
-            .withMargin(juce::GridItem::Margin(10.0f))
-            .withArea(1, 2),
+            .withMargin(juce::GridItem::Margin(10.0f, 0, 10.0f, 0))
+            .withArea(1, 3),
 
         juce::GridItem(colourSlider).withSize(70.0f, 70.0f)
-            .withAlignSelf(juce::GridItem::AlignSelf::center)
-            .withJustifySelf(juce::GridItem::JustifySelf::end)
-            .withMargin(juce::GridItem::Margin(0.0f))
-            .withArea(4, 1),
+            .withAlignSelf(juce::GridItem::AlignSelf::start)
+            .withJustifySelf(juce::GridItem::JustifySelf::center)
+            .withMargin(juce::GridItem::Margin(10.0f, 0, 0, 0))
+            .withArea(2, 2),
 
         juce::GridItem(colourLabel).withSize(65.0f, 30.0f)
-            .withAlignSelf(juce::GridItem::AlignSelf::start)
-            .withJustifySelf(juce::GridItem::JustifySelf::end)
-            .withMargin(juce::GridItem::Margin(20.0f, -5.0f, 0, 0))
-            .withArea(5, 1),
-
+            .withAlignSelf(juce::GridItem::AlignSelf::end)
+            .withJustifySelf(juce::GridItem::JustifySelf::center)
+            .withMargin(juce::GridItem::Margin(10.0f, 0, 0, 12.0f))
+            .withArea(5, 2),
+        
         juce::GridItem(ampSlider).withSize(sliderDim, sliderDim)
             .withAlignSelf(juce::GridItem::AlignSelf::center)
-            .withJustifySelf(juce::GridItem::JustifySelf::start)
-            .withMargin(juce::GridItem::Margin(10.0f, 0, 0, 20.0f))
-            .withArea(7, 1),
-
-        juce::GridItem(ampLabel).withSize(65.0f, 30.0f)
-            .withAlignSelf(juce::GridItem::AlignSelf::start)
-            .withJustifySelf(juce::GridItem::JustifySelf::start)
-            .withMargin(juce::GridItem::Margin(15.0f, 0, 0, 25.0f))
-            .withArea(8, 1),
-
-        juce::GridItem(lfoLabel).withSize(30.0f, 100.0f)
-            .withAlignSelf(juce::GridItem::AlignSelf::center)
-            .withJustifySelf(juce::GridItem::JustifySelf::center)
-            .withMargin(juce::GridItem::Margin(20.0f, 35.0f, 0, 0))
+            .withJustifySelf(juce::GridItem::JustifySelf::end)
+            .withMargin(juce::GridItem::Margin(0.0f, -5.0f, 10.0f, 0))
             .withArea(6, 2),
 
-        juce::GridItem(rateSlider).withSize(sliderDim, sliderDim)
+        juce::GridItem(ampLabel).withSize(65.0f, 30.0f)
             .withAlignSelf(juce::GridItem::AlignSelf::center)
-            .withJustifySelf(juce::GridItem::JustifySelf::end)
-            .withMargin(juce::GridItem::Margin(0.0f, 20.0f, 0, 0))
-            .withArea(4, 2),
-
-        juce::GridItem(rateLabel).withSize(65.0f, 30.0f)
-            .withAlignSelf(juce::GridItem::AlignSelf::start)
-            .withJustifySelf(juce::GridItem::JustifySelf::end)
-            .withMargin(juce::GridItem::Margin(10.0f, 0.0f, 0, 0))
-            .withArea(5, 2),
-
-        juce::GridItem(amoutSlider).withSize(sliderDim, sliderDim)
-            .withAlignSelf(juce::GridItem::AlignSelf::center)
-            .withJustifySelf(juce::GridItem::JustifySelf::end)
-            .withMargin(juce::GridItem::Margin(10.0f, 20.0f, 0, 0))
+            .withJustifySelf(juce::GridItem::JustifySelf::center)
+            .withMargin(juce::GridItem::Margin(10.0f, 0, 0, 25.0f))
             .withArea(7, 2),
-
-        juce::GridItem(amountLabel).withSize(65.0f, 30.0f)
-            .withAlignSelf(juce::GridItem::AlignSelf::start)
-            .withJustifySelf(juce::GridItem::JustifySelf::end)
-            .withMargin(juce::GridItem::Margin(15.0f, 10.0f, 0, 0))
-            .withArea(8, 2),
     };
 
 

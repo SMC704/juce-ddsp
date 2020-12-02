@@ -42,10 +42,6 @@ private:
     juce::Slider ampSlider;
     juce::Label ampLabel;
     juce::Label lfoLabel;
-    juce::Slider amoutSlider;
-    juce::Label amountLabel;
-    juce::Slider rateSlider;
-    juce::Label rateLabel;
     juce::Slider colourSlider;
     juce::Label colourLabel;
 

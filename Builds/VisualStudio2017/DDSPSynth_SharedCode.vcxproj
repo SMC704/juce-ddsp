@@ -141,6 +141,7 @@
     <ClCompile Include="..\..\Source\codegen\ColoredNoise.cpp"/>
     <ClCompile Include="..\..\Source\codegen\DDSPSynth_data.cpp"/>
     <ClCompile Include="..\..\Source\codegen\DDSPSynth_initialize.cpp"/>
+    <ClCompile Include="..\..\Source\codegen\DDSPSynth_rtwutil.cpp"/>
     <ClCompile Include="..\..\Source\codegen\DDSPSynth_terminate.cpp"/>
     <ClCompile Include="..\..\Source\DDSPVoice.cpp"/>
     <ClCompile Include="..\..\Source\codegen\eml_rand_mt19937ar_stateful.cpp"/>
@@ -148,6 +149,7 @@
     <ClCompile Include="..\..\Source\codegen\mldivide.cpp"/>
     <ClCompile Include="..\..\Source\codegen\rand.cpp"/>
     <ClCompile Include="..\..\Source\codegen\randn.cpp"/>
+    <ClCompile Include="..\..\Source\codegen\rescale.cpp"/>
     <ClCompile Include="..\..\Source\codegen\rt_nonfinite.cpp"/>
     <ClCompile Include="..\..\Source\codegen\rtGetInf.cpp"/>
     <ClCompile Include="..\..\Source\codegen\rtGetNaN.cpp"/>
@@ -158,6 +160,7 @@
     <ClCompile Include="..\..\Source\MainComponent.cpp"/>
     <ClCompile Include="..\..\Source\InputComponent.cpp"/>
     <ClCompile Include="..\..\Source\ModelComponent.cpp"/>
+    <ClCompile Include="..\..\Source\ModulationComponent.cpp"/>
     <ClCompile Include="..\..\Source\AdditiveComponent.cpp"/>
     <ClCompile Include="..\..\Source\CustomLookAndFeel.cpp"/>
     <ClCompile Include="..\..\Source\SubtractiveComponent.cpp"/>
@@ -2184,6 +2187,7 @@
     <ClInclude Include="..\..\Source\DDSPSound.h"/>
     <ClInclude Include="..\..\Source\codegen\DDSPSynth_data.h"/>
     <ClInclude Include="..\..\Source\codegen\DDSPSynth_initialize.h"/>
+    <ClInclude Include="..\..\Source\codegen\DDSPSynth_rtwutil.h"/>
     <ClInclude Include="..\..\Source\codegen\DDSPSynth_terminate.h"/>
     <ClInclude Include="..\..\Source\codegen\DDSPSynth_types.h"/>
     <ClInclude Include="..\..\Source\DDSPVoice.h"/>
@@ -2192,6 +2196,7 @@
     <ClInclude Include="..\..\Source\codegen\mldivide.h"/>
     <ClInclude Include="..\..\Source\codegen\rand.h"/>
     <ClInclude Include="..\..\Source\codegen\randn.h"/>
+    <ClInclude Include="..\..\Source\codegen\rescale.h"/>
     <ClInclude Include="..\..\Source\codegen\rt_nonfinite.h"/>
     <ClInclude Include="..\..\Source\codegen\rtGetInf.h"/>
     <ClInclude Include="..\..\Source\codegen\rtGetNaN.h"/>
@@ -2204,6 +2209,7 @@
     <ClInclude Include="..\..\Source\MainComponent.h"/>
     <ClInclude Include="..\..\Source\InputComponent.h"/>
     <ClInclude Include="..\..\Source\ModelComponent.h"/>
+    <ClInclude Include="..\..\Source\ModulationComponent.h"/>
     <ClInclude Include="..\..\Source\CustomLookAndFeel.h"/>
     <ClInclude Include="..\..\Source\AdditiveComponent.h"/>
     <ClInclude Include="..\..\Source\SubtractiveComponent.h"/>

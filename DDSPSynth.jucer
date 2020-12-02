@@ -80,6 +80,10 @@
             file="Source/ModelComponent.cpp"/>
       <FILE id="P0kVYP" name="ModelComponent.h" compile="0" resource="0"
             file="Source/ModelComponent.h"/>
+      <FILE id="mOoA9d" name="ModulationComponent.cpp" compile="1" resource="0"
+            file="Source/ModulationComponent.cpp"/>
+      <FILE id="Gj3KN8" name="ModulationComponent.h" compile="0" resource="0"
+            file="Source/ModulationComponent.h"/>
       <FILE id="IQQWkT" name="AdditiveComponent.cpp" compile="1" resource="0"
             file="Source/AdditiveComponent.cpp"/>
       <FILE id="LmvF4T" name="CustomLookAndFeel.cpp" compile="1" resource="0"
