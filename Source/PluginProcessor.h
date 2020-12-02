@@ -73,6 +73,14 @@ public:
         fftSize  = 1 << fftOrder
     };
 
+    juce::AudioProcessorValueTreeState parameters;
+
+    std::atomic<float>* addAmpParameter = nullptr;
+    std::atomic<float>* shiftParameter = nullptr;
+    std::atomic<float>* stretchParameter = nullptr;
+    std::atomic<float>* addOnOffParameter = nullptr;
+
+
 	void onValueChange(double harmonics[50]);
     
     void onShiftValueChange(double shiftValue);

@@ -11,8 +11,8 @@
 #include "AdditiveComponent.h"
 
 //==============================================================================
-DdspsynthAudioProcessorEditor::DdspsynthAudioProcessorEditor (DdspsynthAudioProcessor& p)
-    : AudioProcessorEditor (&p), audioProcessor (p)
+DdspsynthAudioProcessorEditor::DdspsynthAudioProcessorEditor (DdspsynthAudioProcessor& p, juce::AudioProcessorValueTreeState& params)
+    : AudioProcessorEditor (&p), audioProcessor (p), parameters(params)
 {
     //LookAndFeel::getDefaultLookAndFeel().setDefaultSansSerifTypefaceName("Avenir Next");
 

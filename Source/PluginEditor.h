@@ -27,7 +27,7 @@
 class DdspsynthAudioProcessorEditor  : public juce::AudioProcessorEditor, private juce::Timer, public SubtractiveComponent::SubtractiveListener, public AdditiveComponent::AdditiveListener, public OutputComponent::OutputListener
 {
 public:
-    DdspsynthAudioProcessorEditor (DdspsynthAudioProcessor&);
+    DdspsynthAudioProcessorEditor (DdspsynthAudioProcessor&, juce::AudioProcessorValueTreeState&);
     ~DdspsynthAudioProcessorEditor() override;
 
     //==============================================================================
@@ -41,6 +41,7 @@ private:
     // This reference is provided as a quick way for your editor to
     // access the processor object that created it.
     DdspsynthAudioProcessor& audioProcessor;
+    juce::AudioProcessorValueTreeState& parameters;
     
     juce::Image backgroundTexture = juce::ImageFileFormat::
         loadFrom(BinaryData::background_texture_dark_headline_png, 

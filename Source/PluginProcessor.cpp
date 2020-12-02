@@ -164,7 +164,7 @@ bool DdspsynthAudioProcessor::hasEditor() const
 
 juce::AudioProcessorEditor* DdspsynthAudioProcessor::createEditor()
 {
-    return new DdspsynthAudioProcessorEditor (*this);
+    return new DdspsynthAudioProcessorEditor (*this, parameters);
 }
 
 //==============================================================================
