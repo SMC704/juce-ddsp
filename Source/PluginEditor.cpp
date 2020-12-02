@@ -23,7 +23,6 @@ DdspsynthAudioProcessorEditor::DdspsynthAudioProcessorEditor (DdspsynthAudioProc
     auto subtractive = (SubtractiveComponent*)(mainComponent.findChildWithID("subtractive"));
     auto output = (OutputComponent*)mainComponent.findChildWithID("output");
 
-
 	harmEditor->setListener(&p);
     subtractive->setSubtractiveListener(this);
     additive->setAdditiveListener(this);

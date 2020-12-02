@@ -12,7 +12,18 @@
 #include "HarmonicEditor.h"
 
 //==============================================================================
-DdspsynthAudioProcessor::DdspsynthAudioProcessor() : forwardFFT(fftOrder)
+DdspsynthAudioProcessor::DdspsynthAudioProcessor() : forwardFFT(fftOrder),
+    parameters (*this, nullptr, juce::Identifier("DDSPSynth"),
+        {
+            std::make_unique<juce::AudioParameterFloat> (
+                "addGain", "Gain", 0.0f, 1.0f, 0.5f),
+            std::make_unique<juce::AudioParameterFloat> (
+                "addShift", "Shift", -12.0f, 12.0f, 0.0f),
+            std::make_unique<juce::AudioParameterFloat> (
+                "addStretch", "Stretch", -1.0f, 1.0f, 0.0f),
+            std::make_unique<juce::AudioParameterBool> (
+                "addOnOff", "On/Off", true)
+        })
 #ifndef JucePlugin_PreferredChannelConfigurations
     : AudioProcessor(BusesProperties()
 #if ! JucePlugin_IsMidiEffect
@@ -222,6 +233,7 @@ void DdspsynthAudioProcessor::onSubAmpChange(double subAmp)
 
 void DdspsynthAudioProcessor::onAddAmpChange(double addAmp)
 {
+    parameters.getParameter("addGain")->setValue((float)addAmp);
     voice->setAddAmp(addAmp);
 }
 
@@ -232,15 +244,18 @@ void DdspsynthAudioProcessor::onOutAmpChange(double outAmp)
 
 void DdspsynthAudioProcessor::onShiftValueChange(double shiftValue)
 {
+    parameters.getParameter("addShift")->setValue((float)shiftValue);
     voice->setShift(shiftValue);
 }
 
 void DdspsynthAudioProcessor::onStretchValueChange(double stretchValue)
 {
+    parameters.getParameter("addStretch")->setValue((float)stretchValue);
     voice->setStretch(stretchValue);
 }
 
 void DdspsynthAudioProcessor::onOnOffAddChange(bool button)
 {
+    parameters.getParameter("addOnOff")->setValue(button);
     voice->setOnOffAdditive(button);
 }

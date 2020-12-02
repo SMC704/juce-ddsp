@@ -55,6 +55,11 @@ private:
     juce::Slider ampSlider;
     juce::Label ampLabel;
     
+    //juce::AudioProcessorValueTreeState::ButtonAttachment onOffButtonAttachment;
+    //juce::AudioProcessorValueTreeState::SliderAttachment shiftSliderAttachment;
+    //juce::AudioProcessorValueTreeState::SliderAttachment stretchSliderAttachment;
+    //juce::AudioProcessorValueTreeState::SliderAttachment ampSliderAttachment;
+
     double addAmp = 0;
     double shiftValue;
     double stretchValue;
