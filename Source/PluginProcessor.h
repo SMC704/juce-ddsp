@@ -10,7 +10,6 @@
 
 #include <JuceHeader.h>
 #include "DDSPVoice.h"
-#include "HarmonicEditor.h"
 #include "SubtractiveComponent.h"
 #include "AdditiveComponent.h"
 //==============================================================================
@@ -122,6 +121,10 @@ private:
     TF_Tensor** tfInputValues;
     TF_Tensor** tfOutputValues;
 
+	float* ampsOutputData;
+	float* harmsOutputData;
+	float* magsOutputData;
+
     static const int time_steps = 100;
 
     int numInputDims = 3;
@@ -130,13 +133,12 @@ private:
     float ldData[100];
 
     float modelSampleRate = 44100;
-    float samplesPerTimestep = modelSampleRate / time_steps;
 
     int modelSampleCounter = 0;
 
     int ntags = 1;
 
-    const char* saved_model_dir = "C:\\Users\\svkly\\Downloads\\converted_models\\models\\violin";
+	const char* saved_model_dir = "C:\\Users\\david\\Documents\\Sound and Music Computing\\DDSP\\juce-ddsp\\Source\\Python\\functional";
     const char* tags = "serve";
 
     int ndata = TF_DataTypeSize(TF_FLOAT) * time_steps;
@@ -144,6 +146,21 @@ private:
     TF_Tensor* ldInputTensor;
 
     bool playing_model = true;
+
+	double amplitudes[4096];
+	double f0[4096];
+	double phaseBuffer_in[50];
+	double phaseBuffer_out[50];
+	double shift = 0;
+	double stretch = 0;
+	double color = -1;
+	double irBuffer_in[129];
+	double irBuffer_out[129];
+	bool recalculateIR = true;
+	std::vector<float> soundBuffer;
+
+	double addBuffer[4096];
+	double subBuffer[4096];
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (DdspsynthAudioProcessor)
 };

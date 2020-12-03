@@ -76,7 +76,4 @@ private:
 	juce::ADSR adsr;
 	juce::ADSR::Parameters adsr_params;
 	juce::Random r;
-
-	float f0Data[4096];
-	float ldData[4096];
 };

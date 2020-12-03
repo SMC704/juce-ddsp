@@ -10,6 +10,8 @@
 #include "DDSPVoice.h"
 #include "PluginEditor.h"
 #include "HarmonicEditor.h"
+#include "codegen/additive.h"
+#include "codegen/subtractive.h"
 #include "tensorflow_c/include/tensorflow/c/c_api.h"
 
 void NoOpDeallocator(void* data, size_t a, void* b) {}
@@ -41,6 +43,17 @@ DdspsynthAudioProcessor::DdspsynthAudioProcessor() : forwardFFT(fftOrder)
         DBG("%s", TF_Message(tfStatus));
     }
 
+	for (int i = 0; i < 100; i++)
+	{
+		ldData[i] = 0.5;
+		f0Data[i] = 880;
+	}
+
+	for (int i = 0; i < 4096; i++)
+	{
+		f0[i] = 880;
+	}
+
     tfInput = (TF_Output*)malloc(sizeof(TF_Output) * numInputs);
     f0Input = { TF_GraphOperationByName(tfGraph, "serving_default_input_1"), 0 };
     ldInput = { TF_GraphOperationByName(tfGraph, "serving_default_input_2"), 0 };
@@ -59,6 +72,17 @@ DdspsynthAudioProcessor::DdspsynthAudioProcessor() : forwardFFT(fftOrder)
 
     tfInputValues = (TF_Tensor**)malloc(sizeof(TF_Tensor*) * numInputs);
     tfOutputValues = (TF_Tensor**)malloc(sizeof(TF_Tensor*) * numOutputs);
+
+	f0InputTensor = TF_NewTensor(TF_FLOAT, inputDims, numInputDims, f0Data, ndata, &NoOpDeallocator, 0);
+	ldInputTensor = TF_NewTensor(TF_FLOAT, inputDims, numInputDims, ldData, ndata, &NoOpDeallocator, 0);
+
+	tfInputValues[0] = f0InputTensor;
+	tfInputValues[1] = ldInputTensor;
+	TF_SessionRun(tfSession, NULL, tfInput, tfInputValues, numInputs, tfOutput, tfOutputValues, numOutputs, NULL, 0, NULL, tfStatus);
+
+	ampsOutputData = (float*)TF_TensorData(tfOutputValues[0]);
+	harmsOutputData = (float*)TF_TensorData(tfOutputValues[1]);
+	magsOutputData = (float*)TF_TensorData(tfOutputValues[2]);
 
     voice = new DDSPVoice();
 	synth.addVoice(voice);
@@ -143,6 +167,47 @@ void DdspsynthAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBl
     // initialisation that you need..
 
 	synth.setCurrentPlaybackSampleRate(sampleRate);
+
+	int audio_size[1];
+	double framefactor = sampleRate / modelSampleRate;
+	int samplesPerTimestep = sampleRate / time_steps; // just for testing, cause model generates 1s audio
+	int totalSamples = sampleRate;
+	
+	soundBuffer.reserve(totalSamples);
+
+	for (int i = 0; i < time_steps; i++) {
+		double amplitudes[4096];
+		double harmonics[50];
+		double magnitudes[65];
+
+		for (int j = 0; j < samplesPerTimestep; j++)
+		{
+			amplitudes[j] = 10;
+			f0[j] = 880;
+		}
+
+		for (int j = 0; j < 50; j++)
+		{
+			harmonics[j] = harmsOutputData[i * 60 + j];
+		}
+
+		for (int j = 0; j < 65; j++)
+		{
+			magnitudes[j] = magsOutputData[i * 65 + j];
+		}
+
+		additive(samplesPerTimestep, sampleRate, amplitudes, harmonics, f0, phaseBuffer_in, shift, stretch, addBuffer, audio_size, phaseBuffer_out);
+		for (int i = 0; i < 50; ++i) {
+			phaseBuffer_in[i] = phaseBuffer_out[i];
+		}
+		subtractive(samplesPerTimestep, magnitudes, 0, irBuffer_in, recalculateIR, subBuffer, irBuffer_out);
+	
+		for (int j = 0; j < samplesPerTimestep; j++)
+		{
+			soundBuffer.push_back(addBuffer[j] + subBuffer[j]);
+			//soundBuffer.push_back(addBuffer[j]);
+		}
+	}
 }
 
 void DdspsynthAudioProcessor::releaseResources()
@@ -176,21 +241,18 @@ bool DdspsynthAudioProcessor::isBusesLayoutSupported (const BusesLayout& layouts
 #endif
 
 void DdspsynthAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce::MidiBuffer& midiMessages)
-{
-    f0InputTensor = TF_NewTensor(TF_FLOAT, inputDims, numInputDims, f0Data, ndata, &NoOpDeallocator, 0);
-    ldInputTensor = TF_NewTensor(TF_FLOAT, inputDims, numInputDims, ldData, ndata, &NoOpDeallocator, 0);
-
-    tfInputValues[0] = f0InputTensor;
-    tfInputValues[1] = ldInputTensor;
-    TF_SessionRun(tfSession, NULL, tfInput, tfInputValues, numInputs, tfOutput, tfOutputValues, numOutputs, NULL, 0, NULL, tfStatus);
-    if (TF_GetCode(tfStatus) == TF_OK)
-        DBG("Session is OK\n");
-    else
-        DBG("%s", TF_Message(Status));
-	synth.renderNextBlock(buffer, midiMessages, 0, buffer.getNumSamples());
-	for (int i = 0; i < buffer.getNumSamples(); i++) {
-		this->pushNextSampleIntoFifo(*(buffer.getReadPointer(0, i)));
+{	
+	float* left = buffer.getWritePointer(0);
+	float* right = buffer.getWritePointer(1);
+	for (int i = 0; i < buffer.getNumSamples(); i++)
+	{
+		if (modelSampleCounter >= getSampleRate()) break;
+		float sample = soundBuffer[modelSampleCounter++];
+		left[i] = sample;
+		right[i] = sample;
+		this->pushNextSampleIntoFifo(sample);
 	}
+	//synth.renderNextBlock(buffer, midiMessages, 0, buffer.getNumSamples());
 }
 
 //==============================================================================

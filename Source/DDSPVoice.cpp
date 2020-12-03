@@ -26,15 +26,10 @@ DDSPVoice::DDSPVoice()
 
 	for (int i = 0; i < 4096; i++) {
 		amplitudes[i] = 2;
-		f0[i] = 440;
+		f0[i] = 880;
 	}
 	for (int i = 0; i < 50; i++) {
 		harmonics[i] = 0.5;
-	}
-
-	for (int i = 0; i < 4096; i++)
-	{
-		ldData[i] = 0.5;
 	}
 
 	adsr.setSampleRate(getSampleRate());
