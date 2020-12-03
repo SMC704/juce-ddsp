@@ -10,7 +10,9 @@
 #include "DDSPVoice.h"
 #include "PluginEditor.h"
 #include "HarmonicEditor.h"
+#include "tensorflow_c/include/tensorflow/c/c_api.h"
 
+void NoOpDeallocator(void* data, size_t a, void* b) {}
 //==============================================================================
 DdspsynthAudioProcessor::DdspsynthAudioProcessor() : forwardFFT(fftOrder)
 #ifndef JucePlugin_PreferredChannelConfigurations
@@ -25,6 +27,39 @@ DdspsynthAudioProcessor::DdspsynthAudioProcessor() : forwardFFT(fftOrder)
 
 #endif
 {
+
+    tfGraph = TF_NewGraph();
+    tfStatus = TF_NewStatus();
+    tfSessionOpts = TF_NewSessionOptions();
+    tfSession = TF_LoadSessionFromSavedModel(tfSessionOpts, tfRunOpts, saved_model_dir, &tags, ntags, tfGraph, NULL, tfStatus);
+    if (TF_GetCode(tfStatus) == TF_OK)
+    {
+        DBG("TF_LoadSessionFromSavedModel OK\n");
+    }
+    else
+    {
+        DBG("%s", TF_Message(tfStatus));
+    }
+
+    tfInput = (TF_Output*)malloc(sizeof(TF_Output) * numInputs);
+    f0Input = { TF_GraphOperationByName(tfGraph, "serving_default_input_1"), 0 };
+    ldInput = { TF_GraphOperationByName(tfGraph, "serving_default_input_2"), 0 };
+
+    tfInput[0] = f0Input;
+    tfInput[1] = ldInput;
+
+    tfOutput = (TF_Output*)malloc(sizeof(TF_Output) * numOutputs);
+    ampsOutput = { TF_GraphOperationByName(tfGraph, "StatefulPartitionedCall"), 0 };
+    harmsOutput = { TF_GraphOperationByName(tfGraph, "StatefulPartitionedCall"), 1 };
+    magsOutput = { TF_GraphOperationByName(tfGraph, "StatefulPartitionedCall"), 2 };
+
+    tfOutput[0] = ampsOutput;
+    tfOutput[1] = harmsOutput;
+    tfOutput[2] = magsOutput;
+
+    tfInputValues = (TF_Tensor**)malloc(sizeof(TF_Tensor*) * numInputs);
+    tfOutputValues = (TF_Tensor**)malloc(sizeof(TF_Tensor*) * numOutputs);
+
     voice = new DDSPVoice();
 	synth.addVoice(voice);
 
@@ -33,7 +68,10 @@ DdspsynthAudioProcessor::DdspsynthAudioProcessor() : forwardFFT(fftOrder)
 
 DdspsynthAudioProcessor::~DdspsynthAudioProcessor()
 {
-
+    TF_DeleteGraph(tfGraph);
+    TF_DeleteSession(tfSession, tfStatus);
+    TF_DeleteSessionOptions(tfSessionOpts);
+    TF_DeleteStatus(tfStatus);
 }
 
 //==============================================================================
@@ -139,6 +177,16 @@ bool DdspsynthAudioProcessor::isBusesLayoutSupported (const BusesLayout& layouts
 
 void DdspsynthAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce::MidiBuffer& midiMessages)
 {
+    f0InputTensor = TF_NewTensor(TF_FLOAT, inputDims, numInputDims, f0Data, ndata, &NoOpDeallocator, 0);
+    ldInputTensor = TF_NewTensor(TF_FLOAT, inputDims, numInputDims, ldData, ndata, &NoOpDeallocator, 0);
+
+    tfInputValues[0] = f0InputTensor;
+    tfInputValues[1] = ldInputTensor;
+    TF_SessionRun(tfSession, NULL, tfInput, tfInputValues, numInputs, tfOutput, tfOutputValues, numOutputs, NULL, 0, NULL, tfStatus);
+    if (TF_GetCode(tfStatus) == TF_OK)
+        DBG("Session is OK\n");
+    else
+        DBG("%s", TF_Message(Status));
 	synth.renderNextBlock(buffer, midiMessages, 0, buffer.getNumSamples());
 	for (int i = 0; i < buffer.getNumSamples(); i++) {
 		this->pushNextSampleIntoFifo(*(buffer.getReadPointer(0, i)));

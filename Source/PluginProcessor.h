@@ -100,5 +100,50 @@ private:
 	juce::MidiKeyboardState keyboardState;
 	juce::Synthesiser synth;
 
+    // ======================== TENSORFLOW ==========================
+
+    TF_Graph* tfGraph;
+    TF_Status* tfStatus;
+    TF_SessionOptions* tfSessionOpts;
+    TF_Session* tfSession;
+    TF_Buffer* tfRunOpts = NULL;
+
+    int numInputs = 2;
+    TF_Output* tfInput;
+    TF_Output f0Input;
+    TF_Output ldInput;
+
+    int numOutputs = 3;
+    TF_Output* tfOutput;
+    TF_Output ampsOutput;
+    TF_Output harmsOutput;
+    TF_Output magsOutput;
+
+    TF_Tensor** tfInputValues;
+    TF_Tensor** tfOutputValues;
+
+    static const int time_steps = 100;
+
+    int numInputDims = 3;
+    int64_t inputDims[3] = { 1,100,1 };
+    float f0Data[100];
+    float ldData[100];
+
+    float modelSampleRate = 44100;
+    float samplesPerTimestep = modelSampleRate / time_steps;
+
+    int modelSampleCounter = 0;
+
+    int ntags = 1;
+
+    const char* saved_model_dir = "C:\\Users\\svkly\\Downloads\\converted_models\\models\\violin";
+    const char* tags = "serve";
+
+    int ndata = TF_DataTypeSize(TF_FLOAT) * time_steps;
+    TF_Tensor* f0InputTensor;
+    TF_Tensor* ldInputTensor;
+
+    bool playing_model = true;
+
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (DdspsynthAudioProcessor)
 };
