@@ -13,6 +13,7 @@
 #include "HarmonicEditor.h"
 #include "SubtractiveComponent.h"
 #include "AdditiveComponent.h"
+#include "TensorflowHandler.h"
 //==============================================================================
 /**
 */
@@ -99,6 +100,8 @@ private:
 	DDSPVoice* voice;
 	juce::MidiKeyboardState keyboardState;
 	juce::Synthesiser synth;
+
+	TensorflowHandler tfHandler;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (DdspsynthAudioProcessor)
 };
