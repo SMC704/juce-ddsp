@@ -58,7 +58,7 @@ SubtractiveComponent::SubtractiveComponent()
     colourSlider.setSliderStyle(juce::Slider::SliderStyle::RotaryHorizontalVerticalDrag);
     colourSlider.setTextBoxStyle(juce::Slider::NoTextBox, true, 0, 0);
     colourSlider.setPopupDisplayEnabled(true, true, this);
-    colourSlider.setTextValueSuffix (" Noise Colour");
+    //colourSlider.setTextValueSuffix (" Noise Colour");
     colourSlider.setRange(-1.0f, 1.0f, 0.01f);
     colourSlider.setValue(0.0f);
     addAndMakeVisible(colourSlider);

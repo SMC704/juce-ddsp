@@ -28,10 +28,12 @@ private:
     juce::ImageButton onoffButton;
     juce::Label nameLabel;
     juce::Label onoffLabel;
-    juce::Slider amoutSlider;
+    juce::Slider amountSlider;
     juce::Label amountLabel;
     juce::Slider rateSlider;
     juce::Label rateLabel;
+    juce::Slider delaySlider;
+    juce::Label delayLabel;
     
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ModulationComponent)

@@ -37,25 +37,40 @@ ModulationComponent::ModulationComponent()
     nameLabel.setText("Mod", juce::NotificationType::dontSendNotification);
     nameLabel.setFont(20.0f);  
 
-    amoutSlider.setSliderStyle(juce::Slider::SliderStyle::RotaryHorizontalVerticalDrag);
-    amoutSlider.setTextBoxStyle(juce::Slider::NoTextBox, true, 0, 0);
-    amoutSlider.setPopupDisplayEnabled(true, true, this);
-    amoutSlider.setTextValueSuffix (" Mod Amount");
-    amoutSlider.setRange(0.0f, 10.0f, 0.1f);
-    amoutSlider.setValue(5.0f);
-    addAndMakeVisible(amoutSlider);
-    amoutSlider.setBounds(0, 0, 100, 100);
+    amountSlider.setSliderStyle(juce::Slider::SliderStyle::RotaryHorizontalVerticalDrag);
+    amountSlider.setTextBoxStyle(juce::Slider::NoTextBox, true, 0, 0);
+    amountSlider.setPopupDisplayEnabled(true, true, this);
+    //amountSlider.setTextValueSuffix (" Mod Amount");
+    amountSlider.setRange(0.0f, 10.0f, 0.1f);
+    amountSlider.setValue(5.0f);
+    addAndMakeVisible(amountSlider);
+    amountSlider.setBounds(0, 0, 100, 100);
 
     addAndMakeVisible(amountLabel);
     amountLabel.setColour(juce::Label::textColourId, juce::Colours::white);
     amountLabel.setJustificationType(juce::Justification::topLeft);
     amountLabel.setText("Amount", juce::NotificationType::dontSendNotification);
     amountLabel.setFont(fontDim);
+    
+    delaySlider.setSliderStyle(juce::Slider::SliderStyle::RotaryHorizontalVerticalDrag);
+    delaySlider.setTextBoxStyle(juce::Slider::NoTextBox, true, 0, 0);
+    delaySlider.setPopupDisplayEnabled(true, true, this);
+    //delaySlider.setTextValueSuffix (" Mod Amount");
+    delaySlider.setRange(0.0f, 10.0f, 0.1f);
+    delaySlider.setValue(5.0f);
+    addAndMakeVisible(delaySlider);
+    delaySlider.setBounds(0, 0, 100, 100);
+
+    addAndMakeVisible(delayLabel);
+    delayLabel.setColour(juce::Label::textColourId, juce::Colours::white);
+    delayLabel.setJustificationType(juce::Justification::topLeft);
+    delayLabel.setText("Delay", juce::NotificationType::dontSendNotification);
+    delayLabel.setFont(fontDim);
 
     rateSlider.setSliderStyle(juce::Slider::SliderStyle::RotaryHorizontalVerticalDrag);
     rateSlider.setTextBoxStyle(juce::Slider::NoTextBox, true, 0, 0);
     rateSlider.setPopupDisplayEnabled(true, true, this);
-    rateSlider.setTextValueSuffix (" Mod Rate");
+    //rateSlider.setTextValueSuffix (" Mod Rate");
     rateSlider.setRange(0.0f, 10.0f, 0.1f);
     rateSlider.setValue(5.0f);
     addAndMakeVisible(rateSlider);
@@ -132,20 +147,32 @@ void ModulationComponent::resized()
         juce::GridItem(rateLabel).withSize(65.0f, 30.0f)
             .withAlignSelf(juce::GridItem::AlignSelf::end)
             .withJustifySelf(juce::GridItem::JustifySelf::center)
-            .withMargin(juce::GridItem::Margin(10.0f, 0, 0, 25.0f))
+            .withMargin(juce::GridItem::Margin(10.0f, 0, 0, 30.0f))
             .withArea(5, 2),
         
-        juce::GridItem(amoutSlider).withSize(sliderDim, sliderDim)
+        juce::GridItem(amountSlider).withSize(sliderDim, sliderDim)
             .withAlignSelf(juce::GridItem::AlignSelf::center)
             .withJustifySelf(juce::GridItem::JustifySelf::end)
-            .withMargin(juce::GridItem::Margin(0.0f, -5.0f, 10.0f, 0))
-            .withArea(6, 2),
+            .withMargin(juce::GridItem::Margin(0.0f, 10.0f, 10.0f, 0))
+            .withArea(6, 3),
 
         juce::GridItem(amountLabel).withSize(65.0f, 30.0f)
             .withAlignSelf(juce::GridItem::AlignSelf::center)
             .withJustifySelf(juce::GridItem::JustifySelf::center)
-            .withMargin(juce::GridItem::Margin(10.0f, 0, 0, 0))
-            .withArea(7, 2),
+            .withMargin(juce::GridItem::Margin(10.0f, 25.0f, 0, 1.0f))
+            .withArea(7, 3),
+        
+        juce::GridItem(delaySlider).withSize(sliderDim, sliderDim)
+            .withAlignSelf(juce::GridItem::AlignSelf::center)
+            .withJustifySelf(juce::GridItem::JustifySelf::start)
+            .withMargin(juce::GridItem::Margin(0.0f, 0.0f, 10.0f, 10.0f))
+            .withArea(6, 1),
+
+        juce::GridItem(delayLabel).withSize(65.0f, 30.0f)
+            .withAlignSelf(juce::GridItem::AlignSelf::center)
+            .withJustifySelf(juce::GridItem::JustifySelf::start)
+            .withMargin(juce::GridItem::Margin(10.0f, 0, 0, 13.0f))
+            .withArea(7, 1),
     };
 
     grid.performLayout(getLocalBounds());
