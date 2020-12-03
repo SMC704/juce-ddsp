@@ -14,6 +14,7 @@
 #include "ModelComponent.h"
 #include "AdditiveComponent.h"
 #include "SubtractiveComponent.h"
+#include "ModulationComponent.h"
 #include "ReverbComponent.h"
 #include "SpectogramComponent.h"
 #include "OutputComponent.h"

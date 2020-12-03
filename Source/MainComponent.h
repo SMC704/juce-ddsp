@@ -16,6 +16,7 @@
 #include "ModelComponent.h"
 #include "AdditiveComponent.h"
 #include "SubtractiveComponent.h"
+#include "ModulationComponent.h"
 #include "ReverbComponent.h"
 #include "SpectogramComponent.h"
 #include "OutputComponent.h"
@@ -41,6 +42,7 @@ private:
     ModelComponent modelComponent;
     AdditiveComponent additiveComponent;
     SubtractiveComponent subtractiveComponent;
+    ModulationComponent modulationComponent;
     ReverbComponent reverbComponent;
     SpectogramComponent spectogramComponent;
     OutputComponent outputComponent;
