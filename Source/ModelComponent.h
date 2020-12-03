@@ -26,7 +26,7 @@ public:
 
 private:
 
-    juce::ToggleButton onoffButton;
+    juce::ImageButton onoffButton;
     juce::Label nameLabel;
     juce::Label onoffLabel;
     juce::ImageButton violinButton;

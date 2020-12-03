@@ -5195,6 +5195,9 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\Resources\power.png">
+      <Filter>DDSPSynth\Resources</Filter>
+    </None>
     <None Include="..\..\Resources\background_texture_dark.png">
       <Filter>DDSPSynth\Resources</Filter>
     </None>

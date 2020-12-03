@@ -572,6 +572,13 @@
 			path = "../../JuceLibraryCode/modules/juce_core";
 			sourceTree = "SOURCE_ROOT";
 		};
+		49DF8F873339F513F58B8CC7 = {
+			isa = PBXFileReference;
+			lastKnownFileType = image.png;
+			name = power.png;
+			path = ../../Resources/power.png;
+			sourceTree = "SOURCE_ROOT";
+		};
 		4D442A07DEE1D71B001B47E4 = {
 			isa = PBXFileReference;
 			lastKnownFileType = wrapper.framework;
@@ -1317,6 +1324,7 @@
 		C46D5F697253CB3A0BB0B3F3 = {
 			isa = PBXGroup;
 			children = (
+				49DF8F873339F513F58B8CC7,
 				89B229C895AA000D0AD30B2E,
 				C9D9DDE6877E63A09451A6EE,
 				7FDF825F0BCBE7263891759B,
