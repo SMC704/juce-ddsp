@@ -27,11 +27,11 @@ OutputComponent::OutputComponent()
     masterSlider.setPopupDisplayEnabled(true, true, this);
     masterSlider.setTextValueSuffix (" dB");
     masterSlider.setRange(-60.0f, 0.0f, 0.1f);
-    masterSlider.setValue(-8.0f);
+    masterSlider.setValue(-6.0f);
     addAndMakeVisible(masterSlider);
     masterSlider.setBounds(0, 0, 100, 100);
     masterSlider.addListener(this);
-    masterSlider.setDoubleClickReturnValue(true, -8.0f);
+    masterSlider.setDoubleClickReturnValue(true, -6.0f);
 
     addAndMakeVisible(masterLabel);
     masterLabel.setColour(juce::Label::textColourId, juce::Colours::white);

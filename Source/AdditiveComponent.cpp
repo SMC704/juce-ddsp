@@ -26,6 +26,7 @@ AdditiveComponent::AdditiveComponent()
         juce::ImageFileFormat::loadFrom(BinaryData::power_png, BinaryData::power_pngSize), {}, juce::Colour::fromRGB(255, 255, 255), //Down
         0.0f);
     onoffButton.setClickingTogglesState(true);
+    onoffButton.setToggleState(true, NULL);
 
     addAndMakeVisible(onoffLabel);
     onoffLabel.setColour(juce::Label::textColourId, juce::Colours::white);
@@ -80,11 +81,11 @@ AdditiveComponent::AdditiveComponent()
     ampSlider.setPopupDisplayEnabled(true, true, this);
     ampSlider.setTextValueSuffix (" dB");
     ampSlider.setRange(-60.0f, 0.0f, 0.1f);
-    ampSlider.setValue(-8.0f);
+    ampSlider.setValue(-6.0f);
     addAndMakeVisible(ampSlider);
     ampSlider.setBounds(0, 0, 100, 100);
     ampSlider.addListener(this);
-    ampSlider.setDoubleClickReturnValue(true, -8.0f);
+    ampSlider.setDoubleClickReturnValue(true, -6.0f);
 
     addAndMakeVisible(ampLabel);
     ampLabel.setColour(juce::Label::textColourId, juce::Colours::white);

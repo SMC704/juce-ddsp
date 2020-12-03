@@ -23,6 +23,8 @@ public:
 
     void paint (juce::Graphics&) override;
     void resized() override;
+    
+    void updateModelState(juce::Button* button);
 
 private:
 

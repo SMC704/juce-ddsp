@@ -26,11 +26,13 @@ ModelComponent::ModelComponent()
     //onoffButton.addListener(this);
     onoffButton.setClickingTogglesState(true);
     onoffButton.setImages(false, true, false,
-        juce::ImageFileFormat::loadFrom(BinaryData::power_png, BinaryData::power_pngSize), {}, juce::Colour::fromRGB(100, 100, 100), //Normal
+        juce::ImageFileFormat::loadFrom(BinaryData::power_png, BinaryData::power_pngSize), {}, juce::Colour::fromRGB(255, 255, 255), //Normal
         juce::ImageFileFormat::loadFrom(BinaryData::power_png, BinaryData::power_pngSize), {}, juce::Colour::fromRGB(200, 200, 200), //Over
-        juce::ImageFileFormat::loadFrom(BinaryData::power_png, BinaryData::power_pngSize), {}, juce::Colour::fromRGB(255, 255, 255), //Down
+        juce::ImageFileFormat::loadFrom(BinaryData::power_png, BinaryData::power_pngSize), {}, juce::Colour::fromRGB(100, 100, 100), //Down
         0.0f);
-    onoffButton.setClickingTogglesState(true);
+    onoffButton.setToggleState(true, NULL);
+    onoffButton.setRadioGroupId(1001);
+    onoffButton.onClick = [this] { updateModelState(&onoffButton); };
 
     addAndMakeVisible(onoffLabel);
     onoffLabel.setColour(juce::Label::textColourId, juce::Colours::white);
@@ -41,7 +43,10 @@ ModelComponent::ModelComponent()
     violinButton.setBounds(0, 0, 50, 50);
     violinButton.setImages(false, true, false,
         juce::ImageFileFormat::loadFrom(BinaryData::violin_png, BinaryData::violin_pngSize),
-        0.85f, {}, {}, 0.75f, {}, {}, 1.0f, {}, 0.0f);
+        0.65f, {}, {}, 0.85f, {}, {}, 1.0f, {}, 0.0f);
+    violinButton.setRadioGroupId(1001);
+    violinButton.setClickingTogglesState(true);
+    violinButton.onClick = [this] { updateModelState(&violinButton); };
 
     addAndMakeVisible(violinLabel);
     violinLabel.setColour(juce::Label::textColourId, juce::Colours::white);
@@ -52,7 +57,10 @@ ModelComponent::ModelComponent()
     fluteButton.setBounds(0, 0, 50, 50);
     fluteButton.setImages(false, true, false,
         juce::ImageFileFormat::loadFrom(BinaryData::flute_png, BinaryData::flute_pngSize),
-        0.85f, {}, {}, 0.75f, {}, {}, 1.0f, {}, 0.0f);
+        0.65f, {}, {}, 0.85f, {}, {}, 1.0f, {}, 0.0f);
+    fluteButton.setRadioGroupId(1001);
+    fluteButton.setClickingTogglesState(true);
+    fluteButton.onClick = [this] { updateModelState(&fluteButton); };
 
     addAndMakeVisible(fluteLabel);
     fluteLabel.setColour(juce::Label::textColourId, juce::Colours::white);
@@ -63,7 +71,10 @@ ModelComponent::ModelComponent()
     saxophoneButton.setBounds(0, 0, 50, 50);
     saxophoneButton.setImages(false, true, false,
         juce::ImageFileFormat::loadFrom(BinaryData::saxophone_png, BinaryData::saxophone_pngSize),
-        0.85f, {}, {}, 0.75f, {}, {}, 1.0f, {}, 0.0f);
+        0.65f, {}, {}, 0.85f, {}, {}, 1.0f, {}, 0.0f);
+    saxophoneButton.setRadioGroupId(1001);
+    saxophoneButton.setClickingTogglesState(true);
+    saxophoneButton.onClick = [this] { updateModelState(&saxophoneButton); };
 
     addAndMakeVisible(saxophoneLabel);
     saxophoneLabel.setColour(juce::Label::textColourId, juce::Colours::white);
@@ -74,7 +85,10 @@ ModelComponent::ModelComponent()
     trumpetButton.setBounds(0, 0, 50, 50);
     trumpetButton.setImages(false, true, false,
         juce::ImageFileFormat::loadFrom(BinaryData::trumpet_png, BinaryData::trumpet_pngSize),
-        0.85f, {}, {}, 0.75f, {}, {}, 1.0f, {}, 0.0f);
+        0.65f, {}, {}, 0.85f, {}, {}, 1.0f, {}, 0.0f);
+    trumpetButton.setRadioGroupId(1001);
+    trumpetButton.setClickingTogglesState(true);
+    trumpetButton.onClick = [this] { updateModelState(&trumpetButton); };
 
     addAndMakeVisible(trumpetLabel);
     trumpetLabel.setColour(juce::Label::textColourId, juce::Colours::white);
@@ -85,7 +99,10 @@ ModelComponent::ModelComponent()
     extra1Button.setBounds(0, 0, 50, 50);
     extra1Button.setImages(false, true, false,
         juce::ImageFileFormat::loadFrom(BinaryData::placeholder_png, BinaryData::placeholder_pngSize),
-        0.85f, {}, {}, 0.75f, {}, {}, 1.0f, {}, 0.0f);
+        0.65f, {}, {}, 0.85f, {}, {}, 1.0f, {}, 0.0f);
+    extra1Button.setRadioGroupId(1001);
+    extra1Button.setClickingTogglesState(true);
+    extra1Button.onClick = [this] { updateModelState(&extra1Button); };
 
     addAndMakeVisible(extra1Label);
     extra1Label.setColour(juce::Label::textColourId, juce::Colours::white);
@@ -96,7 +113,10 @@ ModelComponent::ModelComponent()
     extra2Button.setBounds(0, 0, 50, 50);
     extra2Button.setImages(false, true, false,
         juce::ImageFileFormat::loadFrom(BinaryData::placeholder_png, BinaryData::placeholder_pngSize),
-        0.85f, {}, {}, 0.75f, {}, {}, 1.0f, {}, 0.0f);
+        0.65f, {}, {}, 0.85f, {}, {}, 1.0f, {}, 0.0f);
+    extra2Button.setRadioGroupId(1001);
+    extra2Button.setClickingTogglesState(true);
+    extra2Button.onClick = [this] { updateModelState(&extra2Button); };
 
     addAndMakeVisible(extra2Label);
     extra2Label.setColour(juce::Label::textColourId, juce::Colours::white);
@@ -107,7 +127,10 @@ ModelComponent::ModelComponent()
     extra3Button.setBounds(0, 0, 50, 50);
     extra3Button.setImages(false, true, false,
         juce::ImageFileFormat::loadFrom(BinaryData::placeholder_png, BinaryData::placeholder_pngSize),
-        0.85f, {}, {}, 0.75f, {}, {}, 1.0f, {}, 0.0f);
+        0.65f, {}, {}, 0.85f, {}, {}, 1.0f, {}, 0.0f);
+    extra3Button.setRadioGroupId(1001);
+    extra3Button.setClickingTogglesState(true);
+    extra3Button.onClick = [this] { updateModelState(&extra3Button); };
 
     addAndMakeVisible(extra3Label);
     extra3Label.setColour(juce::Label::textColourId, juce::Colours::white);
@@ -118,7 +141,10 @@ ModelComponent::ModelComponent()
     extra4Button.setBounds(0, 0, 50, 50);
     extra4Button.setImages(false, true, false,
         juce::ImageFileFormat::loadFrom(BinaryData::placeholder_png, BinaryData::placeholder_pngSize),
-        0.85f, {}, {}, 0.75f, {}, {}, 1.0f, {}, 0.0f);
+        0.65f, {}, {}, 0.85f, {}, {}, 1.0f, {}, 0.0f);
+    extra4Button.setRadioGroupId(1001);
+    extra4Button.setClickingTogglesState(true);
+    extra4Button.onClick = [this] { updateModelState(&extra4Button); };
 
     addAndMakeVisible(extra4Label);
     extra4Label.setColour(juce::Label::textColourId, juce::Colours::white);
@@ -229,4 +255,44 @@ void ModelComponent::resized()
     };
 
     grid.performLayout (getLocalBounds());
+}
+
+void ModelComponent::updateModelState(juce::Button *button)
+{
+    if(button == &onoffButton && onoffButton.getToggleState() == true)
+    {
+        DBG("no model activated");
+    }
+    else if(button == &violinButton && violinButton.getToggleState() == true)
+    {
+        DBG("violin model activated");
+    }
+    else if(button == &fluteButton && fluteButton.getToggleState() == true)
+    {
+        DBG("flute model activated");
+    }
+    else if(button == &saxophoneButton && saxophoneButton.getToggleState() == true)
+    {
+        DBG("saxophone model activated");
+    }
+    else if(button == &trumpetButton && trumpetButton.getToggleState() == true)
+    {
+        DBG("trumpet model activated");
+    }
+    else if(button == &extra1Button && extra1Button.getToggleState() == true)
+    {
+        DBG("extra1 model activated");
+    }
+    else if(button == &extra2Button && extra2Button.getToggleState() == true)
+    {
+        DBG("extra2 model activated");
+    }
+    else if(button == &extra3Button && extra3Button.getToggleState() == true)
+    {
+        DBG("extra3 model activated");
+    }
+    else if(button == &extra4Button && extra4Button.getToggleState() == true)
+    {
+        DBG("extra4 model activated");
+    }
 }
