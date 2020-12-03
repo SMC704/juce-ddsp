@@ -23,12 +23,15 @@ public:
 
     void paint (juce::Graphics&) override;
     void resized() override;
+    
+    void updateInputState(juce::Button *button);
 
 private:
 
     juce::Label nameLabel;
-    juce::TextButton midiButton;
-    juce::TextButton lineButton;
+    juce::Label midiLabel;
+    juce::Label audioLabel;
+    juce::ImageButton inputSwitch;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (InputComponent)
 };

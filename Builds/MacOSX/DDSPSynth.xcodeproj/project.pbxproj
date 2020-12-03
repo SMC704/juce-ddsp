@@ -327,6 +327,13 @@
 			path = RecentFilesMenuTemplate.nib;
 			sourceTree = "SOURCE_ROOT";
 		};
+		0A4DC613110D8F7C09BADA76 = {
+			isa = PBXFileReference;
+			lastKnownFileType = image.png;
+			name = "switch_right.png";
+			path = "../../Resources/switch_right.png";
+			sourceTree = "SOURCE_ROOT";
+		};
 		0C75222C75554E6A4E6ECB11 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
@@ -873,6 +880,13 @@
 			path = ../../Source/HarmonicSlider.h;
 			sourceTree = "SOURCE_ROOT";
 		};
+		AFC8648A4D3DAFD623A7CB6C = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = JuceHeader.h;
+			path = ../../JuceLibraryCode/JuceHeader.h;
+			sourceTree = "SOURCE_ROOT";
+		};
 		B213D6DE76069D4A1F145166 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
@@ -950,11 +964,11 @@
 			path = "../../JuceLibraryCode/include_juce_gui_extra.mm";
 			sourceTree = "SOURCE_ROOT";
 		};
-		AFC8648A4D3DAFD623A7CB6C = {
+		B52BD5C9B8F9AE3CB6B92779 = {
 			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.c.h;
-			name = JuceHeader.h;
-			path = ../../JuceLibraryCode/JuceHeader.h;
+			lastKnownFileType = image.png;
+			name = "switch_left.png";
+			path = "../../Resources/switch_left.png";
 			sourceTree = "SOURCE_ROOT";
 		};
 		B52D391255706C5CBE0846EB = {
@@ -1324,6 +1338,8 @@
 		C46D5F697253CB3A0BB0B3F3 = {
 			isa = PBXGroup;
 			children = (
+				B52BD5C9B8F9AE3CB6B92779,
+				0A4DC613110D8F7C09BADA76,
 				49DF8F873339F513F58B8CC7,
 				89B229C895AA000D0AD30B2E,
 				C9D9DDE6877E63A09451A6EE,

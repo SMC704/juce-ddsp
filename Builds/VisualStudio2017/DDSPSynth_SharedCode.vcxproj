@@ -3007,6 +3007,8 @@
     <ClInclude Include="..\..\JuceLibraryCode\JucePluginDefines.h"/>
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\Resources\switch_left.png"/>
+    <None Include="..\..\Resources\switch_right.png"/>
     <None Include="..\..\Resources\power.png"/>
     <None Include="..\..\Resources\background_texture_dark.png"/>
     <None Include="..\..\Resources\flute.png"/>

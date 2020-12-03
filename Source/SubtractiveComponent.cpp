@@ -26,6 +26,7 @@ SubtractiveComponent::SubtractiveComponent()
         juce::ImageFileFormat::loadFrom(BinaryData::power_png, BinaryData::power_pngSize), {}, juce::Colour::fromRGB(255, 255, 255), //Down
         0.0f);
     onoffButton.setClickingTogglesState(true);
+    onoffButton.setToggleState(true, NULL);
 
     addAndMakeVisible(onoffLabel);
     onoffLabel.setColour(juce::Label::textColourId, juce::Colours::white);
@@ -42,11 +43,11 @@ SubtractiveComponent::SubtractiveComponent()
     ampSlider.setPopupDisplayEnabled(true, true, this);
     ampSlider.setTextValueSuffix (" dB");
     ampSlider.setRange(-60.0f, 0.0f, 0.01f);
-    ampSlider.setValue(-10.0f);
+    ampSlider.setValue(-6.0f);
     addAndMakeVisible(ampSlider);
     ampSlider.setBounds(0, 0, 100, 100);
     ampSlider.addListener(this);
-    ampSlider.setDoubleClickReturnValue(true, -10.0f);
+    ampSlider.setDoubleClickReturnValue(true, -6.0f);
 
     addAndMakeVisible(ampLabel);
     ampLabel.setColour(juce::Label::textColourId, juce::Colours::white);
@@ -57,7 +58,7 @@ SubtractiveComponent::SubtractiveComponent()
     colourSlider.setSliderStyle(juce::Slider::SliderStyle::RotaryHorizontalVerticalDrag);
     colourSlider.setTextBoxStyle(juce::Slider::NoTextBox, true, 0, 0);
     colourSlider.setPopupDisplayEnabled(true, true, this);
-    colourSlider.setTextValueSuffix (" Noise Colour");
+    //colourSlider.setTextValueSuffix (" Noise Colour");
     colourSlider.setRange(-1.0f, 1.0f, 0.01f);
     colourSlider.setValue(0.0f);
     addAndMakeVisible(colourSlider);
