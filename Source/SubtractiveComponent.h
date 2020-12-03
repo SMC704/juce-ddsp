@@ -51,6 +51,7 @@ private:
 
     double noiseColor = 0;
     double subAmp = 0;
+    bool onOffState = true;
 
     SubtractiveListener* subtractiveListener = NULL;
 

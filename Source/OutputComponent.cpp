@@ -31,6 +31,7 @@ OutputComponent::OutputComponent()
     addAndMakeVisible(masterSlider);
     masterSlider.setBounds(0, 0, 100, 100);
     masterSlider.addListener(this);
+    masterSlider.setDoubleClickReturnValue(true, -8.0f);
 
     addAndMakeVisible(masterLabel);
     masterLabel.setColour(juce::Label::textColourId, juce::Colours::white);

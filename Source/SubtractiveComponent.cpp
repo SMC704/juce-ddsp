@@ -39,6 +39,7 @@ SubtractiveComponent::SubtractiveComponent()
     addAndMakeVisible(ampSlider);
     ampSlider.setBounds(0, 0, 100, 100);
     ampSlider.addListener(this);
+    ampSlider.setDoubleClickReturnValue(true, -10.0f);
 
     addAndMakeVisible(ampLabel);
     ampLabel.setColour(juce::Label::textColourId, juce::Colours::white);
@@ -91,6 +92,7 @@ SubtractiveComponent::SubtractiveComponent()
     addAndMakeVisible(colourSlider);
     colourSlider.setBounds(0, 0, 100, 100);
     colourSlider.addListener(this);
+    colourSlider.setDoubleClickReturnValue(true, 0.0f);
 
     addAndMakeVisible(colourLabel);
     colourLabel.setColour(juce::Label::textColourId, juce::Colours::white);
@@ -232,11 +234,15 @@ void SubtractiveComponent::sliderValueChanged(juce::Slider* slider)
 void SubtractiveComponent::setSubtractiveListener(SubtractiveListener* subListener)
 {
     subtractiveListener = subListener;
-    if (subtractiveListener != NULL)
-        subtractiveListener->onNoiseColorChange(0);
+    if (subtractiveListener != NULL) {
+        subtractiveListener->onNoiseColorChange(noiseColor);
+        subtractiveListener->onSubAmpChange(subAmp);
+        subtractiveListener->onOnOffSubChange(onOffState);
+    }
 }
 
 void SubtractiveComponent::buttonClicked(juce::Button* button)
 {
-    subtractiveListener->onOnOffSubChange(button->getToggleState());
+    onOffState = button->getToggleState();
+    subtractiveListener->onOnOffSubChange(onOffState);
 }

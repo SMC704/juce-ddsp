@@ -22,6 +22,10 @@
               file="Source/codegen/DDSPSynth_initialize.cpp"/>
         <FILE id="lKbqZc" name="DDSPSynth_initialize.h" compile="0" resource="0"
               file="Source/codegen/DDSPSynth_initialize.h"/>
+        <FILE id="RJKXXA" name="DDSPSynth_rtwutil.cpp" compile="1" resource="0"
+              file="Source/codegen/DDSPSynth_rtwutil.cpp"/>
+        <FILE id="bRAgu9" name="DDSPSynth_rtwutil.h" compile="0" resource="0"
+              file="Source/codegen/DDSPSynth_rtwutil.h"/>
         <FILE id="fhUxyk" name="DDSPSynth_terminate.cpp" compile="1" resource="0"
               file="Source/codegen/DDSPSynth_terminate.cpp"/>
         <FILE id="UdnMhl" name="DDSPSynth_terminate.h" compile="0" resource="0"
@@ -42,6 +46,8 @@
         <FILE id="PioHxc" name="rand.h" compile="0" resource="0" file="Source/codegen/rand.h"/>
         <FILE id="gceWau" name="randn.cpp" compile="1" resource="0" file="Source/codegen/randn.cpp"/>
         <FILE id="F3gVlR" name="randn.h" compile="0" resource="0" file="Source/codegen/randn.h"/>
+        <FILE id="DRmenl" name="rescale.cpp" compile="1" resource="0" file="Source/codegen/rescale.cpp"/>
+        <FILE id="D17MSI" name="rescale.h" compile="0" resource="0" file="Source/codegen/rescale.h"/>
         <FILE id="LbU0vJ" name="rt_nonfinite.cpp" compile="1" resource="0"
               file="Source/codegen/rt_nonfinite.cpp"/>
         <FILE id="cnVU3x" name="rt_nonfinite.h" compile="0" resource="0" file="Source/codegen/rt_nonfinite.h"/>
