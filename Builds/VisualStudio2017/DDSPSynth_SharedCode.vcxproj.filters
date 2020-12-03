@@ -5195,6 +5195,12 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\Resources\switch_left.png">
+      <Filter>DDSPSynth\Resources</Filter>
+    </None>
+    <None Include="..\..\Resources\switch_right.png">
+      <Filter>DDSPSynth\Resources</Filter>
+    </None>
     <None Include="..\..\Resources\power.png">
       <Filter>DDSPSynth\Resources</Filter>
     </None>

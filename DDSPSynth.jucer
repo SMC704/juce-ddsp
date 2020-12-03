@@ -118,6 +118,9 @@
             file="Source/HarmonicSlider.h"/>
     </GROUP>
     <GROUP id="{D8B71657-2B6B-68DF-F380-CA4760A753A4}" name="Resources">
+      <FILE id="XlEtlt" name="switch_left.png" compile="0" resource="1" file="Resources/switch_left.png"/>
+      <FILE id="WDNmoD" name="switch_right.png" compile="0" resource="1"
+            file="Resources/switch_right.png"/>
       <FILE id="UZkess" name="power.png" compile="0" resource="1" file="Resources/power.png"/>
       <FILE id="T8UIeB" name="background_texture_dark.png" compile="0" resource="1"
             file="Resources/background_texture_dark.png"/>
