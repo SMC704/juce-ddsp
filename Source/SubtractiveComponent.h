@@ -36,16 +36,12 @@ public:
 
 private:
     
-    juce::ToggleButton onoffButton;
+    juce::ImageButton onoffButton;
     juce::Label nameLabel;
     juce::Label onoffLabel;
     juce::Slider ampSlider;
     juce::Label ampLabel;
     juce::Label lfoLabel;
-    juce::Slider amoutSlider;
-    juce::Label amountLabel;
-    juce::Slider rateSlider;
-    juce::Label rateLabel;
     juce::Slider colourSlider;
     juce::Label colourLabel;
 

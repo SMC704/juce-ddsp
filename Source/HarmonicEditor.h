@@ -46,8 +46,8 @@ private:
     
     juce::OwnedArray<HarmonicSlider> harmonicSliders;
 
-	double harmonicValues[50];
-	int nHarmonics = 50;
+    const static int nHarmonics = 60;
+	double harmonicValues[nHarmonics];
 	Listener* pListener = NULL;
     
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (HarmonicEditor)

@@ -18,6 +18,15 @@ ReverbComponent::ReverbComponent()
 
     addAndMakeVisible(onoffButton);
     onoffButton.setBounds(0, 0, 50, 50);
+    //onoffButton.addListener(this);
+    onoffButton.setClickingTogglesState(true);
+    onoffButton.setImages(false, true, false,
+        juce::ImageFileFormat::loadFrom(BinaryData::power_png, BinaryData::power_pngSize), {}, juce::Colour::fromRGB(100, 100, 100), //Normal
+        juce::ImageFileFormat::loadFrom(BinaryData::power_png, BinaryData::power_pngSize), {}, juce::Colour::fromRGB(200, 200, 200), //Over
+        juce::ImageFileFormat::loadFrom(BinaryData::power_png, BinaryData::power_pngSize), {}, juce::Colour::fromRGB(255, 255, 255), //Down
+        0.0f);
+    onoffButton.setClickingTogglesState(true);
+    onoffButton.setToggleState(true, NULL);
 
     addAndMakeVisible(onoffLabel);
     onoffLabel.setColour(juce::Label::textColourId, juce::Colours::white);
@@ -118,10 +127,10 @@ void ReverbComponent::resized()
             .withMargin(juce::GridItem::Margin(10.0f))
             .withArea(1, 1),
 
-        juce::GridItem(onoffButton).withSize(40.0f, 30.0f)
+        juce::GridItem(onoffButton).withSize(17.0f, 17.0f)
             .withAlignSelf(juce::GridItem::AlignSelf::start)
             .withJustifySelf(juce::GridItem::JustifySelf::end)
-            .withMargin(juce::GridItem::Margin(10.0f, 0, 10.0f, 0))
+            .withMargin(juce::GridItem::Margin(10.0f, 10.0f, 10.0f, 0.0f))
             .withArea(1, 3),
 
         juce::GridItem(drywetSlider).withSize(70.0f, 70.0f)
@@ -133,7 +142,7 @@ void ReverbComponent::resized()
         juce::GridItem(drywetLabel).withSize(65.0f, 30.0f)
             .withAlignSelf(juce::GridItem::AlignSelf::end)
             .withJustifySelf(juce::GridItem::JustifySelf::center)
-            .withMargin(juce::GridItem::Margin(10.0f, 0, 0, 0))
+            .withMargin(juce::GridItem::Margin(10.0f, 0, 0, 5.0f))
             .withArea(5, 2),
 
         juce::GridItem(sizeSlider).withSize(sliderDim, sliderDim)
@@ -145,7 +154,7 @@ void ReverbComponent::resized()
         juce::GridItem(sizeLabel).withSize(65.0f, 30.0f)
             .withAlignSelf(juce::GridItem::AlignSelf::center)
             .withJustifySelf(juce::GridItem::JustifySelf::start)
-            .withMargin(juce::GridItem::Margin(10.0f, 0, 0, 16.0f))
+            .withMargin(juce::GridItem::Margin(10.0f, 0, 0, 18.0f))
             .withArea(7, 1),
 
         juce::GridItem(glowSlider).withSize(sliderDim, sliderDim)
@@ -157,7 +166,7 @@ void ReverbComponent::resized()
         juce::GridItem(glowLabel).withSize(65.0f, 30.0f)
             .withAlignSelf(juce::GridItem::AlignSelf::center)
             .withJustifySelf(juce::GridItem::JustifySelf::center)
-            .withMargin(juce::GridItem::Margin(10.0f, 10.0f, 0, 1.0f))
+            .withMargin(juce::GridItem::Margin(10.0f, 6.0f, 0, 1.0f))
             .withArea(7, 3),
     };
 

@@ -478,6 +478,9 @@
     <ClCompile Include="..\..\Source\codegen\DDSPSynth_initialize.cpp">
       <Filter>DDSPSynth\Source\DDSP</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\codegen\DDSPSynth_rtwutil.cpp">
+      <Filter>DDSPSynth\Source\DDSP</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\codegen\DDSPSynth_terminate.cpp">
       <Filter>DDSPSynth\Source\DDSP</Filter>
     </ClCompile>
@@ -497,6 +500,9 @@
       <Filter>DDSPSynth\Source\DDSP</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\codegen\randn.cpp">
+      <Filter>DDSPSynth\Source\DDSP</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\codegen\rescale.cpp">
       <Filter>DDSPSynth\Source\DDSP</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\codegen\rt_nonfinite.cpp">
@@ -527,6 +533,9 @@
       <Filter>DDSPSynth\Source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\ModelComponent.cpp">
+      <Filter>DDSPSynth\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\ModulationComponent.cpp">
       <Filter>DDSPSynth\Source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\AdditiveComponent.cpp">
@@ -2730,6 +2739,9 @@
     <ClInclude Include="..\..\Source\codegen\DDSPSynth_initialize.h">
       <Filter>DDSPSynth\Source\DDSP</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Source\codegen\DDSPSynth_rtwutil.h">
+      <Filter>DDSPSynth\Source\DDSP</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\codegen\DDSPSynth_terminate.h">
       <Filter>DDSPSynth\Source\DDSP</Filter>
     </ClInclude>
@@ -2752,6 +2764,9 @@
       <Filter>DDSPSynth\Source\DDSP</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\codegen\randn.h">
+      <Filter>DDSPSynth\Source\DDSP</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\codegen\rescale.h">
       <Filter>DDSPSynth\Source\DDSP</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\codegen\rt_nonfinite.h">
@@ -2788,6 +2803,9 @@
       <Filter>DDSPSynth\Source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\ModelComponent.h">
+      <Filter>DDSPSynth\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\ModulationComponent.h">
       <Filter>DDSPSynth\Source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\CustomLookAndFeel.h">
@@ -5177,6 +5195,15 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\Resources\switch_left.png">
+      <Filter>DDSPSynth\Resources</Filter>
+    </None>
+    <None Include="..\..\Resources\switch_right.png">
+      <Filter>DDSPSynth\Resources</Filter>
+    </None>
+    <None Include="..\..\Resources\power.png">
+      <Filter>DDSPSynth\Resources</Filter>
+    </None>
     <None Include="..\..\Resources\background_texture_dark.png">
       <Filter>DDSPSynth\Resources</Filter>
     </None>

@@ -14,19 +14,36 @@
 //==============================================================================
 InputComponent::InputComponent()
 {
+    float fontDim = 15.0f;
+    
     addAndMakeVisible(nameLabel);
     nameLabel.setColour(juce::Label::textColourId, juce::Colours::white);
     nameLabel.setJustificationType(juce::Justification::topLeft);
     nameLabel.setText("Input", juce::NotificationType::dontSendNotification);
     nameLabel.setFont(20.0f);
-
-    addAndMakeVisible(midiButton);
-    midiButton.setButtonText("MIDI");
-    midiButton.setBounds(0, 0, 50, 50);
-
-    addAndMakeVisible(lineButton);
-    lineButton.setButtonText("Line");
-    lineButton.setBounds(0, 0, 50, 50);
+    
+    addAndMakeVisible(midiLabel);
+    midiLabel.setColour(juce::Label::textColourId, juce::Colours::white);
+    midiLabel.setJustificationType(juce::Justification::topLeft);
+    midiLabel.setText("MIDI", juce::NotificationType::dontSendNotification);
+    midiLabel.setFont(fontDim);
+    
+    addAndMakeVisible(audioLabel);
+    audioLabel.setColour(juce::Label::textColourId, juce::Colours::white);
+    audioLabel.setJustificationType(juce::Justification::topLeft);
+    audioLabel.setText("Audio", juce::NotificationType::dontSendNotification);
+    audioLabel.setFont(fontDim);
+    
+    addAndMakeVisible(inputSwitch);
+    inputSwitch.setBounds(0, 0, 50, 50);
+    inputSwitch.setClickingTogglesState(true);
+    inputSwitch.setImages(false, true, false,
+        juce::ImageFileFormat::loadFrom(BinaryData::switch_left_png, BinaryData::switch_left_pngSize), 1.0f, {},
+        {}, 1.0f, {},
+        juce::ImageFileFormat::loadFrom(BinaryData::switch_right_png, BinaryData::switch_right_pngSize), 1.0f, {},
+        0.0f);
+    inputSwitch.setToggleState(false, NULL);
+    inputSwitch.onClick = [this] { updateInputState(&inputSwitch); };
 }
 
 InputComponent::~InputComponent()
@@ -64,9 +81,6 @@ void InputComponent::resized()
     grid.rowGap = juce::Grid::Px(10.0f);
     grid.columnGap = juce::Grid::Px(10.0f);
 
-    float buttonDimHeigth = 25.0f;
-    float buttonDimWidth = 50.0f; 
-
     grid.items = {
 
         juce::GridItem(nameLabel).withSize(100.0f, 30.0f)
@@ -74,20 +88,38 @@ void InputComponent::resized()
             .withJustifySelf(juce::GridItem::JustifySelf::start)
             .withMargin(juce::GridItem::Margin(10.0f))
             .withArea(1, 1),
-
-         juce::GridItem(midiButton).withSize(buttonDimWidth, buttonDimHeigth)
+        
+        juce::GridItem(midiLabel).withSize(100.0f, 30.0f)
             .withAlignSelf(juce::GridItem::AlignSelf::start)
-            .withJustifySelf(juce::GridItem::JustifySelf::start)
-            .withMargin(juce::GridItem::Margin(-17.0f, 0, 0 , -35.0f))
+            .withJustifySelf(juce::GridItem::JustifySelf::end)
+            .withMargin(juce::GridItem::Margin(-3.0f, -75.0f, 0.0f, 0.0f))
+            .withArea(2, 1),
+        
+        juce::GridItem(audioLabel).withSize(100.0f, 30.0f)
+            .withAlignSelf(juce::GridItem::AlignSelf::start)
+            .withJustifySelf(juce::GridItem::JustifySelf::end)
+            .withMargin(juce::GridItem::Margin(-3.0f, -45.0f, 0.0f, 0.0f))
             .withArea(2, 2),
-
-        juce::GridItem(lineButton).withSize(buttonDimWidth, buttonDimHeigth)
+        
+        juce::GridItem(inputSwitch).withSize(40.0f, 40.0f)
             .withAlignSelf(juce::GridItem::AlignSelf::start)
             .withJustifySelf(juce::GridItem::JustifySelf::center)
-            .withMargin(juce::GridItem::Margin(-17.0f, 0, 0 , 20.0f))
+            .withMargin(juce::GridItem::Margin(-15.0f, 0, 0 , -51.0f))
             .withArea(2, 2),
 
     };
 
     grid.performLayout(getLocalBounds());
+}
+
+void InputComponent::updateInputState(juce::Button *button)
+{
+    if(button == &inputSwitch && inputSwitch.getToggleState() == true)
+    {
+        DBG("Audio Mode activated");
+    }
+    else if(button == &inputSwitch && inputSwitch.getToggleState() == false)
+    {
+        DBG("MIDI Mode activated");
+    }
 }

@@ -89,6 +89,10 @@
             file="Source/ModelComponent.cpp"/>
       <FILE id="P0kVYP" name="ModelComponent.h" compile="0" resource="0"
             file="Source/ModelComponent.h"/>
+      <FILE id="mOoA9d" name="ModulationComponent.cpp" compile="1" resource="0"
+            file="Source/ModulationComponent.cpp"/>
+      <FILE id="Gj3KN8" name="ModulationComponent.h" compile="0" resource="0"
+            file="Source/ModulationComponent.h"/>
       <FILE id="IQQWkT" name="AdditiveComponent.cpp" compile="1" resource="0"
             file="Source/AdditiveComponent.cpp"/>
       <FILE id="LmvF4T" name="CustomLookAndFeel.cpp" compile="1" resource="0"
@@ -123,6 +127,10 @@
             file="Source/HarmonicSlider.h"/>
     </GROUP>
     <GROUP id="{D8B71657-2B6B-68DF-F380-CA4760A753A4}" name="Resources">
+      <FILE id="XlEtlt" name="switch_left.png" compile="0" resource="1" file="Resources/switch_left.png"/>
+      <FILE id="WDNmoD" name="switch_right.png" compile="0" resource="1"
+            file="Resources/switch_right.png"/>
+      <FILE id="UZkess" name="power.png" compile="0" resource="1" file="Resources/power.png"/>
       <FILE id="T8UIeB" name="background_texture_dark.png" compile="0" resource="1"
             file="Resources/background_texture_dark.png"/>
       <FILE id="D8pHKV" name="flute.png" compile="0" resource="1" file="Resources/flute.png"/>
