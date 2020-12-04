@@ -27,7 +27,7 @@
 class MainComponent  : public juce::Component
 {
 public:
-    MainComponent();
+    MainComponent(juce::AudioProcessorValueTreeState&);
     ~MainComponent() override;
 
     void paint (juce::Graphics&) override;

@@ -7,12 +7,14 @@
 */
 
 #include "PluginProcessor.h"
-#include "DDSPVoice.h"
 #include "PluginEditor.h"
 #include "HarmonicEditor.h"
+#include "codegen/additive.h"
+#include "codegen/subtractive.h"
+#include "TensorflowHandler.h"
 
 //==============================================================================
-DdspsynthAudioProcessor::DdspsynthAudioProcessor() : forwardFFT(fftOrder)
+DdspsynthAudioProcessor::DdspsynthAudioProcessor()
 #ifndef JucePlugin_PreferredChannelConfigurations
     : AudioProcessor(BusesProperties()
 #if ! JucePlugin_IsMidiEffect
@@ -24,11 +26,56 @@ DdspsynthAudioProcessor::DdspsynthAudioProcessor() : forwardFFT(fftOrder)
     ),
 
 #endif
+    : forwardFFT(fftOrder),
+    parameters(*this, nullptr, juce::Identifier("DDSPSynth"),
+        {
+         // Input
+        std::make_unique<juce::AudioParameterBool>("inputIsLine", "Input is line in", false),
+        // Model
+        std::make_unique<juce::AudioParameterBool>("modelOn", "Use model", true),
+        std::make_unique<juce::AudioParameterChoice>("modelSelect", "Model select", juce::StringArray({ "Violin", "Flute", "TenorSax", "Trumpet" }), 0),
+        // Additive
+        std::make_unique<juce::AudioParameterBool>("additiveOn", "Additive synth on", true),
+        std::make_unique<juce::AudioParameterFloat>("additiveShift", "Shift amount", -12.0f, 12.0f, 0.0f),
+        std::make_unique<juce::AudioParameterFloat>("additiveStretch", "Stretch amount", -1.0f, 1.0f, 0.0f),
+        std::make_unique<juce::AudioParameterFloat>("additiveGain", "Additive gain", -60.0f, 0.0f, -6.0f),
+        // Subtractive
+        std::make_unique<juce::AudioParameterBool>("noiseOn", "Noise synth on", true),
+        std::make_unique<juce::AudioParameterFloat>("noiseColor", "Noise color", -1.0f, 1.0f, 0.0f),
+        std::make_unique<juce::AudioParameterFloat>("noiseGain", "Noise gain", -60.0f, 0.0f, -6.0f),
+        // Modulation
+        std::make_unique<juce::AudioParameterBool>("modulationOn", "Modulation on", false),
+        std::make_unique<juce::AudioParameterFloat>("modulationRate", "Rate", 0.0f, 10.0f, 1.0f),
+        std::make_unique<juce::AudioParameterFloat>("modulationDelay", "Delay", 0.01f, 0.5f, 0.03f),
+        std::make_unique<juce::AudioParameterFloat>("modulationAmount", "Amount", 0.0f, 100.0f, 50.0f),
+        // Reverb
+        std::make_unique<juce::AudioParameterBool>("reverbOn", "Reverb on", false),
+        std::make_unique<juce::AudioParameterFloat>("reverbMix", "Mix", 0.0f, 10.0f, 1.0f),
+        std::make_unique<juce::AudioParameterFloat>("reverbSize", "Size", 0.10f, 2.0f, 1.0f),
+        std::make_unique<juce::AudioParameterFloat>("reverbGlow", "Glow", 0.0f, 100.0f, 0.0f),
+        // Output
+        std::make_unique<juce::AudioParameterFloat>("outputGain", "Output gain", -60.0f, 0.0f, -6.0f),
+    })
 {
-    voice = new DDSPVoice();
-	synth.addVoice(voice);
-
-	synth.addSound(new DDSPSound());
+    inputSelectParameter = parameters.getRawParameterValue("inputIsLine");
+    modelOnParameter = parameters.getRawParameterValue("modelOn");
+    modelChoiceParameter = parameters.getRawParameterValue("modelSelect");
+    additiveOnParameter = parameters.getRawParameterValue("additiveOn");
+    additiveShiftParameter = parameters.getRawParameterValue("additiveShift");
+    additiveStretchParameter = parameters.getRawParameterValue("additiveStretch");
+    additiveGain = parameters.getRawParameterValue("additiveGain");
+    noiseOnParameter = parameters.getRawParameterValue("noiseOn");
+    noiseColorParameter = parameters.getRawParameterValue("noiseColor");
+    noiseGainParameter = parameters.getRawParameterValue("noiseGain");
+    modulationOnParameter = parameters.getRawParameterValue("modulationOn");
+    modulationRateParameter = parameters.getRawParameterValue("modulationRate");
+    modulationDelayParameter = parameters.getRawParameterValue("modulationDelay");
+    modulationAmountParameter = parameters.getRawParameterValue("modulationAmount");
+    reverbOnParameter = parameters.getRawParameterValue("reverbOn");
+    reverbMixParameter = parameters.getRawParameterValue("reverbMix");
+    reverbSizeParameter = parameters.getRawParameterValue("reverbSize");
+    reverbGlowParameter = parameters.getRawParameterValue("reverbGlow");
+    outputGainParameter = parameters.getRawParameterValue("outputGain");
 }
 
 DdspsynthAudioProcessor::~DdspsynthAudioProcessor()
@@ -104,7 +151,6 @@ void DdspsynthAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBl
     // Use this method as the place to do any pre-playback
     // initialisation that you need..
 
-	synth.setCurrentPlaybackSampleRate(sampleRate);
 }
 
 void DdspsynthAudioProcessor::releaseResources()
@@ -139,10 +185,7 @@ bool DdspsynthAudioProcessor::isBusesLayoutSupported (const BusesLayout& layouts
 
 void DdspsynthAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce::MidiBuffer& midiMessages)
 {
-	synth.renderNextBlock(buffer, midiMessages, 0, buffer.getNumSamples());
-	for (int i = 0; i < buffer.getNumSamples(); i++) {
-		this->pushNextSampleIntoFifo(*(buffer.getReadPointer(0, i)));
-	}
+
 }
 
 //==============================================================================
@@ -153,7 +196,7 @@ bool DdspsynthAudioProcessor::hasEditor() const
 
 juce::AudioProcessorEditor* DdspsynthAudioProcessor::createEditor()
 {
-    return new DdspsynthAudioProcessorEditor (*this);
+    return new DdspsynthAudioProcessorEditor (*this, parameters);
 }
 
 //==============================================================================
@@ -197,50 +240,4 @@ void DdspsynthAudioProcessor::pushNextSampleIntoFifo (float sample) noexcept
     }
 
     fifo[fifoIndex++] = sample;
-}
-
-
-void DdspsynthAudioProcessor::onValueChange(double harmonics[50])
-{
-	voice->setHarmonics(harmonics);
-}
-
-void DdspsynthAudioProcessor::onNoiseColorChange(double color)
-{
-    voice->setNoiseColor(color);
-}
-
-void DdspsynthAudioProcessor::onOnOffSubChange(bool onOff)
-{
-    voice->setOnOffSubtractive(onOff);
-}
-
-void DdspsynthAudioProcessor::onSubAmpChange(double subAmp)
-{
-    voice->setSubAmp(subAmp);
-}
-
-void DdspsynthAudioProcessor::onAddAmpChange(double addAmp)
-{
-    voice->setAddAmp(addAmp);
-}
-
-void DdspsynthAudioProcessor::onOutAmpChange(double outAmp)
-{
-    voice->setOutAmp(outAmp);
-}
-
-void DdspsynthAudioProcessor::onShiftValueChange(double shiftValue)
-{
-    voice->setShift(shiftValue);
-}
-
-void DdspsynthAudioProcessor::onStretchValueChange(double stretchValue)
-{
-    voice->setStretch(stretchValue);
-}
-
-void DdspsynthAudioProcessor::onOnOffAddChange(bool button)
-{
-    voice->setOnOffAdditive(button);
 }

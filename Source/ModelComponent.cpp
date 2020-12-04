@@ -12,7 +12,8 @@
 #include "ModelComponent.h"
 
 //==============================================================================
-ModelComponent::ModelComponent()
+ModelComponent::ModelComponent(juce::AudioProcessorValueTreeState& vts)
+    : valueTreeState(vts)
 {
 
     addAndMakeVisible(nameLabel);

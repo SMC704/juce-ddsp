@@ -18,7 +18,7 @@
 class ModelComponent  : public juce::Component
 {
 public:
-    ModelComponent();
+    ModelComponent(juce::AudioProcessorValueTreeState&);
     ~ModelComponent() override;
 
     void paint (juce::Graphics&) override;
@@ -27,6 +27,7 @@ public:
     void updateModelState(juce::Button* button);
 
 private:
+    juce::AudioProcessorValueTreeState& valueTreeState;
 
     juce::ImageButton onoffButton;
     juce::Label nameLabel;

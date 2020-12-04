@@ -17,7 +17,7 @@
 //==============================================================================
 /**
 */
-class DdspsynthAudioProcessor : public juce::AudioProcessor, public HarmonicEditor::Listener
+class DdspsynthAudioProcessor : public juce::AudioProcessor/*, public HarmonicEditor::Listener*/
 {
 public:
     //==============================================================================
@@ -74,34 +74,56 @@ public:
         fftSize  = 1 << fftOrder
     };
 
-	void onValueChange(double harmonics[50]);
-    
-    void onShiftValueChange(double shiftValue);
+	//void onValueChange(double harmonics[50]);
+ //   
+ //   void onShiftValueChange(double shiftValue);
 
-    void onStretchValueChange(double stretchValue);
+ //   void onStretchValueChange(double stretchValue);
 
-    void onNoiseColorChange(double color);
-    void onOnOffSubChange(bool onOff);
-    void onSubAmpChange(double subAmp);
-    void onAddAmpChange(double addAmp);
-    void onOutAmpChange(double outAmp);
+ //   void onNoiseColorChange(double color);
+ //   void onOnOffSubChange(bool onOff);
+ //   void onSubAmpChange(double subAmp);
+ //   void onAddAmpChange(double addAmp);
+ //   void onOutAmpChange(double outAmp);
 
-    void onOnOffAddChange(bool button);
+ //   void onOnOffAddChange(bool button);
 
 private:
+
+    // Parameters
+    juce::AudioProcessorValueTreeState parameters;
+
+    std::atomic<float>* inputSelectParameter = nullptr;
+    std::atomic<float>* modelOnParameter = nullptr;
+    std::atomic<float>* modelChoiceParameter = nullptr;
+    std::atomic<float>* additiveOnParameter = nullptr;
+    std::atomic<float>* additiveShiftParameter = nullptr;
+    std::atomic<float>* additiveStretchParameter = nullptr;
+    std::atomic<float>* additiveGain = nullptr;
+    std::atomic<float>* noiseOnParameter = nullptr;
+    std::atomic<float>* noiseColorParameter = nullptr;
+    std::atomic<float>* noiseGainParameter = nullptr;
+    std::atomic<float>* modulationOnParameter = nullptr;
+    std::atomic<float>* modulationRateParameter = nullptr;
+    std::atomic<float>* modulationDelayParameter = nullptr;
+    std::atomic<float>* modulationAmountParameter = nullptr;
+    std::atomic<float>* reverbOnParameter = nullptr;
+    std::atomic<float>* reverbMixParameter = nullptr;
+    std::atomic<float>* reverbSizeParameter = nullptr;
+    std::atomic<float>* reverbGlowParameter = nullptr;
+    std::atomic<float>* outputGainParameter = nullptr;
+
+    // FFT Window
     juce::dsp::FFT forwardFFT;
     
     float fifo [fftSize];
     float fftData [2 * fftSize];
     int fifoIndex = 0;
     bool nextFFTBlockReady = false;
-    
-    //==============================================================================
-	DDSPVoice* voice;
-	juce::MidiKeyboardState keyboardState;
-	juce::Synthesiser synth;
 
+    // Tensorflow 
 	TensorflowHandler tfHandler;
 
+    //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (DdspsynthAudioProcessor)
 };

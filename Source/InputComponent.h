@@ -18,7 +18,7 @@
 class InputComponent  : public juce::Component
 {
 public:
-    InputComponent();
+    InputComponent(juce::AudioProcessorValueTreeState&);
     ~InputComponent() override;
 
     void paint (juce::Graphics&) override;
@@ -28,10 +28,15 @@ public:
 
 private:
 
+    juce::AudioProcessorValueTreeState& valueTreeState;
+
+    typedef juce::AudioProcessorValueTreeState::ButtonAttachment ButtonAttachment;
+
     juce::Label nameLabel;
     juce::Label midiLabel;
     juce::Label audioLabel;
     juce::ImageButton inputSwitch;
+    std::unique_ptr <ButtonAttachment> inputSwitchAttachment;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (InputComponent)
 };

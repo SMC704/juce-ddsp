@@ -12,25 +12,28 @@
 #include "ReverbComponent.h"
 
 //==============================================================================
-ReverbComponent::ReverbComponent()
+ReverbComponent::ReverbComponent(juce::AudioProcessorValueTreeState& vts)
+    : valueTreeState(vts)
 {
     float fontDim = 15.0f;
 
     addAndMakeVisible(onoffButton);
     onoffButton.setBounds(0, 0, 50, 50);
     //onoffButton.addListener(this);
-    onoffButton.setClickingTogglesState(true);
+    //onoffButton.setClickingTogglesState(true);
     onoffButton.setImages(false, true, false,
         juce::ImageFileFormat::loadFrom(BinaryData::power_png, BinaryData::power_pngSize), {}, juce::Colour::fromRGB(100, 100, 100), //Normal
         juce::ImageFileFormat::loadFrom(BinaryData::power_png, BinaryData::power_pngSize), {}, juce::Colour::fromRGB(200, 200, 200), //Over
         juce::ImageFileFormat::loadFrom(BinaryData::power_png, BinaryData::power_pngSize), {}, juce::Colour::fromRGB(255, 255, 255), //Down
         0.0f);
     onoffButton.setClickingTogglesState(true);
-    onoffButton.setToggleState(true, NULL);
+    //onoffButton.setToggleState(true, NULL);
 
     addAndMakeVisible(onoffLabel);
     onoffLabel.setColour(juce::Label::textColourId, juce::Colours::white);
     onoffLabel.setJustificationType(juce::Justification::centred);
+
+    onoffAttachment.reset(new ButtonAttachment(valueTreeState, "reverbOn", onoffButton));
 
     addAndMakeVisible(nameLabel);
     nameLabel.setColour(juce::Label::textColourId, juce::Colours::white);
@@ -51,6 +54,8 @@ ReverbComponent::ReverbComponent()
     drywetLabel.setText("Dry/Wet", juce::NotificationType::dontSendNotification);
     drywetLabel.setFont(fontDim);
 
+    drywetAttachment.reset(new SliderAttachment(valueTreeState, "reverbMix", drywetSlider));
+
     sizeSlider.setSliderStyle(juce::Slider::SliderStyle::RotaryHorizontalVerticalDrag);
     sizeSlider.setTextBoxStyle(juce::Slider::NoTextBox, true, 0, 0);
     sizeSlider.setRange(0.0f, 10.0f, 0.1f);
@@ -64,6 +69,8 @@ ReverbComponent::ReverbComponent()
     sizeLabel.setText("Size", juce::NotificationType::dontSendNotification);
     sizeLabel.setFont(fontDim);
 
+    sizeAttachment.reset(new SliderAttachment(valueTreeState, "reverbSize", sizeSlider));
+
     glowSlider.setSliderStyle(juce::Slider::SliderStyle::RotaryHorizontalVerticalDrag);
     glowSlider.setTextBoxStyle(juce::Slider::NoTextBox, true, 0, 0);
     glowSlider.setRange(0.0f, 10.0f, 0.1f);
@@ -76,6 +83,8 @@ ReverbComponent::ReverbComponent()
     glowLabel.setJustificationType(juce::Justification::topLeft);
     glowLabel.setText("Glow", juce::NotificationType::dontSendNotification);
     glowLabel.setFont(fontDim);
+
+    glowAttachment.reset(new SliderAttachment(valueTreeState, "reverbGlow", glowSlider));
 
 }
 

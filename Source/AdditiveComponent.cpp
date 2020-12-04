@@ -12,25 +12,27 @@
 #include "AdditiveComponent.h"
 
 //==============================================================================
-AdditiveComponent::AdditiveComponent()
+AdditiveComponent::AdditiveComponent(juce::AudioProcessorValueTreeState& vts)
+    : valueTreeState(vts)
 {
     float fontDim = 15.0f;
 
+    // OnOffButton
     addAndMakeVisible(onoffButton);
     onoffButton.setBounds(0, 0, 50, 50);
-    onoffButton.addListener(this);
     onoffButton.setClickingTogglesState(true);
     onoffButton.setImages(false, true, false,
         juce::ImageFileFormat::loadFrom(BinaryData::power_png, BinaryData::power_pngSize), {}, juce::Colour::fromRGB(100, 100, 100), //Normal
         juce::ImageFileFormat::loadFrom(BinaryData::power_png, BinaryData::power_pngSize), {}, juce::Colour::fromRGB(200, 200, 200), //Over
         juce::ImageFileFormat::loadFrom(BinaryData::power_png, BinaryData::power_pngSize), {}, juce::Colour::fromRGB(255, 255, 255), //Down
         0.0f);
-    onoffButton.setClickingTogglesState(true);
-    onoffButton.setToggleState(true, NULL);
+    //onoffButton.setToggleState(true, NULL);
 
     addAndMakeVisible(onoffLabel);
     onoffLabel.setColour(juce::Label::textColourId, juce::Colours::white);
     onoffLabel.setJustificationType(juce::Justification::centred);
+
+    onoffAttachment.reset(new ButtonAttachment(valueTreeState, "additiveOn", onoffButton));
 
     addAndMakeVisible(nameLabel);
     nameLabel.setColour(juce::Label::textColourId, juce::Colours::white);
@@ -41,17 +43,16 @@ AdditiveComponent::AdditiveComponent()
 	addChildAndSetID(&harmonicEditor, "harmonicEditor");
     harmonicEditor.setBounds(0, 0, 100, 100);
     
+    // Shift slider
     shiftSlider.setSliderStyle(juce::Slider::SliderStyle::RotaryHorizontalVerticalDrag);
     shiftSlider.setTextBoxStyle(juce::Slider::NoTextBox, true, 0, 0);
     shiftSlider.setPopupDisplayEnabled(true, true, this);
     //shiftSlider.setTextValueSuffix (" Halftones");
-    shiftSlider.setRange(-12.0f, 12.0f, 0.01f);
-    shiftSlider.setValue(0);
+    //shiftSlider.setRange(-12.0f, 12.0f, 0.01f);
+    //shiftSlider.setValue(0);
     addAndMakeVisible(shiftSlider);
     shiftSlider.setBounds(0, 0, 100, 100);
-    shiftSlider.addListener(this);
     shiftSlider.setDoubleClickReturnValue(true, 0.0f);
-
 
     addAndMakeVisible(shiftLabel);
     shiftLabel.setColour(juce::Label::textColourId, juce::Colours::white);
@@ -59,15 +60,18 @@ AdditiveComponent::AdditiveComponent()
     shiftLabel.setText("Shift", juce::NotificationType::dontSendNotification);
     shiftLabel.setFont(fontDim);
 
+    shiftAttachment.reset(new SliderAttachment(valueTreeState, "additiveShift", shiftSlider));
+
+    // Stretch slider
     stretchSlider.setSliderStyle(juce::Slider::SliderStyle::RotaryHorizontalVerticalDrag);
     stretchSlider.setTextBoxStyle(juce::Slider::NoTextBox, true, 0, 0);
     stretchSlider.setPopupDisplayEnabled(true, true, this);
     //stretchSlider.setTextValueSuffix (" ");
-    stretchSlider.setRange(-1.0f, 1.0f, 0.01f);
-    stretchSlider.setValue(0.0f);
+    //stretchSlider.setRange(-1.0f, 1.0f, 0.01f);
+    //stretchSlider.setValue(0.0f);
     addAndMakeVisible(stretchSlider);
     stretchSlider.setBounds(0, 0, 100, 100);
-    stretchSlider.addListener(this);
+    //stretchSlider.addListener(this);
     stretchSlider.setDoubleClickReturnValue(true, 0.0f);
 
     addAndMakeVisible(stretchLabel);
@@ -76,15 +80,18 @@ AdditiveComponent::AdditiveComponent()
     stretchLabel.setText("Stretch", juce::NotificationType::dontSendNotification);
     stretchLabel.setFont(fontDim);
  
+    stretchAttachment.reset(new SliderAttachment(valueTreeState, "additiveStretch", stretchSlider));
+
+    // Amp slider
     ampSlider.setSliderStyle(juce::Slider::SliderStyle::RotaryHorizontalVerticalDrag);
     ampSlider.setTextBoxStyle(juce::Slider::NoTextBox, true, 0, 0);
     ampSlider.setPopupDisplayEnabled(true, true, this);
     ampSlider.setTextValueSuffix (" dB");
-    ampSlider.setRange(-60.0f, 0.0f, 0.1f);
-    ampSlider.setValue(-6.0f);
+    //ampSlider.setRange(-60.0f, 0.0f, 0.1f);
+    //ampSlider.setValue(-6.0f);
     addAndMakeVisible(ampSlider);
     ampSlider.setBounds(0, 0, 100, 100);
-    ampSlider.addListener(this);
+    //ampSlider.addListener(this);
     ampSlider.setDoubleClickReturnValue(true, -6.0f);
 
     addAndMakeVisible(ampLabel);
@@ -93,8 +100,7 @@ AdditiveComponent::AdditiveComponent()
     ampLabel.setText("Amp", juce::NotificationType::dontSendNotification);
     ampLabel.setFont(fontDim);
     
-    shiftValue = 0;
-    stretchValue = 0;
+    ampAttachment.reset(new SliderAttachment(valueTreeState, "additiveGain", ampSlider));
 }
 
 AdditiveComponent::~AdditiveComponent()
@@ -195,37 +201,37 @@ void AdditiveComponent::resized()
     
 }
 
-void AdditiveComponent::sliderValueChanged(juce::Slider* slider)
-{
-   if (additiveListener != NULL) {
-        if (slider == &ampSlider) {
-            addAmp = ampSlider.getValue();
-            additiveListener->onAddAmpChange(addAmp);
-        }
-        else if (slider == &shiftSlider)
-        {
-            shiftValue = slider->getValue();
-            additiveListener->onShiftValueChange(shiftValue);
-        }
-        else if (slider == &stretchSlider)
-        {
-            stretchValue = slider->getValue();
-            additiveListener->onStretchValueChange(stretchValue);
-        }
-    }
-}
+//void AdditiveComponent::sliderValueChanged(juce::Slider* slider)
+//{
+//   if (additiveListener != NULL) {
+//        if (slider == &ampSlider) {
+//            addAmp = ampSlider.getValue();
+//            additiveListener->onAddAmpChange(addAmp);
+//        }
+//        else if (slider == &shiftSlider)
+//        {
+//            shiftValue = slider->getValue();
+//            additiveListener->onShiftValueChange(shiftValue);
+//        }
+//        else if (slider == &stretchSlider)
+//        {
+//            stretchValue = slider->getValue();
+//            additiveListener->onStretchValueChange(stretchValue);
+//        }
+//    }
+//}
 
-void AdditiveComponent::setAdditiveListener(AdditiveListener* addListener)
-{
-    additiveListener = addListener;
-    if (additiveListener != NULL)
-        additiveListener->onAddAmpChange(0);
-        additiveListener->onShiftValueChange(shiftValue);
-        additiveListener->onStretchValueChange(stretchValue);
-        additiveListener->onOnOffAddChange(onOffState);
-}
-
-void AdditiveComponent::buttonClicked(juce::Button* button)
-{
-    additiveListener->onOnOffAddChange(button->getToggleState());
-}
+//void AdditiveComponent::setAdditiveListener(AdditiveListener* addListener)
+//{
+//    additiveListener = addListener;
+//    if (additiveListener != NULL)
+//        additiveListener->onAddAmpChange(0);
+//        additiveListener->onShiftValueChange(shiftValue);
+//        additiveListener->onStretchValueChange(stretchValue);
+//        additiveListener->onOnOffAddChange(onOffState);
+//}
+//
+//void AdditiveComponent::buttonClicked(juce::Button* button)
+//{
+//    additiveListener->onOnOffAddChange(button->getToggleState());
+//}
