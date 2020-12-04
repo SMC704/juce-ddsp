@@ -17,7 +17,7 @@
 //==============================================================================
 /**
 */
-class DdspsynthAudioProcessor : public juce::AudioProcessor/*, public HarmonicEditor::Listener*/
+class DdspsynthAudioProcessor : public juce::AudioProcessor
 {
 public:
     //==============================================================================
@@ -99,7 +99,7 @@ private:
     std::atomic<float>* additiveOnParameter = nullptr;
     std::atomic<float>* additiveShiftParameter = nullptr;
     std::atomic<float>* additiveStretchParameter = nullptr;
-    std::atomic<float>* additiveGain = nullptr;
+    std::atomic<float>* additiveGainParameter = nullptr;
     std::atomic<float>* noiseOnParameter = nullptr;
     std::atomic<float>* noiseColorParameter = nullptr;
     std::atomic<float>* noiseGainParameter = nullptr;
@@ -113,6 +113,19 @@ private:
     std::atomic<float>* reverbGlowParameter = nullptr;
     std::atomic<float>* outputGainParameter = nullptr;
 
+    // Internal parameters
+    double phaseBuffer_in[50];
+    double phaseBuffer_out[50];
+    double amplitudes[4096];
+    double f0[4096];
+    double harmonics[50];
+    double addBuffer[4096];
+    double subBuffer[4096];
+    double magnitudes[65];
+    double irBuffer_in[129];
+    double irBuffer_out[129];
+    bool recalculateIR = true;
+
     // FFT Window
     juce::dsp::FFT forwardFFT;
     
@@ -123,6 +136,10 @@ private:
 
     // Tensorflow 
 	TensorflowHandler tfHandler;
+    TensorflowHandler::ModelResults tfResults;
+    // TF test
+    float tf_f0[100];
+    float tf_amps[100];
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (DdspsynthAudioProcessor)

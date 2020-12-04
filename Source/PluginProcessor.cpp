@@ -63,7 +63,7 @@ DdspsynthAudioProcessor::DdspsynthAudioProcessor()
     additiveOnParameter = parameters.getRawParameterValue("additiveOn");
     additiveShiftParameter = parameters.getRawParameterValue("additiveShift");
     additiveStretchParameter = parameters.getRawParameterValue("additiveStretch");
-    additiveGain = parameters.getRawParameterValue("additiveGain");
+    additiveGainParameter = parameters.getRawParameterValue("additiveGain");
     noiseOnParameter = parameters.getRawParameterValue("noiseOn");
     noiseColorParameter = parameters.getRawParameterValue("noiseColor");
     noiseGainParameter = parameters.getRawParameterValue("noiseGain");
@@ -148,9 +148,18 @@ void DdspsynthAudioProcessor::changeProgramName (int index, const juce::String& 
 //==============================================================================
 void DdspsynthAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
 {
-    // Use this method as the place to do any pre-playback
-    // initialisation that you need..
+    for (int i = 0; i < 65; i++) {
+        magnitudes[i] = 1;
+    }
+    for (int i = 0; i < 4096; i++) {
+        amplitudes[i] = 2;
+        f0[i] = 440;
+    }
+    for (int i = 0; i < 50; i++) {
+        harmonics[i] = 0.5;
+    }
 
+    tfHandler.loadModel("C:\\Users\\svkly\\Documents\\SMC\\models\\flute");
 }
 
 void DdspsynthAudioProcessor::releaseResources()
@@ -185,6 +194,65 @@ bool DdspsynthAudioProcessor::isBusesLayoutSupported (const BusesLayout& layouts
 
 void DdspsynthAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce::MidiBuffer& midiMessages)
 {
+    tfResults = tfHandler.runModel(tf_f0, tf_amps);
+
+    // generated additive synth code overwrites passed harmonics & magnitudes
+    // so create copy before passing
+    double harms_copy[50];
+    double mags_copy[65];
+    for (int i = 0; i < 50; i++) {
+        harms_copy[i] = tfResults.harmonicDistribution[100*i];
+    }
+    for (int i = 0; i < 65; i++) {
+        mags_copy[i] = tfResults.amplitudes[i];
+    }
+
+    int audio_size[1];
+
+    int numSamples = buffer.getNumSamples();
+
+    if (*additiveOnParameter) {
+        additive(numSamples, getSampleRate(), amplitudes, harms_copy, f0, phaseBuffer_in, (double)*additiveShiftParameter, (double)*additiveStretchParameter, addBuffer, audio_size, phaseBuffer_out);
+        jassert(numSamples == audio_size[0]);
+    }
+    else {
+        for (int i = 0; i < 4096; i++)
+        {
+            addBuffer[i] = 0;
+        }
+    }
+
+
+    if (*noiseOnParameter)
+    {
+        subtractive(numSamples, mags_copy, (double)*noiseColorParameter, irBuffer_in, recalculateIR, subBuffer, irBuffer_out);
+        if (recalculateIR);
+        {
+            recalculateIR = false;
+            for (int i = 0; i < 129; i++)
+                irBuffer_in[i] = irBuffer_out[i];
+        }
+    }
+    else {
+        for (int i = 0; i < 4096; i++)
+        {
+            subBuffer[i] = 0;
+        }
+    }
+    for (int i = 0; i < 50; ++i) {
+        phaseBuffer_in[i] = phaseBuffer_out[i];
+    }
+
+    auto outL = buffer.getWritePointer(0);
+    auto outR = buffer.getWritePointer(1);
+
+    for (int i = 0; i < buffer.getNumSamples(); i++) {
+        float additiveGain = pow(10.0f,(*additiveGainParameter/20));
+        float noiseGain = pow(10.0f,(*noiseGainParameter/20));
+        float out = addBuffer[i] * additiveGain + subBuffer[i] * noiseGain;
+        outL[i] = out;
+        outR[i] = out;
+    }
 
 }
 
