@@ -10,9 +10,10 @@
 
 #pragma once
 
+#include <JuceHeader.h>
 #include "tensorflow_c/include/tensorflow/c/c_api.h"
 
-class TensorflowHandler
+class TensorflowHandler : public juce::Thread
 {
 public:
 	TensorflowHandler();
@@ -35,9 +36,14 @@ public:
 
 	void loadModel(const char* path);
 	void unloadModel();
-	ModelResults runModel(float f0[timeSteps], float amps[timeSteps]);
+	void setInputs(float f0[timeSteps], float amps[timeSteps]);
+	ModelResults getOutputs() { return results; };
+
+	void run() override;
 
 private:
+	//DdspsynthAudioProcessor* audioProcessor;
+
 	TF_Graph* tfGraph = NULL;
 	TF_Status* tfStatus = NULL;
 	TF_SessionOptions* tfSessionOpts = NULL;
@@ -68,4 +74,9 @@ private:
 	int ndata = TF_DataTypeSize(TF_FLOAT) * timeSteps;
 	TF_Tensor* f0InputTensor;
 	TF_Tensor* ldInputTensor;
+	
+	ModelResults results;
+
+	//==============================================================================
+	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (TensorflowHandler)
 };

@@ -17,7 +17,7 @@
 //==============================================================================
 /**
 */
-class DdspsynthAudioProcessor : public juce::AudioProcessor
+class DdspsynthAudioProcessor : public juce::AudioProcessor, juce::Thread::Listener
 {
 public:
     //==============================================================================
@@ -73,6 +73,8 @@ public:
         fftOrder = 10,
         fftSize  = 1 << fftOrder
     };
+
+    void setModelOutput(TensorflowHandler::ModelResults results);
 
 	//void onValueChange(double harmonics[50]);
  //   
@@ -140,7 +142,10 @@ private:
     // TF test
     float tf_f0[100];
     float tf_amps[100];
+    // Inherited via Listener
+    virtual void exitSignalSent() override;
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (DdspsynthAudioProcessor)
+
 };

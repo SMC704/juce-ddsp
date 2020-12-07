@@ -55,7 +55,8 @@ DdspsynthAudioProcessor::DdspsynthAudioProcessor()
         std::make_unique<juce::AudioParameterFloat>("reverbGlow", "Glow", 0.0f, 100.0f, 0.0f),
         // Output
         std::make_unique<juce::AudioParameterFloat>("outputGain", "Output gain", -60.0f, 0.0f, -6.0f),
-    })
+    })/*, 
+    tfHandler(*this)*/
 {
     inputSelectParameter = parameters.getRawParameterValue("inputIsLine");
     modelOnParameter = parameters.getRawParameterValue("modelOn");
@@ -159,7 +160,7 @@ void DdspsynthAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBl
         harmonics[i] = 0.5;
     }
 
-    tfHandler.loadModel("C:\\Users\\svkly\\Documents\\SMC\\models\\flute");
+    tfHandler.loadModel("C:\\Users\\svkly\\Documents\\SMC\\models\\tenorsax");
 }
 
 void DdspsynthAudioProcessor::releaseResources()
@@ -194,17 +195,20 @@ bool DdspsynthAudioProcessor::isBusesLayoutSupported (const BusesLayout& layouts
 
 void DdspsynthAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce::MidiBuffer& midiMessages)
 {
-    tfResults = tfHandler.runModel(tf_f0, tf_amps);
+    if (!tfHandler.isThreadRunning())
+    {
+        tfHandler.setInputs(tf_f0, tf_amps);
+        tfHandler.startThread();
+        tfHandler.addListener(this);
+    }
 
-    // generated additive synth code overwrites passed harmonics & magnitudes
-    // so create copy before passing
     double harms_copy[50];
     double mags_copy[65];
     for (int i = 0; i < 50; i++) {
-        harms_copy[i] = tfResults.harmonicDistribution[100*i];
+        harms_copy[i] = harmonics[i];
     }
     for (int i = 0; i < 65; i++) {
-        mags_copy[i] = tfResults.amplitudes[i];
+        mags_copy[i] = magnitudes[i];
     }
 
     int audio_size[1];
@@ -253,8 +257,25 @@ void DdspsynthAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, ju
         outL[i] = out;
         outR[i] = out;
     }
-
 }
+
+void DdspsynthAudioProcessor::setModelOutput(TensorflowHandler::ModelResults tfResults)
+{
+    // generated additive synth code overwrites passed harmonics & magnitudes
+    // so create copy before passing
+    for (int i = 0; i < 50; i++) {
+        harmonics[i] = tfResults.harmonicDistribution[100 * i];
+    }
+    for (int i = 0; i < 65; i++) {
+        magnitudes[i] = tfResults.amplitudes[i];
+    }
+}
+
+void DdspsynthAudioProcessor::exitSignalSent()
+{
+    setModelOutput(tfHandler.getOutputs());
+}
+
 
 //==============================================================================
 bool DdspsynthAudioProcessor::hasEditor() const

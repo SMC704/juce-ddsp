@@ -13,9 +13,10 @@
 
 void NoOpDeallocator(void* data, size_t a, void* b) {}
 
-TensorflowHandler::TensorflowHandler()
-{
 
+TensorflowHandler::TensorflowHandler()
+	: Thread("TFThread")
+{
 }
 
 TensorflowHandler::~TensorflowHandler()
@@ -85,10 +86,8 @@ void TensorflowHandler::loadModel(const char* path)
 	tfInputValues[1] = ldInputTensor;
 }
 
-TensorflowHandler::ModelResults TensorflowHandler::runModel(float f0[TensorflowHandler::timeSteps], float amps[TensorflowHandler::timeSteps])
+void TensorflowHandler::setInputs(float f0[TensorflowHandler::timeSteps], float amps[TensorflowHandler::timeSteps])
 {
-	TensorflowHandler::ModelResults results;
-
 	float* f0InputData = (float*)TF_TensorData(f0InputTensor);
 	float* ldInputData = (float*)TF_TensorData(ldInputTensor);
 
@@ -97,6 +96,12 @@ TensorflowHandler::ModelResults TensorflowHandler::runModel(float f0[TensorflowH
 		f0InputData[t] = f0[t];
 		ldInputData[t] = amps[t];
 	}
+}
+
+
+void TensorflowHandler::run()
+{
+	TensorflowHandler::ModelResults _results;
 
 	TF_SessionRun(tfSession, NULL, tfInput, tfInputValues, numInputs, tfOutput, tfOutputValues, numOutputs, NULL, 0, NULL, tfStatus);
 
@@ -105,13 +110,15 @@ TensorflowHandler::ModelResults TensorflowHandler::runModel(float f0[TensorflowH
 	float* magsOutputData = (float*)TF_TensorData(tfOutputValues[2]);
 
 	for (int t = 0; t < timeSteps; t++)
-		results.amplitudes[t] = ampsOutputData[t];
+		_results.amplitudes[t] = ampsOutputData[t];
 
 	for (int h = 0; h < timeSteps * numHarmonics; h++)
-		results.harmonicDistribution[h] = harmsOutputData[h];
+		_results.harmonicDistribution[h] = harmsOutputData[h];
 
 	for (int m = 0; m < timeSteps * numMagnitudes; m++)
-		results.noiseMagnitudes[m] = magsOutputData[m];
+		_results.noiseMagnitudes[m] = magsOutputData[m];
 	
-	return results;
+	results = _results;
+
+	signalThreadShouldExit();
 }
