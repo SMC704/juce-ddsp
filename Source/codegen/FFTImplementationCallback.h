@@ -3,14 +3,14 @@
 //  course requirements at degree granting institutions only.  Not for
 //  government, commercial, or other organizational use.
 //
-//  DDSPSynth_rtwutil.h
+//  FFTImplementationCallback.h
 //
-//  Code generation for function 'DDSPSynth_rtwutil'
+//  Code generation for function 'FFTImplementationCallback'
 //
 
 
-#ifndef DDSPSYNTH_RTWUTIL_H
-#define DDSPSYNTH_RTWUTIL_H
+#ifndef FFTIMPLEMENTATIONCALLBACK_H
+#define FFTIMPLEMENTATIONCALLBACK_H
 
 // Include files
 #include <cstddef>
@@ -19,11 +19,6 @@
 #include "omp.h"
 #include "DDSPSynth_types.h"
 #define MAX_THREADS                    omp_get_max_threads()
-
-// Function Declarations
-extern double rt_powd_snf(double u0, double u1);
-extern double rt_roundd_snf(double u);
-
 #endif
 
-// End of code generation (DDSPSynth_rtwutil.h)
+// End of code generation (FFTImplementationCallback.h)

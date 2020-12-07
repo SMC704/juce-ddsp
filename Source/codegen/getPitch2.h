@@ -3,14 +3,14 @@
 //  course requirements at degree granting institutions only.  Not for
 //  government, commercial, or other organizational use.
 //
-//  DDSPSynth_rtwutil.h
+//  getPitch2.h
 //
-//  Code generation for function 'DDSPSynth_rtwutil'
+//  Code generation for function 'getPitch2'
 //
 
 
-#ifndef DDSPSYNTH_RTWUTIL_H
-#define DDSPSYNTH_RTWUTIL_H
+#ifndef GETPITCH2_H
+#define GETPITCH2_H
 
 // Include files
 #include <cstddef>
@@ -21,9 +21,8 @@
 #define MAX_THREADS                    omp_get_max_threads()
 
 // Function Declarations
-extern double rt_powd_snf(double u0, double u1);
-extern double rt_roundd_snf(double u);
+extern double getPitch2(double n_samples, const double input[4096], double fs);
 
 #endif
 
-// End of code generation (DDSPSynth_rtwutil.h)
+// End of code generation (getPitch2.h)

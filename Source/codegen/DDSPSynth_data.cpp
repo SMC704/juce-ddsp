@@ -12,11 +12,13 @@
 // Include files
 #include "DDSPSynth_data.h"
 #include "additive.h"
+#include "getPitch2.h"
 #include "rt_nonfinite.h"
 #include "subtractive.h"
 
 // Variable Definitions
 unsigned int state[625];
+omp_nest_lock_t emlrtNestLockGlobal;
 boolean_T isInitialized_DDSPSynth = false;
 
 // End of code generation (DDSPSynth_data.cpp)

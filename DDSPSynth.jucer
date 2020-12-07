@@ -7,6 +7,26 @@
   <MAINGROUP id="wP40jo" name="DDSPSynth">
     <GROUP id="{21B404C6-B1A3-96E0-24F7-18E3D850093A}" name="Source">
       <GROUP id="{EC1CE48D-AFDF-312B-B94A-6D056A9FE965}" name="DDSP">
+        <FILE id="r8rIQL" name="eml_setop.cpp" compile="1" resource="0" file="Source/codegen/eml_setop.cpp"/>
+        <FILE id="Gn9EgF" name="eml_setop.h" compile="0" resource="0" file="Source/codegen/eml_setop.h"/>
+        <FILE id="GiCThP" name="fft.cpp" compile="1" resource="0" file="Source/codegen/fft.cpp"/>
+        <FILE id="OfTaOQ" name="fft.h" compile="0" resource="0" file="Source/codegen/fft.h"/>
+        <FILE id="LUbzye" name="FFTImplementationCallback.cpp" compile="1"
+              resource="0" file="Source/codegen/FFTImplementationCallback.cpp"/>
+        <FILE id="KQQZ7Y" name="FFTImplementationCallback.h" compile="0" resource="0"
+              file="Source/codegen/FFTImplementationCallback.h"/>
+        <FILE id="Tsbeqx" name="findpeaks.cpp" compile="1" resource="0" file="Source/codegen/findpeaks.cpp"/>
+        <FILE id="MKq7gP" name="findpeaks.h" compile="0" resource="0" file="Source/codegen/findpeaks.h"/>
+        <FILE id="OeU7s5" name="gencoswin.cpp" compile="1" resource="0" file="Source/codegen/gencoswin.cpp"/>
+        <FILE id="M4eezR" name="gencoswin.h" compile="0" resource="0" file="Source/codegen/gencoswin.h"/>
+        <FILE id="D00yHF" name="getPitch2.cpp" compile="1" resource="0" file="Source/codegen/getPitch2.cpp"/>
+        <FILE id="csKRUC" name="getPitch2.h" compile="0" resource="0" file="Source/codegen/getPitch2.h"/>
+        <FILE id="N7EHND" name="hamming.cpp" compile="1" resource="0" file="Source/codegen/hamming.cpp"/>
+        <FILE id="Og1ucH" name="hamming.h" compile="0" resource="0" file="Source/codegen/hamming.h"/>
+        <FILE id="Kr9ucg" name="ifft.cpp" compile="1" resource="0" file="Source/codegen/ifft.cpp"/>
+        <FILE id="lqEyNS" name="ifft.h" compile="0" resource="0" file="Source/codegen/ifft.h"/>
+        <FILE id="IjaAy9" name="interp1.cpp" compile="1" resource="0" file="Source/codegen/interp1.cpp"/>
+        <FILE id="fvSSpV" name="interp1.h" compile="0" resource="0" file="Source/codegen/interp1.h"/>
         <FILE id="gwLLC8" name="TensorflowHandler.cpp" compile="1" resource="0"
               file="Source/TensorflowHandler.cpp"/>
         <FILE id="FcN3yN" name="TensorflowHandler.h" compile="0" resource="0"

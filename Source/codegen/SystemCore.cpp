@@ -13,6 +13,7 @@
 #include "SystemCore.h"
 #include "ColoredNoise.h"
 #include "additive.h"
+#include "getPitch2.h"
 #include "rt_nonfinite.h"
 #include "subtractive.h"
 #include <cstring>
@@ -77,7 +78,7 @@ void dsp_ColoredNoise::release()
   }
 }
 
-void c_dsp_ColoredNoise::step(double varargout_1[4161])
+void c_dsp_ColoredNoise::step(double varargout_1[4096])
 {
   if (this->isInitialized != 1) {
     this->setupAndReset();
@@ -86,7 +87,7 @@ void c_dsp_ColoredNoise::step(double varargout_1[4161])
   this->stepImpl(varargout_1);
 }
 
-void b_dsp_ColoredNoise::step(double varargout_1[4161])
+void b_dsp_ColoredNoise::step(double varargout_1[4096])
 {
   if (this->isInitialized != 1) {
     this->setupAndReset();
@@ -95,7 +96,7 @@ void b_dsp_ColoredNoise::step(double varargout_1[4161])
   this->stepImpl(varargout_1);
 }
 
-void dsp_ColoredNoise::step(double varargout_1[4161])
+void dsp_ColoredNoise::step(double varargout_1[4096])
 {
   if (this->isInitialized != 1) {
     this->setupAndReset();

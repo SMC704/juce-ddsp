@@ -127,6 +127,7 @@ private:
     double irBuffer_in[129];
     double irBuffer_out[129];
     bool recalculateIR = true;
+    int numSamples;
 
     // FFT Window
     juce::dsp::FFT forwardFFT;

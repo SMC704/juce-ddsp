@@ -3,14 +3,14 @@
 //  course requirements at degree granting institutions only.  Not for
 //  government, commercial, or other organizational use.
 //
-//  DDSPSynth_rtwutil.h
+//  eml_setop.h
 //
-//  Code generation for function 'DDSPSynth_rtwutil'
+//  Code generation for function 'eml_setop'
 //
 
 
-#ifndef DDSPSYNTH_RTWUTIL_H
-#define DDSPSYNTH_RTWUTIL_H
+#ifndef EML_SETOP_H
+#define EML_SETOP_H
 
 // Include files
 #include <cstddef>
@@ -21,9 +21,10 @@
 #define MAX_THREADS                    omp_get_max_threads()
 
 // Function Declarations
-extern double rt_powd_snf(double u0, double u1);
-extern double rt_roundd_snf(double u);
+extern void do_vectors(const coder::array<int, 1U> &a, const coder::array<int,
+  1U> &b, coder::array<int, 1U> &c, coder::array<int, 1U> &ia, coder::array<int,
+  1U> &ib);
 
 #endif
 
-// End of code generation (DDSPSynth_rtwutil.h)
+// End of code generation (eml_setop.h)

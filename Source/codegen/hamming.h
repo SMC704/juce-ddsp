@@ -3,14 +3,14 @@
 //  course requirements at degree granting institutions only.  Not for
 //  government, commercial, or other organizational use.
 //
-//  DDSPSynth_rtwutil.h
+//  hamming.h
 //
-//  Code generation for function 'DDSPSynth_rtwutil'
+//  Code generation for function 'hamming'
 //
 
 
-#ifndef DDSPSYNTH_RTWUTIL_H
-#define DDSPSYNTH_RTWUTIL_H
+#ifndef HAMMING_H
+#define HAMMING_H
 
 // Include files
 #include <cstddef>
@@ -21,9 +21,8 @@
 #define MAX_THREADS                    omp_get_max_threads()
 
 // Function Declarations
-extern double rt_powd_snf(double u0, double u1);
-extern double rt_roundd_snf(double u);
+extern void hamming(double varargin_1, double w_data[], int w_size[1]);
 
 #endif
 
-// End of code generation (DDSPSynth_rtwutil.h)
+// End of code generation (hamming.h)

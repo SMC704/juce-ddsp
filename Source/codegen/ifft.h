@@ -3,14 +3,14 @@
 //  course requirements at degree granting institutions only.  Not for
 //  government, commercial, or other organizational use.
 //
-//  DDSPSynth_rtwutil.h
+//  ifft.h
 //
-//  Code generation for function 'DDSPSynth_rtwutil'
+//  Code generation for function 'ifft'
 //
 
 
-#ifndef DDSPSYNTH_RTWUTIL_H
-#define DDSPSYNTH_RTWUTIL_H
+#ifndef IFFT_H
+#define IFFT_H
 
 // Include files
 #include <cstddef>
@@ -21,9 +21,9 @@
 #define MAX_THREADS                    omp_get_max_threads()
 
 // Function Declarations
-extern double rt_powd_snf(double u0, double u1);
-extern double rt_roundd_snf(double u);
+extern void ifft(const coder::array<double, 1U> &x, double varargin_1, coder::
+                 array<creal_T, 1U> &y);
 
 #endif
 
-// End of code generation (DDSPSynth_rtwutil.h)
+// End of code generation (ifft.h)

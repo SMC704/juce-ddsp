@@ -13,13 +13,14 @@
 #include "DDSPSynth_terminate.h"
 #include "DDSPSynth_data.h"
 #include "additive.h"
+#include "getPitch2.h"
 #include "rt_nonfinite.h"
 #include "subtractive.h"
 
 // Function Definitions
 void DDSPSynth_terminate()
 {
-  // (no terminate code required)
+  omp_destroy_nest_lock(&emlrtNestLockGlobal);
   isInitialized_DDSPSynth = false;
 }
 

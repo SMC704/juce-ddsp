@@ -11,6 +11,7 @@
 #include "HarmonicEditor.h"
 #include "codegen/additive.h"
 #include "codegen/subtractive.h"
+#include "codegen/getPitch2.h"
 #include "TensorflowHandler.h"
 
 //==============================================================================
@@ -160,7 +161,7 @@ void DdspsynthAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBl
         harmonics[i] = 0.5;
     }
 
-    tfHandler.loadModel("C:\\Users\\svkly\\Documents\\SMC\\models\\tenorsax");
+    tfHandler.loadModel("C:\\Users\\svkly\\Documents\\SMC\\models\\flute");
 }
 
 void DdspsynthAudioProcessor::releaseResources()
@@ -195,6 +196,38 @@ bool DdspsynthAudioProcessor::isBusesLayoutSupported (const BusesLayout& layouts
 
 void DdspsynthAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce::MidiBuffer& midiMessages)
 {
+    const float* in_l = buffer.getReadPointer(0);
+    numSamples = buffer.getNumSamples();
+    double input[4096];
+    for (int i = 0; i < 4096; i++)
+    {
+        if (i < numSamples)
+            input[i] = in_l[i];
+        else
+            input[i] = 0;
+    }
+
+    bool shouldGenerateAudio = buffer.getRMSLevel(0, 0, numSamples) > 0.2;
+    int amps_step = floor(numSamples / 100.0f);
+    for (int i = 0; i < 100; i++)
+    {
+        tf_amps[i] = buffer.getRMSLevel(0, (i * amps_step), amps_step);
+    }
+
+    double f0_out = getPitch2((double)numSamples, input, getSampleRate());
+
+    for (int i = 0; i < 100; i++)
+    {
+        if (shouldGenerateAudio)
+            tf_f0[i] = (float)f0_out;
+        else
+            tf_f0[i] = 0;
+    }
+    //for (int i = 0; i < 4096; i++)
+    //{
+    //    f0[i] = f0_out;
+    //}
+
     if (!tfHandler.isThreadRunning())
     {
         tfHandler.setInputs(tf_f0, tf_amps);
@@ -204,19 +237,21 @@ void DdspsynthAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, ju
 
     double harms_copy[50];
     double mags_copy[65];
+    double amps_copy[4096];
     for (int i = 0; i < 50; i++) {
         harms_copy[i] = harmonics[i];
     }
     for (int i = 0; i < 65; i++) {
         mags_copy[i] = magnitudes[i];
     }
+    for (int i = 0; i < 4096; i++) {
+        amps_copy[i] = amplitudes[i];
+    }
 
     int audio_size[1];
 
-    int numSamples = buffer.getNumSamples();
-
-    if (*additiveOnParameter) {
-        additive(numSamples, getSampleRate(), amplitudes, harms_copy, f0, phaseBuffer_in, (double)*additiveShiftParameter, (double)*additiveStretchParameter, addBuffer, audio_size, phaseBuffer_out);
+    if (*additiveOnParameter && shouldGenerateAudio) {
+        additive(numSamples, getSampleRate(), amps_copy, harms_copy, f0, phaseBuffer_in, (double)*additiveShiftParameter, (double)*additiveStretchParameter, addBuffer, audio_size, phaseBuffer_out);
         jassert(numSamples == audio_size[0]);
     }
     else {
@@ -229,13 +264,7 @@ void DdspsynthAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, ju
 
     if (*noiseOnParameter)
     {
-        subtractive(numSamples, mags_copy, (double)*noiseColorParameter, irBuffer_in, recalculateIR, subBuffer, irBuffer_out);
-        if (recalculateIR);
-        {
-            recalculateIR = false;
-            for (int i = 0; i < 129; i++)
-                irBuffer_in[i] = irBuffer_out[i];
-        }
+        subtractive(numSamples, mags_copy, (double)*noiseColorParameter, subBuffer);
     }
     else {
         for (int i = 0; i < 4096; i++)
@@ -254,6 +283,7 @@ void DdspsynthAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, ju
         float additiveGain = pow(10.0f,(*additiveGainParameter/20));
         float noiseGain = pow(10.0f,(*noiseGainParameter/20));
         float out = addBuffer[i] * additiveGain + subBuffer[i] * noiseGain;
+        pushNextSampleIntoFifo(out);
         outL[i] = out;
         outR[i] = out;
     }
@@ -267,13 +297,19 @@ void DdspsynthAudioProcessor::setModelOutput(TensorflowHandler::ModelResults tfR
         harmonics[i] = tfResults.harmonicDistribution[100 * i];
     }
     for (int i = 0; i < 65; i++) {
-        magnitudes[i] = tfResults.amplitudes[i];
+        magnitudes[i] = tfResults.noiseMagnitudes[100 * i];
     }
+    int amp_step = floor(numSamples / 100.0f);
+    for (int i = 0; i < numSamples; i++) {
+        amplitudes[i] = tfResults.amplitudes[(int)floor(i / amp_step)];
+    }
+
 }
 
 void DdspsynthAudioProcessor::exitSignalSent()
 {
     setModelOutput(tfHandler.getOutputs());
+    DBG("Got output");
 }
 
 

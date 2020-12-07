@@ -3,14 +3,14 @@
 //  course requirements at degree granting institutions only.  Not for
 //  government, commercial, or other organizational use.
 //
-//  DDSPSynth_rtwutil.h
+//  findpeaks.h
 //
-//  Code generation for function 'DDSPSynth_rtwutil'
+//  Code generation for function 'findpeaks'
 //
 
 
-#ifndef DDSPSYNTH_RTWUTIL_H
-#define DDSPSYNTH_RTWUTIL_H
+#ifndef FINDPEAKS_H
+#define FINDPEAKS_H
 
 // Include files
 #include <cstddef>
@@ -21,9 +21,9 @@
 #define MAX_THREADS                    omp_get_max_threads()
 
 // Function Declarations
-extern double rt_powd_snf(double u0, double u1);
-extern double rt_roundd_snf(double u);
+extern void findpeaks(const coder::array<double, 1U> &Yin, coder::array<double,
+                      1U> &Ypk, coder::array<double, 1U> &Xpk);
 
 #endif
 
-// End of code generation (DDSPSynth_rtwutil.h)
+// End of code generation (findpeaks.h)

@@ -13,6 +13,7 @@
 #include "randn.h"
 #include "DDSPSynth_data.h"
 #include "additive.h"
+#include "getPitch2.h"
 #include "rt_nonfinite.h"
 #include "subtractive.h"
 #include <cmath>
@@ -126,7 +127,7 @@ static double genrandu(unsigned int mt[625])
   return r;
 }
 
-void randn(double r[4161])
+void randn(double r[4096])
 {
   unsigned int u32[2];
   static const double dv[257] = { 0.0, 0.215241895984875, 0.286174591792068,
@@ -265,7 +266,7 @@ void randn(double r[4161])
     0.00403797259336304, 0.00260907274610216, 0.0012602859304986,
     0.000477467764609386 };
 
-  for (int k = 0; k < 4161; k++) {
+  for (int k = 0; k < 4096; k++) {
     int exitg1;
     int i;
     double b_r;

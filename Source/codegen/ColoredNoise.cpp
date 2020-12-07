@@ -12,6 +12,7 @@
 // Include files
 #include "ColoredNoise.h"
 #include "additive.h"
+#include "getPitch2.h"
 #include "randn.h"
 #include "rt_nonfinite.h"
 #include "subtractive.h"
@@ -42,10 +43,10 @@ dsp_ColoredNoise *dsp_ColoredNoise::init()
   return obj;
 }
 
-void c_dsp_ColoredNoise::stepImpl(double out[4161])
+void c_dsp_ColoredNoise::stepImpl(double out[4096])
 {
   int k;
-  double b_out[4161];
+  double b_out[4096];
   double dv[255];
   int j;
   static const double dv1[256] = { 1.0, -0.99500000000000011,
@@ -141,26 +142,26 @@ void c_dsp_ColoredNoise::stepImpl(double out[4161])
     b_out[k] = this->pFilterStates[k];
   }
 
-  std::memset(&b_out[255], 0, 3906U * sizeof(double));
+  std::memset(&b_out[255], 0, 3841U * sizeof(double));
   for (k = 0; k < 256; k++) {
     int b_k;
     b_k = k + 1;
-    for (j = b_k; j < 4162; j++) {
+    for (j = b_k; j < 4097; j++) {
       b_out[j - 1] += dv1[k] * out[(j - k) - 1];
     }
   }
 
   for (k = 0; k < 255; k++) {
     for (j = 0; j <= k; j++) {
-      dv[j] += out[k + 3906] * dv1[(j - k) + 255];
+      dv[j] += out[k + 3841] * dv1[(j - k) + 255];
     }
   }
 
   std::memcpy(&this->pFilterStates[0], &dv[0], 255U * sizeof(double));
-  std::memcpy(&out[0], &b_out[0], 4161U * sizeof(double));
+  std::memcpy(&out[0], &b_out[0], 4096U * sizeof(double));
 }
 
-void b_dsp_ColoredNoise::stepImpl(double out[4161])
+void b_dsp_ColoredNoise::stepImpl(double out[4096])
 {
   double b[3];
   static const double num[30] = { 1.0, 1.0, 1.0, 1.0, 1.0, 0.768234948541554,
@@ -172,7 +173,7 @@ void b_dsp_ColoredNoise::stepImpl(double out[4161])
 
   double a[3];
   double dv[2];
-  double b_out[4161];
+  double b_out[4096];
   randn(out);
   for (int jj = 0; jj < 5; jj++) {
     double as;
@@ -209,12 +210,12 @@ void b_dsp_ColoredNoise::stepImpl(double out[4161])
     b_out[0] = this->pFilterStates[zi_idx_0_tmp];
     dv[1] = 0.0;
     b_out[1] = this->pFilterStates[zi_idx_1_tmp];
-    std::memset(&b_out[2], 0, 4159U * sizeof(double));
-    for (int k = 0; k < 4161; k++) {
+    std::memset(&b_out[2], 0, 4094U * sizeof(double));
+    for (int k = 0; k < 4096; k++) {
       int naxpy;
       int out_tmp;
-      if (4161 - k < 3) {
-        naxpy = 4160 - k;
+      if (4096 - k < 3) {
+        naxpy = 4095 - k;
       } else {
         naxpy = 2;
       }
@@ -224,8 +225,8 @@ void b_dsp_ColoredNoise::stepImpl(double out[4161])
         b_out[out_tmp] += out[k] * b[j];
       }
 
-      if (4160 - k < 2) {
-        naxpy = 4159 - k;
+      if (4095 - k < 2) {
+        naxpy = 4094 - k;
       } else {
         naxpy = 1;
       }
@@ -238,28 +239,28 @@ void b_dsp_ColoredNoise::stepImpl(double out[4161])
     }
 
     for (j = 0; j < 1; j++) {
-      dv[0] += out[4159] * b[2];
+      dv[0] += out[4094] * b[2];
     }
 
     for (j = 0; j < 2; j++) {
-      dv[j] += out[4160] * b[j + 1];
+      dv[j] += out[4095] * b[j + 1];
     }
 
     for (j = 0; j < 1; j++) {
-      dv[0] += -b_out[4159] * a[2];
+      dv[0] += -b_out[4094] * a[2];
     }
 
     for (j = 0; j < 2; j++) {
-      dv[j] += -b_out[4160] * a[j + 1];
+      dv[j] += -b_out[4095] * a[j + 1];
     }
 
-    std::memcpy(&out[0], &b_out[0], 4161U * sizeof(double));
+    std::memcpy(&out[0], &b_out[0], 4096U * sizeof(double));
     this->pFilterStates[zi_idx_0_tmp] = dv[0];
     this->pFilterStates[zi_idx_1_tmp] = dv[1];
   }
 }
 
-void dsp_ColoredNoise::stepImpl(double out[4161])
+void dsp_ColoredNoise::stepImpl(double out[4096])
 {
   randn(out);
 }

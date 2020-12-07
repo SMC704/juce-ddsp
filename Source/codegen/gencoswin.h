@@ -3,14 +3,14 @@
 //  course requirements at degree granting institutions only.  Not for
 //  government, commercial, or other organizational use.
 //
-//  DDSPSynth_rtwutil.h
+//  gencoswin.h
 //
-//  Code generation for function 'DDSPSynth_rtwutil'
+//  Code generation for function 'gencoswin'
 //
 
 
-#ifndef DDSPSYNTH_RTWUTIL_H
-#define DDSPSYNTH_RTWUTIL_H
+#ifndef GENCOSWIN_H
+#define GENCOSWIN_H
 
 // Include files
 #include <cstddef>
@@ -21,9 +21,8 @@
 #define MAX_THREADS                    omp_get_max_threads()
 
 // Function Declarations
-extern double rt_powd_snf(double u0, double u1);
-extern double rt_roundd_snf(double u);
+extern void calc_window(double m, double n, double w_data[], int w_size[1]);
 
 #endif
 
-// End of code generation (DDSPSynth_rtwutil.h)
+// End of code generation (gencoswin.h)
