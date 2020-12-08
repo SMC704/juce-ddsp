@@ -26,10 +26,23 @@
 #include <cstring>
 #include <math.h>
 
+// Function Declarations
+static void b_scale_fn(const double x[65], double y[65]);
+
 // Function Definitions
-void subtractive(double n_samples, const double magnitudes[65], double color,
-                 double out[4096])
+static void b_scale_fn(const double x[65], double y[65])
 {
+  for (int k = 0; k < 65; k++) {
+    y[k] = 2.0 * rt_powd_snf(1.0 / (std::exp(-x[k]) + 1.0), 2.3025850929940459)
+      + 1.0E-7;
+  }
+}
+
+void subtractive(double n_samples, double magnitudes[65], double color, double
+                 initial_bias, double out[4096])
+{
+  int i;
+  double b_magnitudes[65];
   dsp_ColoredNoise white_n;
   b_dsp_ColoredNoise brown_n;
   c_dsp_ColoredNoise violet_n;
@@ -37,7 +50,6 @@ void subtractive(double n_samples, const double magnitudes[65], double color,
   double brown_noise[4096];
   double violet_noise[4096];
   double mag_rel_bin_size;
-  int i;
   int loop_ub;
   int white_noise_size[1];
   coder::array<creal_T, 1U> r;
@@ -57,10 +69,12 @@ void subtractive(double n_samples, const double magnitudes[65], double color,
   //  function [out, b] = subtractive(n_samples, magnitudes, color, ir_coeffs, recalculate_ir) 
   //  magnitudes: row = frames, column = freq responses
   //  magnitudes should be 65
-  //      normalize magnitudes
-  //      initial_bias = 1;
-  //      optional; colab examplees do not use it
-  //      magnitudes = scale_fn(magnitudes + initial_bias);
+  for (i = 0; i < 65; i++) {
+    b_magnitudes[i] = magnitudes[i] + initial_bias;
+  }
+
+  b_scale_fn(b_magnitudes, magnitudes);
+
   //  generate white noise
   white_n.init();
   brown_n.init();

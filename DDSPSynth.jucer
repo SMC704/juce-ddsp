@@ -3,10 +3,16 @@
 <JUCERPROJECT id="xUphdz" name="DDSPSynth" projectType="audioplug" useAppConfig="0"
               addUsingNamespaceToJuceHeader="0" displaySplashScreen="1" jucerFormatVersion="1"
               pluginCharacteristicsValue="pluginIsSynth,pluginWantsMidiIn"
-              pluginChannelConfigs="{1, 2}">
+              pluginChannelConfigs="{1, 2}" pluginFormats="buildStandalone,buildVST3"
+              pluginManufacturer="SMC704" aaxIdentifier="com.SMC704.DDSPSynth"
+              bundleIdentifier="com.SMC704.DDSPSynth">
   <MAINGROUP id="wP40jo" name="DDSPSynth">
     <GROUP id="{21B404C6-B1A3-96E0-24F7-18E3D850093A}" name="Source">
       <GROUP id="{EC1CE48D-AFDF-312B-B94A-6D056A9FE965}" name="DDSP">
+        <FILE id="ypkwx0" name="chorus.cpp" compile="1" resource="0" file="Source/codegen/chorus.cpp"/>
+        <FILE id="N71yVe" name="chorus.h" compile="0" resource="0" file="Source/codegen/chorus.h"/>
+        <FILE id="pQoKze" name="linspace.cpp" compile="1" resource="0" file="Source/codegen/linspace.cpp"/>
+        <FILE id="CdsY6h" name="linspace.h" compile="0" resource="0" file="Source/codegen/linspace.h"/>
         <FILE id="r8rIQL" name="eml_setop.cpp" compile="1" resource="0" file="Source/codegen/eml_setop.cpp"/>
         <FILE id="Gn9EgF" name="eml_setop.h" compile="0" resource="0" file="Source/codegen/eml_setop.h"/>
         <FILE id="GiCThP" name="fft.cpp" compile="1" resource="0" file="Source/codegen/fft.cpp"/>
@@ -42,7 +48,6 @@
         <FILE id="DtO4j2" name="ColoredNoise.cpp" compile="1" resource="0"
               file="Source/codegen/ColoredNoise.cpp"/>
         <FILE id="OjeyQy" name="ColoredNoise.h" compile="0" resource="0" file="Source/codegen/ColoredNoise.h"/>
-        <FILE id="zfV7Fj" name="DDSPSound.h" compile="0" resource="0" file="Source/DDSPSound.h"/>
         <FILE id="ZaR07c" name="DDSPSynth_data.cpp" compile="1" resource="0"
               file="Source/codegen/DDSPSynth_data.cpp"/>
         <FILE id="Cx25ES" name="DDSPSynth_data.h" compile="0" resource="0"
@@ -61,8 +66,6 @@
               file="Source/codegen/DDSPSynth_terminate.h"/>
         <FILE id="YHmTJN" name="DDSPSynth_types.h" compile="0" resource="0"
               file="Source/codegen/DDSPSynth_types.h"/>
-        <FILE id="W1aKVv" name="DDSPVoice.cpp" compile="1" resource="0" file="Source/DDSPVoice.cpp"/>
-        <FILE id="dJBq0W" name="DDSPVoice.h" compile="0" resource="0" file="Source/DDSPVoice.h"/>
         <FILE id="MhPljt" name="eml_rand_mt19937ar_stateful.cpp" compile="1"
               resource="0" file="Source/codegen/eml_rand_mt19937ar_stateful.cpp"/>
         <FILE id="WTTBRh" name="eml_rand_mt19937ar_stateful.h" compile="0"

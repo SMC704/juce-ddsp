@@ -9,7 +9,6 @@
 #pragma once
 
 #include <JuceHeader.h>
-#include "DDSPVoice.h"
 #include "HarmonicEditor.h"
 #include "SubtractiveComponent.h"
 #include "AdditiveComponent.h"
@@ -116,18 +115,17 @@ private:
     std::atomic<float>* outputGainParameter = nullptr;
 
     // Internal parameters
-    double phaseBuffer_in[50];
-    double phaseBuffer_out[50];
+    double phaseBuffer_in[60];
+    double phaseBuffer_out[60];
     double amplitudes[4096];
     double f0[4096];
-    double harmonics[50];
+    double n_harmonics = 60;
+    double harmonics[60];
     double addBuffer[4096];
+    double initial_bias = -5.0f;
     double subBuffer[4096];
     double magnitudes[65];
-    double irBuffer_in[129];
-    double irBuffer_out[129];
-    bool recalculateIR = true;
-    int numSamples;
+    double numSamples;
 
     // FFT Window
     juce::dsp::FFT forwardFFT;

@@ -82,7 +82,7 @@ DdspsynthAudioProcessor::DdspsynthAudioProcessor()
 
 DdspsynthAudioProcessor::~DdspsynthAudioProcessor()
 {
-
+    tfHandler.stopThread(100);
 }
 
 //==============================================================================
@@ -161,7 +161,7 @@ void DdspsynthAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBl
         harmonics[i] = 0.5;
     }
 
-    tfHandler.loadModel("C:\\Users\\svkly\\Documents\\SMC\\models\\flute");
+    tfHandler.loadModel("C:\\Users\\svkly\\Downloads\\converted_models\\models\\violin");
 }
 
 void DdspsynthAudioProcessor::releaseResources()
@@ -223,10 +223,10 @@ void DdspsynthAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, ju
         else
             tf_f0[i] = 0;
     }
-    //for (int i = 0; i < 4096; i++)
-    //{
-    //    f0[i] = f0_out;
-    //}
+    for (int i = 0; i < 4096; i++)
+    {
+        f0[i] = f0_out;
+    }
 
     if (!tfHandler.isThreadRunning())
     {
@@ -235,7 +235,7 @@ void DdspsynthAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, ju
         tfHandler.addListener(this);
     }
 
-    double harms_copy[50];
+    double harms_copy[60];
     double mags_copy[65];
     double amps_copy[4096];
     for (int i = 0; i < 50; i++) {
@@ -251,7 +251,7 @@ void DdspsynthAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, ju
     int audio_size[1];
 
     if (*additiveOnParameter && shouldGenerateAudio) {
-        additive(numSamples, getSampleRate(), amps_copy, harms_copy, f0, phaseBuffer_in, (double)*additiveShiftParameter, (double)*additiveStretchParameter, addBuffer, audio_size, phaseBuffer_out);
+        additive((double)numSamples, getSampleRate(), amps_copy, n_harmonics, harms_copy, f0, phaseBuffer_in, (double)*additiveShiftParameter, (double)*additiveStretchParameter, addBuffer, audio_size, phaseBuffer_out);
         jassert(numSamples == audio_size[0]);
     }
     else {
@@ -264,7 +264,7 @@ void DdspsynthAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, ju
 
     if (*noiseOnParameter)
     {
-        subtractive(numSamples, mags_copy, (double)*noiseColorParameter, subBuffer);
+        subtractive(numSamples, mags_copy, (double)*noiseColorParameter, initial_bias, subBuffer);
     }
     else {
         for (int i = 0; i < 4096; i++)
@@ -294,7 +294,7 @@ void DdspsynthAudioProcessor::setModelOutput(TensorflowHandler::ModelResults tfR
     // generated additive synth code overwrites passed harmonics & magnitudes
     // so create copy before passing
     for (int i = 0; i < 50; i++) {
-        harmonics[i] = tfResults.harmonicDistribution[100 * i];
+        harmonics[i] = tfResults.harmonicDistribution[i];
     }
     for (int i = 0; i < 65; i++) {
         magnitudes[i] = tfResults.noiseMagnitudes[100 * i];
