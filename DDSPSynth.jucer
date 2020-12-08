@@ -146,7 +146,8 @@
   </MAINGROUP>
   <JUCEOPTIONS JUCE_STRICT_REFCOUNTEDPOINTER="1" JUCE_VST3_CAN_REPLACE_VST2="0"/>
   <EXPORTFORMATS>
-    <XCODE_MAC targetFolder="Builds/MacOSX" microphonePermissionNeeded="1">
+    <XCODE_MAC targetFolder="Builds/MacOSX" microphonePermissionNeeded="1" extraLinkerFlags="-L${PROJECT_DIR}/../../Libraries/tensorflow_c_mac/"
+               externalLibraries="tensorflow_cc">
       <CONFIGURATIONS>
         <CONFIGURATION isDebug="1" name="Debug" targetName="DDSPSynth"/>
         <CONFIGURATION isDebug="0" name="Release" targetName="DDSPSynth"/>
