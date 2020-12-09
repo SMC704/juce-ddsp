@@ -13,15 +13,16 @@
 #define RANDN_H
 
 // Include files
-#include <cstddef>
-#include <cstdlib>
 #include "rtwtypes.h"
 #include "omp.h"
-#include "DDSPSynth_types.h"
-#define MAX_THREADS                    omp_get_max_threads()
+#include <cstddef>
+#include <cstdlib>
 
 // Function Declarations
-extern void randn(double r[4096]);
+namespace coder
+{
+  void randn(double r[4096]);
+}
 
 #endif
 

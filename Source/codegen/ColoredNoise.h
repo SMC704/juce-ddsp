@@ -13,12 +13,61 @@
 #define COLOREDNOISE_H
 
 // Include files
-#include <cstddef>
-#include <cstdlib>
 #include "rtwtypes.h"
 #include "omp.h"
-#include "DDSPSynth_types.h"
-#define MAX_THREADS                    omp_get_max_threads()
+#include <cstddef>
+#include <cstdlib>
+
+// Type Definitions
+namespace coder
+{
+  namespace dsp
+  {
+    class ColoredNoise
+    {
+     public:
+      ColoredNoise *init();
+      void step(double varargout_1[4096]);
+      void setupAndReset();
+      void setup();
+      void release();
+     private:
+      int isInitialized;
+      boolean_T isSetupComplete;
+    };
+
+    class b_ColoredNoise
+    {
+     public:
+      b_ColoredNoise *init();
+      void step(double varargout_1[4096]);
+      void setupAndReset();
+      void setup();
+      void release();
+     protected:
+      double pFilterStates[10];
+     private:
+      int isInitialized;
+      boolean_T isSetupComplete;
+    };
+
+    class c_ColoredNoise
+    {
+     public:
+      c_ColoredNoise *init();
+      void step(double varargout_1[4096]);
+      void setupAndReset();
+      void setup();
+      void release();
+     protected:
+      double pFilterStates[255];
+     private:
+      int isInitialized;
+      boolean_T isSetupComplete;
+    };
+  }
+}
+
 #endif
 
 // End of code generation (ColoredNoise.h)

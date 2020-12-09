@@ -13,15 +13,18 @@
 #define GENCOSWIN_H
 
 // Include files
+#include "rtwtypes.h"
+#include "coder_array.h"
+#include "omp.h"
 #include <cstddef>
 #include <cstdlib>
-#include "rtwtypes.h"
-#include "omp.h"
-#include "DDSPSynth_types.h"
-#define MAX_THREADS                    omp_get_max_threads()
 
 // Function Declarations
-extern void calc_window(double m, double n, double w_data[], int w_size[1]);
+namespace coder
+{
+  void calc_window(double m, double n, ::coder::array<double, 1U> &w);
+  void calc_window(double m, double n, double w_data[], int w_size[1]);
+}
 
 #endif
 

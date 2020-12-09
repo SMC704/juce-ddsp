@@ -11,6 +11,8 @@
 
 #ifndef RT_NONFINITE_H
 #define RT_NONFINITE_H
+
+// Include files
 #include "rtwtypes.h"
 #ifdef __cplusplus
 
@@ -24,7 +26,6 @@ extern "C" {
   extern real32_T rtInfF;
   extern real32_T rtMinusInfF;
   extern real32_T rtNaNF;
-  extern void rt_InitInfAndNaN();
   extern boolean_T rtIsInf(real_T value);
   extern boolean_T rtIsInfF(real32_T value);
   extern boolean_T rtIsNaN(real_T value);

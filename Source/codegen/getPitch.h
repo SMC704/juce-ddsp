@@ -3,22 +3,24 @@
 //  course requirements at degree granting institutions only.  Not for
 //  government, commercial, or other organizational use.
 //
-//  SystemCore.h
+//  getPitch.h
 //
-//  Code generation for function 'SystemCore'
+//  Code generation for function 'getPitch'
 //
 
 
-#ifndef SYSTEMCORE_H
-#define SYSTEMCORE_H
+#ifndef GETPITCH_H
+#define GETPITCH_H
 
 // Include files
-#include <cstddef>
-#include <cstdlib>
 #include "rtwtypes.h"
 #include "omp.h"
-#include "DDSPSynth_types.h"
-#define MAX_THREADS                    omp_get_max_threads()
+#include <cstddef>
+#include <cstdlib>
+
+// Function Declarations
+extern double getPitch(double n_samples, const double input[4096], double fs);
+
 #endif
 
-// End of code generation (SystemCore.h)
+// End of code generation (getPitch.h)

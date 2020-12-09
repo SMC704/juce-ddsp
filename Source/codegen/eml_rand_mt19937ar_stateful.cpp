@@ -12,14 +12,12 @@
 // Include files
 #include "eml_rand_mt19937ar_stateful.h"
 #include "DDSPSynth_data.h"
-#include "additive.h"
-#include "getPitch2.h"
 #include "rt_nonfinite.h"
-#include "subtractive.h"
 #include <cstring>
+#include <string.h>
 
 // Function Definitions
-void c_eml_rand_mt19937ar_stateful_i()
+void eml_rand_mt19937ar_stateful_init()
 {
   unsigned int r;
   std::memset(&state[0], 0, 625U * sizeof(unsigned int));

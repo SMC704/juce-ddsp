@@ -13,17 +13,19 @@
 #define EML_SETOP_H
 
 // Include files
+#include "rtwtypes.h"
+#include "coder_array.h"
+#include "omp.h"
 #include <cstddef>
 #include <cstdlib>
-#include "rtwtypes.h"
-#include "omp.h"
-#include "DDSPSynth_types.h"
-#define MAX_THREADS                    omp_get_max_threads()
 
 // Function Declarations
-extern void do_vectors(const coder::array<int, 1U> &a, const coder::array<int,
-  1U> &b, coder::array<int, 1U> &c, coder::array<int, 1U> &ia, coder::array<int,
-  1U> &ib);
+namespace coder
+{
+  void do_vectors(const ::coder::array<int, 1U> &a, const ::coder::array<int, 1U>
+                  &b, ::coder::array<int, 1U> &c, ::coder::array<int, 1U> &ia, ::
+                  coder::array<int, 1U> &ib);
+}
 
 #endif
 

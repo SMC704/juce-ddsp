@@ -13,15 +13,17 @@
 #define LINSPACE_H
 
 // Include files
+#include "rtwtypes.h"
+#include "coder_array.h"
+#include "omp.h"
 #include <cstddef>
 #include <cstdlib>
-#include "rtwtypes.h"
-#include "omp.h"
-#include "DDSPSynth_types.h"
-#define MAX_THREADS                    omp_get_max_threads()
 
 // Function Declarations
-extern void linspace(double d2, double n1, coder::array<double, 2U> &y);
+namespace coder
+{
+  void linspace(double d2, double n, ::coder::array<double, 2U> &y);
+}
 
 #endif
 

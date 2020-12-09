@@ -12,150 +12,226 @@
 // Include files
 #include "ifft.h"
 #include "FFTImplementationCallback.h"
-#include "additive.h"
-#include "getPitch2.h"
 #include "rt_nonfinite.h"
-#include "subtractive.h"
+#include "coder_array.h"
 #include <cmath>
+#include <string.h>
 
 // Function Definitions
-void ifft(const coder::array<double, 1U> &x, double varargin_1, coder::array<
-          creal_T, 1U> &y)
+namespace coder
 {
-  int loop_ub;
-  int N2blue;
-  int nd2;
-  coder::array<double, 2U> costab1q;
-  coder::array<double, 2U> costab;
-  coder::array<double, 2U> sintab;
-  coder::array<double, 2U> sintabinv;
-  loop_ub = static_cast<int>(varargin_1);
-  if (0 == loop_ub) {
-    y.set_size(0);
-  } else {
-    boolean_T useRadix2;
-    double e;
-    int n;
+  void ifft(const ::coder::array<double, 1U> &x, double varargin_1, ::coder::
+            array<creal_T, 1U> &y)
+  {
+    array<double, 2U> costab;
+    array<double, 2U> costab1q;
+    array<double, 2U> sintab;
+    array<double, 2U> sintabinv;
+    double twid_im;
+    double twid_re;
+    int i;
+    int iDelta2;
+    int ihi;
+    int ix;
+    int j;
+    int ju;
     int k;
-    int n2;
-    useRadix2 = ((loop_ub > 0) && ((loop_ub & (loop_ub - 1)) == 0));
-    FFTImplementationCallback::get_algo_sizes((static_cast<int>(varargin_1)),
-      (useRadix2), (&N2blue), (&nd2));
-    e = 6.2831853071795862 / static_cast<double>(nd2);
-    n = nd2 / 2 / 2;
-    costab1q.set_size(1, (n + 1));
-    costab1q[0] = 1.0;
-    nd2 = n / 2 - 1;
-    for (k = 0; k <= nd2; k++) {
-      costab1q[k + 1] = std::cos(e * (static_cast<double>(k) + 1.0));
-    }
-
-    nd2 += 2;
-    n2 = n - 1;
-    for (k = nd2; k <= n2; k++) {
-      costab1q[k] = std::sin(e * static_cast<double>(n - k));
-    }
-
-    costab1q[n] = 0.0;
-    if (!useRadix2) {
-      n = costab1q.size(1) - 1;
-      n2 = (costab1q.size(1) - 1) << 1;
-      costab.set_size(1, (n2 + 1));
-      sintab.set_size(1, (n2 + 1));
-      costab[0] = 1.0;
-      sintab[0] = 0.0;
-      sintabinv.set_size(1, (n2 + 1));
-      for (k = 0; k < n; k++) {
-        sintabinv[k + 1] = costab1q[(n - k) - 1];
-      }
-
-      nd2 = costab1q.size(1);
-      for (k = nd2; k <= n2; k++) {
-        sintabinv[k] = costab1q[k - n];
-      }
-
-      for (k = 0; k < n; k++) {
-        costab[k + 1] = costab1q[k + 1];
-        sintab[k + 1] = -costab1q[(n - k) - 1];
-      }
-
-      nd2 = costab1q.size(1);
-      for (k = nd2; k <= n2; k++) {
-        costab[k] = -costab1q[n2 - k];
-        sintab[k] = -costab1q[k - n];
+    int nd2;
+    if (0 == static_cast<int>(varargin_1)) {
+      y.set_size((static_cast<int>(varargin_1)));
+      nd2 = static_cast<int>(varargin_1);
+      for (ix = 0; ix < nd2; ix++) {
+        y[ix].re = 0.0;
+        y[ix].im = 0.0;
       }
     } else {
-      n = costab1q.size(1) - 1;
-      n2 = (costab1q.size(1) - 1) << 1;
-      costab.set_size(1, (n2 + 1));
-      sintab.set_size(1, (n2 + 1));
-      costab[0] = 1.0;
-      sintab[0] = 0.0;
-      for (k = 0; k < n; k++) {
-        costab[k + 1] = costab1q[k + 1];
-        sintab[k + 1] = costab1q[(n - k) - 1];
+      boolean_T useRadix2;
+      useRadix2 = ((static_cast<int>(varargin_1) > 0) && ((static_cast<int>
+        (varargin_1) & (static_cast<int>(varargin_1) - 1)) == 0));
+      internal::FFTImplementationCallback::get_algo_sizes((static_cast<int>
+        (varargin_1)), (useRadix2), (&iDelta2), (&nd2));
+      twid_re = 6.2831853071795862 / static_cast<double>(nd2);
+      ihi = nd2 / 2 / 2;
+      costab1q.set_size(1, (ihi + 1));
+      costab1q[0] = 1.0;
+      nd2 = ihi / 2 - 1;
+      for (k = 0; k <= nd2; k++) {
+        costab1q[k + 1] = std::cos(twid_re * (static_cast<double>(k) + 1.0));
       }
 
-      nd2 = costab1q.size(1);
-      for (k = nd2; k <= n2; k++) {
-        costab[k] = -costab1q[n2 - k];
-        sintab[k] = costab1q[k - n];
+      ix = nd2 + 2;
+      nd2 = ihi - 1;
+      for (k = ix; k <= nd2; k++) {
+        costab1q[k] = std::sin(twid_re * static_cast<double>(ihi - k));
       }
 
-      sintabinv.set_size(1, 0);
-    }
-
-    if (useRadix2) {
-      boolean_T guard1 = false;
-      y.set_size(loop_ub);
-      if (loop_ub > x.size(0)) {
-        y.set_size(loop_ub);
-        for (nd2 = 0; nd2 < loop_ub; nd2++) {
-          y[nd2].re = 0.0;
-          y[nd2].im = 0.0;
+      costab1q[ihi] = 0.0;
+      if (!useRadix2) {
+        ihi = costab1q.size(1) - 1;
+        nd2 = (costab1q.size(1) - 1) << 1;
+        costab.set_size(1, (nd2 + 1));
+        sintab.set_size(1, (nd2 + 1));
+        costab[0] = 1.0;
+        sintab[0] = 0.0;
+        sintabinv.set_size(1, (nd2 + 1));
+        for (k = 0; k < ihi; k++) {
+          sintabinv[k + 1] = costab1q[(ihi - k) - 1];
         }
-      }
 
-      guard1 = false;
-      if (loop_ub != 1) {
-        FFTImplementationCallback::doHalfLengthRadix2((x), (y), (static_cast<int>
-          (varargin_1)), (costab), (sintab));
-        guard1 = true;
+        ix = costab1q.size(1);
+        for (k = ix; k <= nd2; k++) {
+          sintabinv[k] = costab1q[k - ihi];
+        }
+
+        for (k = 0; k < ihi; k++) {
+          costab[k + 1] = costab1q[k + 1];
+          sintab[k + 1] = -costab1q[(ihi - k) - 1];
+        }
+
+        ix = costab1q.size(1);
+        for (k = ix; k <= nd2; k++) {
+          costab[k] = -costab1q[nd2 - k];
+          sintab[k] = -costab1q[k - ihi];
+        }
       } else {
-        int b_loop_ub;
-        nd2 = x.size(0);
-        if (nd2 >= 1) {
-          nd2 = 1;
+        ihi = costab1q.size(1) - 1;
+        nd2 = (costab1q.size(1) - 1) << 1;
+        costab.set_size(1, (nd2 + 1));
+        sintab.set_size(1, (nd2 + 1));
+        costab[0] = 1.0;
+        sintab[0] = 0.0;
+        for (k = 0; k < ihi; k++) {
+          costab[k + 1] = costab1q[k + 1];
+          sintab[k + 1] = costab1q[(ihi - k) - 1];
         }
 
-        b_loop_ub = nd2 - 2;
-        n2 = 0;
-        int exitg1;
-        do {
-          if (n2 <= b_loop_ub) {
-            y[0].re = x[0];
-            y[0].im = 0.0;
-            exitg1 = 1;
-          } else {
-            y[0].re = x[0];
-            y[0].im = 0.0;
-            guard1 = true;
-            exitg1 = 1;
+        ix = costab1q.size(1);
+        for (k = ix; k <= nd2; k++) {
+          costab[k] = -costab1q[nd2 - k];
+          sintab[k] = costab1q[k - ihi];
+        }
+
+        sintabinv.set_size(1, 0);
+      }
+
+      if (useRadix2) {
+        y.set_size((static_cast<int>(varargin_1)));
+        if (static_cast<int>(varargin_1) > x.size(0)) {
+          nd2 = static_cast<int>(varargin_1);
+          y.set_size((static_cast<int>(varargin_1)));
+          for (ix = 0; ix < nd2; ix++) {
+            y[ix].re = 0.0;
+            y[ix].im = 0.0;
           }
-        } while (exitg1 == 0);
-      }
-
-      if (guard1 && (y.size(0) > 1)) {
-        e = 1.0 / static_cast<double>(y.size(0));
-        loop_ub = y.size(0);
-        for (nd2 = 0; nd2 < loop_ub; nd2++) {
-          y[nd2].re = e * y[nd2].re;
-          y[nd2].im = e * y[nd2].im;
         }
+
+        if (static_cast<int>(varargin_1) != 1) {
+          internal::FFTImplementationCallback::doHalfLengthRadix2((x), (y), (
+            static_cast<int>(varargin_1)), (costab), (sintab));
+        } else {
+          double temp_im;
+          double temp_re;
+          int nRowsD2;
+          nd2 = x.size(0);
+          j = static_cast<int>(varargin_1);
+          if (nd2 < j) {
+            j = nd2;
+          }
+
+          iDelta2 = static_cast<int>(varargin_1) - 2;
+          nRowsD2 = static_cast<int>(varargin_1) / 2;
+          k = nRowsD2 / 2;
+          ix = 0;
+          nd2 = 0;
+          ju = 0;
+          for (i = 0; i <= j - 2; i++) {
+            y[nd2].re = x[ix];
+            y[nd2].im = 0.0;
+            ihi = static_cast<int>(varargin_1);
+            useRadix2 = true;
+            while (useRadix2) {
+              ihi >>= 1;
+              ju ^= ihi;
+              useRadix2 = ((ju & ihi) == 0);
+            }
+
+            nd2 = ju;
+            ix++;
+          }
+
+          y[nd2].re = x[ix];
+          y[nd2].im = 0.0;
+          if (static_cast<int>(varargin_1) > 1) {
+            for (i = 0; i <= iDelta2; i += 2) {
+              temp_re = y[i + 1].re;
+              temp_im = y[i + 1].im;
+              twid_re = y[i].re;
+              twid_im = y[i].im;
+              y[i + 1].re = y[i].re - y[i + 1].re;
+              y[i + 1].im = y[i].im - y[i + 1].im;
+              twid_re += temp_re;
+              twid_im += temp_im;
+              y[i].re = twid_re;
+              y[i].im = twid_im;
+            }
+          }
+
+          nd2 = 2;
+          iDelta2 = 4;
+          ix = ((k - 1) << 2) + 1;
+          while (k > 0) {
+            int temp_re_tmp;
+            for (i = 0; i < ix; i += iDelta2) {
+              temp_re_tmp = i + nd2;
+              temp_re = y[temp_re_tmp].re;
+              temp_im = y[temp_re_tmp].im;
+              y[temp_re_tmp].re = y[i].re - temp_re;
+              y[temp_re_tmp].im = y[i].im - temp_im;
+              y[i].re = y[i].re + temp_re;
+              y[i].im = y[i].im + temp_im;
+            }
+
+            ju = 1;
+            for (j = k; j < nRowsD2; j += k) {
+              twid_re = costab[j];
+              twid_im = sintab[j];
+              i = ju;
+              ihi = ju + ix;
+              while (i < ihi) {
+                temp_re_tmp = i + nd2;
+                temp_re = twid_re * y[temp_re_tmp].re - twid_im * y[temp_re_tmp]
+                  .im;
+                temp_im = twid_re * y[temp_re_tmp].im + twid_im * y[temp_re_tmp]
+                  .re;
+                y[temp_re_tmp].re = y[i].re - temp_re;
+                y[temp_re_tmp].im = y[i].im - temp_im;
+                y[i].re = y[i].re + temp_re;
+                y[i].im = y[i].im + temp_im;
+                i += iDelta2;
+              }
+
+              ju++;
+            }
+
+            k /= 2;
+            nd2 = iDelta2;
+            iDelta2 += iDelta2;
+            ix -= nd2;
+          }
+        }
+
+        if (y.size(0) > 1) {
+          twid_re = 1.0 / static_cast<double>(y.size(0));
+          nd2 = y.size(0);
+          for (ix = 0; ix < nd2; ix++) {
+            y[ix].re = twid_re * y[ix].re;
+            y[ix].im = twid_re * y[ix].im;
+          }
+        }
+      } else {
+        internal::FFTImplementationCallback::dobluesteinfft((x), (iDelta2), (
+          static_cast<int>(varargin_1)), (costab), (sintab), (sintabinv), (y));
       }
-    } else {
-      FFTImplementationCallback::dobluesteinfft((x), (N2blue), (static_cast<int>
-        (varargin_1)), (costab), (sintab), (sintabinv), (y));
     }
   }
 }

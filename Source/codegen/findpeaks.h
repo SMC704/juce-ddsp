@@ -13,16 +13,18 @@
 #define FINDPEAKS_H
 
 // Include files
+#include "rtwtypes.h"
+#include "coder_array.h"
+#include "omp.h"
 #include <cstddef>
 #include <cstdlib>
-#include "rtwtypes.h"
-#include "omp.h"
-#include "DDSPSynth_types.h"
-#define MAX_THREADS                    omp_get_max_threads()
 
 // Function Declarations
-extern void findpeaks(const coder::array<double, 1U> &Yin, coder::array<double,
-                      1U> &Ypk, coder::array<double, 1U> &Xpk);
+namespace coder
+{
+  void findpeaks(const ::coder::array<double, 1U> &Yin, ::coder::array<double,
+                 1U> &Ypk, ::coder::array<double, 1U> &Xpk);
+}
 
 #endif
 

@@ -13,12 +13,10 @@
 #define ADDITIVE_H
 
 // Include files
-#include <cstddef>
-#include <cstdlib>
 #include "rtwtypes.h"
 #include "omp.h"
-#include "DDSPSynth_types.h"
-#define MAX_THREADS                    omp_get_max_threads()
+#include <cstddef>
+#include <cstdlib>
 
 // Function Declarations
 extern void additive(double n_samples, double sample_rate, const double

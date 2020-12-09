@@ -118,8 +118,11 @@ private:
     double phaseBuffer_in[60];
     double phaseBuffer_out[60];
     double amplitudes[4096];
+    double ld[100];
+    double f0_in[100];
+    double f0_out[100];
     double f0[4096];
-    double n_harmonics = 60;
+    double n_harmonics = 50;
     double harmonics[60];
     double addBuffer[4096];
     double initial_bias = -5.0f;

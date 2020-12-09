@@ -13,18 +13,16 @@
 #define DDSPSYNTH_DATA_H
 
 // Include files
-#include <cstddef>
-#include <cstdlib>
 #include "rtwtypes.h"
 #include "omp.h"
-#include "DDSPSynth_types.h"
+#include <cstddef>
+#include <cstdlib>
 
 // Variable Declarations
 extern unsigned int state[625];
 extern omp_nest_lock_t emlrtNestLockGlobal;
 extern boolean_T isInitialized_DDSPSynth;
 
-#define MAX_THREADS                    omp_get_max_threads()
 #endif
 
 // End of code generation (DDSPSynth_data.h)

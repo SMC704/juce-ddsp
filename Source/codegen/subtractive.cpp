@@ -15,53 +15,40 @@
 #include "DDSPSynth_data.h"
 #include "DDSPSynth_initialize.h"
 #include "DDSPSynth_rtwutil.h"
-#include "FFTImplementationCallback.h"
-#include "SystemCore.h"
-#include "additive.h"
 #include "fft.h"
-#include "getPitch2.h"
 #include "ifft.h"
+#include "rt_nonfinite.h"
+#include "coder_array.h"
 #include "rt_nonfinite.h"
 #include <cmath>
 #include <cstring>
 #include <math.h>
-
-// Function Declarations
-static void b_scale_fn(const double x[65], double y[65]);
+#include <string.h>
 
 // Function Definitions
-static void b_scale_fn(const double x[65], double y[65])
-{
-  for (int k = 0; k < 65; k++) {
-    y[k] = 2.0 * rt_powd_snf(1.0 / (std::exp(-x[k]) + 1.0), 2.3025850929940459)
-      + 1.0E-7;
-  }
-}
-
 void subtractive(double n_samples, double magnitudes[65], double color, double
                  initial_bias, double out[4096])
 {
-  int i;
-  double b_magnitudes[65];
-  dsp_ColoredNoise white_n;
-  b_dsp_ColoredNoise brown_n;
-  c_dsp_ColoredNoise violet_n;
-  double white_noise[4096];
+  coder::dsp::ColoredNoise white_n;
+  coder::dsp::b_ColoredNoise brown_n;
+  coder::dsp::c_ColoredNoise violet_n;
+  coder::array<creal_T, 1U> r;
+  coder::array<double, 1U> mag_rescaled;
+  coder::array<double, 1U> noise_freq;
+  coder::array<short, 1U> r2;
+  coder::array<boolean_T, 1U> b_r1;
   double brown_noise[4096];
   double violet_noise[4096];
+  double white_noise[4096];
   double mag_rel_bin_size;
-  int loop_ub;
-  int white_noise_size[1];
-  coder::array<creal_T, 1U> r;
-  coder::array<double, 1U> noise_freq;
-  coder::array<double, 1U> mag_rescaled;
-  int idx;
   double r1;
-  int k;
   double r3;
+  int white_noise_size[1];
   int eint;
-  coder::array<boolean_T, 1U> b_r1;
-  coder::array<short, 1U> r2;
+  int i;
+  int idx;
+  int k;
+  int loop_ub;
   if (!isInitialized_DDSPSynth) {
     DDSPSynth_initialize();
   }
@@ -69,11 +56,10 @@ void subtractive(double n_samples, double magnitudes[65], double color, double
   //  function [out, b] = subtractive(n_samples, magnitudes, color, ir_coeffs, recalculate_ir) 
   //  magnitudes: row = frames, column = freq responses
   //  magnitudes should be 65
-  for (i = 0; i < 65; i++) {
-    b_magnitudes[i] = magnitudes[i] + initial_bias;
+  for (k = 0; k < 65; k++) {
+    magnitudes[k] = 2.0 * rt_powd_snf(1.0 / (std::exp(-(magnitudes[k] +
+      initial_bias)) + 1.0), 2.3025850929940459) + 1.0E-7;
   }
-
-  b_scale_fn(b_magnitudes, magnitudes);
 
   //  generate white noise
   white_n.init();
@@ -113,7 +99,7 @@ void subtractive(double n_samples, double magnitudes[65], double color, double
     std::memcpy(&brown_noise[0], &white_noise[0], loop_ub * sizeof(double));
   }
 
-  fft(brown_noise, white_noise_size, 2.0 * (n_samples - 1.0), r);
+  coder::fft(brown_noise, white_noise_size, 2.0 * (n_samples - 1.0), r);
   noise_freq.set_size(r.size(0));
   loop_ub = r.size(0);
   for (i = 0; i < loop_ub; i++) {
@@ -129,9 +115,9 @@ void subtractive(double n_samples, double magnitudes[65], double color, double
 
   i = static_cast<int>(mag_rel_bin_size);
   for (idx = 0; idx < 65; idx++) {
-    for (loop_ub = 0; loop_ub < i; loop_ub++) {
-      mag_rescaled[static_cast<int>((static_cast<double>(loop_ub) + 1.0) * (
-        static_cast<double>(idx) + 1.0)) - 1] = magnitudes[loop_ub];
+    for (k = 0; k < i; k++) {
+      mag_rescaled[static_cast<int>((static_cast<double>(k) + 1.0) * (
+        static_cast<double>(idx) + 1.0)) - 1] = magnitudes[k];
     }
   }
 
@@ -141,7 +127,7 @@ void subtractive(double n_samples, double magnitudes[65], double color, double
     mag_rescaled[i] = noise_freq[i] * mag_rescaled[i];
   }
 
-  ifft(mag_rescaled, n_samples * 2.0, r);
+  coder::ifft(mag_rescaled, n_samples * 2.0, r);
   noise_freq.set_size(r.size(0));
   loop_ub = r.size(0);
   for (i = 0; i < loop_ub; i++) {
@@ -150,13 +136,11 @@ void subtractive(double n_samples, double magnitudes[65], double color, double
 
   if (1.0 > n_samples) {
     loop_ub = 0;
-    i = 0;
   } else {
     loop_ub = static_cast<int>(n_samples);
-    i = static_cast<int>(n_samples);
   }
 
-  noise_freq.set_size(i);
+  noise_freq.set_size(loop_ub);
   if (loop_ub <= 2) {
     if (loop_ub == 1) {
       r1 = noise_freq[0];
@@ -177,8 +161,10 @@ void subtractive(double n_samples, double magnitudes[65], double color, double
       }
     }
   } else {
+    boolean_T b;
     boolean_T exitg1;
-    if (!rtIsNaN(noise_freq[0])) {
+    b = rtIsNaN(noise_freq[0]);
+    if (!b) {
       idx = 1;
     } else {
       idx = 0;
@@ -207,7 +193,7 @@ void subtractive(double n_samples, double magnitudes[65], double color, double
       }
     }
 
-    if (!rtIsNaN(noise_freq[0])) {
+    if (!b) {
       idx = 1;
     } else {
       idx = 0;
@@ -239,8 +225,8 @@ void subtractive(double n_samples, double magnitudes[65], double color, double
 
   if (loop_ub != 0) {
     double c1;
-    double iMin;
     double iMax;
+    double iMin;
     if ((0.0 < r3) || rtIsNaN(r3)) {
       c1 = 0.0;
     } else {
@@ -292,19 +278,19 @@ void subtractive(double n_samples, double magnitudes[65], double color, double
         b_r1[i] = !b_r1[i];
       }
 
-      loop_ub = b_r1.size(0) - 1;
+      k = b_r1.size(0) - 1;
       idx = 0;
-      for (k = 0; k <= loop_ub; k++) {
-        if (b_r1[k]) {
+      for (loop_ub = 0; loop_ub <= k; loop_ub++) {
+        if (b_r1[loop_ub]) {
           idx++;
         }
       }
 
       r2.set_size(idx);
       idx = 0;
-      for (k = 0; k <= loop_ub; k++) {
-        if (b_r1[k]) {
-          r2[idx] = static_cast<short>(k + 1);
+      for (loop_ub = 0; loop_ub <= k; loop_ub++) {
+        if (b_r1[loop_ub]) {
+          r2[idx] = static_cast<short>(loop_ub + 1);
           idx++;
         }
       }
@@ -324,17 +310,17 @@ void subtractive(double n_samples, double magnitudes[65], double color, double
         noise_freq[i] = r1 * noise_freq[i] + mag_rel_bin_size;
       }
 
-      loop_ub = noise_freq.size(0);
-      for (k = 0; k < loop_ub; k++) {
-        if (noise_freq[k] < -1.0) {
-          noise_freq[k] = -1.0;
+      k = noise_freq.size(0);
+      for (loop_ub = 0; loop_ub < k; loop_ub++) {
+        if (noise_freq[loop_ub] < -1.0) {
+          noise_freq[loop_ub] = -1.0;
         }
       }
 
-      loop_ub = noise_freq.size(0);
-      for (k = 0; k < loop_ub; k++) {
-        if (noise_freq[k] > 1.0) {
-          noise_freq[k] = 1.0;
+      k = noise_freq.size(0);
+      for (loop_ub = 0; loop_ub < k; loop_ub++) {
+        if (noise_freq[loop_ub] > 1.0) {
+          noise_freq[loop_ub] = 1.0;
         }
       }
     }

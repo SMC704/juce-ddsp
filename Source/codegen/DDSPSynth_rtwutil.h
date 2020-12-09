@@ -13,16 +13,14 @@
 #define DDSPSYNTH_RTWUTIL_H
 
 // Include files
-#include <cstddef>
-#include <cstdlib>
 #include "rtwtypes.h"
 #include "omp.h"
-#include "DDSPSynth_types.h"
-#define MAX_THREADS                    omp_get_max_threads()
+#include <cstddef>
+#include <cstdlib>
 
 // Function Declarations
+extern int div_s32_floor(int numerator, int denominator);
 extern double rt_powd_snf(double u0, double u1);
-extern double rt_roundd_snf(double u);
 
 #endif
 

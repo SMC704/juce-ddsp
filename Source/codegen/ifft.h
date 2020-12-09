@@ -13,16 +13,18 @@
 #define IFFT_H
 
 // Include files
+#include "rtwtypes.h"
+#include "coder_array.h"
+#include "omp.h"
 #include <cstddef>
 #include <cstdlib>
-#include "rtwtypes.h"
-#include "omp.h"
-#include "DDSPSynth_types.h"
-#define MAX_THREADS                    omp_get_max_threads()
 
 // Function Declarations
-extern void ifft(const coder::array<double, 1U> &x, double varargin_1, coder::
-                 array<creal_T, 1U> &y);
+namespace coder
+{
+  void ifft(const ::coder::array<double, 1U> &x, double varargin_1, ::coder::
+            array<creal_T, 1U> &y);
+}
 
 #endif
 

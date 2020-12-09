@@ -11,7 +11,9 @@
 #include "HarmonicEditor.h"
 #include "codegen/additive.h"
 #include "codegen/subtractive.h"
-#include "codegen/getPitch2.h"
+#include "codegen/getPitch.h"
+#include "codegen/compute_loudness.h"
+#include "codegen/scale_f0.h"
 #include "TensorflowHandler.h"
 
 //==============================================================================
@@ -207,25 +209,27 @@ void DdspsynthAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, ju
             input[i] = 0;
     }
 
-    bool shouldGenerateAudio = buffer.getRMSLevel(0, 0, numSamples) > 0.2;
     int amps_step = floor(numSamples / 100.0f);
+    double f0_from_pitch = getPitch((double)numSamples, input, getSampleRate());
+    compute_loudness((double)numSamples, input, getSampleRate(), ld);
     for (int i = 0; i < 100; i++)
     {
-        tf_amps[i] = buffer.getRMSLevel(0, (i * amps_step), amps_step);
+        tf_amps[i] = ld[i];
+        f0_in[i] = f0_from_pitch;
     }
 
-    double f0_out = getPitch2((double)numSamples, input, getSampleRate());
+    scale_f0(f0_in, true, f0_out);
 
     for (int i = 0; i < 100; i++)
     {
-        if (shouldGenerateAudio)
-            tf_f0[i] = (float)f0_out;
-        else
-            tf_f0[i] = 0;
+        tf_f0[i] = (float)f0_out[i];
     }
     for (int i = 0; i < 4096; i++)
     {
-        f0[i] = f0_out;
+        if (f0_from_pitch != -1)
+            f0[i] = f0_from_pitch;
+        else
+            f0[i] = 0;
     }
 
     if (!tfHandler.isThreadRunning())
@@ -250,7 +254,7 @@ void DdspsynthAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, ju
 
     int audio_size[1];
 
-    if (*additiveOnParameter && shouldGenerateAudio) {
+    if (*additiveOnParameter) {
         additive((double)numSamples, getSampleRate(), amps_copy, n_harmonics, harms_copy, f0, phaseBuffer_in, (double)*additiveShiftParameter, (double)*additiveStretchParameter, addBuffer, audio_size, phaseBuffer_out);
         jassert(numSamples == audio_size[0]);
     }

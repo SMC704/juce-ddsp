@@ -13,15 +13,13 @@
 #define EML_RAND_MT19937AR_STATEFUL_H
 
 // Include files
-#include <cstddef>
-#include <cstdlib>
 #include "rtwtypes.h"
 #include "omp.h"
-#include "DDSPSynth_types.h"
-#define MAX_THREADS                    omp_get_max_threads()
+#include <cstddef>
+#include <cstdlib>
 
 // Function Declarations
-extern void c_eml_rand_mt19937ar_stateful_i();
+void eml_rand_mt19937ar_stateful_init();
 
 #endif
 

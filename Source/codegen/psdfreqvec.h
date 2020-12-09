@@ -3,25 +3,27 @@
 //  course requirements at degree granting institutions only.  Not for
 //  government, commercial, or other organizational use.
 //
-//  rescale.h
+//  psdfreqvec.h
 //
-//  Code generation for function 'rescale'
+//  Code generation for function 'psdfreqvec'
 //
 
 
-#ifndef RESCALE_H
-#define RESCALE_H
+#ifndef PSDFREQVEC_H
+#define PSDFREQVEC_H
 
 // Include files
+#include "rtwtypes.h"
+#include "omp.h"
 #include <cstddef>
 #include <cstdlib>
-#include "rtwtypes.h"
-#include "DDSPSynth_types.h"
 
 // Function Declarations
-extern void RESCALE(double A_data[], const int A_size[1], double inputMin,
-                    double inputMax);
+namespace coder
+{
+  void psdfreqvec(double varargin_4, double w_data[], int w_size[1]);
+}
 
 #endif
 
-// End of code generation (rescale.h)
+// End of code generation (psdfreqvec.h)

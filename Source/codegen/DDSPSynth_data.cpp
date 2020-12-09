@@ -11,10 +11,8 @@
 
 // Include files
 #include "DDSPSynth_data.h"
-#include "additive.h"
-#include "getPitch2.h"
 #include "rt_nonfinite.h"
-#include "subtractive.h"
+#include <string.h>
 
 // Variable Definitions
 unsigned int state[625];

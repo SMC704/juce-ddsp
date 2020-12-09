@@ -13,12 +13,10 @@
 #define DDSPSYNTH_TERMINATE_H
 
 // Include files
-#include <cstddef>
-#include <cstdlib>
 #include "rtwtypes.h"
 #include "omp.h"
-#include "DDSPSynth_types.h"
-#define MAX_THREADS                    omp_get_max_threads()
+#include <cstddef>
+#include <cstdlib>
 
 // Function Declarations
 extern void DDSPSynth_terminate();

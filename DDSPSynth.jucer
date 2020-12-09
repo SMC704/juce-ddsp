@@ -9,8 +9,45 @@
   <MAINGROUP id="wP40jo" name="DDSPSynth">
     <GROUP id="{21B404C6-B1A3-96E0-24F7-18E3D850093A}" name="Source">
       <GROUP id="{EC1CE48D-AFDF-312B-B94A-6D056A9FE965}" name="DDSP">
-        <FILE id="ypkwx0" name="chorus.cpp" compile="1" resource="0" file="Source/codegen/chorus.cpp"/>
-        <FILE id="N71yVe" name="chorus.h" compile="0" resource="0" file="Source/codegen/chorus.h"/>
+        <FILE id="G7UnBN" name="BiquadFilter.cpp" compile="1" resource="0"
+              file="Source/codegen/BiquadFilter.cpp"/>
+        <FILE id="FS57Tc" name="BiquadFilter.h" compile="0" resource="0" file="Source/codegen/BiquadFilter.h"/>
+        <FILE id="F4T2T1" name="compute_loudness.cpp" compile="1" resource="0"
+              file="Source/codegen/compute_loudness.cpp"/>
+        <FILE id="uMhjQh" name="compute_loudness.h" compile="0" resource="0"
+              file="Source/codegen/compute_loudness.h"/>
+        <FILE id="oC0Oa1" name="computeDFT.cpp" compile="1" resource="0" file="Source/codegen/computeDFT.cpp"/>
+        <FILE id="yV2FFJ" name="computeDFT.h" compile="0" resource="0" file="Source/codegen/computeDFT.h"/>
+        <FILE id="K3MG6K" name="eml_rand_mt19937ar.cpp" compile="1" resource="0"
+              file="Source/codegen/eml_rand_mt19937ar.cpp"/>
+        <FILE id="pt5Fzb" name="eml_rand_mt19937ar.h" compile="0" resource="0"
+              file="Source/codegen/eml_rand_mt19937ar.h"/>
+        <FILE id="ANdgfs" name="getPitch.cpp" compile="1" resource="0" file="Source/codegen/getPitch.cpp"/>
+        <FILE id="cRWvnG" name="getPitch.h" compile="0" resource="0" file="Source/codegen/getPitch.h"/>
+        <FILE id="Gr8fGD" name="iseven.cpp" compile="1" resource="0" file="Source/codegen/iseven.cpp"/>
+        <FILE id="BBuWfx" name="iseven.h" compile="0" resource="0" file="Source/codegen/iseven.h"/>
+        <FILE id="ZlZZ7Z" name="ProcessConstructorArguments.cpp" compile="1"
+              resource="0" file="Source/codegen/ProcessConstructorArguments.cpp"/>
+        <FILE id="Cc1bgg" name="ProcessConstructorArguments.h" compile="0"
+              resource="0" file="Source/codegen/ProcessConstructorArguments.h"/>
+        <FILE id="lCIEkC" name="psdfreqvec.cpp" compile="1" resource="0" file="Source/codegen/psdfreqvec.cpp"/>
+        <FILE id="Hk5gvU" name="psdfreqvec.h" compile="0" resource="0" file="Source/codegen/psdfreqvec.h"/>
+        <FILE id="aHLVD8" name="scale_f0.cpp" compile="1" resource="0" file="Source/codegen/scale_f0.cpp"/>
+        <FILE id="hXMzXg" name="scale_f0.h" compile="0" resource="0" file="Source/codegen/scale_f0.h"/>
+        <FILE id="pWq1Wb" name="setup.cpp" compile="1" resource="0" file="Source/codegen/setup.cpp"/>
+        <FILE id="yBcask" name="setup.h" compile="0" resource="0" file="Source/codegen/setup.h"/>
+        <FILE id="u5SzuZ" name="sort.cpp" compile="1" resource="0" file="Source/codegen/sort.cpp"/>
+        <FILE id="cGnXu0" name="sort.h" compile="0" resource="0" file="Source/codegen/sort.h"/>
+        <FILE id="yCTHvj" name="sortIdx.cpp" compile="1" resource="0" file="Source/codegen/sortIdx.cpp"/>
+        <FILE id="wbj3Rt" name="sortIdx.h" compile="0" resource="0" file="Source/codegen/sortIdx.h"/>
+        <FILE id="lUy1ef" name="stft.cpp" compile="1" resource="0" file="Source/codegen/stft.cpp"/>
+        <FILE id="nITzVT" name="stft.h" compile="0" resource="0" file="Source/codegen/stft.h"/>
+        <FILE id="B0uhJL" name="SystemProp.cpp" compile="1" resource="0" file="Source/codegen/SystemProp.cpp"/>
+        <FILE id="Sk5z2Z" name="SystemProp.h" compile="0" resource="0" file="Source/codegen/SystemProp.h"/>
+        <FILE id="gnkQHH" name="weightingFilter.cpp" compile="1" resource="0"
+              file="Source/codegen/weightingFilter.cpp"/>
+        <FILE id="BjdD6U" name="weightingFilter.h" compile="0" resource="0"
+              file="Source/codegen/weightingFilter.h"/>
         <FILE id="pQoKze" name="linspace.cpp" compile="1" resource="0" file="Source/codegen/linspace.cpp"/>
         <FILE id="CdsY6h" name="linspace.h" compile="0" resource="0" file="Source/codegen/linspace.h"/>
         <FILE id="r8rIQL" name="eml_setop.cpp" compile="1" resource="0" file="Source/codegen/eml_setop.cpp"/>
@@ -25,10 +62,6 @@
         <FILE id="MKq7gP" name="findpeaks.h" compile="0" resource="0" file="Source/codegen/findpeaks.h"/>
         <FILE id="OeU7s5" name="gencoswin.cpp" compile="1" resource="0" file="Source/codegen/gencoswin.cpp"/>
         <FILE id="M4eezR" name="gencoswin.h" compile="0" resource="0" file="Source/codegen/gencoswin.h"/>
-        <FILE id="D00yHF" name="getPitch2.cpp" compile="1" resource="0" file="Source/codegen/getPitch2.cpp"/>
-        <FILE id="csKRUC" name="getPitch2.h" compile="0" resource="0" file="Source/codegen/getPitch2.h"/>
-        <FILE id="N7EHND" name="hamming.cpp" compile="1" resource="0" file="Source/codegen/hamming.cpp"/>
-        <FILE id="Og1ucH" name="hamming.h" compile="0" resource="0" file="Source/codegen/hamming.h"/>
         <FILE id="Kr9ucg" name="ifft.cpp" compile="1" resource="0" file="Source/codegen/ifft.cpp"/>
         <FILE id="lqEyNS" name="ifft.h" compile="0" resource="0" file="Source/codegen/ifft.h"/>
         <FILE id="IjaAy9" name="interp1.cpp" compile="1" resource="0" file="Source/codegen/interp1.cpp"/>
@@ -70,16 +103,8 @@
               resource="0" file="Source/codegen/eml_rand_mt19937ar_stateful.cpp"/>
         <FILE id="WTTBRh" name="eml_rand_mt19937ar_stateful.h" compile="0"
               resource="0" file="Source/codegen/eml_rand_mt19937ar_stateful.h"/>
-        <FILE id="lr9KKd" name="firls.cpp" compile="1" resource="0" file="Source/codegen/firls.cpp"/>
-        <FILE id="goBThA" name="firls.h" compile="0" resource="0" file="Source/codegen/firls.h"/>
-        <FILE id="EnV0nq" name="mldivide.cpp" compile="1" resource="0" file="Source/codegen/mldivide.cpp"/>
-        <FILE id="ucbaqh" name="mldivide.h" compile="0" resource="0" file="Source/codegen/mldivide.h"/>
-        <FILE id="g4HZI4" name="rand.cpp" compile="1" resource="0" file="Source/codegen/rand.cpp"/>
-        <FILE id="PioHxc" name="rand.h" compile="0" resource="0" file="Source/codegen/rand.h"/>
         <FILE id="gceWau" name="randn.cpp" compile="1" resource="0" file="Source/codegen/randn.cpp"/>
         <FILE id="F3gVlR" name="randn.h" compile="0" resource="0" file="Source/codegen/randn.h"/>
-        <FILE id="DRmenl" name="rescale.cpp" compile="1" resource="0" file="Source/codegen/rescale.cpp"/>
-        <FILE id="D17MSI" name="rescale.h" compile="0" resource="0" file="Source/codegen/rescale.h"/>
         <FILE id="LbU0vJ" name="rt_nonfinite.cpp" compile="1" resource="0"
               file="Source/codegen/rt_nonfinite.cpp"/>
         <FILE id="cnVU3x" name="rt_nonfinite.h" compile="0" resource="0" file="Source/codegen/rt_nonfinite.h"/>
@@ -90,8 +115,6 @@
         <FILE id="S7nMfq" name="rtwtypes.h" compile="0" resource="0" file="Source/codegen/rtwtypes.h"/>
         <FILE id="NpINNn" name="subtractive.cpp" compile="1" resource="0" file="Source/codegen/subtractive.cpp"/>
         <FILE id="xYI3Li" name="subtractive.h" compile="0" resource="0" file="Source/codegen/subtractive.h"/>
-        <FILE id="IfywLa" name="SystemCore.cpp" compile="1" resource="0" file="Source/codegen/SystemCore.cpp"/>
-        <FILE id="u4A2CG" name="SystemCore.h" compile="0" resource="0" file="Source/codegen/SystemCore.h"/>
         <FILE id="FP0Ikj" name="tmwtypes.h" compile="0" resource="0" file="Source/codegen/tmwtypes.h"/>
       </GROUP>
       <FILE id="f6vy2M" name="PluginProcessor.cpp" compile="1" resource="0"
