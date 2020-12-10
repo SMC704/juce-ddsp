@@ -80,6 +80,22 @@ DdspsynthAudioProcessor::DdspsynthAudioProcessor()
     reverbSizeParameter = parameters.getRawParameterValue("reverbSize");
     reverbGlowParameter = parameters.getRawParameterValue("reverbGlow");
     outputGainParameter = parameters.getRawParameterValue("outputGain");
+
+    for (int i = 0; i < 65; i++) {
+        magnitudes[i] = 0;
+    }
+    for (int i = 0; i < 4096; i++) {
+        amplitudes[i] = 0;
+        f0[i] = 0;
+    }
+    for (int i = 0; i < 50; i++) {
+        harmonics[i] = 0.0;
+    }
+    for (int i = 0; i < 100; i++)
+    {
+        tf_amps[i] = -120;
+        tf_f0[i] = 0;
+    }
 }
 
 DdspsynthAudioProcessor::~DdspsynthAudioProcessor()
@@ -152,17 +168,6 @@ void DdspsynthAudioProcessor::changeProgramName (int index, const juce::String& 
 //==============================================================================
 void DdspsynthAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
 {
-    for (int i = 0; i < 65; i++) {
-        magnitudes[i] = 1;
-    }
-    for (int i = 0; i < 4096; i++) {
-        amplitudes[i] = 2;
-        f0[i] = 440;
-    }
-    for (int i = 0; i < 50; i++) {
-        harmonics[i] = 0.5;
-    }
-
     tfHandler.loadModel("C:\\Users\\svkly\\Downloads\\converted_models\\models\\violin");
 }
 
@@ -200,36 +205,77 @@ void DdspsynthAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, ju
 {
     const float* in_l = buffer.getReadPointer(0);
     numSamples = buffer.getNumSamples();
-    double input[4096];
-    for (int i = 0; i < 4096; i++)
+    if (*inputSelectParameter) //Input is line-in
     {
-        if (i < numSamples)
-            input[i] = in_l[i];
-        else
-            input[i] = 0;
-    }
+        double input[4096];
+        for (int i = 0; i < 4096; i++)
+        {
+            if (i < numSamples)
+                input[i] = in_l[i];
+            else
+                input[i] = 0;
+        }
 
-    int amps_step = floor(numSamples / 100.0f);
-    double f0_from_pitch = getPitch((double)numSamples, input, getSampleRate());
-    compute_loudness((double)numSamples, input, getSampleRate(), ld);
-    for (int i = 0; i < 100; i++)
-    {
-        tf_amps[i] = ld[i];
-        f0_in[i] = f0_from_pitch;
-    }
+        double f0_from_pitch = getPitch((double)numSamples, input, getSampleRate());
+        compute_loudness((double)numSamples, input, getSampleRate(), ld);
+        for (int i = 0; i < 100; i++)
+        {
+            tf_amps[i] = ld[i] /*/ 120.0f + 1.0f*/; // ddsp.training.preprocessing.py line 77
+            f0_in[i] = f0_from_pitch;
+        }
 
-    scale_f0(f0_in, true, f0_out);
+        scale_f0(f0_in, true, f0_out);
 
-    for (int i = 0; i < 100; i++)
-    {
-        tf_f0[i] = (float)f0_out[i];
+        for (int i = 0; i < 100; i++)
+        {
+            tf_f0[i] = (float)f0_out[i];
+        }
+        for (int i = 0; i < 4096; i++)
+        {
+            if (f0_from_pitch != -1)
+                f0[i] = f0_from_pitch;
+            else
+                f0[i] = 0;
+        }
     }
-    for (int i = 0; i < 4096; i++)
+    else //Input is midi
     {
-        if (f0_from_pitch != -1)
-            f0[i] = f0_from_pitch;
-        else
-            f0[i] = 0;
+        buffer.clear();
+        int time;
+        juce::MidiMessage m;
+        for (juce::MidiBuffer::Iterator i(midiMessages); i.getNextEvent(m, time);)
+        {
+            if (m.isNoteOn())
+            {
+                float vel = m.getFloatVelocity();
+                vel = log10f(vel) * 20.0f /*/ 120.0f + 1.0f*/; // ddsp.training.preprocessing.py line 77;
+                int note = m.getNoteNumber();
+                double noteHz = m.getMidiNoteInHertz(note);
+                float midi_ranged = note /*/ 127.0f*/; // ddsp.training.preprocessing.py line 76
+                for (int i = 0; i < 100; i++)
+                {
+                    tf_amps[i] = vel;
+                    tf_f0[i] = noteHz/*midi_ranged*/;
+                }
+                for (int i = 0; i < 4096; i++)
+                {
+                    f0[i] = noteHz;
+                }
+
+            }
+            else if (m.isNoteOff())
+            {
+                for (int i = 0; i < 100; i++)
+                {
+                    tf_amps[i] = -120;
+                    tf_f0[i] = 0;
+                }
+                for (int i = 0; i < 4096; i++)
+                {
+                    f0[i] = 0;
+                }
+            }
+        }
     }
 
     if (!tfHandler.isThreadRunning())
@@ -252,11 +298,8 @@ void DdspsynthAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, ju
         amps_copy[i] = amplitudes[i];
     }
 
-    int audio_size[1];
-
     if (*additiveOnParameter) {
-        additive((double)numSamples, getSampleRate(), amps_copy, n_harmonics, harms_copy, f0, phaseBuffer_in, (double)*additiveShiftParameter, (double)*additiveStretchParameter, addBuffer, audio_size, phaseBuffer_out);
-        jassert(numSamples == audio_size[0]);
+        additive((double)numSamples, getSampleRate(), amps_copy, n_harmonics, harms_copy, f0, phaseBuffer_in, (double)*additiveShiftParameter, (double)*additiveStretchParameter, addBuffer, phaseBuffer_out);
     }
     else {
         for (int i = 0; i < 4096; i++)
@@ -301,7 +344,7 @@ void DdspsynthAudioProcessor::setModelOutput(TensorflowHandler::ModelResults tfR
         harmonics[i] = tfResults.harmonicDistribution[i];
     }
     for (int i = 0; i < 65; i++) {
-        magnitudes[i] = tfResults.noiseMagnitudes[100 * i];
+        magnitudes[i] = tfResults.noiseMagnitudes[i];
     }
     int amp_step = floor(numSamples / 100.0f);
     for (int i = 0; i < numSamples; i++) {
