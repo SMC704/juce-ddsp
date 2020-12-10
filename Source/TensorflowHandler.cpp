@@ -131,5 +131,5 @@ void TensorflowHandler::run()
 	
 	results = _results;
 
-	signalThreadShouldExit();
+	processUpdater->triggerAsyncUpdate();
 }

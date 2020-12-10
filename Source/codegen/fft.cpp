@@ -53,8 +53,8 @@ namespace coder
       costab1q[512] = 0.0;
       n = costab1q.size(1) - 1;
       n2 = (costab1q.size(1) - 1) << 1;
-      costab.set_size(1, (n2 + 1));
-      sintab.set_size(1, (n2 + 1));
+      costab.set_size(1, (static_cast<int>(static_cast<short>(n2 + 1))));
+      sintab.set_size(1, (static_cast<int>(static_cast<short>(n2 + 1))));
       costab[0] = 1.0;
       sintab[0] = 0.0;
       for (k = 0; k < n; k++) {
