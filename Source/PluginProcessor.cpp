@@ -93,7 +93,7 @@ DdspsynthAudioProcessor::DdspsynthAudioProcessor()
     }
     for (int i = 0; i < 100; i++)
     {
-        tf_amps[i] = -120;
+        tf_amps[i] = -200;
         tf_f0[i] = 0;
     }
 }
@@ -168,7 +168,8 @@ void DdspsynthAudioProcessor::changeProgramName (int index, const juce::String& 
 //==============================================================================
 void DdspsynthAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
 {
-    tfHandler.loadModel("C:\\Users\\svkly\\Downloads\\converted_models\\models\\violin");
+    tfHandler.setAsyncUpdater(this);
+    tfHandler.loadModel("C:\\Users\\svkly\\Documents\\SMC\\models-new");
 }
 
 void DdspsynthAudioProcessor::releaseResources()
@@ -252,7 +253,7 @@ void DdspsynthAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, ju
                 int note = m.getNoteNumber();
                 double noteHz = m.getMidiNoteInHertz(note);
                 float midi_ranged = note /*/ 127.0f*/; // ddsp.training.preprocessing.py line 76
-                for (int i = 0; i < 100; i++)
+                for (int i = 0; i < 1024; i++)
                 {
                     tf_amps[i] = vel;
                     tf_f0[i] = noteHz/*midi_ranged*/;
@@ -265,9 +266,9 @@ void DdspsynthAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, ju
             }
             else if (m.isNoteOff())
             {
-                for (int i = 0; i < 100; i++)
+                for (int i = 0; i < 1024; i++)
                 {
-                    tf_amps[i] = -120;
+                    tf_amps[i] = -200;
                     tf_f0[i] = 0;
                 }
                 for (int i = 0; i < 4096; i++)
@@ -282,7 +283,6 @@ void DdspsynthAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, ju
     {
         tfHandler.setInputs(tf_f0, tf_amps);
         tfHandler.startThread();
-        tfHandler.addListener(this);
     }
 
     double harms_copy[60];
@@ -346,14 +346,15 @@ void DdspsynthAudioProcessor::setModelOutput(TensorflowHandler::ModelResults tfR
     for (int i = 0; i < 65; i++) {
         magnitudes[i] = tfResults.noiseMagnitudes[i];
     }
-    int amp_step = floor(numSamples / 100.0f);
+    //int amp_step = floor(numSamples / 100.0f);
     for (int i = 0; i < numSamples; i++) {
-        amplitudes[i] = tfResults.amplitudes[(int)floor(i / amp_step)];
+        //amplitudes[i] = tfResults.amplitudes[(int)floor(i / amp_step)];
+        amplitudes[i] = tfResults.amplitudes[0];
     }
 
 }
 
-void DdspsynthAudioProcessor::exitSignalSent()
+void DdspsynthAudioProcessor::handleAsyncUpdate()
 {
     setModelOutput(tfHandler.getOutputs());
     DBG("Got output");

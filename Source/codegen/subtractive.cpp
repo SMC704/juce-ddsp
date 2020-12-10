@@ -32,23 +32,24 @@ void subtractive(double n_samples, double magnitudes[65], double color, double
   coder::dsp::ColoredNoise white_n;
   coder::dsp::b_ColoredNoise brown_n;
   coder::dsp::c_ColoredNoise violet_n;
-  coder::array<creal_T, 1U> r;
+  coder::array<creal_T, 1U> b_x;
+  coder::array<creal_T, 1U> x;
   coder::array<double, 1U> mag_rescaled;
-  coder::array<double, 1U> noise_freq;
-  coder::array<short, 1U> r2;
-  coder::array<boolean_T, 1U> b_r1;
   double brown_noise[4096];
   double violet_noise[4096];
   double white_noise[4096];
-  double mag_rel_bin_size;
-  double r1;
+  double ex;
   double r3;
-  int white_noise_size[1];
+  double sigma;
+  int signal_size[1];
+  int b_eint;
   int eint;
   int i;
   int idx;
   int k;
   int loop_ub;
+  short b_tmp_data[4096];
+  boolean_T tmp_data[4096];
   if (!isInitialized_DDSPSynth) {
     DDSPSynth_initialize();
   }
@@ -71,9 +72,9 @@ void subtractive(double n_samples, double magnitudes[65], double color, double
   white_n.release();
   brown_n.release();
   violet_n.release();
-  mag_rel_bin_size = std::abs(color);
+  sigma = std::abs(color);
   for (i = 0; i < 4096; i++) {
-    white_noise[i] *= 1.0 - mag_rel_bin_size;
+    white_noise[i] *= 1.0 - sigma;
   }
 
   if (color > 0.0) {
@@ -84,7 +85,7 @@ void subtractive(double n_samples, double magnitudes[65], double color, double
 
   if (color < 0.0) {
     for (i = 0; i < 4096; i++) {
-      white_noise[i] += mag_rel_bin_size * brown_noise[i];
+      white_noise[i] += sigma * brown_noise[i];
     }
   }
 
@@ -94,26 +95,210 @@ void subtractive(double n_samples, double magnitudes[65], double color, double
     loop_ub = static_cast<int>(n_samples);
   }
 
-  white_noise_size[0] = loop_ub;
+  signal_size[0] = loop_ub;
   if (0 <= loop_ub - 1) {
     std::memcpy(&brown_noise[0], &white_noise[0], loop_ub * sizeof(double));
   }
 
-  coder::fft(brown_noise, white_noise_size, 2.0 * (n_samples - 1.0), r);
-  noise_freq.set_size(r.size(0));
-  loop_ub = r.size(0);
-  for (i = 0; i < loop_ub; i++) {
-    noise_freq[i] = r[i].re;
+  if (loop_ub <= 2) {
+    if (loop_ub == 1) {
+      r3 = white_noise[0];
+      ex = white_noise[0];
+    } else {
+      if ((white_noise[0] > white_noise[1]) || (rtIsNaN(white_noise[0]) &&
+           (!rtIsNaN(white_noise[1])))) {
+        r3 = white_noise[1];
+      } else {
+        r3 = white_noise[0];
+      }
+
+      if ((white_noise[0] < white_noise[1]) || (rtIsNaN(white_noise[0]) &&
+           (!rtIsNaN(white_noise[1])))) {
+        ex = white_noise[1];
+      } else {
+        ex = white_noise[0];
+      }
+    }
+  } else {
+    boolean_T b;
+    boolean_T exitg1;
+    b = rtIsNaN(white_noise[0]);
+    if (!b) {
+      idx = 1;
+    } else {
+      idx = 0;
+      k = 2;
+      exitg1 = false;
+      while ((!exitg1) && (k <= loop_ub)) {
+        if (!rtIsNaN(white_noise[k - 1])) {
+          idx = k;
+          exitg1 = true;
+        } else {
+          k++;
+        }
+      }
+    }
+
+    if (idx == 0) {
+      r3 = white_noise[0];
+    } else {
+      r3 = white_noise[idx - 1];
+      i = idx + 1;
+      for (k = i; k <= loop_ub; k++) {
+        sigma = white_noise[k - 1];
+        if (r3 > sigma) {
+          r3 = sigma;
+        }
+      }
+    }
+
+    if (!b) {
+      idx = 1;
+    } else {
+      idx = 0;
+      k = 2;
+      exitg1 = false;
+      while ((!exitg1) && (k <= loop_ub)) {
+        if (!rtIsNaN(white_noise[k - 1])) {
+          idx = k;
+          exitg1 = true;
+        } else {
+          k++;
+        }
+      }
+    }
+
+    if (idx == 0) {
+      ex = white_noise[0];
+    } else {
+      ex = white_noise[idx - 1];
+      i = idx + 1;
+      for (k = i; k <= loop_ub; k++) {
+        sigma = white_noise[k - 1];
+        if (ex < sigma) {
+          ex = sigma;
+        }
+      }
+    }
   }
 
-  mag_rel_bin_size = std::ceil(n_samples / 65.0);
-  loop_ub = static_cast<int>(65.0 * mag_rel_bin_size);
+  if (loop_ub != 0) {
+    double iMax;
+    double iMin;
+    if ((0.0 < ex) || rtIsNaN(ex)) {
+      sigma = 0.0;
+    } else {
+      sigma = ex;
+    }
+
+    if ((!(sigma > r3)) && (!rtIsNaN(r3))) {
+      sigma = r3;
+    }
+
+    signal_size[0] = loop_ub;
+    for (i = 0; i < loop_ub; i++) {
+      brown_noise[i] = white_noise[i] - sigma;
+    }
+
+    iMin = r3 - sigma;
+    iMax = ex - sigma;
+    sigma = std::abs(iMax);
+    r3 = std::abs(iMin);
+    if ((sigma > r3) || rtIsNaN(r3)) {
+      ex = sigma;
+    } else {
+      ex = r3;
+    }
+
+    if ((!rtIsInf(ex)) && (!rtIsNaN(ex))) {
+      frexp(ex, &b_eint);
+    } else {
+      b_eint = 0;
+    }
+
+    sigma = rt_powd_snf(2.0, static_cast<double>(b_eint) - 1.0);
+    ex = (static_cast<double>(b_eint) + 1.0) / 2.0;
+    if (ex < 0.0) {
+      ex = std::ceil(ex);
+    } else {
+      ex = std::floor(ex);
+    }
+
+    r3 = rt_powd_snf(2.0, ex - 1.0);
+    if (iMin == iMax) {
+      for (i = 0; i < loop_ub; i++) {
+        tmp_data[i] = rtIsNaN(brown_noise[i]);
+      }
+
+      for (i = 0; i < loop_ub; i++) {
+        tmp_data[i] = !tmp_data[i];
+      }
+
+      idx = loop_ub - 1;
+      loop_ub = 0;
+      k = 0;
+      for (b_eint = 0; b_eint <= idx; b_eint++) {
+        if (tmp_data[b_eint]) {
+          loop_ub++;
+          b_tmp_data[k] = static_cast<short>(b_eint + 1);
+          k++;
+        }
+      }
+
+      for (i = 0; i < loop_ub; i++) {
+        brown_noise[b_tmp_data[i] - 1] = -1.0;
+      }
+    } else {
+      double c1;
+      c1 = iMax / sigma;
+      sigma = iMin / sigma;
+      ex = 2.0 / (iMax / r3 - iMin / r3) / r3;
+      sigma = r3 * ((c1 * (-1.0 / r3) - sigma * (1.0 / r3)) / (c1 - sigma));
+      mag_rescaled.set_size(loop_ub);
+      for (i = 0; i < loop_ub; i++) {
+        mag_rescaled[i] = brown_noise[i];
+      }
+
+      for (i = 0; i < loop_ub; i++) {
+        brown_noise[i] = ex * brown_noise[i] + sigma;
+      }
+
+      idx = mag_rescaled.size(0);
+      for (b_eint = 0; b_eint < idx; b_eint++) {
+        if (brown_noise[b_eint] < -1.0) {
+          brown_noise[b_eint] = -1.0;
+        }
+      }
+
+      for (b_eint = 0; b_eint < loop_ub; b_eint++) {
+        if (brown_noise[b_eint] > 1.0) {
+          brown_noise[b_eint] = 1.0;
+        }
+      }
+    }
+  }
+
+  sigma = std::abs(n_samples);
+  if (!rtIsInf(sigma)) {
+    r3 = frexp(sigma, &eint);
+    sigma = eint;
+    if (r3 == 0.5) {
+      sigma = static_cast<double>(eint) - 1.0;
+    }
+  }
+
+  coder::fft(brown_noise, signal_size, rt_powd_snf(2.0, sigma), x);
+
+  //      noise_freq = real(fft(signal, NFFT))/NFFT;
+  //      noise_freq_half = noise_freq(1:end/2+1);
+  sigma = std::ceil(n_samples / 65.0);
+  loop_ub = static_cast<int>(65.0 * sigma);
   mag_rescaled.set_size(loop_ub);
   for (i = 0; i < loop_ub; i++) {
     mag_rescaled[i] = 0.0;
   }
 
-  i = static_cast<int>(mag_rel_bin_size);
+  i = static_cast<int>(sigma);
   for (idx = 0; idx < 65; idx++) {
     for (k = 0; k < i; k++) {
       mag_rescaled[static_cast<int>((static_cast<double>(k) + 1.0) * (
@@ -121,209 +306,31 @@ void subtractive(double n_samples, double magnitudes[65], double color, double
     }
   }
 
-  loop_ub = static_cast<int>(static_cast<double>(noise_freq.size(0)) / 2.0 + 1.0);
-  mag_rescaled.set_size(loop_ub);
+  b_x.set_size(x.size(0));
+  loop_ub = x.size(0);
   for (i = 0; i < loop_ub; i++) {
-    mag_rescaled[i] = noise_freq[i] * mag_rescaled[i];
+    sigma = x[i].re;
+    ex = x[i].im;
+    if (ex == 0.0) {
+      r3 = sigma / n_samples;
+      sigma = 0.0;
+    } else if (sigma == 0.0) {
+      r3 = 0.0;
+      sigma = ex / n_samples;
+    } else {
+      r3 = sigma / n_samples;
+      sigma = ex / n_samples;
+    }
+
+    b_x[i].re = mag_rescaled[i] * r3;
+    b_x[i].im = mag_rescaled[i] * sigma;
   }
 
-  coder::ifft(mag_rescaled, n_samples * 2.0, r);
-  noise_freq.set_size(r.size(0));
-  loop_ub = r.size(0);
+  coder::ifft(b_x, n_samples, x);
+  mag_rescaled.set_size(x.size(0));
+  loop_ub = x.size(0);
   for (i = 0; i < loop_ub; i++) {
-    noise_freq[i] = r[i].re;
-  }
-
-  if (1.0 > n_samples) {
-    loop_ub = 0;
-  } else {
-    loop_ub = static_cast<int>(n_samples);
-  }
-
-  noise_freq.set_size(loop_ub);
-  if (loop_ub <= 2) {
-    if (loop_ub == 1) {
-      r1 = noise_freq[0];
-      r3 = noise_freq[0];
-    } else {
-      if ((noise_freq[0] > noise_freq[1]) || (rtIsNaN(noise_freq[0]) &&
-           (!rtIsNaN(noise_freq[1])))) {
-        r1 = noise_freq[1];
-      } else {
-        r1 = noise_freq[0];
-      }
-
-      if ((noise_freq[0] < noise_freq[1]) || (rtIsNaN(noise_freq[0]) &&
-           (!rtIsNaN(noise_freq[1])))) {
-        r3 = noise_freq[1];
-      } else {
-        r3 = noise_freq[0];
-      }
-    }
-  } else {
-    boolean_T b;
-    boolean_T exitg1;
-    b = rtIsNaN(noise_freq[0]);
-    if (!b) {
-      idx = 1;
-    } else {
-      idx = 0;
-      k = 2;
-      exitg1 = false;
-      while ((!exitg1) && (k <= loop_ub)) {
-        if (!rtIsNaN(noise_freq[k - 1])) {
-          idx = k;
-          exitg1 = true;
-        } else {
-          k++;
-        }
-      }
-    }
-
-    if (idx == 0) {
-      r1 = noise_freq[0];
-    } else {
-      r1 = noise_freq[idx - 1];
-      i = idx + 1;
-      for (k = i; k <= loop_ub; k++) {
-        mag_rel_bin_size = noise_freq[k - 1];
-        if (r1 > mag_rel_bin_size) {
-          r1 = mag_rel_bin_size;
-        }
-      }
-    }
-
-    if (!b) {
-      idx = 1;
-    } else {
-      idx = 0;
-      k = 2;
-      exitg1 = false;
-      while ((!exitg1) && (k <= loop_ub)) {
-        if (!rtIsNaN(noise_freq[k - 1])) {
-          idx = k;
-          exitg1 = true;
-        } else {
-          k++;
-        }
-      }
-    }
-
-    if (idx == 0) {
-      r3 = noise_freq[0];
-    } else {
-      r3 = noise_freq[idx - 1];
-      i = idx + 1;
-      for (k = i; k <= loop_ub; k++) {
-        mag_rel_bin_size = noise_freq[k - 1];
-        if (r3 < mag_rel_bin_size) {
-          r3 = mag_rel_bin_size;
-        }
-      }
-    }
-  }
-
-  if (loop_ub != 0) {
-    double c1;
-    double iMax;
-    double iMin;
-    if ((0.0 < r3) || rtIsNaN(r3)) {
-      c1 = 0.0;
-    } else {
-      c1 = r3;
-    }
-
-    if ((c1 > r1) || rtIsNaN(r1)) {
-      mag_rel_bin_size = c1;
-    } else {
-      mag_rel_bin_size = r1;
-    }
-
-    for (i = 0; i < loop_ub; i++) {
-      noise_freq[i] = noise_freq[i] - mag_rel_bin_size;
-    }
-
-    iMin = r1 - mag_rel_bin_size;
-    iMax = r3 - mag_rel_bin_size;
-    c1 = std::abs(iMax);
-    mag_rel_bin_size = std::abs(iMin);
-    if ((c1 > mag_rel_bin_size) || rtIsNaN(mag_rel_bin_size)) {
-      mag_rel_bin_size = c1;
-    }
-
-    if ((!rtIsInf(mag_rel_bin_size)) && (!rtIsNaN(mag_rel_bin_size))) {
-      frexp(mag_rel_bin_size, &eint);
-    } else {
-      eint = 0;
-    }
-
-    r1 = rt_powd_snf(2.0, static_cast<double>(eint) - 1.0);
-    mag_rel_bin_size = (static_cast<double>(eint) + 1.0) / 2.0;
-    if (mag_rel_bin_size < 0.0) {
-      mag_rel_bin_size = std::ceil(mag_rel_bin_size);
-    } else {
-      mag_rel_bin_size = std::floor(mag_rel_bin_size);
-    }
-
-    r3 = rt_powd_snf(2.0, mag_rel_bin_size - 1.0);
-    if (iMin == iMax) {
-      b_r1.set_size(noise_freq.size(0));
-      loop_ub = noise_freq.size(0);
-      for (i = 0; i < loop_ub; i++) {
-        b_r1[i] = rtIsNaN(noise_freq[i]);
-      }
-
-      loop_ub = b_r1.size(0);
-      for (i = 0; i < loop_ub; i++) {
-        b_r1[i] = !b_r1[i];
-      }
-
-      k = b_r1.size(0) - 1;
-      idx = 0;
-      for (loop_ub = 0; loop_ub <= k; loop_ub++) {
-        if (b_r1[loop_ub]) {
-          idx++;
-        }
-      }
-
-      r2.set_size(idx);
-      idx = 0;
-      for (loop_ub = 0; loop_ub <= k; loop_ub++) {
-        if (b_r1[loop_ub]) {
-          r2[idx] = static_cast<short>(loop_ub + 1);
-          idx++;
-        }
-      }
-
-      loop_ub = r2.size(0);
-      for (i = 0; i < loop_ub; i++) {
-        noise_freq[r2[i] - 1] = -1.0;
-      }
-    } else {
-      c1 = iMax / r1;
-      mag_rel_bin_size = iMin / r1;
-      r1 = 2.0 / (iMax / r3 - iMin / r3) / r3;
-      mag_rel_bin_size = r3 * ((c1 * (-1.0 / r3) - mag_rel_bin_size * (1.0 / r3))
-        / (c1 - mag_rel_bin_size));
-      loop_ub = noise_freq.size(0);
-      for (i = 0; i < loop_ub; i++) {
-        noise_freq[i] = r1 * noise_freq[i] + mag_rel_bin_size;
-      }
-
-      k = noise_freq.size(0);
-      for (loop_ub = 0; loop_ub < k; loop_ub++) {
-        if (noise_freq[loop_ub] < -1.0) {
-          noise_freq[loop_ub] = -1.0;
-        }
-      }
-
-      k = noise_freq.size(0);
-      for (loop_ub = 0; loop_ub < k; loop_ub++) {
-        if (noise_freq[loop_ub] > 1.0) {
-          noise_freq[loop_ub] = 1.0;
-        }
-      }
-    }
+    mag_rescaled[i] = x[i].re;
   }
 
   std::memset(&out[0], 0, 4096U * sizeof(double));
@@ -334,7 +341,7 @@ void subtractive(double n_samples, double magnitudes[65], double color, double
   }
 
   for (i = 0; i < loop_ub; i++) {
-    out[i] = noise_freq[i];
+    out[i] = mag_rescaled[i];
   }
 }
 

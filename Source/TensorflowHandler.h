@@ -23,7 +23,7 @@ public:
 	// or possibly the model file?
 	static const int numHarmonics = 60;
 	static const int numMagnitudes = 65;
-	static const int timeSteps = 100;
+	static const int timeSteps = 1;
 
 	struct ModelResults
 	{
@@ -37,6 +37,7 @@ public:
 	void loadModel(const char* path);
 	void unloadModel();
 	void setInputs(float f0[timeSteps], float amps[timeSteps]);
+	void setAsyncUpdater(juce::AsyncUpdater* _asyncUpdater) { processUpdater = _asyncUpdater; };
 	ModelResults getOutputs() { return results; };
 
 	void run() override;
@@ -77,6 +78,7 @@ private:
 	
 	ModelResults results;
 
+	juce::AsyncUpdater* processUpdater;
 	//==============================================================================
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (TensorflowHandler)
 };

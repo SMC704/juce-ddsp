@@ -16,7 +16,7 @@
 //==============================================================================
 /**
 */
-class DdspsynthAudioProcessor : public juce::AudioProcessor, juce::Thread::Listener
+class DdspsynthAudioProcessor : public juce::AudioProcessor, juce::AsyncUpdater
 {
 public:
     //==============================================================================
@@ -142,12 +142,14 @@ private:
 	TensorflowHandler tfHandler;
     TensorflowHandler::ModelResults tfResults;
     // TF test
-    float tf_f0[100];
-    float tf_amps[100];
-    // Inherited via Listener
-    virtual void exitSignalSent() override;
+    float tf_f0[1024];
+    float tf_amps[1024];
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (DdspsynthAudioProcessor)
+
+
+        // Inherited via AsyncUpdater
+        virtual void handleAsyncUpdate() override;
 
 };

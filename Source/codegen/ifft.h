@@ -22,7 +22,7 @@
 // Function Declarations
 namespace coder
 {
-  void ifft(const ::coder::array<double, 1U> &x, double varargin_1, ::coder::
+  void ifft(const ::coder::array<creal_T, 1U> &x, double varargin_1, ::coder::
             array<creal_T, 1U> &y);
 }
 
