@@ -54,6 +54,11 @@ void TensorflowHandler::unloadModel()
 
 void TensorflowHandler::loadModel(const char* path)
 {
+	// make sure no one tries to run the model while we're changing it
+	const juce::ScopedLock loadLock(lock);
+	
+	unloadModel();
+
 	tfGraph = TF_NewGraph();
 	tfStatus = TF_NewStatus();
 	tfSessionOpts = TF_NewSessionOptions();
@@ -89,6 +94,9 @@ void TensorflowHandler::loadModel(const char* path)
 
 void TensorflowHandler::setInputs(float f0[TensorflowHandler::timeSteps], float amps[TensorflowHandler::timeSteps])
 {	
+	// this might/should be changed into ScopedTryLock and returning false
+	const juce::ScopedLock loadLock(lock);
+
 	float* f0InputData = (float*)TF_TensorData(tfInputValues[0]);
 	float* ldInputData = (float*)TF_TensorData(tfInputValues[1]);
 
@@ -101,6 +109,9 @@ void TensorflowHandler::setInputs(float f0[TensorflowHandler::timeSteps], float 
 
 void TensorflowHandler::run()
 {
+	// this might/should be changed into ScopedTryLock and returning false
+	const juce::ScopedLock loadLock(lock);
+
 	TensorflowHandler::ModelResults _results;
 
 	TF_SessionRun(tfSession, NULL, tfInput, tfInputValues, numInputs, tfOutput, tfOutputValues, numOutputs, NULL, 0, NULL, tfStatus);

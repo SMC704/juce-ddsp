@@ -44,6 +44,8 @@ public:
 private:
 	//DdspsynthAudioProcessor* audioProcessor;
 
+	juce::CriticalSection lock;
+
 	TF_Graph* tfGraph = NULL;
 	TF_Status* tfStatus = NULL;
 	TF_SessionOptions* tfSessionOpts = NULL;

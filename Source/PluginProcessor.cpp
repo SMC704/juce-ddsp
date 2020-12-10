@@ -36,7 +36,7 @@ DdspsynthAudioProcessor::DdspsynthAudioProcessor()
         std::make_unique<juce::AudioParameterBool>("inputIsLine", "Input is line in", false),
         // Model
         std::make_unique<juce::AudioParameterBool>("modelOn", "Use model", true),
-        std::make_unique<juce::AudioParameterChoice>("modelSelect", "Model select", juce::StringArray({ "Violin", "Flute", "TenorSax", "Trumpet" }), 0),
+        std::make_unique<juce::AudioParameterChoice>("modelSelect", "Model select", juce::StringArray({ "violin", "flute", "tenorsax", "trumpet" }), 0),
         // Additive
         std::make_unique<juce::AudioParameterBool>("additiveOn", "Additive synth on", true),
         std::make_unique<juce::AudioParameterFloat>("additiveShift", "Shift amount", -12.0f, 12.0f, 0.0f),
@@ -80,6 +80,8 @@ DdspsynthAudioProcessor::DdspsynthAudioProcessor()
     reverbSizeParameter = parameters.getRawParameterValue("reverbSize");
     reverbGlowParameter = parameters.getRawParameterValue("reverbGlow");
     outputGainParameter = parameters.getRawParameterValue("outputGain");
+
+	parameters.addParameterListener("modelSelect", this);
 }
 
 DdspsynthAudioProcessor::~DdspsynthAudioProcessor()
@@ -163,7 +165,7 @@ void DdspsynthAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBl
         harmonics[i] = 0.5;
     }
 
-    tfHandler.loadModel("C:\\Users\\svkly\\Downloads\\converted_models\\models\\violin");
+    tfHandler.loadModel((modelDir + "violin").getCharPointer());
 }
 
 void DdspsynthAudioProcessor::releaseResources()
@@ -308,6 +310,18 @@ void DdspsynthAudioProcessor::setModelOutput(TensorflowHandler::ModelResults tfR
         amplitudes[i] = tfResults.amplitudes[(int)floor(i / amp_step)];
     }
 
+}
+
+void DdspsynthAudioProcessor::parameterChanged(const juce::String & parameterID, float newValue)
+{
+	if (parameterID == "modelSelect")
+	{
+		// getRawParameterValue is "not guaranteed" to contain up-to-date value
+		auto param = (juce::AudioParameterChoice*) parameters.getParameter("modelSelect");
+		juce::String modelName = param->getCurrentChoiceName();
+		DBG("Processor notified to select model " + modelName);
+		tfHandler.loadModel((modelDir + modelName).getCharPointer());
+	}
 }
 
 void DdspsynthAudioProcessor::exitSignalSent()
