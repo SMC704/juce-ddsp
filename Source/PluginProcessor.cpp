@@ -167,17 +167,6 @@ void DdspsynthAudioProcessor::changeProgramName (int index, const juce::String& 
 //==============================================================================
 void DdspsynthAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
 {
-    for (int i = 0; i < 65; i++) {
-        magnitudes[i] = 1;
-    }
-    for (int i = 0; i < 4096; i++) {
-        amplitudes[i] = 2;
-        f0[i] = 440;
-    }
-    for (int i = 0; i < 50; i++) {
-        harmonics[i] = 0.5;
-    }
-
     tfHandler.setAsyncUpdater(this);
     tfHandler.loadModel((modelDir + "violin").getCharPointer());
 
