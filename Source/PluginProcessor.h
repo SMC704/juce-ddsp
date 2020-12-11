@@ -16,7 +16,7 @@
 //==============================================================================
 /**
 */
-class DdspsynthAudioProcessor : public juce::AudioProcessor, juce::AsyncUpdater
+class DdspsynthAudioProcessor : public juce::AudioProcessor, juce::AsyncUpdater, juce::AudioProcessorValueTreeState::Listener
 {
 public:
     //==============================================================================
@@ -89,6 +89,8 @@ public:
 
  //   void onOnOffAddChange(bool button);
 
+	void parameterChanged(const juce::String &parameterID, float newValue = 0) override;
+
 private:
 
     // Parameters
@@ -151,6 +153,8 @@ private:
     // TF test
     float tf_f0;
     float tf_amps;
+
+	const juce::String modelDir = "../../Models/";
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (DdspsynthAudioProcessor)
