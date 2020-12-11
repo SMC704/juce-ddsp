@@ -13,7 +13,6 @@
 #include "BiquadFilter.h"
 #include "rt_nonfinite.h"
 #include "setup.h"
-#include <string.h>
 
 // Function Definitions
 namespace coder

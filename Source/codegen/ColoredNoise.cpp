@@ -14,7 +14,6 @@
 #include "randn.h"
 #include "rt_nonfinite.h"
 #include <cstring>
-#include <string.h>
 
 // Function Definitions
 namespace coder

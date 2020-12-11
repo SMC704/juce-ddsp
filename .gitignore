@@ -68,3 +68,4 @@ extras/Projucer/JUCECompileEngine.dylib
 
 .vscode
 /build
+/Source/Python/__pycache__

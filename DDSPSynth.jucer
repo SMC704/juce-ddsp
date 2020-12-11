@@ -16,8 +16,6 @@
               file="Source/codegen/compute_loudness.cpp"/>
         <FILE id="uMhjQh" name="compute_loudness.h" compile="0" resource="0"
               file="Source/codegen/compute_loudness.h"/>
-        <FILE id="oC0Oa1" name="computeDFT.cpp" compile="1" resource="0" file="Source/codegen/computeDFT.cpp"/>
-        <FILE id="yV2FFJ" name="computeDFT.h" compile="0" resource="0" file="Source/codegen/computeDFT.h"/>
         <FILE id="K3MG6K" name="eml_rand_mt19937ar.cpp" compile="1" resource="0"
               file="Source/codegen/eml_rand_mt19937ar.cpp"/>
         <FILE id="pt5Fzb" name="eml_rand_mt19937ar.h" compile="0" resource="0"
@@ -40,8 +38,6 @@
         <FILE id="cGnXu0" name="sort.h" compile="0" resource="0" file="Source/codegen/sort.h"/>
         <FILE id="yCTHvj" name="sortIdx.cpp" compile="1" resource="0" file="Source/codegen/sortIdx.cpp"/>
         <FILE id="wbj3Rt" name="sortIdx.h" compile="0" resource="0" file="Source/codegen/sortIdx.h"/>
-        <FILE id="lUy1ef" name="stft.cpp" compile="1" resource="0" file="Source/codegen/stft.cpp"/>
-        <FILE id="nITzVT" name="stft.h" compile="0" resource="0" file="Source/codegen/stft.h"/>
         <FILE id="B0uhJL" name="SystemProp.cpp" compile="1" resource="0" file="Source/codegen/SystemProp.cpp"/>
         <FILE id="Sk5z2Z" name="SystemProp.h" compile="0" resource="0" file="Source/codegen/SystemProp.h"/>
         <FILE id="gnkQHH" name="weightingFilter.cpp" compile="1" resource="0"

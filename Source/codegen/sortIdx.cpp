@@ -12,7 +12,6 @@
 // Include files
 #include "sortIdx.h"
 #include "rt_nonfinite.h"
-#include <string.h>
 
 // Function Definitions
 namespace coder

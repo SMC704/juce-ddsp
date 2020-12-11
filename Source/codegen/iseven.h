@@ -21,13 +21,7 @@
 // Function Declarations
 namespace coder
 {
-  namespace signalwavelet
-  {
-    namespace internal
-    {
-      boolean_T iseven(double x);
-    }
-  }
+  boolean_T iseven(double x);
 }
 
 #endif

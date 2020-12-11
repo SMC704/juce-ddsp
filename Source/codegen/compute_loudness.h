@@ -19,8 +19,8 @@
 #include <cstdlib>
 
 // Function Declarations
-extern void compute_loudness(double n_samples, const double audio[4096], double
-  sample_rate, double loudness_out[100]);
+extern double compute_loudness(double n_samples, const double audio[4096],
+  double sample_rate);
 
 #endif
 

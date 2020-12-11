@@ -20,7 +20,6 @@
 #include "rt_nonfinite.h"
 #include <cmath>
 #include <cstring>
-#include <string.h>
 
 // Function Definitions
 void additive(double n_samples, double sample_rate, const double amplitudes[4096],
@@ -215,13 +214,11 @@ void additive(double n_samples, double sample_rate, const double amplitudes[4096
   //      t.TileSpacing = 'none';
   //
   //  end
-  //  Normalize the harmonic distribution
-  for (nx = 0; nx < 60; nx++) {
-    b_sample_rate = harmonic_distribution[nx];
-    b_sample_rate /= b_sample_rate;
-    harmonic_distribution[nx] = b_sample_rate;
-  }
-
+  //      % Normalize the harmonic distribution
+  //      harm_sum = sum(harmonic_distribution,2);
+  //      for c = 1:size(harmonic_distribution,2)
+  //          harmonic_distribution(1:end,c) = harmonic_distribution(1:end,c) ./ harm_sum; 
+  //      end
   //  Create harmonic amplitudes
   harmonic_amplitudes.set_size(loop_ub, 60);
   b_loop_ub = loop_ub * 60;
