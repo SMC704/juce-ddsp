@@ -18,7 +18,6 @@
 #include "rt_nonfinite.h"
 #include <cmath>
 #include <cstring>
-#include <string.h>
 
 // Function Definitions
 namespace coder

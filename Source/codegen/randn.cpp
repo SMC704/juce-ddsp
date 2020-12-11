@@ -15,7 +15,6 @@
 #include "eml_rand_mt19937ar.h"
 #include "rt_nonfinite.h"
 #include <cmath>
-#include <string.h>
 
 // Function Definitions
 namespace coder

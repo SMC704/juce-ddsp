@@ -26,30 +26,8 @@
 #include <cmath>
 #include <cstring>
 #include <math.h>
-#include <string.h>
-
-// Function Declarations
-static double rt_roundd_snf(double u);
 
 // Function Definitions
-static double rt_roundd_snf(double u)
-{
-  double y;
-  if (std::abs(u) < 4.503599627370496E+15) {
-    if (u >= 0.5) {
-      y = std::floor(u + 0.5);
-    } else if (u > -0.5) {
-      y = u * 0.0;
-    } else {
-      y = std::ceil(u - 0.5);
-    }
-  } else {
-    y = u;
-  }
-
-  return y;
-}
-
 double getPitch(double n_samples, const double input[4096], double fs)
 {
   coder::array<creal_T, 1U> Y;
@@ -198,7 +176,7 @@ double getPitch(double n_samples, const double input[4096], double fs)
   }
 
   if (nd2 == 0) {
-    if (coder::signalwavelet::internal::iseven(static_cast<double>(loop_ub))) {
+    if (coder::iseven(static_cast<double>(loop_ub))) {
       int win_size_idx_0;
       coder::calc_window(static_cast<double>(loop_ub) / 2.0, static_cast<double>
                          (loop_ub), tmp_data, tmp_size);

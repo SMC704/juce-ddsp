@@ -14,7 +14,6 @@
 #include "DDSPSynth_data.h"
 #include "eml_rand_mt19937ar_stateful.h"
 #include "rt_nonfinite.h"
-#include <string.h>
 
 // Function Definitions
 void DDSPSynth_initialize()

@@ -13,7 +13,6 @@
 #include "SystemProp.h"
 #include "rt_nonfinite.h"
 #include "weightingFilter.h"
-#include <string.h>
 
 // Function Definitions
 namespace coder

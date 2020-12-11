@@ -120,9 +120,9 @@ private:
     double phaseBuffer_in[60];
     double phaseBuffer_out[60];
     double amplitudes[4096];
-    double ld[100];
-    double f0_in[100];
-    double f0_out[100];
+    double ld;
+    double f0_in;
+    double f0_out;
     double f0[4096];
     double n_harmonics = 50;
     double harmonics[60];
@@ -131,6 +131,13 @@ private:
     double subBuffer[4096];
     double magnitudes[65];
     double numSamples;
+
+    // Midi features
+    juce::ADSR adsr;
+    juce::ADSR::Parameters adsrParams = { 1.0f, 1.0f, 1.0f, 1.0f };
+    float midiVelocity;
+    float adsrVelocity;
+    float midiNoteHz;
 
     // FFT Window
     juce::dsp::FFT forwardFFT;
@@ -144,8 +151,8 @@ private:
 	TensorflowHandler tfHandler;
     TensorflowHandler::ModelResults tfResults;
     // TF test
-    float tf_f0[1024];
-    float tf_amps[1024];
+    float tf_f0;
+    float tf_amps;
 
 	const juce::String modelDir = "../../Models/";
 

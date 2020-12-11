@@ -23,7 +23,6 @@
 #include <cmath>
 #include <cstring>
 #include <math.h>
-#include <string.h>
 
 // Function Definitions
 void subtractive(double n_samples, double magnitudes[65], double color, double

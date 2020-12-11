@@ -19,7 +19,6 @@
 #include <cmath>
 #include <cstring>
 #include <math.h>
-#include <string.h>
 
 // Function Definitions
 void scale_f0(const double f0_in[100], boolean_T to_midi, double f0_scaled[100])

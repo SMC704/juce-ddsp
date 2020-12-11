@@ -13,7 +13,6 @@
 #include "DDSPSynth_terminate.h"
 #include "DDSPSynth_data.h"
 #include "rt_nonfinite.h"
-#include <string.h>
 
 // Function Definitions
 void DDSPSynth_terminate()

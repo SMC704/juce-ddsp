@@ -22,7 +22,6 @@
 // Function Declarations
 namespace coder
 {
-  void fft(const ::coder::array<double, 2U> &x, ::coder::array<creal_T, 2U> &y);
   void fft(const double x_data[], const int x_size[1], double varargin_1, ::
            coder::array<creal_T, 1U> &y);
 }

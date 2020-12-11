@@ -92,11 +92,9 @@ DdspsynthAudioProcessor::DdspsynthAudioProcessor()
     for (int i = 0; i < 50; i++) {
         harmonics[i] = 0.0;
     }
-    for (int i = 0; i < 100; i++)
-    {
-        tf_amps[i] = -200;
-        tf_f0[i] = 0;
-    }
+
+    tf_amps = -200;
+    tf_f0 = 0;
 }
 
 DdspsynthAudioProcessor::~DdspsynthAudioProcessor()
@@ -182,6 +180,9 @@ void DdspsynthAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBl
 
     tfHandler.setAsyncUpdater(this);
     tfHandler.loadModel((modelDir + "violin").getCharPointer());
+
+    adsr.setSampleRate(sampleRate);
+    adsr.setParameters(adsrParams);
 }
 
 void DdspsynthAudioProcessor::releaseResources()
@@ -229,26 +230,15 @@ void DdspsynthAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, ju
                 input[i] = 0;
         }
 
-        double f0_from_pitch = getPitch((double)numSamples, input, getSampleRate());
-        compute_loudness((double)numSamples, input, getSampleRate(), ld);
-        for (int i = 0; i < 100; i++)
-        {
-            tf_amps[i] = ld[i] /*/ 120.0f + 1.0f*/; // ddsp.training.preprocessing.py line 77
-            f0_in[i] = f0_from_pitch;
-        }
-
-        scale_f0(f0_in, true, f0_out);
-
-        for (int i = 0; i < 100; i++)
-        {
-            tf_f0[i] = (float)f0_out[i];
-        }
+        tf_amps = compute_loudness((double)numSamples, input, getSampleRate());
+        f0_in = getPitch((double)numSamples, input, getSampleRate());
+        tf_f0 = f0_in;
         for (int i = 0; i < 4096; i++)
         {
-            if (f0_from_pitch != -1)
-                f0[i] = f0_from_pitch;
+            if (f0_in != -1)
+                f0[i] = f0_in;
             else
-                f0[i] = 0;
+                f0[i] = 440;
         }
     }
     else //Input is midi
@@ -260,33 +250,34 @@ void DdspsynthAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, ju
         {
             if (m.isNoteOn())
             {
-                float vel = m.getFloatVelocity();
-                vel = log10f(vel) * 20.0f /*/ 120.0f + 1.0f*/; // ddsp.training.preprocessing.py line 77;
+                adsr.reset();
+                adsr.noteOn();
+                midiVelocity = m.getFloatVelocity();
                 int note = m.getNoteNumber();
-                double noteHz = m.getMidiNoteInHertz(note);
-                float midi_ranged = note /*/ 127.0f*/; // ddsp.training.preprocessing.py line 76
-                for (int i = 0; i < 1024; i++)
+                midiNoteHz = m.getMidiNoteInHertz(note);
+                tf_amps = -120;
+                tf_f0 = midiNoteHz;
+                for (int i = 0; i < numSamples; i++)
                 {
-                    tf_amps[i] = vel;
-                    tf_f0[i] = noteHz/*midi_ranged*/;
-                }
-                for (int i = 0; i < 4096; i++)
-                {
-                    f0[i] = noteHz;
+                    f0[i] = midiNoteHz;
+                    adsrVelocity = adsr.getNextSample();
                 }
 
             }
             else if (m.isNoteOff())
             {
-                for (int i = 0; i < 1024; i++)
-                {
-                    tf_amps[i] = -200;
-                    tf_f0[i] = 0;
-                }
-                for (int i = 0; i < 4096; i++)
-                {
-                    f0[i] = 0;
-                }
+                adsr.noteOff();
+            }
+        }
+        if (adsr.isActive())
+        {
+            tf_f0 = midiNoteHz;
+            tf_amps = (120.0f * midiVelocity * adsrVelocity) - 120.0f;
+            DBG((120.0f * midiVelocity * adsrVelocity) - 120.0f);
+            for (int i = 0; i < numSamples; i++)
+            {
+                f0[i] = midiNoteHz;
+                adsrVelocity = adsr.getNextSample();
             }
         }
     }
@@ -341,7 +332,8 @@ void DdspsynthAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, ju
     for (int i = 0; i < buffer.getNumSamples(); i++) {
         float additiveGain = pow(10.0f,(*additiveGainParameter/20));
         float noiseGain = pow(10.0f,(*noiseGainParameter/20));
-        float out = addBuffer[i] * additiveGain + subBuffer[i] * noiseGain;
+        float outGain = pow(10.0f, (*outputGainParameter / 20));
+        float out = (addBuffer[i] * additiveGain + subBuffer[i] * noiseGain) * outGain;
         pushNextSampleIntoFifo(out);
         outL[i] = out;
         outR[i] = out;
@@ -350,20 +342,15 @@ void DdspsynthAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, ju
 
 void DdspsynthAudioProcessor::setModelOutput(TensorflowHandler::ModelResults tfResults)
 {
-    // generated additive synth code overwrites passed harmonics & magnitudes
-    // so create copy before passing
     for (int i = 0; i < 50; i++) {
         harmonics[i] = tfResults.harmonicDistribution[i];
     }
     for (int i = 0; i < 65; i++) {
         magnitudes[i] = tfResults.noiseMagnitudes[i];
     }
-    //int amp_step = floor(numSamples / 100.0f);
     for (int i = 0; i < numSamples; i++) {
-        //amplitudes[i] = tfResults.amplitudes[(int)floor(i / amp_step)];
         amplitudes[i] = tfResults.amplitudes[0];
     }
-
 }
 
 void DdspsynthAudioProcessor::parameterChanged(const juce::String & parameterID, float newValue)
@@ -381,7 +368,6 @@ void DdspsynthAudioProcessor::parameterChanged(const juce::String & parameterID,
 void DdspsynthAudioProcessor::handleAsyncUpdate()
 {
     setModelOutput(tfHandler.getOutputs());
-    DBG("Got output");
 }
 
 

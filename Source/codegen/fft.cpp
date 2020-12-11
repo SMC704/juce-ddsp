@@ -15,64 +15,10 @@
 #include "rt_nonfinite.h"
 #include "coder_array.h"
 #include <cmath>
-#include <string.h>
 
 // Function Definitions
 namespace coder
 {
-  void fft(const ::coder::array<double, 2U> &x, ::coder::array<creal_T, 2U> &y)
-  {
-    array<double, 2U> costab;
-    array<double, 2U> costab1q;
-    array<double, 2U> sintab;
-    if ((x.size(0) == 0) || (x.size(1) == 0)) {
-      int n;
-      y.set_size(2048, x.size(1));
-      n = x.size(1) << 11;
-      for (int i = 0; i < n; i++) {
-        y[i].re = 0.0;
-        y[i].im = 0.0;
-      }
-    } else {
-      int i;
-      int k;
-      int n;
-      int n2;
-      costab1q.set_size(1, 513);
-      costab1q[0] = 1.0;
-      for (k = 0; k < 256; k++) {
-        costab1q[k + 1] = std::cos(0.0030679615757712823 * (static_cast<double>
-          (k) + 1.0));
-      }
-
-      for (k = 0; k < 255; k++) {
-        costab1q[k + 257] = std::sin(0.0030679615757712823 * (512.0 - (
-          static_cast<double>(k) + 257.0)));
-      }
-
-      costab1q[512] = 0.0;
-      n = costab1q.size(1) - 1;
-      n2 = (costab1q.size(1) - 1) << 1;
-      costab.set_size(1, (static_cast<int>(static_cast<short>(n2 + 1))));
-      sintab.set_size(1, (static_cast<int>(static_cast<short>(n2 + 1))));
-      costab[0] = 1.0;
-      sintab[0] = 0.0;
-      for (k = 0; k < n; k++) {
-        costab[k + 1] = costab1q[k + 1];
-        sintab[k + 1] = -costab1q[(n - k) - 1];
-      }
-
-      i = costab1q.size(1);
-      for (k = i; k <= n2; k++) {
-        costab[k] = -costab1q[n2 - k];
-        sintab[k] = -costab1q[k - n];
-      }
-
-      internal::FFTImplementationCallback::r2br_r2dit_trig((x), ((double *)
-        costab.data()), ((double *)sintab.data()), (y));
-    }
-  }
-
   void fft(const double x_data[], const int x_size[1], double varargin_1, ::
            coder::array<creal_T, 1U> &y)
   {

@@ -13,7 +13,6 @@
 #include "eml_setop.h"
 #include "rt_nonfinite.h"
 #include "coder_array.h"
-#include <string.h>
 
 // Function Definitions
 namespace coder

@@ -36,7 +36,7 @@ public:
 
 	void loadModel(const char* path);
 	void unloadModel();
-	void setInputs(float f0[timeSteps], float amps[timeSteps]);
+	void setInputs(float f0, float amps);
 	void setAsyncUpdater(juce::AsyncUpdater* _asyncUpdater) { processUpdater = _asyncUpdater; };
 	ModelResults getOutputs() { return results; };
 

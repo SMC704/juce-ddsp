@@ -14,7 +14,6 @@
 #include "rt_nonfinite.h"
 #include "rt_nonfinite.h"
 #include <cmath>
-#include <string.h>
 
 // Function Definitions
 int div_s32_floor(int numerator, int denominator)
@@ -101,6 +100,24 @@ double rt_powd_snf(double u0, double u1)
     } else {
       y = std::pow(u0, u1);
     }
+  }
+
+  return y;
+}
+
+double rt_roundd_snf(double u)
+{
+  double y;
+  if (std::abs(u) < 4.503599627370496E+15) {
+    if (u >= 0.5) {
+      y = std::floor(u + 0.5);
+    } else if (u > -0.5) {
+      y = u * 0.0;
+    } else {
+      y = std::ceil(u - 0.5);
+    }
+  } else {
+    y = u;
   }
 
   return y;

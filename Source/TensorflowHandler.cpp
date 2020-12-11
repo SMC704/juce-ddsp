@@ -92,7 +92,7 @@ void TensorflowHandler::loadModel(const char* path)
 	tfInputValues[1] = ldInputTensor;
 }
 
-void TensorflowHandler::setInputs(float f0[TensorflowHandler::timeSteps], float amps[TensorflowHandler::timeSteps])
+void TensorflowHandler::setInputs(float f0, float amps)
 {	
 	// this might/should be changed into ScopedTryLock and returning false
 	const juce::ScopedLock loadLock(lock);
@@ -100,10 +100,8 @@ void TensorflowHandler::setInputs(float f0[TensorflowHandler::timeSteps], float 
 	float* f0InputData = (float*)TF_TensorData(tfInputValues[0]);
 	float* ldInputData = (float*)TF_TensorData(tfInputValues[1]);
 
-	for (int i = 0; i < timeSteps; i++) {
-		f0InputData[i] = f0[i];
-		ldInputData[i] = amps[i];
-	}
+	f0InputData[0] = f0;
+	ldInputData[0] = amps;
 }
 
 
