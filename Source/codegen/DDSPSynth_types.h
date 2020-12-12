@@ -14,7 +14,6 @@
 
 // Include files
 #include "rtwtypes.h"
-#define MAX_THREADS                    omp_get_max_threads()
 #endif
 
 // End of code generation (DDSPSynth_types.h)

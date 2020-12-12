@@ -14,7 +14,6 @@
 
 // Include files
 #include "rtwtypes.h"
-#include "omp.h"
 #include <cstddef>
 #include <cstdlib>
 

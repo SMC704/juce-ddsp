@@ -32,8 +32,6 @@
               resource="0" file="Source/codegen/ProcessConstructorArguments.h"/>
         <FILE id="aHLVD8" name="scale_f0.cpp" compile="1" resource="0" file="Source/codegen/scale_f0.cpp"/>
         <FILE id="hXMzXg" name="scale_f0.h" compile="0" resource="0" file="Source/codegen/scale_f0.h"/>
-        <FILE id="pWq1Wb" name="setup.cpp" compile="1" resource="0" file="Source/codegen/setup.cpp"/>
-        <FILE id="yBcask" name="setup.h" compile="0" resource="0" file="Source/codegen/setup.h"/>
         <FILE id="u5SzuZ" name="sort.cpp" compile="1" resource="0" file="Source/codegen/sort.cpp"/>
         <FILE id="cGnXu0" name="sort.h" compile="0" resource="0" file="Source/codegen/sort.h"/>
         <FILE id="yCTHvj" name="sortIdx.cpp" compile="1" resource="0" file="Source/codegen/sortIdx.cpp"/>
@@ -60,8 +58,6 @@
         <FILE id="M4eezR" name="gencoswin.h" compile="0" resource="0" file="Source/codegen/gencoswin.h"/>
         <FILE id="Kr9ucg" name="ifft.cpp" compile="1" resource="0" file="Source/codegen/ifft.cpp"/>
         <FILE id="lqEyNS" name="ifft.h" compile="0" resource="0" file="Source/codegen/ifft.h"/>
-        <FILE id="IjaAy9" name="interp1.cpp" compile="1" resource="0" file="Source/codegen/interp1.cpp"/>
-        <FILE id="fvSSpV" name="interp1.h" compile="0" resource="0" file="Source/codegen/interp1.h"/>
         <FILE id="gwLLC8" name="TensorflowHandler.cpp" compile="1" resource="0"
               file="Source/TensorflowHandler.cpp"/>
         <FILE id="FcN3yN" name="TensorflowHandler.h" compile="0" resource="0"

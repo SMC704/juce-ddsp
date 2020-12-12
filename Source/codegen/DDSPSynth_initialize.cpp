@@ -18,7 +18,6 @@
 // Function Definitions
 void DDSPSynth_initialize()
 {
-  omp_init_nest_lock(&emlrtNestLockGlobal);
   eml_rand_mt19937ar_stateful_init();
   isInitialized_DDSPSynth = true;
 }

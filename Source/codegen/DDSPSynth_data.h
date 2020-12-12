@@ -14,13 +14,11 @@
 
 // Include files
 #include "rtwtypes.h"
-#include "omp.h"
 #include <cstddef>
 #include <cstdlib>
 
 // Variable Declarations
 extern unsigned int state[625];
-extern omp_nest_lock_t emlrtNestLockGlobal;
 extern boolean_T isInitialized_DDSPSynth;
 
 #endif
