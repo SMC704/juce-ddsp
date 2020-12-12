@@ -1,0 +1,10 @@
+prefix=/
+exec_prefix=/
+libdir=//lib
+includedir=//include
+
+Name: aubio
+Description: a library for audio labelling
+Version: 0.4.6
+Libs: -L${libdir} -laubio
+Cflags: -I${includedir}

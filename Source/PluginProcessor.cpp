@@ -16,6 +16,22 @@
 #include "codegen/scale_f0.h"
 #include "TensorflowHandler.h"
 
+
+// ........ don't ask
+FILE _iob[] = { *stdin, *stdout, *stderr };
+
+extern "C" FILE * __cdecl __iob_func(void)
+{
+	return _iob;
+}
+
+extern "C" int __cdecl __ms_vsnprintf(char* s, size_t n, const char* format, va_list arg)
+{
+	//return printf(s, n, format, arg);
+	printf(s, format);
+	return 0;
+}
+
 //==============================================================================
 DdspsynthAudioProcessor::DdspsynthAudioProcessor()
 #ifndef JucePlugin_PreferredChannelConfigurations
@@ -172,12 +188,16 @@ void DdspsynthAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBl
 
     adsr.setSampleRate(sampleRate);
     adsr.setParameters(adsrParams);
+
+	aubioPitch.reset(new_aubio_pitch("yinfft", 4096, samplesPerBlock, (uint_t)sampleRate));
+
 }
 
 void DdspsynthAudioProcessor::releaseResources()
 {
     // When playback stops, you can use this as an opportunity to free up any
     // spare memory, etc.
+	aubioPitch.release();
 }
 
 #ifndef JucePlugin_PreferredChannelConfigurations
@@ -210,24 +230,35 @@ void DdspsynthAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, ju
     numSamples = buffer.getNumSamples();
     if (*inputSelectParameter) //Input is line-in
     {
-        double input[4096];
+		fvec_t aubioInput;
+		fvec_t aubioOutput;
+		float aubiof0;
+
+		// need write pointer because the data type is not const
+		aubioInput.data = buffer.getWritePointer(0);
+		aubioInput.length = buffer.getNumSamples();
+
+		aubioOutput.data = &aubiof0;
+		aubioOutput.length = 1;
+
+		aubio_pitch_do(aubioPitch.get(), &aubioInput, &aubioOutput);
+		DBG(aubiof0);
+		double mlInput[4096];
         for (int i = 0; i < 4096; i++)
         {
             if (i < numSamples)
-                input[i] = in_l[i];
+                mlInput[i] = in_l[i];
             else
-                input[i] = 0;
+                mlInput[i] = 0;
         }
 
-        tf_amps = compute_loudness((double)numSamples, input, getSampleRate());
-        f0_in = getPitch((double)numSamples, input, getSampleRate());
-        tf_f0 = f0_in;
+        tf_amps = compute_loudness((double)numSamples, mlInput, getSampleRate());
+		
+		f0_in = aubiof0;
+		tf_f0 = f0_in;
         for (int i = 0; i < 4096; i++)
         {
-            if (f0_in != -1)
-                f0[i] = f0_in;
-            else
-                f0[i] = 440;
+			f0[i] = f0_in;
         }
     }
     else //Input is midi
