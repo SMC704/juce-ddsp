@@ -13,9 +13,10 @@
 
 void NoOpDeallocator(void* data, size_t a, void* b) {}
 
-TensorflowHandler::TensorflowHandler()
-{
 
+TensorflowHandler::TensorflowHandler()
+	: Thread("TFThread")
+{
 }
 
 TensorflowHandler::~TensorflowHandler()
@@ -53,6 +54,11 @@ void TensorflowHandler::unloadModel()
 
 void TensorflowHandler::loadModel(const char* path)
 {
+	// make sure no one tries to run the model while we're changing it
+	const juce::ScopedLock loadLock(lock);
+	
+	unloadModel();
+
 	tfGraph = TF_NewGraph();
 	tfStatus = TF_NewStatus();
 	tfSessionOpts = TF_NewSessionOptions();
@@ -76,27 +82,35 @@ void TensorflowHandler::loadModel(const char* path)
 	tfInputValues = (TF_Tensor**)malloc(sizeof(TF_Tensor*) * numInputs);
 	tfOutputValues = (TF_Tensor**)malloc(sizeof(TF_Tensor*) * numOutputs);
 
-	float dummy[timeSteps];
+	float f0Data[timeSteps];
+	float ldData[timeSteps];
 
-	f0InputTensor = TF_NewTensor(TF_FLOAT, inputDims, numInputDims, dummy, ndata, &NoOpDeallocator, 0);
-	ldInputTensor = TF_NewTensor(TF_FLOAT, inputDims, numInputDims, dummy, ndata, &NoOpDeallocator, 0);
+	f0InputTensor = TF_NewTensor(TF_FLOAT, inputDims, numInputDims, f0Data, ndata, &NoOpDeallocator, 0);
+	ldInputTensor = TF_NewTensor(TF_FLOAT, inputDims, numInputDims, ldData, ndata, &NoOpDeallocator, 0);
 
 	tfInputValues[0] = f0InputTensor;
 	tfInputValues[1] = ldInputTensor;
 }
 
-TensorflowHandler::ModelResults TensorflowHandler::runModel(float f0[TensorflowHandler::timeSteps], float amps[TensorflowHandler::timeSteps])
+void TensorflowHandler::setInputs(float f0, float amps)
+{	
+	// this might/should be changed into ScopedTryLock and returning false
+	const juce::ScopedLock loadLock(lock);
+
+	float* f0InputData = (float*)TF_TensorData(tfInputValues[0]);
+	float* ldInputData = (float*)TF_TensorData(tfInputValues[1]);
+
+	f0InputData[0] = f0;
+	ldInputData[0] = amps;
+}
+
+
+void TensorflowHandler::run()
 {
-	TensorflowHandler::ModelResults results;
+	// this might/should be changed into ScopedTryLock and returning false
+	const juce::ScopedLock loadLock(lock);
 
-	float* f0InputData = (float*)TF_TensorData(f0InputTensor);
-	float* ldInputData = (float*)TF_TensorData(ldInputTensor);
-
-	for (int t = 0; t < timeSteps; t++)
-	{
-		f0InputData[t] = f0[t];
-		ldInputData[t] = amps[t];
-	}
+	TensorflowHandler::ModelResults _results;
 
 	TF_SessionRun(tfSession, NULL, tfInput, tfInputValues, numInputs, tfOutput, tfOutputValues, numOutputs, NULL, 0, NULL, tfStatus);
 
@@ -105,13 +119,15 @@ TensorflowHandler::ModelResults TensorflowHandler::runModel(float f0[TensorflowH
 	float* magsOutputData = (float*)TF_TensorData(tfOutputValues[2]);
 
 	for (int t = 0; t < timeSteps; t++)
-		results.amplitudes[t] = ampsOutputData[t];
+		_results.amplitudes[t] = ampsOutputData[t];
 
 	for (int h = 0; h < timeSteps * numHarmonics; h++)
-		results.harmonicDistribution[h] = harmsOutputData[h];
+		_results.harmonicDistribution[h] = harmsOutputData[h];
 
 	for (int m = 0; m < timeSteps * numMagnitudes; m++)
-		results.noiseMagnitudes[m] = magsOutputData[m];
+		_results.noiseMagnitudes[m] = magsOutputData[m];
 	
-	return results;
+	results = _results;
+
+	processUpdater->triggerAsyncUpdate();
 }

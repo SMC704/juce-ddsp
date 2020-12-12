@@ -12,16 +12,13 @@
 // Include files
 #include "DDSPSynth_initialize.h"
 #include "DDSPSynth_data.h"
-#include "additive.h"
 #include "eml_rand_mt19937ar_stateful.h"
 #include "rt_nonfinite.h"
-#include "subtractive.h"
 
 // Function Definitions
 void DDSPSynth_initialize()
 {
-  rt_InitInfAndNaN();
-  c_eml_rand_mt19937ar_stateful_i();
+  eml_rand_mt19937ar_stateful_init();
   isInitialized_DDSPSynth = true;
 }
 

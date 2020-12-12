@@ -12,9 +12,7 @@
 // Include files
 #include "DDSPSynth_terminate.h"
 #include "DDSPSynth_data.h"
-#include "additive.h"
 #include "rt_nonfinite.h"
-#include "subtractive.h"
 
 // Function Definitions
 void DDSPSynth_terminate()

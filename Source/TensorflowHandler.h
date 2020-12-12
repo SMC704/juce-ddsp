@@ -10,9 +10,10 @@
 
 #pragma once
 
+#include <JuceHeader.h>
 #include "tensorflow_c/include/tensorflow/c/c_api.h"
 
-class TensorflowHandler
+class TensorflowHandler : public juce::Thread
 {
 public:
 	TensorflowHandler();
@@ -22,7 +23,7 @@ public:
 	// or possibly the model file?
 	static const int numHarmonics = 60;
 	static const int numMagnitudes = 65;
-	static const int timeSteps = 100;
+	static const int timeSteps = 1;
 
 	struct ModelResults
 	{
@@ -35,9 +36,17 @@ public:
 
 	void loadModel(const char* path);
 	void unloadModel();
-	ModelResults runModel(float f0[timeSteps], float amps[timeSteps]);
+	void setInputs(float f0, float amps);
+	void setAsyncUpdater(juce::AsyncUpdater* _asyncUpdater) { processUpdater = _asyncUpdater; };
+	ModelResults getOutputs() { return results; };
+
+	void run() override;
 
 private:
+	//DdspsynthAudioProcessor* audioProcessor;
+
+	juce::CriticalSection lock;
+
 	TF_Graph* tfGraph = NULL;
 	TF_Status* tfStatus = NULL;
 	TF_SessionOptions* tfSessionOpts = NULL;
@@ -68,4 +77,10 @@ private:
 	int ndata = TF_DataTypeSize(TF_FLOAT) * timeSteps;
 	TF_Tensor* f0InputTensor;
 	TF_Tensor* ldInputTensor;
+	
+	ModelResults results;
+
+	juce::AsyncUpdater* processUpdater;
+	//==============================================================================
+	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (TensorflowHandler)
 };

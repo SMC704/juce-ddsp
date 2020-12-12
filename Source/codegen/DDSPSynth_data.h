@@ -13,10 +13,9 @@
 #define DDSPSYNTH_DATA_H
 
 // Include files
+#include "rtwtypes.h"
 #include <cstddef>
 #include <cstdlib>
-#include "rtwtypes.h"
-#include "DDSPSynth_types.h"
 
 // Variable Declarations
 extern unsigned int state[625];

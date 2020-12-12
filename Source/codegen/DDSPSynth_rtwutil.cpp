@@ -11,13 +11,54 @@
 
 // Include files
 #include "DDSPSynth_rtwutil.h"
-#include "additive.h"
 #include "rt_nonfinite.h"
-#include "subtractive.h"
+#include "rt_nonfinite.h"
 #include <cmath>
-#include <math.h>
 
 // Function Definitions
+int div_s32_floor(int numerator, int denominator)
+{
+  unsigned int absNumerator;
+  int quotient;
+  if (denominator == 0) {
+    if (numerator >= 0) {
+      quotient = MAX_int32_T;
+    } else {
+      quotient = MIN_int32_T;
+    }
+  } else {
+    unsigned int absDenominator;
+    unsigned int tempAbsQuotient;
+    boolean_T quotientNeedsNegation;
+    if (numerator < 0) {
+      absNumerator = ~static_cast<unsigned int>(numerator) + 1U;
+    } else {
+      absNumerator = static_cast<unsigned int>(numerator);
+    }
+
+    if (denominator < 0) {
+      absDenominator = ~static_cast<unsigned int>(denominator) + 1U;
+    } else {
+      absDenominator = static_cast<unsigned int>(denominator);
+    }
+
+    quotientNeedsNegation = ((numerator < 0) != (denominator < 0));
+    tempAbsQuotient = absNumerator / absDenominator;
+    if (quotientNeedsNegation) {
+      absNumerator %= absDenominator;
+      if (absNumerator > 0U) {
+        tempAbsQuotient++;
+      }
+
+      quotient = -static_cast<int>(tempAbsQuotient);
+    } else {
+      quotient = static_cast<int>(tempAbsQuotient);
+    }
+  }
+
+  return quotient;
+}
+
 double rt_powd_snf(double u0, double u1)
 {
   double y;
@@ -57,8 +98,26 @@ double rt_powd_snf(double u0, double u1)
     } else if ((u0 < 0.0) && (u1 > std::floor(u1))) {
       y = rtNaN;
     } else {
-      y = pow(u0, u1);
+      y = std::pow(u0, u1);
     }
+  }
+
+  return y;
+}
+
+double rt_roundd_snf(double u)
+{
+  double y;
+  if (std::abs(u) < 4.503599627370496E+15) {
+    if (u >= 0.5) {
+      y = std::floor(u + 0.5);
+    } else if (u > -0.5) {
+      y = u * 0.0;
+    } else {
+      y = std::ceil(u - 0.5);
+    }
+  } else {
+    y = u;
   }
 
   return y;

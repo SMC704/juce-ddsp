@@ -13,13 +13,14 @@
 #define DDSPSYNTH_RTWUTIL_H
 
 // Include files
+#include "rtwtypes.h"
 #include <cstddef>
 #include <cstdlib>
-#include "rtwtypes.h"
-#include "DDSPSynth_types.h"
 
 // Function Declarations
+extern int div_s32_floor(int numerator, int denominator);
 extern double rt_powd_snf(double u0, double u1);
+extern double rt_roundd_snf(double u);
 
 #endif
 

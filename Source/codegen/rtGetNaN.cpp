@@ -13,7 +13,9 @@
 //  Abstract:
 //        MATLAB for code generation function to initialize non-finite, NaN
 
+// Include files
 #include "rtGetNaN.h"
+#include "rt_nonfinite.h"
 
 // Function: rtGetNaN ======================================================================
 //  Abstract:

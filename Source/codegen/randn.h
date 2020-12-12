@@ -13,13 +13,15 @@
 #define RANDN_H
 
 // Include files
+#include "rtwtypes.h"
 #include <cstddef>
 #include <cstdlib>
-#include "rtwtypes.h"
-#include "DDSPSynth_types.h"
 
 // Function Declarations
-extern void randn(double r[4161]);
+namespace coder
+{
+  void randn(double r[4096]);
+}
 
 #endif
 

@@ -13,81 +13,185 @@
 #include "additive.h"
 #include "DDSPSynth_data.h"
 #include "DDSPSynth_initialize.h"
+#include "DDSPSynth_rtwutil.h"
+#include "linspace.h"
 #include "rt_nonfinite.h"
-#include "subtractive.h"
+#include "coder_array.h"
+#include "rt_nonfinite.h"
 #include <cmath>
 #include <cstring>
 
-// Function Declarations
-static void get_harmonic_frequencies(const double f0_data[], const int f0_size[1],
-  double stretch, coder::array<double, 2U> &harmonic_frequencies);
-static void remove_above_nyquist(const coder::array<double, 2U>
-  &harmonic_frequencies, double harmonic_distribution[50], double sample_rate);
-
 // Function Definitions
-static void get_harmonic_frequencies(const double f0_data[], const int f0_size[1],
-  double stretch, coder::array<double, 2U> &harmonic_frequencies)
+void additive(double n_samples, double sample_rate, const double amplitudes[4096],
+              double n_harmonics, double harmonic_distribution[60], const double
+              f0[4096], const double prev_phases[60], double shift, double
+              stretch, double audio[4096], double last_phases[60])
 {
+  coder::array<double, 2U> b_harmonic_frequencies;
+  coder::array<double, 2U> f_ratios;
+  coder::array<double, 2U> harmonic_amplitudes;
+  coder::array<double, 2U> harmonic_frequencies;
+  coder::array<int, 2U> r1;
+  coder::array<boolean_T, 2U> r;
+  double amplitudes_data[4096];
+  double f0_data[4096];
+  double x_data[4096];
+  double b_sample_rate;
+  double q;
+  int b_loop_ub;
   int i;
-  double f_ratios[50];
+  int i1;
+  int k;
   int loop_ub;
-
-  //  Calculate sample-wise oscillator frequencies of harmonics
-  for (i = 0; i < 50; i++) {
-    f_ratios[i] = static_cast<double>(i) + 1.0;
+  int nx;
+  int subsb_idx_1;
+  if (!isInitialized_DDSPSynth) {
+    DDSPSynth_initialize();
   }
 
-  //  Incorporate stretch parameter and shift back to f0
-  if (stretch > 0.0) {
-    for (i = 0; i < 50; i++) {
-      f_ratios[i] = ((static_cast<double>(i) + 1.0) + (static_cast<double>(i) +
-        1.0) * stretch) - stretch;
+  //  ADDITIVE SYNTH
+  //
+  //  INPUTS:
+  //
+  //  sample_rate: int
+  //  amplitudes: Frame-wise oscillator peak amplitude. Shape: [n_frames, 1]
+  //  harmonic distribution: Frame-wise harmonic amplitude variations. Shape. [n_harmonics] 
+  //  f0: Frame-wise fundamental frequency in Hz. Shape: [n_frames, 1]
+  //  shift: Shift fundamental frequency, range -12 (one octave down) to 12 (one octave up), 0: no effect 
+  //  stretch: Stretch/squeeze harmonic frequencies, range -1 (max squeezed) to 1 (max stretched), 0: no effect 
+  //
+  //  RETURNS:
+  //
+  //  Sample-wise audio signal
+  //  Resize the input
+  if (1.0 > n_samples) {
+    loop_ub = 0;
+    b_loop_ub = 0;
+  } else {
+    loop_ub = static_cast<int>(n_samples);
+    b_loop_ub = static_cast<int>(n_samples);
+  }
+
+  if (0 <= b_loop_ub - 1) {
+    std::memcpy(&f0_data[0], &f0[0], b_loop_ub * sizeof(double));
+  }
+
+  //  Incorporate shift parameter
+  if (shift > 0.0) {
+    for (i = 0; i < b_loop_ub; i++) {
+      b_sample_rate = f0[i];
+      f0_data[i] = b_sample_rate + b_sample_rate / 12.0 * shift;
     }
   } else {
-    if (stretch < 0.0) {
-      double b_stretch;
-      b_stretch = stretch * 0.5;
-      for (i = 0; i < 50; i++) {
-        f_ratios[i] = ((static_cast<double>(i) + 1.0) + (static_cast<double>(i)
-          + 1.0) * stretch * 0.5) - b_stretch;
+    if (shift < 0.0) {
+      for (i = 0; i < b_loop_ub; i++) {
+        b_sample_rate = f0[i];
+        f0_data[i] = b_sample_rate + b_sample_rate / 12.0 * shift * 0.5;
       }
     }
   }
 
-  harmonic_frequencies.set_size(f0_size[0], 50);
-  loop_ub = f0_size[0];
-  for (i = 0; i < 50; i++) {
-    for (int i1 = 0; i1 < loop_ub; i1++) {
+  //  Scale the amplitudes
+  //  Scale Function
+  //  Exponentiated Sigmoid pointwise nonlinearity
+  for (i = 0; i < loop_ub; i++) {
+    x_data[i] = -amplitudes[i];
+  }
+
+  for (k = 0; k < loop_ub; k++) {
+    x_data[k] = std::exp(x_data[k]);
+  }
+
+  for (i = 0; i < loop_ub; i++) {
+    x_data[i] = 1.0 / (x_data[i] + 1.0);
+  }
+
+  for (k = 0; k < loop_ub; k++) {
+    amplitudes_data[k] = rt_powd_snf(x_data[k], 2.3025850929940459);
+  }
+
+  for (i = 0; i < loop_ub; i++) {
+    amplitudes_data[i] = 2.0 * amplitudes_data[i] + 1.0E-7;
+  }
+
+  //  Scale Function
+  //  Exponentiated Sigmoid pointwise nonlinearity
+  for (k = 0; k < 60; k++) {
+    harmonic_distribution[k] = 2.0 * rt_powd_snf(1.0 / (std::exp
+      (-harmonic_distribution[k]) + 1.0), 2.3025850929940459) + 1.0E-7;
+  }
+
+  //  Bandlimit the harmonic distribution
+  //  Calculate sample-wise oscillator frequencies of harmonics
+  coder::linspace(n_harmonics, n_harmonics, f_ratios);
+
+  //  Incorporate stretch parameter and shift back to f0
+  if (stretch > 0.0) {
+    i = f_ratios.size(0) * f_ratios.size(1);
+    f_ratios.set_size(1, f_ratios.size(1));
+    nx = i - 1;
+    for (i = 0; i <= nx; i++) {
+      b_sample_rate = f_ratios[i];
+      b_sample_rate = (b_sample_rate + b_sample_rate * stretch) - stretch;
+      f_ratios[i] = b_sample_rate;
+    }
+  } else {
+    if (stretch < 0.0) {
+      i = f_ratios.size(0) * f_ratios.size(1);
+      f_ratios.set_size(1, f_ratios.size(1));
+      q = stretch * 0.5;
+      nx = i - 1;
+      for (i = 0; i <= nx; i++) {
+        b_sample_rate = f_ratios[i];
+        b_sample_rate = (b_sample_rate + b_sample_rate * stretch * 0.5) - q;
+        f_ratios[i] = b_sample_rate;
+      }
+    }
+  }
+
+  harmonic_frequencies.set_size(b_loop_ub, f_ratios.size(1));
+  nx = f_ratios.size(1);
+  for (i = 0; i < nx; i++) {
+    for (i1 = 0; i1 < b_loop_ub; i1++) {
       harmonic_frequencies[i1 + harmonic_frequencies.size(0) * i] = f0_data[i1] *
         f_ratios[i];
     }
   }
-}
-
-static void remove_above_nyquist(const coder::array<double, 2U>
-  &harmonic_frequencies, double harmonic_distribution[50], double sample_rate)
-{
-  double b_sample_rate;
-  int trueCount;
-  int partialTrueCount;
-  signed char tmp_data[50];
 
   //  Set amplitudes for oscillators above nyquist to 0
+  if (1 > harmonic_frequencies.size(1)) {
+    b_loop_ub = 0;
+  } else {
+    b_loop_ub = harmonic_frequencies.size(1);
+  }
+
   b_sample_rate = sample_rate / 2.0;
-  trueCount = 0;
-  partialTrueCount = 0;
-  for (int i = 0; i < 50; i++) {
-    boolean_T b;
-    b = (harmonic_frequencies[harmonic_frequencies.size(0) * i] >= b_sample_rate);
-    if (b) {
-      trueCount++;
-      tmp_data[partialTrueCount] = static_cast<signed char>(i + 1);
-      partialTrueCount++;
+  r.set_size(1, b_loop_ub);
+  for (i = 0; i < b_loop_ub; i++) {
+    r[i] = (harmonic_frequencies[harmonic_frequencies.size(0) * i] >=
+            b_sample_rate);
+  }
+
+  b_loop_ub = r.size(1) - 1;
+  nx = 0;
+  for (k = 0; k <= b_loop_ub; k++) {
+    if (r[k]) {
+      nx++;
     }
   }
 
-  for (partialTrueCount = 0; partialTrueCount < trueCount; partialTrueCount++) {
-    harmonic_distribution[tmp_data[partialTrueCount] - 1] = 0.0;
+  r1.set_size(1, nx);
+  nx = 0;
+  for (k = 0; k <= b_loop_ub; k++) {
+    if (r[k]) {
+      r1[nx] = k + 1;
+      nx++;
+    }
+  }
+
+  b_loop_ub = r1.size(0) * r1.size(1);
+  for (i = 0; i < b_loop_ub; i++) {
+    harmonic_distribution[r1[i] - 1] = 0.0;
   }
 
   //  function plot_controls(amplitudes, harmonic_distribution, f0)
@@ -110,235 +214,163 @@ static void remove_above_nyquist(const coder::array<double, 2U>
   //      t.TileSpacing = 'none';
   //
   //  end
-}
-
-void additive(int n_samples, double sample_rate, const double amplitudes[4096],
-              double harmonic_distribution[50], const double f0[4096], const
-              double prev_phases[50], double shift, double stretch, double
-              audio_data[], int audio_size[1], double last_phases[50])
-{
-  int loop_ub;
-  int nx;
-  int f0_size[1];
-  double f0_data[4096];
-  int i;
-  coder::array<double, 2U> harmonic_frequencies;
-  coder::array<double, 2U> harmonic_amplitudes;
-  int c;
-  int k;
-  short subsb_idx_1;
-  coder::array<double, 2U> x;
-  double r;
-  if (!isInitialized_DDSPSynth) {
-    DDSPSynth_initialize();
-  }
-
-  //  ADDITIVE SYNTH
-  //
-  //  INPUTS:
-  //
-  //  sample_rate: int
-  //  amplitudes: Frame-wise oscillator peak amplitude. Shape: [n_frames, 1]
-  //  harmonic distribution: Frame-wise harmonic amplitude variations. Shape. [n_harmonics] 
-  //  f0: Frame-wise fundamental frequency in Hz. Shape: [n_frames, 1]
-  //  shift: Shift fundamental frequency, range -12 (one octave down) to 12 (one octave up), 0: no effect 
-  //  stretch: Stretch/squeeze harmonic frequencies, range -1 (max squeezed) to 1 (max stretched), 0: no effect 
-  //
-  //  RETURNS:
-  //
-  //  Sample-wise audio signal
-  //  Resize the input
-  if (1 > n_samples) {
-    loop_ub = 0;
-    nx = 0;
-  } else {
-    loop_ub = n_samples;
-    nx = n_samples;
-  }
-
-  f0_size[0] = nx;
-  if (0 <= nx - 1) {
-    std::memcpy(&f0_data[0], &f0[0], nx * sizeof(double));
-  }
-
-  //  Incorporate shift parameter
-  if (shift > 0.0) {
-    f0_size[0] = nx;
-    for (i = 0; i < nx; i++) {
-      f0_data[i] = f0[i] + f0[i] / 12.0 * shift;
-    }
-  } else {
-    if (shift < 0.0) {
-      f0_size[0] = nx;
-      for (i = 0; i < nx; i++) {
-        f0_data[i] = f0[i] + f0[i] / 12.0 * shift * 0.5;
-      }
-    }
-  }
-
-  //  Scale the amplitudes
-  //      amplitudes = scale_fn(amplitudes);
-  //      harmonic_distribution = scale_fn(harmonic_distribution);
-  //  Bandlimit the harmonic distribution
-  get_harmonic_frequencies(f0_data, f0_size, stretch, harmonic_frequencies);
-  remove_above_nyquist(harmonic_frequencies, harmonic_distribution, sample_rate);
-
-  //  Normalize the harmonic distribution
+  //      % Normalize the harmonic distribution
   //      harm_sum = sum(harmonic_distribution,2);
   //      for c = 1:size(harmonic_distribution,2)
   //          harmonic_distribution(1:end,c) = harmonic_distribution(1:end,c) ./ harm_sum; 
   //      end
   //  Create harmonic amplitudes
-  harmonic_amplitudes.set_size(loop_ub, 50);
-  nx = loop_ub * 50;
-  for (i = 0; i < nx; i++) {
+  harmonic_amplitudes.set_size(loop_ub, 60);
+  b_loop_ub = loop_ub * 60;
+  for (i = 0; i < b_loop_ub; i++) {
     harmonic_amplitudes[i] = 0.0;
   }
 
-  for (c = 0; c < 50; c++) {
+  for (nx = 0; nx < 60; nx++) {
     for (i = 0; i < loop_ub; i++) {
-      harmonic_amplitudes[i + harmonic_amplitudes.size(0) * c] =
-        harmonic_distribution[c] * amplitudes[i];
+      harmonic_amplitudes[i + harmonic_amplitudes.size(0) * nx] =
+        harmonic_distribution[nx] * amplitudes_data[i];
     }
   }
 
   // radiant/second
-  nx = harmonic_frequencies.size(0) * harmonic_frequencies.size(1);
-  harmonic_frequencies.set_size(harmonic_frequencies.size(0), 50);
-  for (i = 0; i < nx; i++) {
+  loop_ub = harmonic_frequencies.size(0) * harmonic_frequencies.size(1);
+  for (i = 0; i < loop_ub; i++) {
     harmonic_frequencies[i] = harmonic_frequencies[i] * 2.0 * 3.1415926535897931
       / sample_rate;
   }
 
   // radiant/sample
   //  Accumulate phase and synthesize
+  nx = 2;
   if (harmonic_frequencies.size(0) != 1) {
     nx = 1;
-  } else {
-    nx = 2;
   }
 
   if (1 == nx) {
-    if (harmonic_frequencies.size(0) != 0) {
-      for (k = 0; k < 50; k++) {
-        i = harmonic_frequencies.size(0);
-        if (0 <= i - 2) {
-          subsb_idx_1 = static_cast<short>(k + 1);
+    if ((harmonic_frequencies.size(0) != 0) && (harmonic_frequencies.size(1) !=
+         0)) {
+      i = harmonic_frequencies.size(1);
+      for (k = 0; k < i; k++) {
+        i1 = harmonic_frequencies.size(0);
+        if (0 <= i1 - 2) {
+          subsb_idx_1 = k + 1;
         }
 
-        for (nx = 0; nx <= i - 2; nx++) {
-          int i1;
-          c = static_cast<short>(static_cast<short>(nx + 1) + 1) - 1;
-          i1 = subsb_idx_1 - 1;
-          harmonic_frequencies[c + harmonic_frequencies.size(0) * i1] =
-            harmonic_frequencies[nx + harmonic_frequencies.size(0) * k] +
-            harmonic_frequencies[c + harmonic_frequencies.size(0) * i1];
+        for (nx = 0; nx <= i1 - 2; nx++) {
+          harmonic_frequencies[(nx + harmonic_frequencies.size(0) * (subsb_idx_1
+            - 1)) + 1] = harmonic_frequencies[nx + harmonic_frequencies.size(0) *
+            k] + harmonic_frequencies[(nx + harmonic_frequencies.size(0) *
+            (subsb_idx_1 - 1)) + 1];
         }
       }
     }
   } else {
-    if (harmonic_frequencies.size(0) != 0) {
-      for (k = 0; k < 49; k++) {
-        i = harmonic_frequencies.size(0);
-        for (nx = 0; nx < i; nx++) {
-          int i1;
-          c = static_cast<short>(nx + 1) - 1;
-          i1 = k + 1;
-          harmonic_frequencies[c + harmonic_frequencies.size(0) * i1] =
+    if ((harmonic_frequencies.size(0) != 0) && (harmonic_frequencies.size(1) !=
+         0)) {
+      i = harmonic_frequencies.size(1);
+      for (k = 0; k <= i - 2; k++) {
+        i1 = harmonic_frequencies.size(0);
+        for (nx = 0; nx < i1; nx++) {
+          harmonic_frequencies[nx + harmonic_frequencies.size(0) * (k + 1)] =
             harmonic_frequencies[nx + harmonic_frequencies.size(0) * k] +
-            harmonic_frequencies[c + harmonic_frequencies.size(0) * i1];
+            harmonic_frequencies[nx + harmonic_frequencies.size(0) * (k + 1)];
         }
       }
     }
   }
 
   //  Save last phases of all harmonics for next buffer;
-  for (c = 0; c < 50; c++) {
+  i = harmonic_frequencies.size(1);
+  for (nx = 0; nx < i; nx++) {
     if (1 > harmonic_frequencies.size(0)) {
-      nx = 0;
+      loop_ub = 0;
     } else {
-      nx = harmonic_frequencies.size(0);
+      loop_ub = harmonic_frequencies.size(0);
     }
 
-    for (i = 0; i < nx; i++) {
-      f0_data[i] = harmonic_frequencies[i + harmonic_frequencies.size(0) * c] +
-        prev_phases[c];
+    for (i1 = 0; i1 < loop_ub; i1++) {
+      x_data[i1] = harmonic_frequencies[i1 + harmonic_frequencies.size(0) * nx]
+        + prev_phases[nx];
     }
 
-    for (i = 0; i < nx; i++) {
-      harmonic_frequencies[i + harmonic_frequencies.size(0) * c] = f0_data[i];
+    for (i1 = 0; i1 < loop_ub; i1++) {
+      harmonic_frequencies[i1 + harmonic_frequencies.size(0) * nx] = x_data[i1];
     }
   }
 
-  x.set_size(harmonic_frequencies.size(0), 50);
-  nx = harmonic_frequencies.size(0) * harmonic_frequencies.size(1);
-  for (i = 0; i < nx; i++) {
-    x[i] = harmonic_frequencies[i];
+  //  For now: check if f0 == 0hz and reset phase
+  i = harmonic_frequencies.size(0);
+  for (k = 0; k < i; k++) {
+    if (f0_data[k] == 0.0) {
+      if (1 > harmonic_frequencies.size(1)) {
+        loop_ub = 0;
+      } else {
+        loop_ub = harmonic_frequencies.size(1);
+      }
+
+      for (i1 = 0; i1 < loop_ub; i1++) {
+        harmonic_frequencies[k + harmonic_frequencies.size(0) * i1] = 0.0;
+      }
+    }
   }
 
-  subsb_idx_1 = static_cast<short>(harmonic_frequencies.size(0));
-  harmonic_frequencies.set_size((static_cast<int>(static_cast<short>
-    (harmonic_frequencies.size(0)))), 50);
-  nx = subsb_idx_1 * 50;
+  b_harmonic_frequencies.set_size(harmonic_frequencies.size(0),
+    harmonic_frequencies.size(1));
+  loop_ub = harmonic_frequencies.size(0) * harmonic_frequencies.size(1) - 1;
+  for (i = 0; i <= loop_ub; i++) {
+    b_harmonic_frequencies[i] = harmonic_frequencies[i];
+  }
+
+  harmonic_frequencies.set_size(b_harmonic_frequencies.size(0),
+    b_harmonic_frequencies.size(1));
+  nx = b_harmonic_frequencies.size(0) * b_harmonic_frequencies.size(1);
   for (k = 0; k < nx; k++) {
-    if (rtIsNaN(x[k]) || rtIsInf(x[k])) {
-      r = rtNaN;
-    } else if (x[k] == 0.0) {
-      r = 0.0;
+    if (rtIsNaN(b_harmonic_frequencies[k]) || rtIsInf(b_harmonic_frequencies[k]))
+    {
+      b_sample_rate = rtNaN;
+    } else if (b_harmonic_frequencies[k] == 0.0) {
+      b_sample_rate = 0.0;
     } else {
       boolean_T rEQ0;
-      r = std::fmod(x[k], 6.2831853071795862);
-      rEQ0 = (r == 0.0);
+      b_sample_rate = std::fmod(b_harmonic_frequencies[k], 6.2831853071795862);
+      rEQ0 = (b_sample_rate == 0.0);
       if (!rEQ0) {
-        double q;
-        q = std::abs(x[k] / 6.2831853071795862);
+        q = std::abs(b_harmonic_frequencies[k] / 6.2831853071795862);
         rEQ0 = !(std::abs(q - std::floor(q + 0.5)) > 2.2204460492503131E-16 * q);
       }
 
       if (rEQ0) {
-        r = 0.0;
+        b_sample_rate = 0.0;
       } else {
-        if (x[k] < 0.0) {
-          r += 6.2831853071795862;
+        if (b_harmonic_frequencies[k] < 0.0) {
+          b_sample_rate += 6.2831853071795862;
         }
       }
     }
 
-    harmonic_frequencies[k] = r;
+    harmonic_frequencies[k] = b_sample_rate;
   }
 
-  for (i = 0; i < 50; i++) {
-    last_phases[i] = harmonic_frequencies[(harmonic_frequencies.size(0) +
-      harmonic_frequencies.size(0) * i) - 1];
+  std::memset(&last_phases[0], 0, 60U * sizeof(double));
+  i = harmonic_frequencies.size(1);
+  for (nx = 0; nx < i; nx++) {
+    last_phases[nx] = harmonic_frequencies[(harmonic_frequencies.size(0) +
+      harmonic_frequencies.size(0) * nx) - 1];
   }
 
   //  Convert to waveforms
-  nx = harmonic_frequencies.size(0) * 50;
+  nx = harmonic_frequencies.size(0) * harmonic_frequencies.size(1);
   for (k = 0; k < nx; k++) {
     harmonic_frequencies[k] = std::sin(harmonic_frequencies[k]);
   }
 
-  audio_size[0] = static_cast<short>(loop_ub);
-  loop_ub = static_cast<short>(loop_ub);
-  if (0 <= loop_ub - 1) {
-    std::memset(&audio_data[0], 0, loop_ub * sizeof(double));
-  }
-
-  if (1 > audio_size[0]) {
-    loop_ub = 0;
-  } else {
-    loop_ub = audio_size[0];
-  }
-
-  for (c = 0; c < 50; c++) {
-    for (i = 0; i < loop_ub; i++) {
-      f0_data[i] = audio_data[i] + harmonic_amplitudes[i +
-        harmonic_amplitudes.size(0) * c] * harmonic_frequencies[i +
-        harmonic_frequencies.size(0) * c];
-    }
-
-    if (0 <= loop_ub - 1) {
-      std::memcpy(&audio_data[0], &f0_data[0], loop_ub * sizeof(double));
+  std::memset(&audio[0], 0, 4096U * sizeof(double));
+  i = static_cast<int>(n_harmonics);
+  for (nx = 0; nx < i; nx++) {
+    for (i1 = 0; i1 < 4096; i1++) {
+      audio[i1] += harmonic_amplitudes[i1 + harmonic_amplitudes.size(0) * nx] *
+        harmonic_frequencies[i1 + harmonic_frequencies.size(0) * nx];
     }
   }
 }

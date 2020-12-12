@@ -701,7 +701,7 @@ class array_base {
         ensureCapacity(numel());
     }
 
-    template <size_t N1>
+    template <SizeType N1>
     array_base<T, SZ, N1> reshape_n(const SZ (&_ns)[N1]) const {
         array_base<T, SZ, N1> reshaped(const_cast<T*>(&data_[0]), _ns);
         return reshaped;
@@ -1102,6 +1102,17 @@ class array<T, 1> : public array_base<T, SizeType, 1> {
         const T* p = &Base::data_[0];
         return std::vector<T>(p, p + Base::numel());
     }
+};
+
+// Bounded array
+
+template<typename T, SizeType UpperBoundSize, SizeType NumDims> struct bounded_array {
+    T data[UpperBoundSize];
+    SizeType size[NumDims];
+};
+ 
+template<typename T, SizeType NumDims> struct empty_bounded_array {
+    SizeType size[NumDims];
 };
 
 } // namespace coder
