@@ -41,11 +41,11 @@ DdspsynthAudioProcessor::DdspsynthAudioProcessor()
         std::make_unique<juce::AudioParameterBool>("additiveOn", "Additive synth on", true),
         std::make_unique<juce::AudioParameterFloat>("additiveShift", "Shift amount", -12.0f, 12.0f, 0.0f),
         std::make_unique<juce::AudioParameterFloat>("additiveStretch", "Stretch amount", -1.0f, 1.0f, 0.0f),
-        std::make_unique<juce::AudioParameterFloat>("additiveGain", "Additive gain", -60.0f, 0.0f, -6.0f),
+        std::make_unique<juce::AudioParameterFloat>("additiveGain", "Additive gain", -60.0f, 0.0f, 0.0f),
         // Subtractive
         std::make_unique<juce::AudioParameterBool>("noiseOn", "Noise synth on", true),
         std::make_unique<juce::AudioParameterFloat>("noiseColor", "Noise color", -1.0f, 1.0f, 0.0f),
-        std::make_unique<juce::AudioParameterFloat>("noiseGain", "Noise gain", -60.0f, 0.0f, -6.0f),
+        std::make_unique<juce::AudioParameterFloat>("noiseGain", "Noise gain", -60.0f, 0.0f, 0.0f),
         // Modulation
         std::make_unique<juce::AudioParameterBool>("modulationOn", "Modulation on", false),
         std::make_unique<juce::AudioParameterFloat>("modulationRate", "Rate", 0.0f, 10.0f, 1.0f),
@@ -93,7 +93,7 @@ DdspsynthAudioProcessor::DdspsynthAudioProcessor()
         harmonics[i] = 0.0;
     }
 
-    tf_amps = -200;
+    tf_amps = -120;
     tf_f0 = 0;
 }
 
@@ -261,13 +261,19 @@ void DdspsynthAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, ju
         if (adsr.isActive())
         {
             tf_f0 = midiNoteHz;
-            tf_amps = (120.0f * midiVelocity * adsrVelocity) - 120.0f;
-            DBG((120.0f * midiVelocity * adsrVelocity) - 120.0f);
+            tf_amps = log10(juce::jmax(midiVelocity * adsrVelocity, 0.000001f)) * 20.0f;
             for (int i = 0; i < numSamples; i++)
             {
                 f0[i] = midiNoteHz;
                 adsrVelocity = adsr.getNextSample();
             }
+            //if (adsrVelocity < 0.001f) {
+            //    tf_f0 = 0.0f;
+            //    for (int i = 0; i < numSamples; i++)
+            //    {
+            //        f0[i] = 0.0f;
+            //    }
+            //}
         }
     }
 

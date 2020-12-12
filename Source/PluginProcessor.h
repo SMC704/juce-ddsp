@@ -134,7 +134,7 @@ private:
 
     // Midi features
     juce::ADSR adsr;
-    juce::ADSR::Parameters adsrParams = { 1.0f, 1.0f, 1.0f, 1.0f };
+    juce::ADSR::Parameters adsrParams = { 1.0f, 0.1f, 1.0f, 1.0f };
     float midiVelocity;
     float adsrVelocity;
     float midiNoteHz;
