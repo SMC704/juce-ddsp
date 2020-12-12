@@ -14,13 +14,12 @@
 
 // Include files
 #include "rtwtypes.h"
-#include "omp.h"
 #include <cstddef>
 #include <cstdlib>
 
 // Function Declarations
-extern void subtractive(double n_samples, double magnitudes[65], double color,
-  double initial_bias, double out[4096]);
+extern void subtractive(double n_samples, const double magnitudes[65], double
+  color, double initial_bias, double out[4096]);
 
 #endif
 

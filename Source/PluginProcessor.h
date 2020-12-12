@@ -75,6 +75,7 @@ public:
         fftSize  = 1 << fftOrder
     };
 
+    void parseModelConfigJSON(juce::String path);
     void setModelOutput(TensorflowHandler::ModelResults results);
 
 	//void onValueChange(double harmonics[50]);
@@ -136,7 +137,7 @@ private:
 
     // Midi features
     juce::ADSR adsr;
-    juce::ADSR::Parameters adsrParams = { 1.0f, 1.0f, 1.0f, 1.0f };
+    juce::ADSR::Parameters adsrParams = { 1.0f, 0.1f, 1.0f, 1.0f };
     float midiVelocity;
     float adsrVelocity;
     float midiNoteHz;

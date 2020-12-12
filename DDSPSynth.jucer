@@ -9,6 +9,8 @@
   <MAINGROUP id="wP40jo" name="DDSPSynth">
     <GROUP id="{21B404C6-B1A3-96E0-24F7-18E3D850093A}" name="Source">
       <GROUP id="{EC1CE48D-AFDF-312B-B94A-6D056A9FE965}" name="DDSP">
+        <FILE id="uTrHom" name="fftshift.cpp" compile="1" resource="0" file="Source/codegen/fftshift.cpp"/>
+        <FILE id="BICWnQ" name="fftshift.h" compile="0" resource="0" file="Source/codegen/fftshift.h"/>
         <FILE id="G7UnBN" name="BiquadFilter.cpp" compile="1" resource="0"
               file="Source/codegen/BiquadFilter.cpp"/>
         <FILE id="FS57Tc" name="BiquadFilter.h" compile="0" resource="0" file="Source/codegen/BiquadFilter.h"/>
@@ -28,12 +30,8 @@
               resource="0" file="Source/codegen/ProcessConstructorArguments.cpp"/>
         <FILE id="Cc1bgg" name="ProcessConstructorArguments.h" compile="0"
               resource="0" file="Source/codegen/ProcessConstructorArguments.h"/>
-        <FILE id="lCIEkC" name="psdfreqvec.cpp" compile="1" resource="0" file="Source/codegen/psdfreqvec.cpp"/>
-        <FILE id="Hk5gvU" name="psdfreqvec.h" compile="0" resource="0" file="Source/codegen/psdfreqvec.h"/>
         <FILE id="aHLVD8" name="scale_f0.cpp" compile="1" resource="0" file="Source/codegen/scale_f0.cpp"/>
         <FILE id="hXMzXg" name="scale_f0.h" compile="0" resource="0" file="Source/codegen/scale_f0.h"/>
-        <FILE id="pWq1Wb" name="setup.cpp" compile="1" resource="0" file="Source/codegen/setup.cpp"/>
-        <FILE id="yBcask" name="setup.h" compile="0" resource="0" file="Source/codegen/setup.h"/>
         <FILE id="u5SzuZ" name="sort.cpp" compile="1" resource="0" file="Source/codegen/sort.cpp"/>
         <FILE id="cGnXu0" name="sort.h" compile="0" resource="0" file="Source/codegen/sort.h"/>
         <FILE id="yCTHvj" name="sortIdx.cpp" compile="1" resource="0" file="Source/codegen/sortIdx.cpp"/>
@@ -60,8 +58,6 @@
         <FILE id="M4eezR" name="gencoswin.h" compile="0" resource="0" file="Source/codegen/gencoswin.h"/>
         <FILE id="Kr9ucg" name="ifft.cpp" compile="1" resource="0" file="Source/codegen/ifft.cpp"/>
         <FILE id="lqEyNS" name="ifft.h" compile="0" resource="0" file="Source/codegen/ifft.h"/>
-        <FILE id="IjaAy9" name="interp1.cpp" compile="1" resource="0" file="Source/codegen/interp1.cpp"/>
-        <FILE id="fvSSpV" name="interp1.h" compile="0" resource="0" file="Source/codegen/interp1.h"/>
         <FILE id="gwLLC8" name="TensorflowHandler.cpp" compile="1" resource="0"
               file="Source/TensorflowHandler.cpp"/>
         <FILE id="FcN3yN" name="TensorflowHandler.h" compile="0" resource="0"
@@ -258,7 +254,8 @@
     <VS2019 targetFolder="Builds/VisualStudio2019" externalLibraries="..\..\Libraries\tensorflow_c_win\tensorflow.lib&#10;..\..\Libraries\aubio_win\libaubio.a">
       <CONFIGURATIONS>
         <CONFIGURATION isDebug="1" name="Debug" postbuildCommand="copy &quot;..\..\Libraries\tensorflow_c_win\tensorflow.*&quot; &quot;x64\Debug\Standalone Plugin\&quot;"/>
-        <CONFIGURATION isDebug="0" name="Release" postbuildCommand="copy &quot;..\..\Libraries\tensorflow_c_win\tensorflow.*&quot; &quot;x64\Release\Standalone Plugin\&quot;"/>
+        <CONFIGURATION isDebug="0" name="Release" postbuildCommand="copy &quot;..\..\Libraries\tensorflow_c_win\tensorflow.*&quot; &quot;x64\Release\Standalone Plugin\&quot;"
+                       useRuntimeLibDLL="0"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
         <MODULEPATH id="juce_gui_extra"/>

@@ -15,7 +15,6 @@
 // Include files
 #include "BiquadFilter.h"
 #include "rtwtypes.h"
-#include "omp.h"
 #include <cstddef>
 #include <cstdlib>
 

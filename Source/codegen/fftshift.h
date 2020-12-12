@@ -3,27 +3,26 @@
 //  course requirements at degree granting institutions only.  Not for
 //  government, commercial, or other organizational use.
 //
-//  psdfreqvec.h
+//  fftshift.h
 //
-//  Code generation for function 'psdfreqvec'
+//  Code generation for function 'fftshift'
 //
 
 
-#ifndef PSDFREQVEC_H
-#define PSDFREQVEC_H
+#ifndef FFTSHIFT_H
+#define FFTSHIFT_H
 
 // Include files
 #include "rtwtypes.h"
-#include "omp.h"
 #include <cstddef>
 #include <cstdlib>
 
 // Function Declarations
 namespace coder
 {
-  void psdfreqvec(double varargin_4, double w_data[], int w_size[1]);
+  void fftshift(double x[65]);
 }
 
 #endif
 
-// End of code generation (psdfreqvec.h)
+// End of code generation (fftshift.h)
