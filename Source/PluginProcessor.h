@@ -73,6 +73,7 @@ public:
         fftSize  = 1 << fftOrder
     };
 
+    void parseModelConfigJSON(juce::String path);
     void setModelOutput(TensorflowHandler::ModelResults results);
 
 	//void onValueChange(double harmonics[50]);

@@ -168,6 +168,7 @@ void DdspsynthAudioProcessor::changeProgramName (int index, const juce::String& 
 void DdspsynthAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
 {
     tfHandler.setAsyncUpdater(this);
+    parseModelConfigJSON(modelDir + "violin");
     tfHandler.loadModel((modelDir + "violin").getCharPointer());
 
     adsr.setSampleRate(sampleRate);
@@ -335,6 +336,15 @@ void DdspsynthAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, ju
     }
 }
 
+void DdspsynthAudioProcessor::parseModelConfigJSON(juce::String path)
+{
+    // Parses config.json for model selected. Sets default values if file isn't found.
+    juce::File config_file = juce::File(juce::File::getCurrentWorkingDirectory().getFullPathName() + "../" + path + "/config.json");
+    juce::var config = juce::JSON::parse(config_file);
+    n_harmonics = config.getProperty("n_harmonics", 50);
+    initial_bias = config.getProperty("initial_bias", -5.0f);
+}
+
 void DdspsynthAudioProcessor::setModelOutput(TensorflowHandler::ModelResults tfResults)
 {
     for (int i = 0; i < 50; i++) {
@@ -356,6 +366,7 @@ void DdspsynthAudioProcessor::parameterChanged(const juce::String & parameterID,
 		auto param = (juce::AudioParameterChoice*) parameters.getParameter("modelSelect");
 		juce::String modelName = param->getCurrentChoiceName();
 		DBG("Processor notified to select model " + modelName);
+        parseModelConfigJSON(modelDir + modelName);
 		tfHandler.loadModel((modelDir + modelName).getCharPointer());
 	}
 }
