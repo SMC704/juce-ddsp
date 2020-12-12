@@ -147,10 +147,10 @@
   <JUCEOPTIONS JUCE_STRICT_REFCOUNTEDPOINTER="1" JUCE_VST3_CAN_REPLACE_VST2="0"/>
   <EXPORTFORMATS>
     <XCODE_MAC targetFolder="Builds/MacOSX" microphonePermissionNeeded="1" extraLinkerFlags="-L${PROJECT_DIR}/../../Libraries/tensorflow_c_mac/"
-               externalLibraries="tensorflow_cc">
+               externalLibraries="tensorflow.2.3.1&#10;tensorflow.2&#10;tensorflow&#10;tensorflow_framework.2.3.1&#10;tensorflow_framework.2&#10;tensorflow_framework">
       <CONFIGURATIONS>
-        <CONFIGURATION isDebug="1" name="Debug" targetName="DDSPSynth"/>
-        <CONFIGURATION isDebug="0" name="Release" targetName="DDSPSynth"/>
+        <CONFIGURATION isDebug="1" name="Debug" targetName="DDSPSynth" customXcodeFlags="LD_RUNPATH_SEARCH_PATHS = &quot;${PROJECT_DIR}/../../Libraries/tensorflow_c_mac/&quot;"/>
+        <CONFIGURATION isDebug="0" name="Release" targetName="DDSPSynth" customXcodeFlags="LD_RUNPATH_SEARCH_PATHS = &quot;${PROJECT_DIR}/../../Libraries/tensorflow_c_mac/&quot;"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
         <MODULEPATH id="juce_analytics" path="../../modules"/>
