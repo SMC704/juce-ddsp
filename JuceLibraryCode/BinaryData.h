@@ -35,6 +35,18 @@ namespace BinaryData
     extern const char*   violin_png;
     const int            violin_pngSize = 3333;
 
+    extern const char*   birds_png;
+    const int            birds_pngSize = 4083;
+
+    extern const char*   dulcimer_png;
+    const int            dulcimer_pngSize = 2578;
+
+    extern const char*   handpan_png;
+    const int            handpan_pngSize = 2802;
+
+    extern const char*   synthbass_png;
+    const int            synthbass_pngSize = 1333;
+
     extern const char*   background_texture_png;
     const int            background_texture_pngSize = 296713;
 
@@ -42,7 +54,7 @@ namespace BinaryData
     const int            background_texture_dark_headline_pngSize = 280033;
 
     // Number of elements in the namedResourceList and originalFileNames arrays.
-    const int namedResourceListSize = 11;
+    const int namedResourceListSize = 15;
 
     // Points to the start of a list of resource names.
     extern const char* namedResourceList[];

@@ -176,6 +176,10 @@
       <FILE id="Kv2miF" name="saxophone.png" compile="0" resource="1" file="Resources/saxophone.png"/>
       <FILE id="wtOGVD" name="trumpet.png" compile="0" resource="1" file="Resources/trumpet.png"/>
       <FILE id="XiwffD" name="violin.png" compile="0" resource="1" file="Resources/violin.png"/>
+      <FILE id="vYtwUm" name="birds.png" compile="0" resource="1" file="Resources/birds.png"/>
+      <FILE id="wwwNc4" name="dulcimer.png" compile="0" resource="1" file="Resources/dulcimer.png"/>
+      <FILE id="gVNeWy" name="handpan.png" compile="0" resource="1" file="Resources/handpan.png"/>
+      <FILE id="kShE4z" name="synthbass.png" compile="0" resource="1" file="Resources/synthbass.png"/>
       <FILE id="Tvkuwl" name="background_texture.png" compile="0" resource="1"
             file="Resources/background_texture.png"/>
       <FILE id="JVih5U" name="background_texture_dark_headline.png" compile="0"

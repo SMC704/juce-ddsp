@@ -50,14 +50,21 @@ private:
     juce::Label trumpetLabel;
 	std::unique_ptr<ButtonAttachment> trumpetAttachment;
 
-    juce::ImageButton extra1Button;
-    juce::Label extra1Label;
-    juce::ImageButton extra2Button;
-    juce::Label extra2Label;
-    juce::ImageButton extra3Button;
-    juce::Label extra3Label;
-    juce::ImageButton extra4Button;
-    juce::Label extra4Label;
+    juce::ImageButton synthbassButton;
+    juce::Label synthbassLabel;
+    std::unique_ptr<ButtonAttachment> synthbassAttachment;
+    
+    juce::ImageButton dulcimerButton;
+    juce::Label dulcimerLabel;
+    std::unique_ptr<ButtonAttachment> dulcimerAttachment;
+    
+    juce::ImageButton handpanButton;
+    juce::Label handpanLabel;
+    std::unique_ptr<ButtonAttachment> handpanAttachment;
+    
+    juce::ImageButton birdsButton;
+    juce::Label birdsLabel;
+    std::unique_ptr<ButtonAttachment> birdsAttachment;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ModelComponent)
 };

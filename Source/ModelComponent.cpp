@@ -48,6 +48,7 @@ ModelComponent::ModelComponent(juce::AudioProcessorValueTreeState& vts)
     violinButton.setRadioGroupId(1001);
     violinButton.setClickingTogglesState(true);
     violinButton.onClick = [this] { updateModelState(&violinButton); };
+    violinButton.setTooltip("Violin");
 
     addAndMakeVisible(violinLabel);
     violinLabel.setColour(juce::Label::textColourId, juce::Colours::white);
@@ -95,61 +96,61 @@ ModelComponent::ModelComponent(juce::AudioProcessorValueTreeState& vts)
     trumpetLabel.setColour(juce::Label::textColourId, juce::Colours::white);
     trumpetLabel.setJustificationType(juce::Justification::centred);
 
-    addAndMakeVisible(extra1Button);
-    extra1Button.setButtonText("Extra 1");
-    extra1Button.setBounds(0, 0, 50, 50);
-    extra1Button.setImages(false, true, false,
-        juce::ImageFileFormat::loadFrom(BinaryData::placeholder_png, BinaryData::placeholder_pngSize),
+    addAndMakeVisible(synthbassButton);
+    synthbassButton.setButtonText("Synthbass");
+    synthbassButton.setBounds(0, 0, 50, 50);
+    synthbassButton.setImages(false, true, false,
+        juce::ImageFileFormat::loadFrom(BinaryData::synthbass_png, BinaryData::synthbass_pngSize),
         0.65f, {}, {}, 0.85f, {}, {}, 1.0f, {}, 0.0f);
-    extra1Button.setRadioGroupId(1001);
-    extra1Button.setClickingTogglesState(true);
-    extra1Button.onClick = [this] { updateModelState(&extra1Button); };
+    synthbassButton.setRadioGroupId(1001);
+    synthbassButton.setClickingTogglesState(true);
+    synthbassButton.onClick = [this] { updateModelState(&synthbassButton); };
 
-    addAndMakeVisible(extra1Label);
-    extra1Label.setColour(juce::Label::textColourId, juce::Colours::white);
-    extra1Label.setJustificationType(juce::Justification::centred);
+    addAndMakeVisible(synthbassLabel);
+    synthbassLabel.setColour(juce::Label::textColourId, juce::Colours::white);
+    synthbassLabel.setJustificationType(juce::Justification::centred);
 
-    addAndMakeVisible(extra2Button);
-    extra2Button.setButtonText("Extra 2");
-    extra2Button.setBounds(0, 0, 50, 50);
-    extra2Button.setImages(false, true, false,
-        juce::ImageFileFormat::loadFrom(BinaryData::placeholder_png, BinaryData::placeholder_pngSize),
+    addAndMakeVisible(dulcimerButton);
+    dulcimerButton.setButtonText("Dulcimer");
+    dulcimerButton.setBounds(0, 0, 50, 50);
+    dulcimerButton.setImages(false, true, false,
+        juce::ImageFileFormat::loadFrom(BinaryData::dulcimer_png, BinaryData::dulcimer_pngSize),
         0.65f, {}, {}, 0.85f, {}, {}, 1.0f, {}, 0.0f);
-    extra2Button.setRadioGroupId(1001);
-    extra2Button.setClickingTogglesState(true);
-    extra2Button.onClick = [this] { updateModelState(&extra2Button); };
+    dulcimerButton.setRadioGroupId(1001);
+    dulcimerButton.setClickingTogglesState(true);
+    dulcimerButton.onClick = [this] { updateModelState(&dulcimerButton); };
 
-    addAndMakeVisible(extra2Label);
-    extra2Label.setColour(juce::Label::textColourId, juce::Colours::white);
-    extra2Label.setJustificationType(juce::Justification::centred);
+    addAndMakeVisible(dulcimerLabel);
+    dulcimerLabel.setColour(juce::Label::textColourId, juce::Colours::white);
+    dulcimerLabel.setJustificationType(juce::Justification::centred);
 
-    addAndMakeVisible(extra3Button);
-    extra3Button.setButtonText("Extra 3");
-    extra3Button.setBounds(0, 0, 50, 50);
-    extra3Button.setImages(false, true, false,
-        juce::ImageFileFormat::loadFrom(BinaryData::placeholder_png, BinaryData::placeholder_pngSize),
+    addAndMakeVisible(handpanButton);
+    handpanButton.setButtonText("Handpan");
+    handpanButton.setBounds(0, 0, 50, 50);
+    handpanButton.setImages(false, true, false,
+        juce::ImageFileFormat::loadFrom(BinaryData::handpan_png, BinaryData::handpan_pngSize),
         0.65f, {}, {}, 0.85f, {}, {}, 1.0f, {}, 0.0f);
-    extra3Button.setRadioGroupId(1001);
-    extra3Button.setClickingTogglesState(true);
-    extra3Button.onClick = [this] { updateModelState(&extra3Button); };
+    handpanButton.setRadioGroupId(1001);
+    handpanButton.setClickingTogglesState(true);
+    handpanButton.onClick = [this] { updateModelState(&handpanButton); };
 
-    addAndMakeVisible(extra3Label);
-    extra3Label.setColour(juce::Label::textColourId, juce::Colours::white);
-    extra3Label.setJustificationType(juce::Justification::centred);
+    addAndMakeVisible(handpanLabel);
+    handpanLabel.setColour(juce::Label::textColourId, juce::Colours::white);
+    handpanLabel.setJustificationType(juce::Justification::centred);
 
-    addAndMakeVisible(extra4Button);
-    extra4Button.setButtonText("Extra 4");
-    extra4Button.setBounds(0, 0, 50, 50);
-    extra4Button.setImages(false, true, false,
-        juce::ImageFileFormat::loadFrom(BinaryData::placeholder_png, BinaryData::placeholder_pngSize),
+    addAndMakeVisible(birdsButton);
+    birdsButton.setButtonText("Birds");
+    birdsButton.setBounds(0, 0, 50, 50);
+    birdsButton.setImages(false, true, false,
+        juce::ImageFileFormat::loadFrom(BinaryData::birds_png, BinaryData::birds_pngSize),
         0.65f, {}, {}, 0.85f, {}, {}, 1.0f, {}, 0.0f);
-    extra4Button.setRadioGroupId(1001);
-    extra4Button.setClickingTogglesState(true);
-    extra4Button.onClick = [this] { updateModelState(&extra4Button); };
+    birdsButton.setRadioGroupId(1001);
+    birdsButton.setClickingTogglesState(true);
+    birdsButton.onClick = [this] { updateModelState(&birdsButton); };
 
-    addAndMakeVisible(extra4Label);
-    extra4Label.setColour(juce::Label::textColourId, juce::Colours::white);
-    extra4Label.setJustificationType(juce::Justification::centred);
+    addAndMakeVisible(birdsLabel);
+    birdsLabel.setColour(juce::Label::textColourId, juce::Colours::white);
+    birdsLabel.setJustificationType(juce::Justification::centred);
 
 }
 
@@ -230,25 +231,25 @@ void ModelComponent::resized()
             .withMargin(juce::GridItem::Margin(-20.f, 0, 0, 0))
             .withArea(3,2),
 
-        juce::GridItem(extra1Button).withSize(buttonDim, buttonDim)
+        juce::GridItem(synthbassButton).withSize(buttonDim, buttonDim)
             .withAlignSelf(juce::GridItem::AlignSelf::start)
             .withJustifySelf(juce::GridItem::JustifySelf::end)
             .withMargin(juce::GridItem::Margin(-20.f, 0, 0, 0))
             .withArea(4, 1),
 
-        juce::GridItem(extra2Button).withSize(buttonDim, buttonDim)
+        juce::GridItem(dulcimerButton).withSize(buttonDim, buttonDim)
             .withAlignSelf(juce::GridItem::AlignSelf::start)
             .withJustifySelf(juce::GridItem::JustifySelf::start)
             .withMargin(juce::GridItem::Margin(-20.f, 0, 0, 0))
             .withArea(4,2),
 
-        juce::GridItem(extra3Button).withSize(buttonDim, buttonDim)
+        juce::GridItem(handpanButton).withSize(buttonDim, buttonDim)
             .withAlignSelf(juce::GridItem::AlignSelf::start)
             .withJustifySelf(juce::GridItem::JustifySelf::end)
             .withMargin(juce::GridItem::Margin(-20.f, 0, 0, 0))
             .withArea(5,1),
 
-        juce::GridItem(extra4Button).withSize(buttonDim, buttonDim)
+        juce::GridItem(birdsButton).withSize(buttonDim, buttonDim)
             .withAlignSelf(juce::GridItem::AlignSelf::start)
             .withJustifySelf(juce::GridItem::JustifySelf::start)
             .withMargin(juce::GridItem::Margin(-20.f, 0, 0, 0))
@@ -286,20 +287,24 @@ void ModelComponent::updateModelState(juce::Button *button)
         DBG("trumpet model activated");
 		*param = 3;
     }
-    else if(button == &extra1Button && extra1Button.getToggleState() == true)
+    else if(button == &synthbassButton && synthbassButton.getToggleState() == true)
     {
-        DBG("extra1 model activated");
+        DBG("synthbass model activated");
+        *param = 4;
     }
-    else if(button == &extra2Button && extra2Button.getToggleState() == true)
+    else if(button == &dulcimerButton && dulcimerButton.getToggleState() == true)
     {
-        DBG("extra2 model activated");
+        DBG("dulcimer model activated");
+        *param = 5;
     }
-    else if(button == &extra3Button && extra3Button.getToggleState() == true)
+    else if(button == &handpanButton && handpanButton.getToggleState() == true)
     {
-        DBG("extra3 model activated");
+        DBG("handpan model activated");
+        *param = 6;
     }
-    else if(button == &extra4Button && extra4Button.getToggleState() == true)
+    else if(button == &birdsButton && birdsButton.getToggleState() == true)
     {
         DBG("extra4 model activated");
+        *param = 7;
     }
 }

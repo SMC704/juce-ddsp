@@ -36,7 +36,7 @@ DdspsynthAudioProcessor::DdspsynthAudioProcessor()
         std::make_unique<juce::AudioParameterBool>("inputIsLine", "Input is line in", false),
         // Model
         std::make_unique<juce::AudioParameterBool>("modelOn", "Use model", true),
-        std::make_unique<juce::AudioParameterChoice>("modelSelect", "Model select", juce::StringArray({ "violin", "flute", "tenorsax", "trumpet" }), 0),
+        std::make_unique<juce::AudioParameterChoice>("modelSelect", "Model select", juce::StringArray({ "violin", "flute", "tenorsax", "trumpet", "synthbass", "dulcimer", "handpan", "birds" }), 0),
         // Additive
         std::make_unique<juce::AudioParameterBool>("additiveOn", "Additive synth on", true),
         std::make_unique<juce::AudioParameterFloat>("additiveShift", "Shift amount", -12.0f, 12.0f, 0.0f),
