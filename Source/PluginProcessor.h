@@ -16,7 +16,7 @@
 //==============================================================================
 /**
 */
-class DdspsynthAudioProcessor : public juce::AudioProcessor, juce::AsyncUpdater, juce::AudioProcessorValueTreeState::Listener
+class DdspsynthAudioProcessor : public juce::AudioProcessor, juce::AsyncUpdater, juce::AudioProcessorValueTreeState::Listener, public HarmonicEditor::Listener
 {
 public:
     //==============================================================================
@@ -76,7 +76,7 @@ public:
     void parseModelConfigJSON(juce::String path);
     void setModelOutput(TensorflowHandler::ModelResults results);
 
-	//void onValueChange(double harmonics[50]);
+	void onHarmonicsChange(double* harmonics, int nHarmonics);
  //   
  //   void onShiftValueChange(double shiftValue);
 
@@ -125,8 +125,9 @@ private:
     double f0_in;
     double f0_out;
     double f0[4096];
-    double n_harmonics = 50;
+    double n_harmonics = 60;
     double harmonics[60];
+	double userHarmonics[60];
     double addBuffer[4096];
     double initial_bias = -5.0f;
     double subBuffer[4096];
