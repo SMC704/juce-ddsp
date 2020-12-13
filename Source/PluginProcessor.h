@@ -9,10 +9,12 @@
 #pragma once
 
 #include <JuceHeader.h>
+#include <cstdio>
 #include "HarmonicEditor.h"
 #include "SubtractiveComponent.h"
 #include "AdditiveComponent.h"
 #include "TensorflowHandler.h"
+#include "aubio.h"
 //==============================================================================
 /**
 */
@@ -77,18 +79,7 @@ public:
     void setModelOutput(TensorflowHandler::ModelResults results);
 
 	void onHarmonicsChange(double* harmonics, int nHarmonics);
- //   
- //   void onShiftValueChange(double shiftValue);
-
- //   void onStretchValueChange(double stretchValue);
-
- //   void onNoiseColorChange(double color);
- //   void onOnOffSubChange(bool onOff);
- //   void onSubAmpChange(double subAmp);
- //   void onAddAmpChange(double addAmp);
- //   void onOutAmpChange(double outAmp);
-
- //   void onOnOffAddChange(bool button);
+    int getNumberOfHarmonics();
 
 	void parameterChanged(const juce::String &parameterID, float newValue = 0) override;
 
@@ -118,16 +109,17 @@ private:
     std::atomic<float>* outputGainParameter = nullptr;
 
     // Internal parameters
-    double phaseBuffer_in[60];
-    double phaseBuffer_out[60];
+    const static int max_n_harmonics = 100;
+    double phaseBuffer_in[max_n_harmonics];
+    double phaseBuffer_out[max_n_harmonics];
     double amplitudes[4096];
     double ld;
     double f0_in;
     double f0_out;
     double f0[4096];
     double n_harmonics = 60;
-    double harmonics[60];
-	double userHarmonics[60];
+    double harmonics[max_n_harmonics];
+	double userHarmonics[max_n_harmonics];
     double addBuffer[4096];
     double initial_bias = -5.0f;
     double subBuffer[4096];
@@ -156,7 +148,14 @@ private:
     float tf_f0;
     float tf_amps;
 
-	const juce::String modelDir = "../../Models/";
+	struct PitchDeleter
+	{
+		void operator()(aubio_pitch_t *p) { del_aubio_pitch(p); }
+	};
+
+	std::unique_ptr<aubio_pitch_t, PitchDeleter> aubioPitch;
+
+    juce::File modelDir;
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (DdspsynthAudioProcessor)

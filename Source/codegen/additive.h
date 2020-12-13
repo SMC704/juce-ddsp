@@ -20,9 +20,9 @@
 // Function Declarations
 extern void additive(double n_samples, double sample_rate, const double
                      amplitudes[4096], double n_harmonics, double
-                     harmonic_distribution[60], const double f0[4096], const
-                     double prev_phases[60], double shift, double stretch,
-                     double audio[4096], double last_phases[60]);
+                     harmonic_distribution[100], const double f0[4096], const
+                     double prev_phases[100], double shift, double stretch,
+                     double audio[4096], double last_phases[100]);
 
 #endif
 

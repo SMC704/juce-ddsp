@@ -23,9 +23,9 @@
 
 // Function Definitions
 void additive(double n_samples, double sample_rate, const double amplitudes[4096],
-              double n_harmonics, double harmonic_distribution[60], const double
-              f0[4096], const double prev_phases[60], double shift, double
-              stretch, double audio[4096], double last_phases[60])
+              double n_harmonics, double harmonic_distribution[100], const
+              double f0[4096], const double prev_phases[100], double shift,
+              double stretch, double audio[4096], double last_phases[100])
 {
   coder::array<double, 2U> b_harmonic_frequencies;
   coder::array<double, 2U> f_ratios;
@@ -116,7 +116,7 @@ void additive(double n_samples, double sample_rate, const double amplitudes[4096
 
   //  Scale Function
   //  Exponentiated Sigmoid pointwise nonlinearity
-  for (k = 0; k < 60; k++) {
+  for (k = 0; k < 100; k++) {
     harmonic_distribution[k] = 2.0 * rt_powd_snf(1.0 / (std::exp
       (-harmonic_distribution[k]) + 1.0), 2.3025850929940459) + 1.0E-7;
   }
@@ -220,13 +220,13 @@ void additive(double n_samples, double sample_rate, const double amplitudes[4096
   //          harmonic_distribution(1:end,c) = harmonic_distribution(1:end,c) ./ harm_sum; 
   //      end
   //  Create harmonic amplitudes
-  harmonic_amplitudes.set_size(loop_ub, 60);
-  b_loop_ub = loop_ub * 60;
+  harmonic_amplitudes.set_size(loop_ub, 100);
+  b_loop_ub = loop_ub * 100;
   for (i = 0; i < b_loop_ub; i++) {
     harmonic_amplitudes[i] = 0.0;
   }
 
-  for (nx = 0; nx < 60; nx++) {
+  for (nx = 0; nx < 100; nx++) {
     for (i = 0; i < loop_ub; i++) {
       harmonic_amplitudes[i + harmonic_amplitudes.size(0) * nx] =
         harmonic_distribution[nx] * amplitudes_data[i];
@@ -352,7 +352,7 @@ void additive(double n_samples, double sample_rate, const double amplitudes[4096
     harmonic_frequencies[k] = b_sample_rate;
   }
 
-  std::memset(&last_phases[0], 0, 60U * sizeof(double));
+  std::memset(&last_phases[0], 0, 100U * sizeof(double));
   i = harmonic_frequencies.size(1);
   for (nx = 0; nx < i; nx++) {
     last_phases[nx] = harmonic_frequencies[(harmonic_frequencies.size(0) +
