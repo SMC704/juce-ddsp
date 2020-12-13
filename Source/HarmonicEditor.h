@@ -39,15 +39,19 @@ public:
 
 	void setListener(Listener* pTheListener);
 
+    void setNumberOfHarmonicSliders(int nHarmonicsNew);
+    void createHarmonicSliders();
+
 private:
-    
+
     bool isEntered;
     bool isDown;
     
     juce::OwnedArray<HarmonicSlider> harmonicSliders;
 
-    const static int nHarmonics = 60;
-	double harmonicValues[nHarmonics];
+    const static int maxNumberOfHarmonics = 100;
+    int nHarmonics = 60;
+	double harmonicValues[maxNumberOfHarmonics];
 	Listener* pListener = NULL;
     
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (HarmonicEditor)

@@ -18,10 +18,10 @@ DdspsynthAudioProcessorEditor::DdspsynthAudioProcessorEditor (DdspsynthAudioProc
 
     backgroundTexture = backgroundTexture.rescaled(900, 600);
     addAndMakeVisible(mainComponent);
-	auto additive = (AdditiveComponent*)mainComponent.findChildWithID("additive");
-	auto harmEditor = (HarmonicEditor*)(additive->findChildWithID("harmonicEditor"));
-    auto subtractive = (SubtractiveComponent*)(mainComponent.findChildWithID("subtractive"));
-    auto output = (OutputComponent*)mainComponent.findChildWithID("output");
+	additive = (AdditiveComponent*)mainComponent.findChildWithID("additive");
+	harmEditor = (HarmonicEditor*)(additive->findChildWithID("harmonicEditor"));
+    subtractive = (SubtractiveComponent*)(mainComponent.findChildWithID("subtractive"));
+    output = (OutputComponent*)mainComponent.findChildWithID("output");
 
 
 	harmEditor->setListener(&p);
@@ -65,6 +65,15 @@ void DdspsynthAudioProcessorEditor::timerCallback()
                                                 *audioProcessor.getForwardFFT(),
                                                 audioProcessor.getFftOrder());
         audioProcessor.setNextFFTBlockReady(false);
+    }
+    setNumberOfHarmonics(audioProcessor.getNumberOfHarmonics());
+}
+
+void DdspsynthAudioProcessorEditor::setNumberOfHarmonics(int numberOfHarmonics)
+{
+    if (harmEditor != nullptr)
+    {
+        harmEditor->setNumberOfHarmonicSliders(numberOfHarmonics);
     }
 }
 

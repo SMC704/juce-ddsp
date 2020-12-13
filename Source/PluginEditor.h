@@ -38,7 +38,14 @@ public:
     //==============================================================================
     void timerCallback() override;
 
+    void setNumberOfHarmonics(int numberOfHarmonics);
+
 private:
+    AdditiveComponent* additive;
+    HarmonicEditor* harmEditor;
+    SubtractiveComponent* subtractive;
+    OutputComponent* output;
+
     DdspsynthAudioProcessor& audioProcessor;
     juce::AudioProcessorValueTreeState& valueTreeState;
 

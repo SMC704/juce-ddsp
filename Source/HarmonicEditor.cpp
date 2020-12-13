@@ -16,18 +16,8 @@ HarmonicEditor::HarmonicEditor()
 {
     isEntered = false;
     isDown = false;
-    
-    for (int i=0; i < nHarmonics; i++) {
-        harmonicSliders.add(new HarmonicSlider());
-		harmonicValues[i] = 0.5;
-    }
-    
-    for (HarmonicSlider *harmonicSlider: harmonicSliders) {
-        addAndMakeVisible(harmonicSlider);
-        harmonicSlider->setBounds(0, 0, 100, 100);
-        harmonicSlider->addMouseListener(this, true);
-        
-    }
+    createHarmonicSliders();
+
 }
 
 HarmonicEditor::~HarmonicEditor()
@@ -45,6 +35,32 @@ void HarmonicEditor::setListener(HarmonicEditor::Listener* pTheListener)
 	if (pListener != NULL) {
 		pListener->onHarmonicsChange(harmonicValues, nHarmonics);
 	}
+}
+
+void HarmonicEditor::setNumberOfHarmonicSliders(int nHarmonicsNew)
+{
+    if (nHarmonics != nHarmonicsNew)
+    {
+        nHarmonics = nHarmonicsNew;
+        createHarmonicSliders();
+    }
+}
+
+void HarmonicEditor::createHarmonicSliders()
+{
+    harmonicSliders.clear();
+
+    for (int i = 0; i < nHarmonics; i++) {
+        harmonicSliders.add(new HarmonicSlider());
+        harmonicValues[i] = 0.5;
+    }
+
+    for (HarmonicSlider* harmonicSlider : harmonicSliders) {
+        addAndMakeVisible(harmonicSlider);
+        harmonicSlider->setBounds(0, 0, 100, 100);
+        harmonicSlider->addMouseListener(this, true);
+    }
+    resized();
 }
 
 void HarmonicEditor::resized()

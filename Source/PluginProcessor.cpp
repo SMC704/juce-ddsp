@@ -35,45 +35,45 @@ extern "C" int __cdecl __ms_vsnprintf(char* s, size_t n, const char* format, va_
 //==============================================================================
 DdspsynthAudioProcessor::DdspsynthAudioProcessor()
 #ifndef JucePlugin_PreferredChannelConfigurations
-	: AudioProcessor(BusesProperties()
+    : AudioProcessor(BusesProperties()
 #if ! JucePlugin_IsMidiEffect
 #if ! JucePlugin_IsSynth
-		.withInput("Input", juce::AudioChannelSet::mono(), true)
+        .withInput("Input", juce::AudioChannelSet::mono(), true)
 #endif
-		.withOutput("Output", juce::AudioChannelSet::stereo(), true)
+        .withOutput("Output", juce::AudioChannelSet::stereo(), true)
 #endif
-	),
+    ),
 
 #endif
     : forwardFFT(fftOrder),
     parameters(*this, nullptr, juce::Identifier("DDSPSynth"),
         {
-         // Input
-        std::make_unique<juce::AudioParameterBool>("inputIsLine", "Input is line in", false),
-        // Model
-        std::make_unique<juce::AudioParameterBool>("modelOn", "Use model", false),
-        std::make_unique<juce::AudioParameterChoice>("modelSelect", "Model select", juce::StringArray({ "violin", "flute", "tenorsax", "trumpet" }), 0),
-        // Additive
-        std::make_unique<juce::AudioParameterBool>("additiveOn", "Additive synth on", true),
-        std::make_unique<juce::AudioParameterFloat>("additiveShift", "Shift amount", -12.0f, 12.0f, 0.0f),
-        std::make_unique<juce::AudioParameterFloat>("additiveStretch", "Stretch amount", -1.0f, 1.0f, 0.0f),
-        std::make_unique<juce::AudioParameterFloat>("additiveGain", "Additive gain", -60.0f, 0.0f, 0.0f),
-        // Subtractive
-        std::make_unique<juce::AudioParameterBool>("noiseOn", "Noise synth on", true),
-        std::make_unique<juce::AudioParameterFloat>("noiseColor", "Noise color", -1.0f, 1.0f, 0.0f),
-        std::make_unique<juce::AudioParameterFloat>("noiseGain", "Noise gain", -60.0f, 0.0f, 0.0f),
-        // Modulation
-        std::make_unique<juce::AudioParameterBool>("modulationOn", "Modulation on", false),
-        std::make_unique<juce::AudioParameterFloat>("modulationRate", "Rate", 0.0f, 10.0f, 1.0f),
-        std::make_unique<juce::AudioParameterFloat>("modulationDelay", "Delay", 0.01f, 0.5f, 0.03f),
-        std::make_unique<juce::AudioParameterFloat>("modulationAmount", "Amount", 0.0f, 100.0f, 50.0f),
-        // Reverb
-        std::make_unique<juce::AudioParameterBool>("reverbOn", "Reverb on", false),
-        std::make_unique<juce::AudioParameterFloat>("reverbMix", "Mix", 0.0f, 10.0f, 1.0f),
-        std::make_unique<juce::AudioParameterFloat>("reverbSize", "Size", 0.10f, 2.0f, 1.0f),
-        std::make_unique<juce::AudioParameterFloat>("reverbGlow", "Glow", 0.0f, 100.0f, 0.0f),
-        // Output
-        std::make_unique<juce::AudioParameterFloat>("outputGain", "Output gain", -60.0f, 0.0f, -6.0f),
+            // Input
+           std::make_unique<juce::AudioParameterBool>("inputIsLine", "Input is line in", false),
+           // Model
+           std::make_unique<juce::AudioParameterBool>("modelOn", "Use model", false),
+           std::make_unique<juce::AudioParameterChoice>("modelSelect", "Model select", juce::StringArray({ "violin", "flute", "tenorsax", "trumpet" }), 0),
+           // Additive
+           std::make_unique<juce::AudioParameterBool>("additiveOn", "Additive synth on", true),
+           std::make_unique<juce::AudioParameterFloat>("additiveShift", "Shift amount", -12.0f, 12.0f, 0.0f),
+           std::make_unique<juce::AudioParameterFloat>("additiveStretch", "Stretch amount", -1.0f, 1.0f, 0.0f),
+           std::make_unique<juce::AudioParameterFloat>("additiveGain", "Additive gain", -60.0f, 0.0f, 0.0f),
+           // Subtractive
+           std::make_unique<juce::AudioParameterBool>("noiseOn", "Noise synth on", true),
+           std::make_unique<juce::AudioParameterFloat>("noiseColor", "Noise color", -1.0f, 1.0f, 0.0f),
+           std::make_unique<juce::AudioParameterFloat>("noiseGain", "Noise gain", -60.0f, 0.0f, 0.0f),
+           // Modulation
+           std::make_unique<juce::AudioParameterBool>("modulationOn", "Modulation on", false),
+           std::make_unique<juce::AudioParameterFloat>("modulationRate", "Rate", 0.0f, 10.0f, 1.0f),
+           std::make_unique<juce::AudioParameterFloat>("modulationDelay", "Delay", 0.01f, 0.5f, 0.03f),
+           std::make_unique<juce::AudioParameterFloat>("modulationAmount", "Amount", 0.0f, 100.0f, 50.0f),
+           // Reverb
+           std::make_unique<juce::AudioParameterBool>("reverbOn", "Reverb on", false),
+           std::make_unique<juce::AudioParameterFloat>("reverbMix", "Mix", 0.0f, 10.0f, 1.0f),
+           std::make_unique<juce::AudioParameterFloat>("reverbSize", "Size", 0.10f, 2.0f, 1.0f),
+           std::make_unique<juce::AudioParameterFloat>("reverbGlow", "Glow", 0.0f, 100.0f, 0.0f),
+           // Output
+           std::make_unique<juce::AudioParameterFloat>("outputGain", "Output gain", -60.0f, 0.0f, -6.0f),
     })/*, 
     tfHandler(*this)*/
 {
@@ -96,8 +96,9 @@ DdspsynthAudioProcessor::DdspsynthAudioProcessor()
     reverbSizeParameter = parameters.getRawParameterValue("reverbSize");
     reverbGlowParameter = parameters.getRawParameterValue("reverbGlow");
     outputGainParameter = parameters.getRawParameterValue("outputGain");
-
+;
     parameters.addParameterListener("modelSelect", this);
+
     for (int i = 0; i < 65; i++) {
         magnitudes[i] = 0;
     }
@@ -105,7 +106,7 @@ DdspsynthAudioProcessor::DdspsynthAudioProcessor()
         amplitudes[i] = 0;
         f0[i] = 0;
     }
-    for (int i = 0; i < 50; i++) {
+    for (int i = 0; i < max_n_harmonics; i++) {
         harmonics[i] = 0.0;
     }
 
@@ -320,13 +321,12 @@ void DdspsynthAudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, juc
 		}
 	}
 
-    double harms_copy[60];
+    double harms_copy[max_n_harmonics];
     double mags_copy[65];
     double amps_copy[4096];
-    for (int i = 0; i < 60; i++) {
+    for (int i = 0; i < n_harmonics; i++) {
 		if (*modelOnParameter)
-			// TODO use userHarmonics to alter sound
-			harms_copy[i] = harmonics[i];
+			harms_copy[i] = harmonics[i] * userHarmonics[i]*2;
 		else
 			harms_copy[i] = 1 - userHarmonics[i];
     }
@@ -361,7 +361,7 @@ void DdspsynthAudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, juc
             subBuffer[i] = 0;
         }
     }
-    for (int i = 0; i < 50; ++i) {
+    for (int i = 0; i < max_n_harmonics; ++i) {
         phaseBuffer_in[i] = phaseBuffer_out[i];
     }
 
@@ -390,7 +390,7 @@ void DdspsynthAudioProcessor::parseModelConfigJSON(juce::String path)
 
 void DdspsynthAudioProcessor::setModelOutput(TensorflowHandler::ModelResults tfResults)
 {
-    for (int i = 0; i < 50; i++) {
+    for (int i = 0; i < n_harmonics; i++) {
         harmonics[i] = tfResults.harmonicDistribution[i];
     }
     for (int i = 0; i < 65; i++) {
@@ -406,6 +406,11 @@ void DdspsynthAudioProcessor::onHarmonicsChange(double* newHarmonics, int nHarmo
 	for (int i = 0; i < nHarmonics && i < n_harmonics; i++) {
 		userHarmonics[i] = newHarmonics[i];
 	}
+}
+
+int DdspsynthAudioProcessor::getNumberOfHarmonics()
+{
+    return n_harmonics;
 }
 
 void DdspsynthAudioProcessor::parameterChanged(const juce::String & parameterID, float newValue)
