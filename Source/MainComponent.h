@@ -11,7 +11,6 @@
 #pragma once
 
 #include <JuceHeader.h>
-#include "PluginProcessor.h"
 #include "InputComponent.h"
 #include "ModelComponent.h"
 #include "AdditiveComponent.h"
