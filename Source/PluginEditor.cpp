@@ -24,7 +24,7 @@ DdspsynthAudioProcessorEditor::DdspsynthAudioProcessorEditor (DdspsynthAudioProc
     auto output = (OutputComponent*)mainComponent.findChildWithID("output");
 
 
-	//harmEditor->setListener(&p);
+	harmEditor->setListener(&p);
  //   subtractive->setSubtractiveListener(this);
  //   additive->setAdditiveListener(this);
  //   output->setOutputListener(this);

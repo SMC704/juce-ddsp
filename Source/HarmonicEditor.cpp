@@ -43,7 +43,7 @@ void HarmonicEditor::setListener(HarmonicEditor::Listener* pTheListener)
 {
 	pListener = pTheListener;
 	if (pListener != NULL) {
-		pListener->onValueChange(harmonicValues);
+		pListener->onHarmonicsChange(harmonicValues, nHarmonics);
 	}
 }
 
@@ -104,7 +104,7 @@ void HarmonicEditor::mouseDrag(const juce::MouseEvent &event)
         }
 
 		if (pListener != NULL) {
-			pListener->onValueChange(harmonicValues);
+			pListener->onHarmonicsChange(harmonicValues, nHarmonics);
 		}
         repaint();
     }

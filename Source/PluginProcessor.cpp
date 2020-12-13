@@ -51,7 +51,7 @@ DdspsynthAudioProcessor::DdspsynthAudioProcessor()
          // Input
         std::make_unique<juce::AudioParameterBool>("inputIsLine", "Input is line in", false),
         // Model
-        std::make_unique<juce::AudioParameterBool>("modelOn", "Use model", true),
+        std::make_unique<juce::AudioParameterBool>("modelOn", "Use model", false),
         std::make_unique<juce::AudioParameterChoice>("modelSelect", "Model select", juce::StringArray({ "violin", "flute", "tenorsax", "trumpet" }), 0),
         // Additive
         std::make_unique<juce::AudioParameterBool>("additiveOn", "Additive synth on", true),
@@ -184,9 +184,16 @@ void DdspsynthAudioProcessor::changeProgramName(int index, const juce::String& n
 void DdspsynthAudioProcessor::prepareToPlay(double sampleRate, int samplesPerBlock)
 {
     tfHandler.setAsyncUpdater(this);
-    parseModelConfigJSON(modelDir + "violin");
-    tfHandler.loadModel((modelDir + "violin").getCharPointer());
+	auto param = (juce::AudioParameterChoice*) parameters.getParameter("modelSelect");
+	juce::String modelName = param->getCurrentChoiceName();
+    parseModelConfigJSON(modelDir + modelName);
+    tfHandler.loadModel((modelDir + modelName).getCharPointer());
+
+    adsr.setSampleRate(sampleRate);
+    adsr.setParameters(adsrParams);
+
     aubioPitch.reset(new_aubio_pitch("yinfft", 4096, samplesPerBlock, (uint_t)sampleRate));
+
 }
 
 void DdspsynthAudioProcessor::releaseResources()
@@ -304,23 +311,33 @@ void DdspsynthAudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, juc
         }
     }
 
-    if (!tfHandler.isThreadRunning())
-    {
-        tfHandler.setInputs(tf_f0, tf_amps);
-        tfHandler.startThread();
-    }
+
+	if (*modelOnParameter) {
+		if (!tfHandler.isThreadRunning())
+		{
+			tfHandler.setInputs(tf_f0, tf_amps);
+			tfHandler.startThread();
+		}
+	}
 
     double harms_copy[60];
     double mags_copy[65];
     double amps_copy[4096];
-    for (int i = 0; i < 50; i++) {
-        harms_copy[i] = harmonics[i];
+    for (int i = 0; i < 60; i++) {
+		if (*modelOnParameter)
+			// TODO use userHarmonics to alter sound
+			harms_copy[i] = harmonics[i];
+		else
+			harms_copy[i] = 1 - userHarmonics[i];
     }
     for (int i = 0; i < 65; i++) {
         mags_copy[i] = magnitudes[i];
     }
     for (int i = 0; i < 4096; i++) {
-        amps_copy[i] = amplitudes[i];
+		if (*modelOnParameter)
+			amps_copy[i] = amplitudes[i];
+		else
+			amps_copy[i] = 1;
     }
 
     if (*additiveOnParameter) {
@@ -373,14 +390,21 @@ void DdspsynthAudioProcessor::parseModelConfigJSON(juce::String path)
 
 void DdspsynthAudioProcessor::setModelOutput(TensorflowHandler::ModelResults tfResults)
 {
-	for (int i = 0; i < 50; i++) {
-		harmonics[i] = tfResults.harmonicDistribution[i];
-	}
-	for (int i = 0; i < 65; i++) {
-		magnitudes[i] = tfResults.noiseMagnitudes[i];
-	}
-	for (int i = 0; i < numSamples; i++) {
-		amplitudes[i] = tfResults.amplitudes[0];
+    for (int i = 0; i < 50; i++) {
+        harmonics[i] = tfResults.harmonicDistribution[i];
+    }
+    for (int i = 0; i < 65; i++) {
+        magnitudes[i] = tfResults.noiseMagnitudes[i];
+    }
+    for (int i = 0; i < numSamples; i++) {
+        amplitudes[i] = tfResults.amplitudes[0];
+    }
+}
+
+void DdspsynthAudioProcessor::onHarmonicsChange(double* newHarmonics, int nHarmonics)
+{
+	for (int i = 0; i < nHarmonics && i < n_harmonics; i++) {
+		userHarmonics[i] = newHarmonics[i];
 	}
 }
 
