@@ -155,7 +155,7 @@ private:
 
 	std::unique_ptr<aubio_pitch_t, PitchDeleter> aubioPitch;
 
-	const juce::String modelDir = "../../Models/";
+    juce::File modelDir;
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (DdspsynthAudioProcessor)

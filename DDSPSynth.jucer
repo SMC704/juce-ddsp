@@ -209,8 +209,8 @@
     <VS2017 targetFolder="Builds/VisualStudio2017" externalLibraries="..\..\Libraries\tensorflow_c_win\tensorflow.lib&#10;..\..\Libraries\aubio_win\lib\libaubio.a&#10;..\..\Libraries\aubio_win\lib\aubio.dll.a"
             extraCompilerFlags="/I ..\..\Libraries\aubio_win\include\aubio">
       <CONFIGURATIONS>
-        <CONFIGURATION isDebug="1" name="Debug" postbuildCommand="copy &quot;..\..\Libraries\tensorflow_c_win\tensorflow.*&quot; &quot;x64\Debug\Standalone Plugin\&quot; &amp;&amp; copy &quot;..\..\Libraries\aubio_win\bin\libaubio-5.dll&quot; &quot;x64\Debug\Standalone Plugin\&quot;"/>
-        <CONFIGURATION isDebug="0" name="Release" postbuildCommand="copy &quot;..\..\Libraries\tensorflow_c_win\tensorflow.*&quot; &quot;x64\Release\Standalone Plugin\&quot; &amp;&amp; copy &quot;..\..\Libraries\aubio_win\bin\libaubio-5.dll&quot; &quot;x64\Release\Standalone Plugin\&quot;"/>
+        <CONFIGURATION isDebug="1" name="Debug" postbuildCommand="copy &quot;..\..\Libraries\tensorflow_c_win\tensorflow.*&quot; &quot;x64\Debug\Standalone Plugin\&quot; &amp;&amp; copy &quot;..\..\Libraries\aubio_win\bin\libaubio-5.dll&quot; &quot;x64\Debug\Standalone Plugin\&quot; &amp;&amp; Xcopy /E /I /Y &quot;..\..\Models&quot; &quot;x64\Debug\Standalone Plugin\Models&quot;"/>
+        <CONFIGURATION isDebug="0" name="Release" postbuildCommand="copy &quot;..\..\Libraries\tensorflow_c_win\tensorflow.*&quot; &quot;x64\Release\Standalone Plugin\&quot; &amp;&amp; copy &quot;..\..\Libraries\aubio_win\bin\libaubio-5.dll&quot; &quot;x64\Release\Standalone Plugin\&quot; &amp;&amp; Xcopy /E /I /Y &quot;..\..\Models&quot; &quot;x64\Release\Standalone Plugin\Models&quot;"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
         <MODULEPATH id="juce_gui_extra" path="../../juce"/>
@@ -254,8 +254,8 @@
     <VS2019 targetFolder="Builds/VisualStudio2019" externalLibraries="..\..\Libraries\tensorflow_c_win\tensorflow.lib&#10;..\..\Libraries\aubio_win\lib\libaubio.a&#10;..\..\Libraries\aubio_win\lib\aubio.dll.a"
             extraCompilerFlags="/I ..\..\Libraries\aubio_win\include\aubio">
       <CONFIGURATIONS>
-        <CONFIGURATION isDebug="1" name="Debug" postbuildCommand="copy &quot;..\..\Libraries\tensorflow_c_win\tensorflow.*&quot; &quot;x64\Debug\Standalone Plugin\&quot; &amp;&amp; copy &quot;..\..\Libraries\aubio_win\bin\libaubio-5.dll&quot; &quot;x64\Debug\Standalone Plugin\&quot;"/>
-        <CONFIGURATION isDebug="0" name="Release" postbuildCommand="copy &quot;..\..\Libraries\tensorflow_c_win\tensorflow.*&quot; &quot;x64\Release\Standalone Plugin\&quot; &amp;&amp; copy &quot;..\..\Libraries\aubio_win\bin\libaubio-5.dll&quot; &quot;x64\Release\Standalone Plugin\&quot;"
+        <CONFIGURATION isDebug="1" name="Debug" postbuildCommand="copy &quot;..\..\Libraries\tensorflow_c_win\tensorflow.*&quot; &quot;x64\Debug\Standalone Plugin\&quot; &amp;&amp; copy &quot;..\..\Libraries\aubio_win\bin\libaubio-5.dll&quot; &quot;x64\Debug\Standalone Plugin\&quot; &amp;&amp; Xcopy /E /I /Y &quot;..\..\Models&quot; &quot;x64\Debug\Standalone Plugin\Models&quot;"/>
+        <CONFIGURATION isDebug="0" name="Release" postbuildCommand="copy &quot;..\..\Libraries\tensorflow_c_win\tensorflow.*&quot; &quot;x64\Release\Standalone Plugin\&quot; &amp;&amp; copy &quot;..\..\Libraries\aubio_win\bin\libaubio-5.dll&quot; &quot;x64\Release\Standalone Plugin\&quot; &amp;&amp; Xcopy /E /I /Y &quot;..\..\Models&quot; &quot;x64\Release\Standalone Plugin\Models&quot;"
                        useRuntimeLibDLL="0"/>
       </CONFIGURATIONS>
       <MODULEPATHS>

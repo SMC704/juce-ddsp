@@ -77,6 +77,9 @@ DdspsynthAudioProcessor::DdspsynthAudioProcessor()
     })/*, 
     tfHandler(*this)*/
 {
+    modelDir = juce::File::getSpecialLocation(juce::File::SpecialLocationType::currentApplicationFile).getParentDirectory().getChildFile("Models");
+    jassert(modelDir.exists()); // Check that the Models folder exists in the same path as the plugin
+
     inputSelectParameter = parameters.getRawParameterValue("inputIsLine");
     modelOnParameter = parameters.getRawParameterValue("modelOn");
     modelChoiceParameter = parameters.getRawParameterValue("modelSelect");
@@ -96,7 +99,7 @@ DdspsynthAudioProcessor::DdspsynthAudioProcessor()
     reverbSizeParameter = parameters.getRawParameterValue("reverbSize");
     reverbGlowParameter = parameters.getRawParameterValue("reverbGlow");
     outputGainParameter = parameters.getRawParameterValue("outputGain");
-;
+    
     parameters.addParameterListener("modelSelect", this);
 
     for (int i = 0; i < 65; i++) {
@@ -187,8 +190,9 @@ void DdspsynthAudioProcessor::prepareToPlay(double sampleRate, int samplesPerBlo
     tfHandler.setAsyncUpdater(this);
 	auto param = (juce::AudioParameterChoice*) parameters.getParameter("modelSelect");
 	juce::String modelName = param->getCurrentChoiceName();
-    parseModelConfigJSON(modelDir + modelName);
-    tfHandler.loadModel((modelDir + modelName).getCharPointer());
+    juce::String modelPath = modelDir.getChildFile(modelName).getFullPathName();
+    parseModelConfigJSON(modelPath);
+    tfHandler.loadModel(modelPath.getCharPointer());
 
     adsr.setSampleRate(sampleRate);
     adsr.setParameters(adsrParams);
@@ -421,8 +425,9 @@ void DdspsynthAudioProcessor::parameterChanged(const juce::String & parameterID,
 		auto param = (juce::AudioParameterChoice*) parameters.getParameter("modelSelect");
 		juce::String modelName = param->getCurrentChoiceName();
 		DBG("Processor notified to select model " + modelName);
-        parseModelConfigJSON(modelDir + modelName);
-		tfHandler.loadModel((modelDir + modelName).getCharPointer());
+        juce::String modelPath = modelDir.getChildFile(modelName).getFullPathName();
+        parseModelConfigJSON(modelPath);
+        tfHandler.loadModel(modelPath.getCharPointer());
 	}
 }
 
