@@ -9,10 +9,12 @@
 #pragma once
 
 #include <JuceHeader.h>
+#include <cstdio>
 #include "HarmonicEditor.h"
 #include "SubtractiveComponent.h"
 #include "AdditiveComponent.h"
 #include "TensorflowHandler.h"
+#include "aubio.h"
 //==============================================================================
 /**
 */
@@ -155,6 +157,13 @@ private:
     // TF test
     float tf_f0;
     float tf_amps;
+
+	struct PitchDeleter
+	{
+		void operator()(aubio_pitch_t *p) { del_aubio_pitch(p); }
+	};
+
+	std::unique_ptr<aubio_pitch_t, PitchDeleter> aubioPitch;
 
 	const juce::String modelDir = "../../Models/";
 
