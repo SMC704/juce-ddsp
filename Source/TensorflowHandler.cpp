@@ -10,6 +10,7 @@
 
 #include "TensorflowHandler.h"
 #include <cstdlib>
+#include <juce_core/juce_core.h>
 
 void NoOpDeallocator(void* data, size_t a, void* b) {}
 
@@ -19,7 +20,13 @@ TensorflowHandler::TensorflowHandler()
 {
 	DBG("Loading TF LIB...");
 	juce::File cwd = juce::File::getSpecialLocation(juce::File::currentApplicationFile).getParentDirectory();
-	bool loaded = tfLibrary.open(cwd.getFullPathName() + juce::File::getSeparatorString() + "tensorflow.dll");
+    const char* libFileName;
+#if JUCE_WINDOWS
+    libFileName = "tensorflow.dll";
+#elif JUCE_MAC
+    // TODO mac
+#endif
+    bool loaded = tfLibrary.open(cwd.getFullPathName() + juce::File::getSeparatorString() + libFileName);
 	if (loaded)
 		DBG("success");
 	else

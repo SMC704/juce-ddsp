@@ -10,6 +10,9 @@
     <GROUP id="{21B404C6-B1A3-96E0-24F7-18E3D850093A}" name="Source">
       <GROUP id="{EC1CE48D-AFDF-312B-B94A-6D056A9FE965}" name="DDSP">
         <FILE id="uTrHom" name="fftshift.cpp" compile="1" resource="0" file="Source/codegen/fftshift.cpp"/>
+        <FILE id="KMPRVN" name="AubioHandler.cpp" compile="1" resource="0"
+              file="Source/AubioHandler.cpp"/>
+        <FILE id="ZGYOtX" name="AubioHandler.h" compile="0" resource="0" file="Source/AubioHandler.h"/>
         <FILE id="BICWnQ" name="fftshift.h" compile="0" resource="0" file="Source/codegen/fftshift.h"/>
         <FILE id="G7UnBN" name="BiquadFilter.cpp" compile="1" resource="0"
               file="Source/codegen/BiquadFilter.cpp"/>

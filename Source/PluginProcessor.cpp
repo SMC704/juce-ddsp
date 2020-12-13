@@ -1,7 +1,7 @@
 /*
   ==============================================================================
 
-	This file contains the basic framework code for a JUCE plugin processor.
+    This file contains the basic framework code for a JUCE plugin processor.
 
   ==============================================================================
 */
@@ -22,14 +22,14 @@ FILE _iob[] = { *stdin, *stdout, *stderr };
 
 extern "C" FILE * __cdecl __iob_func(void)
 {
-	return _iob;
+    return _iob;
 }
 
 extern "C" int __cdecl __ms_vsnprintf(char* s, size_t n, const char* format, va_list arg)
 {
-	//return printf(s, n, format, arg);
-	printf(s, format);
-	return 0;
+    //return printf(s, n, format, arg);
+    printf(s, format);
+    return 0;
 }
 
 //==============================================================================
@@ -74,8 +74,8 @@ DdspsynthAudioProcessor::DdspsynthAudioProcessor()
            std::make_unique<juce::AudioParameterFloat>("reverbGlow", "Glow", 0.0f, 100.0f, 0.0f),
            // Output
            std::make_unique<juce::AudioParameterFloat>("outputGain", "Output gain", -60.0f, 0.0f, -6.0f),
-    })/*, 
-    tfHandler(*this)*/
+        })/*,
+        tfHandler(*this)*/
 {
     modelDir = juce::File::getSpecialLocation(juce::File::SpecialLocationType::currentApplicationFile).getParentDirectory().getChildFile("Models");
     jassert(modelDir.exists()); // Check that the Models folder exists in the same path as the plugin
@@ -99,7 +99,7 @@ DdspsynthAudioProcessor::DdspsynthAudioProcessor()
     reverbSizeParameter = parameters.getRawParameterValue("reverbSize");
     reverbGlowParameter = parameters.getRawParameterValue("reverbGlow");
     outputGainParameter = parameters.getRawParameterValue("outputGain");
-    
+
     parameters.addParameterListener("modelSelect", this);
 
     for (int i = 0; i < 65; i++) {
@@ -119,56 +119,56 @@ DdspsynthAudioProcessor::DdspsynthAudioProcessor()
 
 DdspsynthAudioProcessor::~DdspsynthAudioProcessor()
 {
-	tfHandler.stopThread(100);
+    tfHandler.stopThread(100);
 }
 
 //==============================================================================
 const juce::String DdspsynthAudioProcessor::getName() const
 {
-	return JucePlugin_Name;
+    return JucePlugin_Name;
 }
 
 bool DdspsynthAudioProcessor::acceptsMidi() const
 {
 #if JucePlugin_WantsMidiInput
-	return true;
+    return true;
 #else
-	return false;
+    return false;
 #endif
 }
 
 bool DdspsynthAudioProcessor::producesMidi() const
 {
 #if JucePlugin_ProducesMidiOutput
-	return true;
+    return true;
 #else
-	return false;
+    return false;
 #endif
 }
 
 bool DdspsynthAudioProcessor::isMidiEffect() const
 {
 #if JucePlugin_IsMidiEffect
-	return true;
+    return true;
 #else
-	return false;
+    return false;
 #endif
 }
 
 double DdspsynthAudioProcessor::getTailLengthSeconds() const
 {
-	return 0.0;
+    return 0.0;
 }
 
 int DdspsynthAudioProcessor::getNumPrograms()
 {
-	return 1;   // NB: some hosts don't cope very well if you tell them there are 0 programs,
-				// so this should be at least 1, even if you're not really implementing programs.
+    return 1;   // NB: some hosts don't cope very well if you tell them there are 0 programs,
+                // so this should be at least 1, even if you're not really implementing programs.
 }
 
 int DdspsynthAudioProcessor::getCurrentProgram()
 {
-	return 0;
+    return 0;
 }
 
 void DdspsynthAudioProcessor::setCurrentProgram(int index)
@@ -177,7 +177,7 @@ void DdspsynthAudioProcessor::setCurrentProgram(int index)
 
 const juce::String DdspsynthAudioProcessor::getProgramName(int index)
 {
-	return {};
+    return {};
 }
 
 void DdspsynthAudioProcessor::changeProgramName(int index, const juce::String& newName)
@@ -188,8 +188,8 @@ void DdspsynthAudioProcessor::changeProgramName(int index, const juce::String& n
 void DdspsynthAudioProcessor::prepareToPlay(double sampleRate, int samplesPerBlock)
 {
     tfHandler.setAsyncUpdater(this);
-	auto param = (juce::AudioParameterChoice*) parameters.getParameter("modelSelect");
-	juce::String modelName = param->getCurrentChoiceName();
+    auto param = (juce::AudioParameterChoice*) parameters.getParameter("modelSelect");
+    juce::String modelName = param->getCurrentChoiceName();
     juce::String modelPath = modelDir.getChildFile(modelName).getFullPathName();
     parseModelConfigJSON(modelPath);
     tfHandler.loadModel(modelPath.getCharPointer());
@@ -197,37 +197,36 @@ void DdspsynthAudioProcessor::prepareToPlay(double sampleRate, int samplesPerBlo
     adsr.setSampleRate(sampleRate);
     adsr.setParameters(adsrParams);
 
-    aubioPitch.reset(new_aubio_pitch("yinfft", 4096, samplesPerBlock, (uint_t)sampleRate));
-
+    abHandler.prepare("yinfft", 4096, samplesPerBlock, (uint_t)sampleRate);
 }
 
 void DdspsynthAudioProcessor::releaseResources()
 {
-	// When playback stops, you can use this as an opportunity to free up any
-	// spare memory, etc.
-	aubioPitch.release();
+    // When playback stops, you can use this as an opportunity to free up any
+    // spare memory, etc.
+    abHandler.releaseResources();
 }
 
 #ifndef JucePlugin_PreferredChannelConfigurations
 bool DdspsynthAudioProcessor::isBusesLayoutSupported(const BusesLayout& layouts) const
 {
 #if JucePlugin_IsMidiEffect
-	juce::ignoreUnused(layouts);
-	return true;
+    juce::ignoreUnused(layouts);
+    return true;
 #else
-	// This is the place where you check if the layout is supported.
-	// In this template code we only support mono or stereo.
-	if (layouts.getMainOutputChannelSet() != juce::AudioChannelSet::mono()
-		&& layouts.getMainOutputChannelSet() != juce::AudioChannelSet::stereo())
-		return false;
+    // This is the place where you check if the layout is supported.
+    // In this template code we only support mono or stereo.
+    if (layouts.getMainOutputChannelSet() != juce::AudioChannelSet::mono()
+        && layouts.getMainOutputChannelSet() != juce::AudioChannelSet::stereo())
+        return false;
 
-	// This checks if the input layout matches the output layout
+    // This checks if the input layout matches the output layout
    //#if ! JucePlugin_IsSynth
-	if (layouts.getMainOutputChannelSet() != layouts.getMainInputChannelSet())
-		return false;
-	//#endif
+    if (layouts.getMainOutputChannelSet() != layouts.getMainInputChannelSet())
+        return false;
+    //#endif
 
-	return true;
+    return true;
 #endif
 }
 #endif
@@ -238,36 +237,24 @@ void DdspsynthAudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, juc
     numSamples = buffer.getNumSamples();
     if (*inputSelectParameter) //Input is line-in
     {
-        fvec_t aubioInput;
-	fvec_t aubioOutput;
-	float aubiof0;
+        float aubiof0 = abHandler.process(buffer);
+        double mlInput[4096];
+        for (int i = 0; i < 4096; i++)
+        {
+            if (i < numSamples)
+                mlInput[i] = in_l[i];
+            else
+                mlInput[i] = 0;
+        }
 
-	// need write pointer because the data type is not const
-	aubioInput.data = buffer.getWritePointer(0);
-	aubioInput.length = buffer.getNumSamples();
+        tf_amps = compute_loudness((double)numSamples, mlInput, getSampleRate());
 
-	aubioOutput.data = &aubiof0;
-	aubioOutput.length = 1;
-
-	aubio_pitch_do(aubioPitch.get(), &aubioInput, &aubioOutput);
-	DBG(aubiof0);
-	double mlInput[4096];
-	for (int i = 0; i < 4096; i++)
-	{
-		if (i < numSamples)
-			mlInput[i] = in_l[i];
-		else
-			mlInput[i] = 0;
-	}
-
-	tf_amps = compute_loudness((double)numSamples, mlInput, getSampleRate());
-
-	f0_in = aubiof0;
-	tf_f0 = f0_in;
-	for (int i = 0; i < 4096; i++)
-	{
-		f0[i] = f0_in;
-	}
+        f0_in = aubiof0;
+        tf_f0 = f0_in;
+        for (int i = 0; i < 4096; i++)
+        {
+            f0[i] = f0_in;
+        }
     }
     else //Input is midi
     {
@@ -317,31 +304,31 @@ void DdspsynthAudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, juc
     }
 
 
-	if (*modelOnParameter) {
-		if (!tfHandler.isThreadRunning())
-		{
-			tfHandler.setInputs(tf_f0, tf_amps);
-			tfHandler.startThread();
-		}
-	}
+    if (*modelOnParameter) {
+        if (!tfHandler.isThreadRunning())
+        {
+            tfHandler.setInputs(tf_f0, tf_amps);
+            tfHandler.startThread();
+        }
+    }
 
     double harms_copy[max_n_harmonics];
     double mags_copy[65];
     double amps_copy[4096];
     for (int i = 0; i < n_harmonics; i++) {
-		if (*modelOnParameter)
-			harms_copy[i] = harmonics[i] * userHarmonics[i]*2;
-		else
-			harms_copy[i] = 1 - userHarmonics[i];
+        if (*modelOnParameter)
+            harms_copy[i] = harmonics[i] * userHarmonics[i] * 2;
+        else
+            harms_copy[i] = 1 - userHarmonics[i];
     }
     for (int i = 0; i < 65; i++) {
         mags_copy[i] = magnitudes[i];
     }
     for (int i = 0; i < 4096; i++) {
-		if (*modelOnParameter)
-			amps_copy[i] = amplitudes[i];
-		else
-			amps_copy[i] = 1;
+        if (*modelOnParameter)
+            amps_copy[i] = amplitudes[i];
+        else
+            amps_copy[i] = 1;
     }
 
     if (*additiveOnParameter) {
@@ -373,8 +360,8 @@ void DdspsynthAudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, juc
     auto outR = buffer.getWritePointer(1);
 
     for (int i = 0; i < buffer.getNumSamples(); i++) {
-        float additiveGain = pow(10.0f,(*additiveGainParameter/20));
-        float noiseGain = pow(10.0f,(*noiseGainParameter/20));
+        float additiveGain = pow(10.0f, (*additiveGainParameter / 20));
+        float noiseGain = pow(10.0f, (*noiseGainParameter / 20));
         float outGain = pow(10.0f, (*outputGainParameter / 20));
         float out = (addBuffer[i] * additiveGain + subBuffer[i] * noiseGain) * outGain;
         pushNextSampleIntoFifo(out);
@@ -407,9 +394,9 @@ void DdspsynthAudioProcessor::setModelOutput(TensorflowHandler::ModelResults tfR
 
 void DdspsynthAudioProcessor::onHarmonicsChange(double* newHarmonics, int nHarmonics)
 {
-	for (int i = 0; i < nHarmonics && i < n_harmonics; i++) {
-		userHarmonics[i] = newHarmonics[i];
-	}
+    for (int i = 0; i < nHarmonics && i < n_harmonics; i++) {
+        userHarmonics[i] = newHarmonics[i];
+    }
 }
 
 int DdspsynthAudioProcessor::getNumberOfHarmonics()
@@ -419,54 +406,54 @@ int DdspsynthAudioProcessor::getNumberOfHarmonics()
 
 void DdspsynthAudioProcessor::parameterChanged(const juce::String & parameterID, float newValue)
 {
-	if (parameterID == "modelSelect")
-	{
-		// getRawParameterValue is "not guaranteed" to contain up-to-date value
-		auto param = (juce::AudioParameterChoice*) parameters.getParameter("modelSelect");
-		juce::String modelName = param->getCurrentChoiceName();
-		DBG("Processor notified to select model " + modelName);
+    if (parameterID == "modelSelect")
+    {
+        // getRawParameterValue is "not guaranteed" to contain up-to-date value
+        auto param = (juce::AudioParameterChoice*) parameters.getParameter("modelSelect");
+        juce::String modelName = param->getCurrentChoiceName();
+        DBG("Processor notified to select model " + modelName);
         juce::String modelPath = modelDir.getChildFile(modelName).getFullPathName();
         parseModelConfigJSON(modelPath);
         tfHandler.loadModel(modelPath.getCharPointer());
-	}
+    }
 }
 
 void DdspsynthAudioProcessor::handleAsyncUpdate()
 {
-	setModelOutput(tfHandler.getOutputs());
+    setModelOutput(tfHandler.getOutputs());
 }
 
 
 //==============================================================================
 bool DdspsynthAudioProcessor::hasEditor() const
 {
-	return true; // (change this to false if you choose to not supply an editor)
+    return true; // (change this to false if you choose to not supply an editor)
 }
 
 juce::AudioProcessorEditor* DdspsynthAudioProcessor::createEditor()
 {
-	return new DdspsynthAudioProcessorEditor(*this, parameters);
+    return new DdspsynthAudioProcessorEditor(*this, parameters);
 }
 
 //==============================================================================
 void DdspsynthAudioProcessor::getStateInformation(juce::MemoryBlock& destData)
 {
-	// You should use this method to store your parameters in the memory block.
-	// You could do that either as raw data, or use the XML or ValueTree classes
-	// as intermediaries to make it easy to save and load complex data.
+    // You should use this method to store your parameters in the memory block.
+    // You could do that either as raw data, or use the XML or ValueTree classes
+    // as intermediaries to make it easy to save and load complex data.
 }
 
 void DdspsynthAudioProcessor::setStateInformation(const void* data, int sizeInBytes)
 {
-	// You should use this method to restore your parameters from this memory block,
-	// whose contents will have been created by the getStateInformation() call.
+    // You should use this method to restore your parameters from this memory block,
+    // whose contents will have been created by the getStateInformation() call.
 }
 
 //==============================================================================
 // This creates new instances of the plugin..
 juce::AudioProcessor* JUCE_CALLTYPE createPluginFilter()
 {
-	return new DdspsynthAudioProcessor();
+    return new DdspsynthAudioProcessor();
 }
 
 //===============================================================================
@@ -474,19 +461,19 @@ juce::AudioProcessor* JUCE_CALLTYPE createPluginFilter()
 
 void DdspsynthAudioProcessor::pushNextSampleIntoFifo(float sample) noexcept
 {
-	// if the fifo contains enough data, set a flag to say
-	// that the next line should now be rendered..
-	if (fifoIndex == fftSize)
-	{
-		if (!nextFFTBlockReady)
-		{
-			juce::zeromem(fftData, sizeof(fftData));
-			memcpy(fftData, fifo, sizeof(fifo));
-			nextFFTBlockReady = true;
-		}
+    // if the fifo contains enough data, set a flag to say
+    // that the next line should now be rendered..
+    if (fifoIndex == fftSize)
+    {
+        if (!nextFFTBlockReady)
+        {
+            juce::zeromem(fftData, sizeof(fftData));
+            memcpy(fftData, fifo, sizeof(fifo));
+            nextFFTBlockReady = true;
+        }
 
-		fifoIndex = 0;
-	}
+        fifoIndex = 0;
+    }
 
-	fifo[fifoIndex++] = sample;
+    fifo[fifoIndex++] = sample;
 }
