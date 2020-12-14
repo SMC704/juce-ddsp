@@ -129,10 +129,11 @@ private:
 
     // Midi features
     juce::ADSR adsr;
-    juce::ADSR::Parameters adsrParams = { 1.0f, 0.1f, 1.0f, 1.0f };
+    juce::ADSR::Parameters adsrParams = { 0.1f, 0.05f, 1.0f, 0.1f };
     float midiVelocity;
     float adsrVelocity;
     float midiNoteHz;
+    int currentMidiNote = 0;
 
     // FFT Window
     juce::dsp::FFT forwardFFT;
