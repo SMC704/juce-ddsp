@@ -196,6 +196,7 @@ void DdspsynthAudioProcessor::prepareToPlay(double sampleRate, int samplesPerBlo
 
     adsr.setSampleRate(sampleRate);
     adsr.setParameters(adsrParams);
+    adsr.reset();
 
     abHandler.prepare("yinfft", 4096, samplesPerBlock, (uint_t)sampleRate);
     abHandler.setTolerance(0.8);
@@ -263,6 +264,7 @@ void DdspsynthAudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, juc
     else //Input is midi
     {
         buffer.clear();
+
         int time;
         juce::MidiMessage m;
         for (juce::MidiBuffer::Iterator i(midiMessages); i.getNextEvent(m, time);)
@@ -272,38 +274,25 @@ void DdspsynthAudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, juc
                 adsr.reset();
                 adsr.noteOn();
                 midiVelocity = m.getFloatVelocity();
-                int note = m.getNoteNumber();
-                midiNoteHz = m.getMidiNoteInHertz(note);
+                currentMidiNote = m.getNoteNumber();
+                midiNoteHz = m.getMidiNoteInHertz(currentMidiNote);
                 tf_amps = -120;
                 tf_f0 = midiNoteHz;
-                for (int i = 0; i < numSamples; i++)
-                {
-                    f0[i] = midiNoteHz;
-                    adsrVelocity = adsr.getNextSample();
-                }
-
             }
             else if (m.isNoteOff())
             {
-                adsr.noteOff();
+                if (m.getNoteNumber() == currentMidiNote)
+                    adsr.noteOff();
             }
         }
-        if (adsr.isActive())
+        if (!adsr.isActive()) return;
+
+        tf_f0 = midiNoteHz;
+        tf_amps = log10(juce::jmax(midiVelocity * adsrVelocity, 0.000001f)) * 20.0f;
+        for (int i = 0; i < numSamples && adsr.isActive(); i++)
         {
-            tf_f0 = midiNoteHz;
-            tf_amps = log10(juce::jmax(midiVelocity * adsrVelocity, 0.000001f)) * 20.0f;
-            for (int i = 0; i < numSamples; i++)
-            {
-                f0[i] = midiNoteHz;
-                adsrVelocity = adsr.getNextSample();
-            }
-            //if (adsrVelocity < 0.001f) {
-            //    tf_f0 = 0.0f;
-            //    for (int i = 0; i < numSamples; i++)
-            //    {
-            //        f0[i] = 0.0f;
-            //    }
-            //}
+            f0[i] = midiNoteHz;
+            adsrVelocity = adsr.getNextSample();
         }
     }
 
