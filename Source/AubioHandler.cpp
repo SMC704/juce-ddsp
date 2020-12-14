@@ -30,6 +30,7 @@ AubioHandler::AubioHandler()
 
 AubioHandler::~AubioHandler()
 {
+    releaseResources();
     abLibrary.close();
 }
 
@@ -62,23 +63,32 @@ AubioHandler::AubioResults AubioHandler::process(juce::AudioBuffer<float>& buffe
 #if JUCE_WINDOWS
 
     fpAubioPitchDo(aubioPitch.get(), &aubioInput, &aubioOutput);
-#elif JUCE_MAC
-    aubio_pitch_do(aubioPitch.get(), &aubioInput, &aubioOutput);
-#endif
     result.confidence = fpGetConfidence(aubioPitch.get());
     result.loudness = fpGetLoudness(&aubioInput);
-    
+#elif JUCE_MAC
+    aubio_pitch_do(aubioPitch.get(), &aubioInput, &aubioOutput);
+    result.confidence = aubio_pitch_get_confidence(aubioPitch.get());
+    result.loudness = aubio_db_spl(&aubioInput);
+#endif
     return result;
 }
 
 uint_t AubioHandler::setTolerance(smpl_t tol)
 {
+#if JUCE_WINDOWS
     return fpSetTolerance(aubioPitch.get(), tol);
+#elif JUCE_MAC
+    return aubio_pitch_set_tolerance(aubioPitch.get(), tol);
+#endif
 }
 
 uint_t AubioHandler::setSilence(smpl_t sil)
 {
+#if JUCE_WINDOWS
     return fpSetSilence(aubioPitch.get(), sil);
+#elif JUCE_MAC
+    return aubio_pitch_set_silence(aubioPitch.get(), sil);
+#endif
 }
 
 void AubioHandler::PitchDeleter::operator()(aubio_pitch_t * p)

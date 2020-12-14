@@ -25,7 +25,6 @@ TensorflowHandler::TensorflowHandler()
     const char* libFileName = "tensorflow.dll";
 
     bool loaded = tfLibrary.open(cwd.getFullPathName() + juce::File::getSeparatorString() + libFileName);
-    bool loaded = tfLibrary.open(path);
 	if (loaded)
 		DBG("success");
 	else
