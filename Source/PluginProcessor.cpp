@@ -424,8 +424,15 @@ void DdspsynthAudioProcessor::parameterChanged(const juce::String & parameterID,
         juce::String modelName = param->getCurrentChoiceName();
         DBG("Processor notified to select model " + modelName);
         juce::String modelPath = modelDir.getChildFile(modelName).getFullPathName();
-        parseModelConfigJSON(modelPath);
-        tfHandler.loadModel(modelPath.getCharPointer());
+        if (modelDir.getChildFile(modelName).exists()) 
+        {
+            parseModelConfigJSON(modelPath);
+            tfHandler.loadModel(modelPath.getCharPointer());
+        }
+        else
+        {
+            juce::AlertWindow::showMessageBox(juce::AlertWindow::AlertIconType::WarningIcon, "Model not found!", "The plugin expected to find the " + modelName + " model in this path:\n" + modelPath);
+        }
     }
 }
 
