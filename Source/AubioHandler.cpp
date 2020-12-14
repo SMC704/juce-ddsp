@@ -13,17 +13,15 @@
 AubioHandler::AubioHandler()
 {
     juce::File cwd = juce::File::getSpecialLocation(juce::File::currentApplicationFile).getParentDirectory();
-    const char* libFileName;
 #if JUCE_WINDOWS
-    libFileName = "libaubio-5.dll";
-#elif JUCE_MAC
-    // TODO mac
-#endif
+    const char* libFileName = "libaubio-5.dll";
+
     bool loaded = abLibrary.open(cwd.getFullPathName() + juce::File::getSeparatorString() + libFileName);
 
     fpNewAubioPitch = (fptypeNewAubioPitch)abLibrary.getFunction("new_aubio_pitch");
     fpDelAubioPitch = (fptypeDelAubioPitch)abLibrary.getFunction("del_aubio_pitch");
     fpAubioPitchDo = (fptypeAubioPitchDo)abLibrary.getFunction("aubio_pitch_do");
+#endif
 }
 
 AubioHandler::~AubioHandler()
@@ -33,7 +31,11 @@ AubioHandler::~AubioHandler()
 
 void AubioHandler::prepare(const char_t* method, uint_t bufsize, uint_t hopsize, uint_t sampleRate)
 {
+#if JUCE_WINDOWS
     aubioPitch.reset(fpNewAubioPitch(method, bufsize, hopsize, sampleRate));
+#elif JUCE_MAC
+    aubioPitch.reset(new_aubio_pitch(method, bufsize, hopsize, sampleRate));
+#endif
 }
 
 void AubioHandler::releaseResources()
@@ -53,12 +55,20 @@ float AubioHandler::process(juce::AudioBuffer<float> buffer)
 
     aubioOutput.data = &result;
     aubioOutput.length = 1;
-
+    
+#if JUCE_WINDOWS
     fpAubioPitchDo(aubioPitch.get(), &aubioInput, &aubioOutput);
+#elif JUCE_MAC
+    aubio_pitch_do(aubioPitch.get(), &aubioInput, &aubioOutput);
+#endif
     return result;
 }
 
 void AubioHandler::PitchDeleter::operator()(aubio_pitch_t * p)
 {
+#if JUCE_WINDOWS
     AubioHandler::getInstance().fpDelAubioPitch(p);
+#elif JUCE_MAC
+    del_aubio_pitch(p);
+#endif
 }
