@@ -11,12 +11,10 @@
 
 #ifndef RTGETNAN_H
 #define RTGETNAN_H
+
+// Include files
 #include "rtwtypes.h"
-#include "rt_nonfinite.h"
-#ifndef __cplusplus
-#include <stddef.h>
-#else
-#include <cstddef>
+#ifdef __cplusplus
 
 extern "C" {
 

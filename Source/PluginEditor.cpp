@@ -6,28 +6,26 @@
   ==============================================================================
 */
 
-#include "PluginProcessor.h"
 #include "PluginEditor.h"
-#include "AdditiveComponent.h"
 
 //==============================================================================
-DdspsynthAudioProcessorEditor::DdspsynthAudioProcessorEditor (DdspsynthAudioProcessor& p)
-    : AudioProcessorEditor (&p), audioProcessor (p)
+DdspsynthAudioProcessorEditor::DdspsynthAudioProcessorEditor (DdspsynthAudioProcessor& p, juce::AudioProcessorValueTreeState& vts)
+    : AudioProcessorEditor (&p), audioProcessor (p), valueTreeState(vts), mainComponent(vts)
 {
     //LookAndFeel::getDefaultLookAndFeel().setDefaultSansSerifTypefaceName("Avenir Next");
 
     backgroundTexture = backgroundTexture.rescaled(900, 600);
     addAndMakeVisible(mainComponent);
-	auto additive = (AdditiveComponent*)mainComponent.findChildWithID("additive");
-	auto harmEditor = (HarmonicEditor*)(additive->findChildWithID("harmonicEditor"));
-    auto subtractive = (SubtractiveComponent*)(mainComponent.findChildWithID("subtractive"));
-    auto output = (OutputComponent*)mainComponent.findChildWithID("output");
+	additive = (AdditiveComponent*)mainComponent.findChildWithID("additive");
+	harmEditor = (HarmonicEditor*)(additive->findChildWithID("harmonicEditor"));
+    subtractive = (SubtractiveComponent*)(mainComponent.findChildWithID("subtractive"));
+    output = (OutputComponent*)mainComponent.findChildWithID("output");
 
 
 	harmEditor->setListener(&p);
-    subtractive->setSubtractiveListener(this);
-    additive->setAdditiveListener(this);
-    output->setOutputListener(this);
+ //   subtractive->setSubtractiveListener(this);
+ //   additive->setAdditiveListener(this);
+ //   output->setOutputListener(this);
 	
     mainComponent.setBounds(20, 20, 860, 560);
     startTimerHz (60);
@@ -66,47 +64,56 @@ void DdspsynthAudioProcessorEditor::timerCallback()
                                                 audioProcessor.getFftOrder());
         audioProcessor.setNextFFTBlockReady(false);
     }
+    setNumberOfHarmonics(audioProcessor.getNumberOfHarmonics());
 }
 
-
-void DdspsynthAudioProcessorEditor::onNoiseColorChange(double color)
+void DdspsynthAudioProcessorEditor::setNumberOfHarmonics(int numberOfHarmonics)
 {
-    audioProcessor.onNoiseColorChange(color);
+    if (harmEditor != nullptr)
+    {
+        harmEditor->setNumberOfHarmonicSliders(numberOfHarmonics);
+    }
 }
 
-void DdspsynthAudioProcessorEditor::onOnOffSubChange(bool onOff)
-{
-    audioProcessor.onOnOffSubChange(onOff);
-}
 
-void DdspsynthAudioProcessorEditor::onShiftValueChange(double shiftValue)
-{
-    audioProcessor.onShiftValueChange(shiftValue);
-}
-
-void DdspsynthAudioProcessorEditor::onStretchValueChange(double stretchValue)
-{
-    audioProcessor.onStretchValueChange(stretchValue);
-}
-
-void DdspsynthAudioProcessorEditor::onOnOffAddChange(bool onOff)
-{
-    audioProcessor.onOnOffAddChange(onOff);
-}
-
-void DdspsynthAudioProcessorEditor::onSubAmpChange(double subAmp)
-{
-    audioProcessor.onSubAmpChange(subAmp);
-}
-
-void DdspsynthAudioProcessorEditor::onAddAmpChange(double addAmp)
-{
-    audioProcessor.onAddAmpChange(addAmp);
-}
-
-void DdspsynthAudioProcessorEditor::onOutAmpChange(double outAmp)
-{
-    audioProcessor.onOutAmpChange(outAmp);
-}
+//void DdspsynthAudioProcessorEditor::onNoiseColorChange(double color)
+//{
+//    audioProcessor.onNoiseColorChange(color);
+//}
+//
+//void DdspsynthAudioProcessorEditor::onOnOffSubChange(bool onOff)
+//{
+//    audioProcessor.onOnOffSubChange(onOff);
+//}
+//
+//void DdspsynthAudioProcessorEditor::onShiftValueChange(double shiftValue)
+//{
+//    audioProcessor.onShiftValueChange(shiftValue);
+//}
+//
+//void DdspsynthAudioProcessorEditor::onStretchValueChange(double stretchValue)
+//{
+//    audioProcessor.onStretchValueChange(stretchValue);
+//}
+//
+//void DdspsynthAudioProcessorEditor::onOnOffAddChange(bool onOff)
+//{
+//    audioProcessor.onOnOffAddChange(onOff);
+//}
+//
+//void DdspsynthAudioProcessorEditor::onSubAmpChange(double subAmp)
+//{
+//    audioProcessor.onSubAmpChange(subAmp);
+//}
+//
+//void DdspsynthAudioProcessorEditor::onAddAmpChange(double addAmp)
+//{
+//    audioProcessor.onAddAmpChange(addAmp);
+//}
+//
+//void DdspsynthAudioProcessorEditor::onOutAmpChange(double outAmp)
+//{
+//    audioProcessor.onOutAmpChange(outAmp);
+//}
 
 

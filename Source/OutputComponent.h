@@ -15,33 +15,36 @@
 //==============================================================================
 /*
 */
-class OutputComponent  : public juce::Component, public juce::Slider::Listener
+class OutputComponent  : public juce::Component/*, public juce::Slider::Listener*/
 {
 public:
-    OutputComponent();
+    OutputComponent(juce::AudioProcessorValueTreeState&);
     ~OutputComponent() override;
 
     void paint (juce::Graphics&) override;
     void resized() override;
     
-    void sliderValueChanged(juce::Slider* slider) override;
-    
-    struct OutputListener
-    {
-        virtual void onOutAmpChange(double outAmp) = 0;
-    };
+    //void sliderValueChanged(juce::Slider* slider) override;
+    //
+    //struct OutputListener
+    //{
+    //    virtual void onOutAmpChange(double outAmp) = 0;
+    //};
 
-    void setOutputListener(OutputListener* outListener);
+    //void setOutputListener(OutputListener* outListener);
 
 private:
+
+    juce::AudioProcessorValueTreeState& valueTreeState;
+
+    typedef juce::AudioProcessorValueTreeState::SliderAttachment SliderAttachment;
 
     juce::Label nameLabel;
     juce::Slider masterSlider;
     juce::Label masterLabel;
+    std::unique_ptr <SliderAttachment> masterAttachment;
     
-    double outAmp = 0;
-    
-    OutputListener* outputListener = NULL;
+    //OutputListener* outputListener = NULL;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (OutputComponent)
 };

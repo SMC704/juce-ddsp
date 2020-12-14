@@ -12,25 +12,28 @@
 #include "SubtractiveComponent.h"
 
 //==============================================================================
-SubtractiveComponent::SubtractiveComponent()
+SubtractiveComponent::SubtractiveComponent(juce::AudioProcessorValueTreeState& vts)
+    : valueTreeState(vts)
 {
     float fontDim = 15.0f;
 
     addAndMakeVisible(onoffButton);
     onoffButton.setBounds(0, 0, 50, 50);
-    onoffButton.addListener(this);
+    //onoffButton.addListener(this);
     onoffButton.setClickingTogglesState(true);
     onoffButton.setImages(false, true, false,
         juce::ImageFileFormat::loadFrom(BinaryData::power_png, BinaryData::power_pngSize), {}, juce::Colour::fromRGB(100, 100, 100), //Normal
         juce::ImageFileFormat::loadFrom(BinaryData::power_png, BinaryData::power_pngSize), {}, juce::Colour::fromRGB(200, 200, 200), //Over
         juce::ImageFileFormat::loadFrom(BinaryData::power_png, BinaryData::power_pngSize), {}, juce::Colour::fromRGB(255, 255, 255), //Down
         0.0f);
-    onoffButton.setClickingTogglesState(true);
-    onoffButton.setToggleState(true, NULL);
+    //onoffButton.setClickingTogglesState(true);
+    //onoffButton.setToggleState(true, NULL);
 
     addAndMakeVisible(onoffLabel);
     onoffLabel.setColour(juce::Label::textColourId, juce::Colours::white);
     onoffLabel.setJustificationType(juce::Justification::centred);
+
+    onoffAttachment.reset(new ButtonAttachment(valueTreeState, "noiseOn", onoffButton));
 
     addAndMakeVisible(nameLabel);
     nameLabel.setColour(juce::Label::textColourId, juce::Colours::white);
@@ -42,11 +45,11 @@ SubtractiveComponent::SubtractiveComponent()
     ampSlider.setTextBoxStyle(juce::Slider::NoTextBox, true, 0, 0);
     ampSlider.setPopupDisplayEnabled(true, true, this);
     ampSlider.setTextValueSuffix (" dB");
-    ampSlider.setRange(-60.0f, 0.0f, 0.01f);
-    ampSlider.setValue(-6.0f);
+    //ampSlider.setRange(-60.0f, 0.0f, 0.01f);
+    //ampSlider.setValue(-6.0f);
     addAndMakeVisible(ampSlider);
     ampSlider.setBounds(0, 0, 100, 100);
-    ampSlider.addListener(this);
+    //ampSlider.addListener(this);
     ampSlider.setDoubleClickReturnValue(true, -6.0f);
 
     addAndMakeVisible(ampLabel);
@@ -55,15 +58,17 @@ SubtractiveComponent::SubtractiveComponent()
     ampLabel.setText("Amp", juce::NotificationType::dontSendNotification);
     ampLabel.setFont(fontDim);
 
+    ampAttachment.reset(new SliderAttachment(valueTreeState, "noiseGain", ampSlider));
+
     colourSlider.setSliderStyle(juce::Slider::SliderStyle::RotaryHorizontalVerticalDrag);
     colourSlider.setTextBoxStyle(juce::Slider::NoTextBox, true, 0, 0);
     colourSlider.setPopupDisplayEnabled(true, true, this);
     //colourSlider.setTextValueSuffix (" Noise Colour");
-    colourSlider.setRange(-1.0f, 1.0f, 0.01f);
-    colourSlider.setValue(0.0f);
+    //colourSlider.setRange(-1.0f, 1.0f, 0.01f);
+    //colourSlider.setValue(0.0f);
     addAndMakeVisible(colourSlider);
     colourSlider.setBounds(0, 0, 100, 100);
-    colourSlider.addListener(this);
+    //colourSlider.addListener(this);
     colourSlider.setDoubleClickReturnValue(true, 0.0f);
 
     addAndMakeVisible(colourLabel);
@@ -72,6 +77,8 @@ SubtractiveComponent::SubtractiveComponent()
     colourLabel.setText("Colour", juce::NotificationType::dontSendNotification);
 
     colourLabel.setFont(fontDim);
+
+    colorAttachment.reset(new SliderAttachment(valueTreeState, "noiseColor", colourSlider));
 
 }
 
@@ -159,33 +166,33 @@ void SubtractiveComponent::resized()
     
 }
 
-void SubtractiveComponent::sliderValueChanged(juce::Slider* slider)
-{
-    if (slider == &colourSlider) {
-        noiseColor = colourSlider.getValue();
-        if (subtractiveListener != NULL)
-            subtractiveListener->onNoiseColorChange(noiseColor);
-    }
-    
-    if (slider == &ampSlider) {
-        subAmp = ampSlider.getValue();
-        if (subtractiveListener != NULL)
-            subtractiveListener->onSubAmpChange(subAmp);
-    }
-}
-
-void SubtractiveComponent::setSubtractiveListener(SubtractiveListener* subListener)
-{
-    subtractiveListener = subListener;
-    if (subtractiveListener != NULL) {
-        subtractiveListener->onNoiseColorChange(noiseColor);
-        subtractiveListener->onSubAmpChange(subAmp);
-        subtractiveListener->onOnOffSubChange(onOffState);
-    }
-}
-
-void SubtractiveComponent::buttonClicked(juce::Button* button)
-{
-    onOffState = button->getToggleState();
-    subtractiveListener->onOnOffSubChange(onOffState);
-}
+//void SubtractiveComponent::sliderValueChanged(juce::Slider* slider)
+//{
+//    if (slider == &colourSlider) {
+//        noiseColor = colourSlider.getValue();
+//        if (subtractiveListener != NULL)
+//            subtractiveListener->onNoiseColorChange(noiseColor);
+//    }
+//    
+//    if (slider == &ampSlider) {
+//        subAmp = ampSlider.getValue();
+//        if (subtractiveListener != NULL)
+//            subtractiveListener->onSubAmpChange(subAmp);
+//    }
+//}
+//
+//void SubtractiveComponent::setSubtractiveListener(SubtractiveListener* subListener)
+//{
+//    subtractiveListener = subListener;
+//    if (subtractiveListener != NULL) {
+//        subtractiveListener->onNoiseColorChange(noiseColor);
+//        subtractiveListener->onSubAmpChange(subAmp);
+//        subtractiveListener->onOnOffSubChange(onOffState);
+//    }
+//}
+//
+//void SubtractiveComponent::buttonClicked(juce::Button* button)
+//{
+//    onOffState = button->getToggleState();
+//    subtractiveListener->onOnOffSubChange(onOffState);
+//}

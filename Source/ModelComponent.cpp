@@ -12,7 +12,8 @@
 #include "ModelComponent.h"
 
 //==============================================================================
-ModelComponent::ModelComponent()
+ModelComponent::ModelComponent(juce::AudioProcessorValueTreeState& vts)
+    : valueTreeState(vts)
 {
 
     addAndMakeVisible(nameLabel);
@@ -259,25 +260,37 @@ void ModelComponent::resized()
 
 void ModelComponent::updateModelState(juce::Button *button)
 {
+	auto selectParam = (juce::AudioParameterChoice*) valueTreeState.getParameter("modelSelect");
+	auto onParam = (juce::AudioParameterBool*) valueTreeState.getParameter("modelOn");
+
     if(button == &onoffButton && onoffButton.getToggleState() == true)
     {
         DBG("no model activated");
+		*onParam = false;
     }
     else if(button == &violinButton && violinButton.getToggleState() == true)
     {
         DBG("violin model activated");
+		*selectParam = 0;
+		*onParam = true;
     }
     else if(button == &fluteButton && fluteButton.getToggleState() == true)
     {
         DBG("flute model activated");
+		*selectParam = 1;
+		*onParam = true;
     }
     else if(button == &saxophoneButton && saxophoneButton.getToggleState() == true)
     {
         DBG("saxophone model activated");
+		*selectParam = 2;
+		*onParam = true;
     }
     else if(button == &trumpetButton && trumpetButton.getToggleState() == true)
     {
         DBG("trumpet model activated");
+		*selectParam = 3;
+		*onParam = true;
     }
     else if(button == &extra1Button && extra1Button.getToggleState() == true)
     {

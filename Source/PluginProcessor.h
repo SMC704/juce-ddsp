@@ -9,15 +9,17 @@
 #pragma once
 
 #include <JuceHeader.h>
-#include "DDSPVoice.h"
+#include <cstdio>
 #include "HarmonicEditor.h"
 #include "SubtractiveComponent.h"
 #include "AdditiveComponent.h"
 #include "TensorflowHandler.h"
+#include "AubioHandler.h"
+
 //==============================================================================
 /**
 */
-class DdspsynthAudioProcessor : public juce::AudioProcessor, public HarmonicEditor::Listener
+class DdspsynthAudioProcessor : public juce::AudioProcessor, juce::AsyncUpdater, juce::AudioProcessorValueTreeState::Listener, public HarmonicEditor::Listener
 {
 public:
     //==============================================================================
@@ -74,34 +76,90 @@ public:
         fftSize  = 1 << fftOrder
     };
 
-	void onValueChange(double harmonics[50]);
-    
-    void onShiftValueChange(double shiftValue);
+    void parseModelConfigJSON(juce::String path);
+    void setModelOutput(TensorflowHandler::ModelResults results);
 
-    void onStretchValueChange(double stretchValue);
+	void onHarmonicsChange(double* harmonics, int nHarmonics);
+    int getNumberOfHarmonics();
 
-    void onNoiseColorChange(double color);
-    void onOnOffSubChange(bool onOff);
-    void onSubAmpChange(double subAmp);
-    void onAddAmpChange(double addAmp);
-    void onOutAmpChange(double outAmp);
-
-    void onOnOffAddChange(bool button);
+	void parameterChanged(const juce::String &parameterID, float newValue = 0) override;
 
 private:
+
+    // Parameters
+    juce::AudioProcessorValueTreeState parameters;
+
+    std::atomic<float>* inputSelectParameter = nullptr;
+    std::atomic<float>* modelOnParameter = nullptr;
+    std::atomic<float>* modelChoiceParameter = nullptr;
+    std::atomic<float>* additiveOnParameter = nullptr;
+    std::atomic<float>* additiveShiftParameter = nullptr;
+    std::atomic<float>* additiveStretchParameter = nullptr;
+    std::atomic<float>* additiveGainParameter = nullptr;
+    std::atomic<float>* noiseOnParameter = nullptr;
+    std::atomic<float>* noiseColorParameter = nullptr;
+    std::atomic<float>* noiseGainParameter = nullptr;
+    std::atomic<float>* modulationOnParameter = nullptr;
+    std::atomic<float>* modulationRateParameter = nullptr;
+    std::atomic<float>* modulationDelayParameter = nullptr;
+    std::atomic<float>* modulationAmountParameter = nullptr;
+    std::atomic<float>* reverbOnParameter = nullptr;
+    std::atomic<float>* reverbMixParameter = nullptr;
+    std::atomic<float>* reverbSizeParameter = nullptr;
+    std::atomic<float>* reverbGlowParameter = nullptr;
+    std::atomic<float>* outputGainParameter = nullptr;
+
+    // Internal parameters
+    const static int max_n_harmonics = 100;
+    double phaseBuffer_in[max_n_harmonics];
+    double phaseBuffer_out[max_n_harmonics];
+    double amplitudes[4096];
+    double ld;
+    double f0_in;
+    double f0_out;
+    double f0[4096];
+    double n_harmonics = 60;
+    double harmonics[max_n_harmonics];
+	double userHarmonics[max_n_harmonics];
+    double addBuffer[4096];
+    double initial_bias = -5.0f;
+    double subBuffer[4096];
+    double magnitudes[65];
+    double numSamples;
+
+    // Midi features
+    juce::ADSR adsr;
+    juce::ADSR::Parameters adsrParams = { 0.1f, 0.05f, 1.0f, 0.1f };
+    float midiVelocity;
+    float adsrVelocity;
+    float midiNoteHz;
+    int currentMidiNote = 0;
+
+    // FFT Window
     juce::dsp::FFT forwardFFT;
     
     float fifo [fftSize];
     float fftData [2 * fftSize];
     int fifoIndex = 0;
     bool nextFFTBlockReady = false;
-    
-    //==============================================================================
-	DDSPVoice* voice;
-	juce::MidiKeyboardState keyboardState;
-	juce::Synthesiser synth;
 
+    // Tensorflow 
 	TensorflowHandler tfHandler;
+    TensorflowHandler::ModelResults tfResults;
+    // TF test
+    float tf_f0;
+    float tf_amps;
 
+
+    juce::File modelDir;
+
+    AubioHandler& abHandler = AubioHandler::getInstance();
+
+    //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (DdspsynthAudioProcessor)
+
+
+    // Inherited via AsyncUpdater
+    virtual void handleAsyncUpdate() override;
+
 };

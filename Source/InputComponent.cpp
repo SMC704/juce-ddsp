@@ -12,7 +12,8 @@
 #include "InputComponent.h"
 
 //==============================================================================
-InputComponent::InputComponent()
+InputComponent::InputComponent(juce::AudioProcessorValueTreeState& vts)
+    : valueTreeState(vts)
 {
     float fontDim = 15.0f;
     
@@ -42,8 +43,11 @@ InputComponent::InputComponent()
         {}, 1.0f, {},
         juce::ImageFileFormat::loadFrom(BinaryData::switch_right_png, BinaryData::switch_right_pngSize), 1.0f, {},
         0.0f);
-    inputSwitch.setToggleState(false, NULL);
+    //inputSwitch.setToggleState(false, NULL);
     inputSwitch.onClick = [this] { updateInputState(&inputSwitch); };
+
+    inputSwitchAttachment.reset(new ButtonAttachment(valueTreeState, "inputIsLine", inputSwitch));
+
 }
 
 InputComponent::~InputComponent()

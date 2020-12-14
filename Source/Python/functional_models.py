@@ -49,7 +49,7 @@ class FcStack(tf.keras.layers.Layer):
 class FunctionalDecoder(tf.keras.Model):
 
     def __init__(self,
-                 time_steps=1000,
+                 time_steps=1,
                  rnn_channels=512,
                  rnn_type='gru',
                  ch=512,

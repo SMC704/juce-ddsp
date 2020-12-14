@@ -3,10 +3,64 @@
 <JUCERPROJECT id="xUphdz" name="DDSPSynth" projectType="audioplug" useAppConfig="0"
               addUsingNamespaceToJuceHeader="0" displaySplashScreen="1" jucerFormatVersion="1"
               pluginCharacteristicsValue="pluginIsSynth,pluginWantsMidiIn"
-              pluginChannelConfigs="{1, 2}">
+              pluginChannelConfigs="{1, 2}" pluginFormats="buildStandalone,buildVST3"
+              pluginManufacturer="SMC704" aaxIdentifier="com.SMC704.DDSPSynth"
+              bundleIdentifier="com.SMC704.DDSPSynth">
   <MAINGROUP id="wP40jo" name="DDSPSynth">
     <GROUP id="{21B404C6-B1A3-96E0-24F7-18E3D850093A}" name="Source">
       <GROUP id="{EC1CE48D-AFDF-312B-B94A-6D056A9FE965}" name="DDSP">
+        <FILE id="uTrHom" name="fftshift.cpp" compile="1" resource="0" file="Source/codegen/fftshift.cpp"/>
+        <FILE id="KMPRVN" name="AubioHandler.cpp" compile="1" resource="0"
+              file="Source/AubioHandler.cpp"/>
+        <FILE id="ZGYOtX" name="AubioHandler.h" compile="0" resource="0" file="Source/AubioHandler.h"/>
+        <FILE id="BICWnQ" name="fftshift.h" compile="0" resource="0" file="Source/codegen/fftshift.h"/>
+        <FILE id="G7UnBN" name="BiquadFilter.cpp" compile="1" resource="0"
+              file="Source/codegen/BiquadFilter.cpp"/>
+        <FILE id="FS57Tc" name="BiquadFilter.h" compile="0" resource="0" file="Source/codegen/BiquadFilter.h"/>
+        <FILE id="F4T2T1" name="compute_loudness.cpp" compile="1" resource="0"
+              file="Source/codegen/compute_loudness.cpp"/>
+        <FILE id="uMhjQh" name="compute_loudness.h" compile="0" resource="0"
+              file="Source/codegen/compute_loudness.h"/>
+        <FILE id="K3MG6K" name="eml_rand_mt19937ar.cpp" compile="1" resource="0"
+              file="Source/codegen/eml_rand_mt19937ar.cpp"/>
+        <FILE id="pt5Fzb" name="eml_rand_mt19937ar.h" compile="0" resource="0"
+              file="Source/codegen/eml_rand_mt19937ar.h"/>
+        <FILE id="ANdgfs" name="getPitch.cpp" compile="1" resource="0" file="Source/codegen/getPitch.cpp"/>
+        <FILE id="cRWvnG" name="getPitch.h" compile="0" resource="0" file="Source/codegen/getPitch.h"/>
+        <FILE id="Gr8fGD" name="iseven.cpp" compile="1" resource="0" file="Source/codegen/iseven.cpp"/>
+        <FILE id="BBuWfx" name="iseven.h" compile="0" resource="0" file="Source/codegen/iseven.h"/>
+        <FILE id="ZlZZ7Z" name="ProcessConstructorArguments.cpp" compile="1"
+              resource="0" file="Source/codegen/ProcessConstructorArguments.cpp"/>
+        <FILE id="Cc1bgg" name="ProcessConstructorArguments.h" compile="0"
+              resource="0" file="Source/codegen/ProcessConstructorArguments.h"/>
+        <FILE id="aHLVD8" name="scale_f0.cpp" compile="1" resource="0" file="Source/codegen/scale_f0.cpp"/>
+        <FILE id="hXMzXg" name="scale_f0.h" compile="0" resource="0" file="Source/codegen/scale_f0.h"/>
+        <FILE id="u5SzuZ" name="sort.cpp" compile="1" resource="0" file="Source/codegen/sort.cpp"/>
+        <FILE id="cGnXu0" name="sort.h" compile="0" resource="0" file="Source/codegen/sort.h"/>
+        <FILE id="yCTHvj" name="sortIdx.cpp" compile="1" resource="0" file="Source/codegen/sortIdx.cpp"/>
+        <FILE id="wbj3Rt" name="sortIdx.h" compile="0" resource="0" file="Source/codegen/sortIdx.h"/>
+        <FILE id="B0uhJL" name="SystemProp.cpp" compile="1" resource="0" file="Source/codegen/SystemProp.cpp"/>
+        <FILE id="Sk5z2Z" name="SystemProp.h" compile="0" resource="0" file="Source/codegen/SystemProp.h"/>
+        <FILE id="gnkQHH" name="weightingFilter.cpp" compile="1" resource="0"
+              file="Source/codegen/weightingFilter.cpp"/>
+        <FILE id="BjdD6U" name="weightingFilter.h" compile="0" resource="0"
+              file="Source/codegen/weightingFilter.h"/>
+        <FILE id="pQoKze" name="linspace.cpp" compile="1" resource="0" file="Source/codegen/linspace.cpp"/>
+        <FILE id="CdsY6h" name="linspace.h" compile="0" resource="0" file="Source/codegen/linspace.h"/>
+        <FILE id="r8rIQL" name="eml_setop.cpp" compile="1" resource="0" file="Source/codegen/eml_setop.cpp"/>
+        <FILE id="Gn9EgF" name="eml_setop.h" compile="0" resource="0" file="Source/codegen/eml_setop.h"/>
+        <FILE id="GiCThP" name="fft.cpp" compile="1" resource="0" file="Source/codegen/fft.cpp"/>
+        <FILE id="OfTaOQ" name="fft.h" compile="0" resource="0" file="Source/codegen/fft.h"/>
+        <FILE id="LUbzye" name="FFTImplementationCallback.cpp" compile="1"
+              resource="0" file="Source/codegen/FFTImplementationCallback.cpp"/>
+        <FILE id="KQQZ7Y" name="FFTImplementationCallback.h" compile="0" resource="0"
+              file="Source/codegen/FFTImplementationCallback.h"/>
+        <FILE id="Tsbeqx" name="findpeaks.cpp" compile="1" resource="0" file="Source/codegen/findpeaks.cpp"/>
+        <FILE id="MKq7gP" name="findpeaks.h" compile="0" resource="0" file="Source/codegen/findpeaks.h"/>
+        <FILE id="OeU7s5" name="gencoswin.cpp" compile="1" resource="0" file="Source/codegen/gencoswin.cpp"/>
+        <FILE id="M4eezR" name="gencoswin.h" compile="0" resource="0" file="Source/codegen/gencoswin.h"/>
+        <FILE id="Kr9ucg" name="ifft.cpp" compile="1" resource="0" file="Source/codegen/ifft.cpp"/>
+        <FILE id="lqEyNS" name="ifft.h" compile="0" resource="0" file="Source/codegen/ifft.h"/>
         <FILE id="gwLLC8" name="TensorflowHandler.cpp" compile="1" resource="0"
               file="Source/TensorflowHandler.cpp"/>
         <FILE id="FcN3yN" name="TensorflowHandler.h" compile="0" resource="0"
@@ -22,7 +76,6 @@
         <FILE id="DtO4j2" name="ColoredNoise.cpp" compile="1" resource="0"
               file="Source/codegen/ColoredNoise.cpp"/>
         <FILE id="OjeyQy" name="ColoredNoise.h" compile="0" resource="0" file="Source/codegen/ColoredNoise.h"/>
-        <FILE id="zfV7Fj" name="DDSPSound.h" compile="0" resource="0" file="Source/DDSPSound.h"/>
         <FILE id="ZaR07c" name="DDSPSynth_data.cpp" compile="1" resource="0"
               file="Source/codegen/DDSPSynth_data.cpp"/>
         <FILE id="Cx25ES" name="DDSPSynth_data.h" compile="0" resource="0"
@@ -41,22 +94,12 @@
               file="Source/codegen/DDSPSynth_terminate.h"/>
         <FILE id="YHmTJN" name="DDSPSynth_types.h" compile="0" resource="0"
               file="Source/codegen/DDSPSynth_types.h"/>
-        <FILE id="W1aKVv" name="DDSPVoice.cpp" compile="1" resource="0" file="Source/DDSPVoice.cpp"/>
-        <FILE id="dJBq0W" name="DDSPVoice.h" compile="0" resource="0" file="Source/DDSPVoice.h"/>
         <FILE id="MhPljt" name="eml_rand_mt19937ar_stateful.cpp" compile="1"
               resource="0" file="Source/codegen/eml_rand_mt19937ar_stateful.cpp"/>
         <FILE id="WTTBRh" name="eml_rand_mt19937ar_stateful.h" compile="0"
               resource="0" file="Source/codegen/eml_rand_mt19937ar_stateful.h"/>
-        <FILE id="lr9KKd" name="firls.cpp" compile="1" resource="0" file="Source/codegen/firls.cpp"/>
-        <FILE id="goBThA" name="firls.h" compile="0" resource="0" file="Source/codegen/firls.h"/>
-        <FILE id="EnV0nq" name="mldivide.cpp" compile="1" resource="0" file="Source/codegen/mldivide.cpp"/>
-        <FILE id="ucbaqh" name="mldivide.h" compile="0" resource="0" file="Source/codegen/mldivide.h"/>
-        <FILE id="g4HZI4" name="rand.cpp" compile="1" resource="0" file="Source/codegen/rand.cpp"/>
-        <FILE id="PioHxc" name="rand.h" compile="0" resource="0" file="Source/codegen/rand.h"/>
         <FILE id="gceWau" name="randn.cpp" compile="1" resource="0" file="Source/codegen/randn.cpp"/>
         <FILE id="F3gVlR" name="randn.h" compile="0" resource="0" file="Source/codegen/randn.h"/>
-        <FILE id="DRmenl" name="rescale.cpp" compile="1" resource="0" file="Source/codegen/rescale.cpp"/>
-        <FILE id="D17MSI" name="rescale.h" compile="0" resource="0" file="Source/codegen/rescale.h"/>
         <FILE id="LbU0vJ" name="rt_nonfinite.cpp" compile="1" resource="0"
               file="Source/codegen/rt_nonfinite.cpp"/>
         <FILE id="cnVU3x" name="rt_nonfinite.h" compile="0" resource="0" file="Source/codegen/rt_nonfinite.h"/>
@@ -67,8 +110,6 @@
         <FILE id="S7nMfq" name="rtwtypes.h" compile="0" resource="0" file="Source/codegen/rtwtypes.h"/>
         <FILE id="NpINNn" name="subtractive.cpp" compile="1" resource="0" file="Source/codegen/subtractive.cpp"/>
         <FILE id="xYI3Li" name="subtractive.h" compile="0" resource="0" file="Source/codegen/subtractive.h"/>
-        <FILE id="IfywLa" name="SystemCore.cpp" compile="1" resource="0" file="Source/codegen/SystemCore.cpp"/>
-        <FILE id="u4A2CG" name="SystemCore.h" compile="0" resource="0" file="Source/codegen/SystemCore.h"/>
         <FILE id="FP0Ikj" name="tmwtypes.h" compile="0" resource="0" file="Source/codegen/tmwtypes.h"/>
       </GROUP>
       <FILE id="f6vy2M" name="PluginProcessor.cpp" compile="1" resource="0"
@@ -146,10 +187,16 @@
   </MAINGROUP>
   <JUCEOPTIONS JUCE_STRICT_REFCOUNTEDPOINTER="1" JUCE_VST3_CAN_REPLACE_VST2="0"/>
   <EXPORTFORMATS>
-    <XCODE_MAC targetFolder="Builds/MacOSX" microphonePermissionNeeded="1">
+    <XCODE_MAC targetFolder="Builds/MacOSX" microphonePermissionNeeded="1" postbuildCommand="rsync -ar &quot;${PROJECT_DIR}/../../Models/&quot; &quot;${PROJECT_DIR}/build/Debug/Models/&quot; &amp; rsync -ar &quot;${PROJECT_DIR}/../../Models/&quot; &quot;${PROJECT_DIR}/build/Release/Models/&quot;  &amp; rsync -ar &quot;${PROJECT_DIR}/../../Libraries/tensorflow_c_mac/&quot; &quot;${PROJECT_DIR}/build/Debug/&quot; &amp; rsync -ar &quot;${PROJECT_DIR}/../../Libraries/tensorflow_c_mac/&quot; &quot;${PROJECT_DIR}/build/Release/&quot; &amp; rsync -ar &quot;${PROJECT_DIR}/../../Libraries/aubio_mac/&quot; &quot;${PROJECT_DIR}/build/Debug/&quot; &amp; rsync -ar &quot;${PROJECT_DIR}/../../Libraries/aubio_mac/&quot; &quot;${PROJECT_DIR}/build/Release/&quot; "
+               extraLinkerFlags="-L${PROJECT_DIR}/../../Libraries/tensorflow_c_mac/"
+               externalLibraries="tensorflow&#10;tensorflow.2&#10;tensorflow.2.3.1&#10;tensorflow_framework&#10;tensorflow_framework.2&#10;tensorflow_framework.2.3.1"
+               frameworkSearchPaths="${PROJECT_DIR}/../../Libraries/aubio_mac/aubio.framework"
+               extraCustomFrameworks="../../Libraries/aubio_mac/aubio" embeddedFrameworks="../../Libraries/aubio_mac/aubio.framework">
       <CONFIGURATIONS>
-        <CONFIGURATION isDebug="1" name="Debug" targetName="DDSPSynth"/>
-        <CONFIGURATION isDebug="0" name="Release" targetName="DDSPSynth"/>
+        <CONFIGURATION isDebug="1" name="Debug" targetName="DDSPSynth" customXcodeFlags="LD_RUNPATH_SEARCH_PATHS = &quot;${PROJECT_DIR}/../../Libraries/tensorflow_c_mac/&quot;; FRAMEWORK_SEARCH_PATHS = &quot;${PROJECT_DIR}/../../Libraries/aubio_mac/aubio.framework/&quot;"
+                       headerPath="$(PROJECT_DIR)/../../Libraries/aubio_mac/aubio.framework/Headers"/>
+        <CONFIGURATION isDebug="0" name="Release" targetName="DDSPSynth" customXcodeFlags="LD_RUNPATH_SEARCH_PATHS = &quot;${PROJECT_DIR}/../../Libraries/tensorflow_c_mac/&quot;; FRAMEWORK_SEARCH_PATHS = &quot;${PROJECT_DIR}/../../Libraries/aubio_mac/aubio.framework/&quot;"
+                       headerPath="$(PROJECT_DIR)/../../Libraries/aubio_mac/aubio.framework/Headers"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
         <MODULEPATH id="juce_analytics" path="../../modules"/>
@@ -168,10 +215,11 @@
         <MODULEPATH id="juce_gui_extra" path="../../modules"/>
       </MODULEPATHS>
     </XCODE_MAC>
-    <VS2017 targetFolder="Builds/VisualStudio2017" externalLibraries="..\..\Libraries\tensorflow_c_win\tensorflow.lib">
+    <VS2017 targetFolder="Builds/VisualStudio2017" externalLibraries="..\..\Libraries\tensorflow_c_win\tensorflow.lib&#10;..\..\Libraries\aubio_win\lib\libaubio.a&#10;..\..\Libraries\aubio_win\lib\aubio.dll.a"
+            extraCompilerFlags="/I ..\..\Libraries\aubio_win\include\aubio">
       <CONFIGURATIONS>
-        <CONFIGURATION isDebug="1" name="Debug" postbuildCommand="copy &quot;..\..\Libraries\tensorflow_c_win\tensorflow.*&quot; &quot;x64\Debug\Standalone Plugin\&quot;"/>
-        <CONFIGURATION isDebug="0" name="Release" postbuildCommand="copy &quot;..\..\Libraries\tensorflow_c_win\tensorflow.*&quot; &quot;x64\Release\Standalone Plugin\&quot;"/>
+        <CONFIGURATION isDebug="1" name="Debug" postbuildCommand="copy &quot;..\..\Libraries\tensorflow_c_win\tensorflow.*&quot; &quot;x64\Debug\Standalone Plugin\&quot; &amp;&amp; copy &quot;..\..\Libraries\aubio_win\bin\libaubio-5.dll&quot; &quot;x64\Debug\Standalone Plugin\&quot; &amp;&amp; Xcopy /E /I /Y &quot;..\..\Models&quot; &quot;x64\Debug\Standalone Plugin\Models&quot;"/>
+        <CONFIGURATION isDebug="0" name="Release" postbuildCommand="copy &quot;..\..\Libraries\tensorflow_c_win\tensorflow.*&quot; &quot;x64\Release\Standalone Plugin\&quot; &amp;&amp; copy &quot;..\..\Libraries\aubio_win\bin\libaubio-5.dll&quot; &quot;x64\Release\Standalone Plugin\&quot; &amp;&amp; Xcopy /E /I /Y &quot;..\..\Models&quot; &quot;x64\Release\Standalone Plugin\Models&quot;"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
         <MODULEPATH id="juce_gui_extra" path="../../juce"/>
@@ -212,10 +260,12 @@
         </MODULEPATHS>
       </VS2019>
     </VS2017>
-    <VS2019 targetFolder="Builds/VisualStudio2019" externalLibraries="..\..\Libraries\tensorflow_c_win\tensorflow.lib">
+    <VS2019 targetFolder="Builds/VisualStudio2019" externalLibraries="..\..\Libraries\tensorflow_c_win\tensorflow.lib&#10;..\..\Libraries\aubio_win\lib\libaubio.a&#10;..\..\Libraries\aubio_win\lib\aubio.dll.a"
+            extraCompilerFlags="/I ..\..\Libraries\aubio_win\include\aubio">
       <CONFIGURATIONS>
-        <CONFIGURATION isDebug="1" name="Debug" postbuildCommand="copy &quot;..\..\Libraries\tensorflow_c_win\tensorflow.*&quot; &quot;x64\Debug\Standalone Plugin\&quot;"/>
-        <CONFIGURATION isDebug="0" name="Release" postbuildCommand="copy &quot;..\..\Libraries\tensorflow_c_win\tensorflow.*&quot; &quot;x64\Release\Standalone Plugin\&quot;"/>
+        <CONFIGURATION isDebug="1" name="Debug" postbuildCommand="copy &quot;..\..\Libraries\tensorflow_c_win\tensorflow.*&quot; &quot;x64\Debug\Standalone Plugin\&quot; &amp;&amp; copy &quot;..\..\Libraries\aubio_win\bin\libaubio-5.dll&quot; &quot;x64\Debug\Standalone Plugin\&quot; &amp;&amp; Xcopy /E /I /Y &quot;..\..\Models&quot; &quot;x64\Debug\Standalone Plugin\Models&quot;"/>
+        <CONFIGURATION isDebug="0" name="Release" postbuildCommand="copy &quot;..\..\Libraries\tensorflow_c_win\tensorflow.*&quot; &quot;x64\Release\Standalone Plugin\&quot; &amp;&amp; copy &quot;..\..\Libraries\aubio_win\bin\libaubio-5.dll&quot; &quot;x64\Release\Standalone Plugin\&quot; &amp;&amp; Xcopy /E /I /Y &quot;..\..\Models&quot; &quot;x64\Release\Standalone Plugin\Models&quot;"
+                       useRuntimeLibDLL="0"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
         <MODULEPATH id="juce_gui_extra"/>

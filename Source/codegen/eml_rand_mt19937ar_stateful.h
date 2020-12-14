@@ -13,13 +13,12 @@
 #define EML_RAND_MT19937AR_STATEFUL_H
 
 // Include files
+#include "rtwtypes.h"
 #include <cstddef>
 #include <cstdlib>
-#include "rtwtypes.h"
-#include "DDSPSynth_types.h"
 
 // Function Declarations
-extern void c_eml_rand_mt19937ar_stateful_i();
+void eml_rand_mt19937ar_stateful_init();
 
 #endif
 

@@ -11,8 +11,9 @@
 
 #ifndef RTGETINF_H
 #define RTGETINF_H
+
+// Include files
 #include "rtwtypes.h"
-#include "rt_nonfinite.h"
 #ifdef __cplusplus
 
 extern "C" {

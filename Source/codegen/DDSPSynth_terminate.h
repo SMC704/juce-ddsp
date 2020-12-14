@@ -13,10 +13,9 @@
 #define DDSPSYNTH_TERMINATE_H
 
 // Include files
+#include "rtwtypes.h"
 #include <cstddef>
 #include <cstdlib>
-#include "rtwtypes.h"
-#include "DDSPSynth_types.h"
 
 // Function Declarations
 extern void DDSPSynth_terminate();

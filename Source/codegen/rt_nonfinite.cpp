@@ -14,31 +14,17 @@
 //       MATLAB for code generation function to initialize non-finites,
 //       (Inf, NaN and -Inf).
 
+// Include files
 #include "rt_nonfinite.h"
 #include <cmath>
 #include <limits>
 
-real_T rtInf;
-real_T rtMinusInf;
-real_T rtNaN;
-real32_T rtInfF;
-real32_T rtMinusInfF;
-real32_T rtNaNF;
-
-// Function: rt_InitInfAndNaN ==================================================
-//  Abstract:
-//  Initialize the rtInf, rtMinusInf, and rtNaN needed by the
-//  generated code. NaN is initialized as non-signaling. Assumes IEEE.
-
-void rt_InitInfAndNaN()
-{
-  rtNaN = std::numeric_limits<real_T>::quiet_NaN();
-  rtNaNF = std::numeric_limits<real32_T>::quiet_NaN();
-  rtInf = std::numeric_limits<real_T>::infinity();
-  rtInfF = std::numeric_limits<real32_T>::infinity();
-  rtMinusInf = -std::numeric_limits<real_T>::infinity();
-  rtMinusInfF = -std::numeric_limits<real32_T>::infinity();
-}
+real_T rtNaN = std::numeric_limits<real_T>::quiet_NaN();
+real_T rtInf = std::numeric_limits<real_T>::infinity();
+real_T rtMinusInf = -std::numeric_limits<real_T>::infinity();
+real32_T rtNaNF = std::numeric_limits<real32_T>::quiet_NaN();
+real32_T rtInfF = std::numeric_limits<real32_T>::infinity();
+real32_T rtMinusInfF = -std::numeric_limits<real32_T>::infinity();
 
 // Function: rtIsInf ==================================================
 //  Abstract:
@@ -46,7 +32,7 @@ void rt_InitInfAndNaN()
 
 boolean_T rtIsInf(real_T value)
 {
-  return ((value==rtInf || value==rtMinusInf) ? 1U : 0U);
+  return ((value==rtInf || value==rtMinusInf) ? true : false);
 }
 
 // Function: rtIsInfF =================================================
@@ -55,7 +41,7 @@ boolean_T rtIsInf(real_T value)
 
 boolean_T rtIsInfF(real32_T value)
 {
-  return(((value)==rtInfF || (value)==rtMinusInfF) ? 1U : 0U);
+  return ((value==rtInfF || value==rtMinusInfF) ? true : false);
 }
 
 // Function: rtIsNaN ==================================================
@@ -64,7 +50,7 @@ boolean_T rtIsInfF(real32_T value)
 
 boolean_T rtIsNaN(real_T value)
 {
-  return ((value!=value)? 1U : 0U);
+  return ((value!=value) ? true : false);
 }
 
 // Function: rtIsNaNF =================================================
@@ -73,7 +59,7 @@ boolean_T rtIsNaN(real_T value)
 
 boolean_T rtIsNaNF(real32_T value)
 {
-  return ((value!=value)? 1U : 0U);
+  return ((value!=value) ? true : false);
 }
 
 // End of code generation (rt_nonfinite.cpp)

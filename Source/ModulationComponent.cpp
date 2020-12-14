@@ -12,7 +12,8 @@
 #include "ModulationComponent.h"
 
 //==============================================================================
-ModulationComponent::ModulationComponent()
+ModulationComponent::ModulationComponent(juce::AudioProcessorValueTreeState& vts)
+    : valueTreeState(vts)
 {
     float fontDim = 15.0f;
     
@@ -25,11 +26,14 @@ ModulationComponent::ModulationComponent()
         juce::ImageFileFormat::loadFrom(BinaryData::power_png, BinaryData::power_pngSize), {}, juce::Colour::fromRGB(255, 255, 255), //Down
         0.0f);
     onoffButton.setClickingTogglesState(true);
-    onoffButton.setToggleState(true, NULL);
+    //onoffButton.setToggleState(true, NULL);
 
     addAndMakeVisible(onoffLabel);
     onoffLabel.setColour(juce::Label::textColourId, juce::Colours::white);
     onoffLabel.setJustificationType(juce::Justification::centred);
+
+    onoffAttachment.reset(new ButtonAttachment(valueTreeState, "modulationOn", onoffButton));
+
 
     addAndMakeVisible(nameLabel);
     nameLabel.setColour(juce::Label::textColourId, juce::Colours::white);
@@ -52,6 +56,8 @@ ModulationComponent::ModulationComponent()
     amountLabel.setText("Amount", juce::NotificationType::dontSendNotification);
     amountLabel.setFont(fontDim);
     
+    amountAttachment.reset(new SliderAttachment(valueTreeState, "modulationAmount", amountSlider));
+
     delaySlider.setSliderStyle(juce::Slider::SliderStyle::RotaryHorizontalVerticalDrag);
     delaySlider.setTextBoxStyle(juce::Slider::NoTextBox, true, 0, 0);
     delaySlider.setPopupDisplayEnabled(true, true, this);
@@ -67,6 +73,8 @@ ModulationComponent::ModulationComponent()
     delayLabel.setText("Delay", juce::NotificationType::dontSendNotification);
     delayLabel.setFont(fontDim);
 
+    delayAttachment.reset(new SliderAttachment(valueTreeState, "modulationDelay", delaySlider));
+
     rateSlider.setSliderStyle(juce::Slider::SliderStyle::RotaryHorizontalVerticalDrag);
     rateSlider.setTextBoxStyle(juce::Slider::NoTextBox, true, 0, 0);
     rateSlider.setPopupDisplayEnabled(true, true, this);
@@ -81,6 +89,8 @@ ModulationComponent::ModulationComponent()
     rateLabel.setJustificationType(juce::Justification::topLeft);
     rateLabel.setText("Rate", juce::NotificationType::dontSendNotification);
     rateLabel.setFont(fontDim);
+
+    rateAttachment.reset(new SliderAttachment(valueTreeState, "modulationRate", rateSlider));
 
 }
 

@@ -12,7 +12,8 @@
 #include "OutputComponent.h"
 
 //==============================================================================
-OutputComponent::OutputComponent()
+OutputComponent::OutputComponent(juce::AudioProcessorValueTreeState& vts)
+    : valueTreeState(vts)
 {
     float fontDim = 15.0f;
 
@@ -26,12 +27,14 @@ OutputComponent::OutputComponent()
     masterSlider.setTextBoxStyle(juce::Slider::NoTextBox, true, 0, 0);
     masterSlider.setPopupDisplayEnabled(true, true, this);
     masterSlider.setTextValueSuffix (" dB");
-    masterSlider.setRange(-60.0f, 0.0f, 0.1f);
-    masterSlider.setValue(-6.0f);
+    //masterSlider.setRange(-60.0f, 0.0f, 0.1f);
+    //masterSlider.setValue(-6.0f);
     addAndMakeVisible(masterSlider);
     masterSlider.setBounds(0, 0, 100, 100);
-    masterSlider.addListener(this);
+    //masterSlider.addListener(this);
     masterSlider.setDoubleClickReturnValue(true, -6.0f);
+
+    masterAttachment.reset(new SliderAttachment(valueTreeState, "outputGain", masterSlider));
 
     addAndMakeVisible(masterLabel);
     masterLabel.setColour(juce::Label::textColourId, juce::Colours::white);
@@ -104,19 +107,19 @@ void OutputComponent::resized()
     grid.performLayout(getLocalBounds());
 }
 
-void OutputComponent::sliderValueChanged(juce::Slider* slider)
-{
-   
-    if (slider == &masterSlider) {
-        outAmp = masterSlider.getValue();
-        if (outputListener != NULL)
-            outputListener->onOutAmpChange(outAmp);
-    }
-}
-
-void OutputComponent::setOutputListener(OutputListener* outListener)
-{
-    outputListener = outListener;
-    if (outputListener != NULL)
-        outputListener->onOutAmpChange(0);
-}
+//void OutputComponent::sliderValueChanged(juce::Slider* slider)
+//{
+//   
+//    if (slider == &masterSlider) {
+//        outAmp = masterSlider.getValue();
+//        if (outputListener != NULL)
+//            outputListener->onOutAmpChange(outAmp);
+//    }
+//}
+//
+//void OutputComponent::setOutputListener(OutputListener* outListener)
+//{
+//    outputListener = outListener;
+//    if (outputListener != NULL)
+//        outputListener->onOutAmpChange(0);
+//}

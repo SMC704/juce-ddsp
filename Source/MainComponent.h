@@ -11,7 +11,6 @@
 #pragma once
 
 #include <JuceHeader.h>
-#include "PluginProcessor.h"
 #include "InputComponent.h"
 #include "ModelComponent.h"
 #include "AdditiveComponent.h"
@@ -27,7 +26,7 @@
 class MainComponent  : public juce::Component
 {
 public:
-    MainComponent();
+    MainComponent(juce::AudioProcessorValueTreeState&);
     ~MainComponent() override;
 
     void paint (juce::Graphics&) override;
