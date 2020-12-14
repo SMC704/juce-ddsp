@@ -198,6 +198,9 @@ void DdspsynthAudioProcessor::prepareToPlay(double sampleRate, int samplesPerBlo
     adsr.setParameters(adsrParams);
 
     abHandler.prepare("yinfft", 4096, samplesPerBlock, (uint_t)sampleRate);
+    abHandler.setTolerance(0.8);
+
+    abHandler.setSilence(-40);
 }
 
 void DdspsynthAudioProcessor::releaseResources()
@@ -237,7 +240,7 @@ void DdspsynthAudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, juc
     numSamples = buffer.getNumSamples();
     if (*inputSelectParameter) //Input is line-in
     {
-        float aubiof0 = abHandler.process(buffer);
+        AubioHandler::AubioResults aubioResults = abHandler.process(buffer);
         double mlInput[4096];
         for (int i = 0; i < 4096; i++)
         {
@@ -247,9 +250,10 @@ void DdspsynthAudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, juc
                 mlInput[i] = 0;
         }
 
-        tf_amps = compute_loudness((double)numSamples, mlInput, getSampleRate());
-
-        f0_in = aubiof0;
+        //tf_amps = compute_loudness((double)numSamples, mlInput, getSampleRate());
+        tf_amps = aubioResults.loudness;
+        DBG(aubioResults.confidence);
+        f0_in = aubioResults.pitch;
         tf_f0 = f0_in;
         for (int i = 0; i < 4096; i++)
         {

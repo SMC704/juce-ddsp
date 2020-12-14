@@ -25,9 +25,20 @@ public:
         return instance;
     }
 
+    struct AubioResults
+    {
+        smpl_t pitch;
+        smpl_t confidence;
+        smpl_t loudness;
+    };
+
+    typedef struct AubioResults AubioResults;
+
     void prepare(const char_t* method, uint_t bufsize, uint_t hopsize, uint_t sampleRate);
     void releaseResources();
-    float process(juce::AudioBuffer<float> buffer);
+    AubioResults process(juce::AudioBuffer<float>& buffer);
+    uint_t setTolerance(smpl_t tol);
+    uint_t setSilence(smpl_t sil);
 
 private:
     AubioHandler();
@@ -48,6 +59,19 @@ private:
 
     typedef void (*fptypeAubioPitchDo) (aubio_pitch_t*, const fvec_t*, fvec_t*);
     fptypeAubioPitchDo fpAubioPitchDo;
+
+    typedef uint_t (*fptypeSetTolerance) (aubio_pitch_t*, smpl_t);
+    fptypeSetTolerance fpSetTolerance;
+
+    typedef uint_t (*fptypeSetSilence) (aubio_pitch_t*, smpl_t);
+    fptypeSetTolerance fpSetSilence;
+
+    typedef smpl_t (*fptypeGetConfidence) (aubio_pitch_t*);
+    fptypeGetConfidence fpGetConfidence;
+
+    typedef smpl_t (*fptypeGetLoudness) (fvec_t*);
+    fptypeGetLoudness fpGetLoudness;
+
 
 	std::unique_ptr<aubio_pitch_t, PitchDeleter> aubioPitch;
 };

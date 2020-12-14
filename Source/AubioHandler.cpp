@@ -24,6 +24,10 @@ AubioHandler::AubioHandler()
     fpNewAubioPitch = (fptypeNewAubioPitch)abLibrary.getFunction("new_aubio_pitch");
     fpDelAubioPitch = (fptypeDelAubioPitch)abLibrary.getFunction("del_aubio_pitch");
     fpAubioPitchDo = (fptypeAubioPitchDo)abLibrary.getFunction("aubio_pitch_do");
+    fpSetTolerance = (fptypeSetTolerance)abLibrary.getFunction("aubio_pitch_set_tolerance");
+    fpSetSilence = (fptypeSetSilence)abLibrary.getFunction("aubio_pitch_get_silence");
+    fpGetConfidence = (fptypeGetConfidence)abLibrary.getFunction("aubio_pitch_get_confidence");
+    fpGetLoudness = (fptypeGetLoudness)abLibrary.getFunction("aubio_db_spl");
 }
 
 AubioHandler::~AubioHandler()
@@ -41,21 +45,36 @@ void AubioHandler::releaseResources()
     aubioPitch.release();
 }
 
-float AubioHandler::process(juce::AudioBuffer<float> buffer)
+AubioHandler::AubioResults AubioHandler::process(juce::AudioBuffer<float>& buffer)
 {
     fvec_t aubioInput;
     fvec_t aubioOutput;
-    float result;
+    AubioResults result;
 
     // need write pointer because the data type is not const
     aubioInput.data = buffer.getWritePointer(0);
     aubioInput.length = buffer.getNumSamples();
 
-    aubioOutput.data = &result;
+    aubioOutput.data = &result.pitch;
     aubioOutput.length = 1;
 
+    DBG(aubio_db_spl(&aubioInput));
+
     fpAubioPitchDo(aubioPitch.get(), &aubioInput, &aubioOutput);
+    result.confidence = fpGetConfidence(aubioPitch.get());
+    result.loudness = fpGetLoudness(&aubioInput);
+    
     return result;
+}
+
+uint_t AubioHandler::setTolerance(smpl_t tol)
+{
+    return fpSetTolerance(aubioPitch.get(), tol);
+}
+
+uint_t AubioHandler::setSilence(smpl_t sil)
+{
+    return fpSetSilence(aubioPitch.get(), sil);
 }
 
 void AubioHandler::PitchDeleter::operator()(aubio_pitch_t * p)
