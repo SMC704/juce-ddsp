@@ -74,6 +74,11 @@ DdspsynthAudioProcessor::DdspsynthAudioProcessor()
            std::make_unique<juce::AudioParameterFloat>("reverbGlow", "Glow", 0.0f, 100.0f, 0.0f),
            // Output
            std::make_unique<juce::AudioParameterFloat>("outputGain", "Output gain", -60.0f, 0.0f, -6.0f),
+           // Midi
+           std::make_unique<juce::AudioParameterFloat>("attack", "Attack", 0.0f, 2.0f, 0.1f),
+           std::make_unique<juce::AudioParameterFloat>("decay", "Decay", 0.0f, 2.0f, 0.1f),
+           std::make_unique<juce::AudioParameterFloat>("sustain", "Sustain", 0.0f, 1.0f, 0.1f),
+           std::make_unique<juce::AudioParameterFloat>("release", "Release", 0.0f, 2.0f, 0.1f),
         })/*,
         tfHandler(*this)*/
 {
@@ -99,6 +104,11 @@ DdspsynthAudioProcessor::DdspsynthAudioProcessor()
     reverbSizeParameter = parameters.getRawParameterValue("reverbSize");
     reverbGlowParameter = parameters.getRawParameterValue("reverbGlow");
     outputGainParameter = parameters.getRawParameterValue("outputGain");
+    attackParameter = parameters.getRawParameterValue("attack");
+    decayParameter = parameters.getRawParameterValue("decay");
+    sustainParameter = parameters.getRawParameterValue("sustain");
+    releaseParameter = parameters.getRawParameterValue("release");
+
 
     parameters.addParameterListener("modelSelect", this);
 
@@ -237,6 +247,7 @@ bool DdspsynthAudioProcessor::isBusesLayoutSupported(const BusesLayout& layouts)
 
 void DdspsynthAudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, juce::MidiBuffer& midiMessages)
 {
+    shouldSynthesize = true;
     const float* in_l = buffer.getReadPointer(0);
     numSamples = buffer.getNumSamples();
     if (*inputSelectParameter) //Input is line-in
@@ -264,7 +275,8 @@ void DdspsynthAudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, juc
     else //Input is midi
     {
         buffer.clear();
-
+        adsrParams = { *attackParameter, *decayParameter, *sustainParameter, *releaseParameter };
+        adsr.setParameters(adsrParams);
         int time;
         juce::MidiMessage m;
         for (juce::MidiBuffer::Iterator i(midiMessages); i.getNextEvent(m, time);)
@@ -285,7 +297,8 @@ void DdspsynthAudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, juc
                     adsr.noteOff();
             }
         }
-        if (!adsr.isActive()) return;
+        if (!adsr.isActive()) 
+            shouldSynthesize = false;
 
         tf_f0 = midiNoteHz;
         tf_amps = log10(juce::jmax(midiVelocity * adsrVelocity, 0.000001f)) * 20.0f;
@@ -371,6 +384,10 @@ void DdspsynthAudioProcessor::parseModelConfigJSON(juce::String path)
     juce::var config = juce::JSON::parse(config_file);
     n_harmonics = config.getProperty("n_harmonics", 50);
     initial_bias = config.getProperty("initial_bias", -5.0f);
+    *attackParameter = config.getProperty("attack", juce::var(*attackParameter));
+    *decayParameter = config.getProperty("decay", juce::var(*decayParameter));
+    *sustainParameter = config.getProperty("sustain", juce::var(*sustainParameter));
+    *releaseParameter = config.getProperty("release", juce::var(*releaseParameter));
 }
 
 void DdspsynthAudioProcessor::setModelOutput(TensorflowHandler::ModelResults tfResults)
