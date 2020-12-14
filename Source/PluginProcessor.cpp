@@ -200,7 +200,7 @@ void DdspsynthAudioProcessor::prepareToPlay(double sampleRate, int samplesPerBlo
     abHandler.prepare("yinfft", 4096, samplesPerBlock, (uint_t)sampleRate);
     abHandler.setTolerance(0.8);
 
-    abHandler.setSilence(-40);
+    abHandler.setSilence(-50);
 }
 
 void DdspsynthAudioProcessor::releaseResources()

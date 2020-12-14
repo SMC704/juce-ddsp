@@ -22,7 +22,7 @@ AubioHandler::AubioHandler()
     fpDelAubioPitch = (fptypeDelAubioPitch)abLibrary.getFunction("del_aubio_pitch");
     fpAubioPitchDo = (fptypeAubioPitchDo)abLibrary.getFunction("aubio_pitch_do");
     fpSetTolerance = (fptypeSetTolerance)abLibrary.getFunction("aubio_pitch_set_tolerance");
-    fpSetSilence = (fptypeSetSilence)abLibrary.getFunction("aubio_pitch_get_silence");
+    fpSetSilence = (fptypeSetSilence)abLibrary.getFunction("aubio_pitch_set_silence");
     fpGetConfidence = (fptypeGetConfidence)abLibrary.getFunction("aubio_pitch_get_confidence");
     fpGetLoudness = (fptypeGetLoudness)abLibrary.getFunction("aubio_db_spl");
 #endif
