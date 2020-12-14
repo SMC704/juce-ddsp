@@ -10,6 +10,9 @@
     <GROUP id="{21B404C6-B1A3-96E0-24F7-18E3D850093A}" name="Source">
       <GROUP id="{EC1CE48D-AFDF-312B-B94A-6D056A9FE965}" name="DDSP">
         <FILE id="uTrHom" name="fftshift.cpp" compile="1" resource="0" file="Source/codegen/fftshift.cpp"/>
+        <FILE id="KMPRVN" name="AubioHandler.cpp" compile="1" resource="0"
+              file="Source/AubioHandler.cpp"/>
+        <FILE id="ZGYOtX" name="AubioHandler.h" compile="0" resource="0" file="Source/AubioHandler.h"/>
         <FILE id="BICWnQ" name="fftshift.h" compile="0" resource="0" file="Source/codegen/fftshift.h"/>
         <FILE id="G7UnBN" name="BiquadFilter.cpp" compile="1" resource="0"
               file="Source/codegen/BiquadFilter.cpp"/>
@@ -184,10 +187,16 @@
   </MAINGROUP>
   <JUCEOPTIONS JUCE_STRICT_REFCOUNTEDPOINTER="1" JUCE_VST3_CAN_REPLACE_VST2="0"/>
   <EXPORTFORMATS>
-    <XCODE_MAC targetFolder="Builds/MacOSX" microphonePermissionNeeded="1">
+    <XCODE_MAC targetFolder="Builds/MacOSX" microphonePermissionNeeded="1" postbuildCommand="rsync -ar &quot;${PROJECT_DIR}/../../Models/&quot; &quot;${PROJECT_DIR}/build/Debug/Models/&quot; &amp; rsync -ar &quot;${PROJECT_DIR}/../../Models/&quot; &quot;${PROJECT_DIR}/build/Release/Models/&quot;  &amp; rsync -ar &quot;${PROJECT_DIR}/../../Libraries/tensorflow_c_mac/&quot; &quot;${PROJECT_DIR}/build/Debug/&quot; &amp; rsync -ar &quot;${PROJECT_DIR}/../../Libraries/tensorflow_c_mac/&quot; &quot;${PROJECT_DIR}/build/Release/&quot; &amp; rsync -ar &quot;${PROJECT_DIR}/../../Libraries/aubio_mac/&quot; &quot;${PROJECT_DIR}/build/Debug/&quot; &amp; rsync -ar &quot;${PROJECT_DIR}/../../Libraries/aubio_mac/&quot; &quot;${PROJECT_DIR}/build/Release/&quot; "
+               extraLinkerFlags="-L${PROJECT_DIR}/../../Libraries/tensorflow_c_mac/"
+               externalLibraries="tensorflow&#10;tensorflow.2&#10;tensorflow.2.3.1&#10;tensorflow_framework&#10;tensorflow_framework.2&#10;tensorflow_framework.2.3.1"
+               frameworkSearchPaths="${PROJECT_DIR}/../../Libraries/aubio_mac/aubio.framework"
+               extraCustomFrameworks="../../Libraries/aubio_mac/aubio" embeddedFrameworks="../../Libraries/aubio_mac/aubio.framework">
       <CONFIGURATIONS>
-        <CONFIGURATION isDebug="1" name="Debug" targetName="DDSPSynth"/>
-        <CONFIGURATION isDebug="0" name="Release" targetName="DDSPSynth"/>
+        <CONFIGURATION isDebug="1" name="Debug" targetName="DDSPSynth" customXcodeFlags="LD_RUNPATH_SEARCH_PATHS = &quot;${PROJECT_DIR}/../../Libraries/tensorflow_c_mac/&quot;; FRAMEWORK_SEARCH_PATHS = &quot;${PROJECT_DIR}/../../Libraries/aubio_mac/aubio.framework/&quot;"
+                       headerPath="$(PROJECT_DIR)/../../Libraries/aubio_mac/aubio.framework/Headers"/>
+        <CONFIGURATION isDebug="0" name="Release" targetName="DDSPSynth" customXcodeFlags="LD_RUNPATH_SEARCH_PATHS = &quot;${PROJECT_DIR}/../../Libraries/tensorflow_c_mac/&quot;; FRAMEWORK_SEARCH_PATHS = &quot;${PROJECT_DIR}/../../Libraries/aubio_mac/aubio.framework/&quot;"
+                       headerPath="$(PROJECT_DIR)/../../Libraries/aubio_mac/aubio.framework/Headers"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
         <MODULEPATH id="juce_analytics" path="../../modules"/>
@@ -209,8 +218,8 @@
     <VS2017 targetFolder="Builds/VisualStudio2017" externalLibraries="..\..\Libraries\tensorflow_c_win\tensorflow.lib&#10;..\..\Libraries\aubio_win\lib\libaubio.a&#10;..\..\Libraries\aubio_win\lib\aubio.dll.a"
             extraCompilerFlags="/I ..\..\Libraries\aubio_win\include\aubio">
       <CONFIGURATIONS>
-        <CONFIGURATION isDebug="1" name="Debug" postbuildCommand="copy &quot;..\..\Libraries\tensorflow_c_win\tensorflow.*&quot; &quot;x64\Debug\Standalone Plugin\&quot; &amp;&amp; copy &quot;..\..\Libraries\aubio_win\bin\libaubio-5.dll&quot; &quot;x64\Debug\Standalone Plugin\&quot;"/>
-        <CONFIGURATION isDebug="0" name="Release" postbuildCommand="copy &quot;..\..\Libraries\tensorflow_c_win\tensorflow.*&quot; &quot;x64\Release\Standalone Plugin\&quot; &amp;&amp; copy &quot;..\..\Libraries\aubio_win\bin\libaubio-5.dll&quot; &quot;x64\Release\Standalone Plugin\&quot;"/>
+        <CONFIGURATION isDebug="1" name="Debug" postbuildCommand="copy &quot;..\..\Libraries\tensorflow_c_win\tensorflow.*&quot; &quot;x64\Debug\Standalone Plugin\&quot; &amp;&amp; copy &quot;..\..\Libraries\aubio_win\bin\libaubio-5.dll&quot; &quot;x64\Debug\Standalone Plugin\&quot; &amp;&amp; Xcopy /E /I /Y &quot;..\..\Models&quot; &quot;x64\Debug\Standalone Plugin\Models&quot;"/>
+        <CONFIGURATION isDebug="0" name="Release" postbuildCommand="copy &quot;..\..\Libraries\tensorflow_c_win\tensorflow.*&quot; &quot;x64\Release\Standalone Plugin\&quot; &amp;&amp; copy &quot;..\..\Libraries\aubio_win\bin\libaubio-5.dll&quot; &quot;x64\Release\Standalone Plugin\&quot; &amp;&amp; Xcopy /E /I /Y &quot;..\..\Models&quot; &quot;x64\Release\Standalone Plugin\Models&quot;"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
         <MODULEPATH id="juce_gui_extra" path="../../juce"/>
@@ -254,8 +263,8 @@
     <VS2019 targetFolder="Builds/VisualStudio2019" externalLibraries="..\..\Libraries\tensorflow_c_win\tensorflow.lib&#10;..\..\Libraries\aubio_win\lib\libaubio.a&#10;..\..\Libraries\aubio_win\lib\aubio.dll.a"
             extraCompilerFlags="/I ..\..\Libraries\aubio_win\include\aubio">
       <CONFIGURATIONS>
-        <CONFIGURATION isDebug="1" name="Debug" postbuildCommand="copy &quot;..\..\Libraries\tensorflow_c_win\tensorflow.*&quot; &quot;x64\Debug\Standalone Plugin\&quot; &amp;&amp; copy &quot;..\..\Libraries\aubio_win\bin\libaubio-5.dll&quot; &quot;x64\Debug\Standalone Plugin\&quot;"/>
-        <CONFIGURATION isDebug="0" name="Release" postbuildCommand="copy &quot;..\..\Libraries\tensorflow_c_win\tensorflow.*&quot; &quot;x64\Release\Standalone Plugin\&quot; &amp;&amp; copy &quot;..\..\Libraries\aubio_win\bin\libaubio-5.dll&quot; &quot;x64\Release\Standalone Plugin\&quot;"
+        <CONFIGURATION isDebug="1" name="Debug" postbuildCommand="copy &quot;..\..\Libraries\tensorflow_c_win\tensorflow.*&quot; &quot;x64\Debug\Standalone Plugin\&quot; &amp;&amp; copy &quot;..\..\Libraries\aubio_win\bin\libaubio-5.dll&quot; &quot;x64\Debug\Standalone Plugin\&quot; &amp;&amp; Xcopy /E /I /Y &quot;..\..\Models&quot; &quot;x64\Debug\Standalone Plugin\Models&quot;"/>
+        <CONFIGURATION isDebug="0" name="Release" postbuildCommand="copy &quot;..\..\Libraries\tensorflow_c_win\tensorflow.*&quot; &quot;x64\Release\Standalone Plugin\&quot; &amp;&amp; copy &quot;..\..\Libraries\aubio_win\bin\libaubio-5.dll&quot; &quot;x64\Release\Standalone Plugin\&quot; &amp;&amp; Xcopy /E /I /Y &quot;..\..\Models&quot; &quot;x64\Release\Standalone Plugin\Models&quot;"
                        useRuntimeLibDLL="0"/>
       </CONFIGURATIONS>
       <MODULEPATHS>

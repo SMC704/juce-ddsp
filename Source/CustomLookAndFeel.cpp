@@ -10,8 +10,6 @@
 
 #include <JuceHeader.h>
 #include "CustomLookAndFeel.h"
-#include "PluginProcessor.h"
-#include "PluginEditor.h"
 
 //==============================================================================
 CustomLookAndFeel::CustomLookAndFeel()

@@ -14,7 +14,8 @@
 #include "SubtractiveComponent.h"
 #include "AdditiveComponent.h"
 #include "TensorflowHandler.h"
-#include "aubio.h"
+#include "AubioHandler.h"
+
 //==============================================================================
 /**
 */
@@ -148,20 +149,16 @@ private:
     float tf_f0;
     float tf_amps;
 
-	struct PitchDeleter
-	{
-		void operator()(aubio_pitch_t *p) { del_aubio_pitch(p); }
-	};
 
-	std::unique_ptr<aubio_pitch_t, PitchDeleter> aubioPitch;
+    juce::File modelDir;
 
-	const juce::String modelDir = "../../Models/";
+    AubioHandler& abHandler = AubioHandler::getInstance();
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (DdspsynthAudioProcessor)
 
 
-        // Inherited via AsyncUpdater
-        virtual void handleAsyncUpdate() override;
+    // Inherited via AsyncUpdater
+    virtual void handleAsyncUpdate() override;
 
 };
