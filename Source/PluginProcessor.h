@@ -108,8 +108,14 @@ private:
     std::atomic<float>* reverbSizeParameter = nullptr;
     std::atomic<float>* reverbGlowParameter = nullptr;
     std::atomic<float>* outputGainParameter = nullptr;
+    std::atomic<float>* attackParameter = nullptr;
+    std::atomic<float>* decayParameter = nullptr;
+    std::atomic<float>* sustainParameter = nullptr;
+    std::atomic<float>* releaseParameter = nullptr;
+    
 
     // Internal parameters
+    bool shouldSynthesize = true;
     const static int max_n_harmonics = 100;
     double phaseBuffer_in[max_n_harmonics];
     double phaseBuffer_out[max_n_harmonics];
