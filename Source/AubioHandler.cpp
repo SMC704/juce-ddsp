@@ -13,12 +13,9 @@
 AubioHandler::AubioHandler()
 {
     juce::File cwd = juce::File::getSpecialLocation(juce::File::currentApplicationFile).getParentDirectory();
-    const char* libFileName;
 #if JUCE_WINDOWS
-    libFileName = "libaubio-5.dll";
-#elif JUCE_MAC
-    // TODO mac
-#endif
+    const char* libFileName = "libaubio-5.dll";
+
     bool loaded = abLibrary.open(cwd.getFullPathName() + juce::File::getSeparatorString() + libFileName);
 
     fpNewAubioPitch = (fptypeNewAubioPitch)abLibrary.getFunction("new_aubio_pitch");
@@ -28,6 +25,7 @@ AubioHandler::AubioHandler()
     fpSetSilence = (fptypeSetSilence)abLibrary.getFunction("aubio_pitch_get_silence");
     fpGetConfidence = (fptypeGetConfidence)abLibrary.getFunction("aubio_pitch_get_confidence");
     fpGetLoudness = (fptypeGetLoudness)abLibrary.getFunction("aubio_db_spl");
+#endif
 }
 
 AubioHandler::~AubioHandler()
@@ -37,7 +35,11 @@ AubioHandler::~AubioHandler()
 
 void AubioHandler::prepare(const char_t* method, uint_t bufsize, uint_t hopsize, uint_t sampleRate)
 {
+#if JUCE_WINDOWS
     aubioPitch.reset(fpNewAubioPitch(method, bufsize, hopsize, sampleRate));
+#elif JUCE_MAC
+    aubioPitch.reset(new_aubio_pitch(method, bufsize, hopsize, sampleRate));
+#endif
 }
 
 void AubioHandler::releaseResources()
@@ -57,10 +59,12 @@ AubioHandler::AubioResults AubioHandler::process(juce::AudioBuffer<float>& buffe
 
     aubioOutput.data = &result.pitch;
     aubioOutput.length = 1;
-
-    DBG(aubio_db_spl(&aubioInput));
+#if JUCE_WINDOWS
 
     fpAubioPitchDo(aubioPitch.get(), &aubioInput, &aubioOutput);
+#elif JUCE_MAC
+    aubio_pitch_do(aubioPitch.get(), &aubioInput, &aubioOutput);
+#endif
     result.confidence = fpGetConfidence(aubioPitch.get());
     result.loudness = fpGetLoudness(&aubioInput);
     
@@ -79,5 +83,9 @@ uint_t AubioHandler::setSilence(smpl_t sil)
 
 void AubioHandler::PitchDeleter::operator()(aubio_pitch_t * p)
 {
+#if JUCE_WINDOWS
     AubioHandler::getInstance().fpDelAubioPitch(p);
+#elif JUCE_MAC
+    del_aubio_pitch(p);
+#endif
 }
