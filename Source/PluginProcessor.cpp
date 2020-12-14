@@ -377,7 +377,8 @@ void DdspsynthAudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, juc
 void DdspsynthAudioProcessor::parseModelConfigJSON(juce::String path)
 {
     // Parses config.json for model selected. Sets default values if file isn't found.
-    juce::File config_file = juce::File(juce::File::getCurrentWorkingDirectory().getFullPathName() + "../" + path + "/config.json");
+    juce::File config_file = juce::File(path + "/config.json");
+    jassert(config_file.existsAsFile());
     juce::var config = juce::JSON::parse(config_file);
     n_harmonics = config.getProperty("n_harmonics", 50);
     initial_bias = config.getProperty("initial_bias", -5.0f);
@@ -392,7 +393,7 @@ void DdspsynthAudioProcessor::setModelOutput(TensorflowHandler::ModelResults tfR
         magnitudes[i] = tfResults.noiseMagnitudes[i];
     }
     for (int i = 0; i < numSamples; i++) {
-        amplitudes[i] = tfResults.amplitudes[0];
+        amplitudes[i] = (double)tfResults.amplitudes[0] + 1.0f;
     }
 }
 
