@@ -336,7 +336,7 @@ void DdspsynthAudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, juc
             amps_copy[i] = 1;
     }
 
-    if (*additiveOnParameter) {
+    if (*additiveOnParameter && shouldSynthesize) {
         additive((double)numSamples, getSampleRate(), amps_copy, n_harmonics, harms_copy, f0, phaseBuffer_in, (double)*additiveShiftParameter, (double)*additiveStretchParameter, addBuffer, phaseBuffer_out);
     }
     else {
@@ -347,7 +347,7 @@ void DdspsynthAudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, juc
     }
 
 
-    if (*noiseOnParameter)
+    if (*noiseOnParameter && shouldSynthesize)
     {
         subtractive(numSamples, mags_copy, (double)*noiseColorParameter, initial_bias, subBuffer);
     }
