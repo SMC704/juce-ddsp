@@ -39,12 +39,14 @@ void additive(double n_samples, double sample_rate, const double amplitudes[4096
   double b_sample_rate;
   double q;
   int b_loop_ub;
+  int c_loop_ub;
   int i;
   int i1;
   int k;
   int loop_ub;
   int nx;
   int subsb_idx_1;
+  int unnamed_idx_1;
   if (!isInitialized_DDSPSynth) {
     DDSPSynth_initialize();
   }
@@ -304,6 +306,12 @@ void additive(double n_samples, double sample_rate, const double amplitudes[4096
   for (k = 0; k < i; k++) {
     if (f0_data[k] == 0.0) {
       if (1 > harmonic_frequencies.size(1)) {
+        unnamed_idx_1 = 0;
+      } else {
+        unnamed_idx_1 = harmonic_frequencies.size(1);
+      }
+
+      if (1 > harmonic_frequencies.size(1)) {
         loop_ub = 0;
       } else {
         loop_ub = harmonic_frequencies.size(1);
@@ -367,10 +375,25 @@ void additive(double n_samples, double sample_rate, const double amplitudes[4096
 
   std::memset(&audio[0], 0, 4096U * sizeof(double));
   i = static_cast<int>(n_harmonics);
+  if (0 <= static_cast<int>(n_harmonics) - 1) {
+    if (1 > harmonic_amplitudes.size(0)) {
+      unnamed_idx_1 = 0;
+    } else {
+      unnamed_idx_1 = harmonic_amplitudes.size(0);
+    }
+
+    c_loop_ub = unnamed_idx_1;
+  }
+
   for (nx = 0; nx < i; nx++) {
-    for (i1 = 0; i1 < 4096; i1++) {
-      audio[i1] += harmonic_amplitudes[i1 + harmonic_amplitudes.size(0) * nx] *
-        harmonic_frequencies[i1 + harmonic_frequencies.size(0) * nx];
+    for (i1 = 0; i1 < c_loop_ub; i1++) {
+      f0_data[i1] = audio[i1] + harmonic_amplitudes[i1 +
+        harmonic_amplitudes.size(0) * nx] * harmonic_frequencies[i1 +
+        harmonic_frequencies.size(0) * nx];
+    }
+
+    if (0 <= unnamed_idx_1 - 1) {
+      std::memcpy(&audio[0], &f0_data[0], unnamed_idx_1 * sizeof(double));
     }
   }
 }

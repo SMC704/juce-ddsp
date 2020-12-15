@@ -109,7 +109,6 @@ DdspsynthAudioProcessor::DdspsynthAudioProcessor()
     sustainParameter = parameters.getRawParameterValue("sustain");
     releaseParameter = parameters.getRawParameterValue("release");
 
-
     parameters.addParameterListener("modelSelect", this);
 
     for (int i = 0; i < 65; i++) {
@@ -384,10 +383,14 @@ void DdspsynthAudioProcessor::parseModelConfigJSON(juce::String path)
     juce::var config = juce::JSON::parse(config_file);
     n_harmonics = config.getProperty("n_harmonics", 50);
     initial_bias = config.getProperty("initial_bias", -5.0f);
-    *attackParameter = config.getProperty("attack", juce::var(*attackParameter));
-    *decayParameter = config.getProperty("decay", juce::var(*decayParameter));
-    *sustainParameter = config.getProperty("sustain", juce::var(*sustainParameter));
-    *releaseParameter = config.getProperty("release", juce::var(*releaseParameter));
+    if(config.hasProperty("attack"))
+        *attackParameter = config.getProperty("attack", juce::var(*attackParameter));
+    if (config.hasProperty("decay"))
+        *decayParameter = config.getProperty("decay", juce::var(*decayParameter));
+    if (config.hasProperty("sustain"))
+        *sustainParameter = config.getProperty("sustain", juce::var(*sustainParameter));
+    if (config.hasProperty("release"))
+        *releaseParameter = config.getProperty("release", juce::var(*releaseParameter));
 }
 
 void DdspsynthAudioProcessor::setModelOutput(TensorflowHandler::ModelResults tfResults)
