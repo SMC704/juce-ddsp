@@ -112,7 +112,7 @@ DdspsynthAudioProcessor::DdspsynthAudioProcessor()
     parameters.addParameterListener("modelSelect", this);
 
     for (int i = 0; i < 65; i++) {
-        magnitudes[i] = 0;
+        magnitudes[i] = 6;
     }
     for (int i = 0; i < 4096; i++) {
         amplitudes[i] = 0;
@@ -324,7 +324,7 @@ void DdspsynthAudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, juc
         if (*modelOnParameter)
             harms_copy[i] = harmonics[i] * userHarmonics[i] * 2;
         else
-            harms_copy[i] = 1 - userHarmonics[i];
+            harms_copy[i] = 10 * (1 - userHarmonics[i]) - 5;
     }
     for (int i = 0; i < 65; i++) {
         mags_copy[i] = magnitudes[i];
@@ -333,7 +333,7 @@ void DdspsynthAudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, juc
         if (*modelOnParameter)
             amps_copy[i] = amplitudes[i];
         else
-            amps_copy[i] = 1;
+            amps_copy[i] = midiVelocity * adsrVelocity;
     }
 
     if (*additiveOnParameter && shouldSynthesize) {
@@ -368,6 +368,10 @@ void DdspsynthAudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, juc
         float additiveGain = pow(10.0f, (*additiveGainParameter / 20));
         float noiseGain = pow(10.0f, (*noiseGainParameter / 20));
         float outGain = pow(10.0f, (*outputGainParameter / 20));
+
+        if (!(*modelOnParameter)) // workaround to prevent MIDI-related hearing damage
+            outGain *= 0.02;
+
         float out = (addBuffer[i] * additiveGain + subBuffer[i] * noiseGain) * outGain;
         pushNextSampleIntoFifo(out);
         outL[i] = out;
