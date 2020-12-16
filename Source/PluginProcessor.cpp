@@ -453,6 +453,10 @@ void DdspsynthAudioProcessor::parameterChanged(const juce::String & parameterID,
         {
             ((DdspsynthAudioProcessorEditor*)getActiveEditor())->resetParameters();
         }
+
+        for (int i = 0; i < 65; i++) {
+            magnitudes[i] = 6;
+        }
     }
 }
 
