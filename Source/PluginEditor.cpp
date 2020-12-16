@@ -9,8 +9,8 @@
 #include "PluginEditor.h"
 
 //==============================================================================
-DdspsynthAudioProcessorEditor::DdspsynthAudioProcessorEditor (DdspsynthAudioProcessor& p, juce::AudioProcessorValueTreeState& vts)
-    : AudioProcessorEditor (&p), audioProcessor (p), valueTreeState(vts), mainComponent(vts)
+DdspsynthAudioProcessorEditor::DdspsynthAudioProcessorEditor (DdspsynthAudioProcessor& p, juce::AudioProcessorValueTreeState& svts, juce::AudioProcessorValueTreeState& mvts)
+    : AudioProcessorEditor (&p), audioProcessor (p), synthVTS(svts), modelVTS(mvts), mainComponent(svts, mvts)
 {
     //LookAndFeel::getDefaultLookAndFeel().setDefaultSansSerifTypefaceName("Avenir Next");
 
@@ -33,7 +33,7 @@ DdspsynthAudioProcessorEditor::DdspsynthAudioProcessorEditor (DdspsynthAudioProc
     
     mainComponent.setLookAndFeel(&otherLookAndFeel);
 
-    defaultTreeState = vts.copyState();
+    defaultTreeState = svts.copyState();
 }
 
 DdspsynthAudioProcessorEditor::~DdspsynthAudioProcessorEditor()
@@ -80,8 +80,9 @@ void DdspsynthAudioProcessorEditor::setNumberOfHarmonics(int numberOfHarmonics)
 void DdspsynthAudioProcessorEditor::resetParameters()
 {
     harmEditor->resetSliders();
-    //valueTreeState.replaceState(defaultTreeState);
-    //defaultTreeState = valueTreeState.copyState();
+    auto tmpCopy = defaultTreeState.createCopy();
+    synthVTS.replaceState(defaultTreeState);
+    defaultTreeState = tmpCopy;
 }
 
 

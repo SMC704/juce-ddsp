@@ -87,7 +87,8 @@ public:
 private:
 
     // Parameters
-    juce::AudioProcessorValueTreeState parameters;
+    juce::AudioProcessorValueTreeState synthParameters;
+    juce::AudioProcessorValueTreeState modelParameters;
 
     std::atomic<float>* inputSelectParameter = nullptr;
     std::atomic<float>* modelOnParameter = nullptr;

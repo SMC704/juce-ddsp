@@ -27,7 +27,7 @@
 class DdspsynthAudioProcessorEditor  : public juce::AudioProcessorEditor, private juce::Timer/*, public SubtractiveComponent::SubtractiveListener, public AdditiveComponent::AdditiveListener, public OutputComponent::OutputListener*/
 {
 public:
-    DdspsynthAudioProcessorEditor (DdspsynthAudioProcessor&, juce::AudioProcessorValueTreeState&);
+    DdspsynthAudioProcessorEditor (DdspsynthAudioProcessor&, juce::AudioProcessorValueTreeState&, juce::AudioProcessorValueTreeState&);
     ~DdspsynthAudioProcessorEditor() override;
 
     //==============================================================================
@@ -47,7 +47,8 @@ private:
     OutputComponent* output;
 
     DdspsynthAudioProcessor& audioProcessor;
-    juce::AudioProcessorValueTreeState& valueTreeState;
+    juce::AudioProcessorValueTreeState& synthVTS;
+    juce::AudioProcessorValueTreeState& modelVTS;
 
     juce::Image backgroundTexture = juce::ImageFileFormat::
         loadFrom(BinaryData::background_texture_dark_headline_png, 
