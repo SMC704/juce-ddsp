@@ -94,7 +94,7 @@ ReverbComponent::~ReverbComponent()
 
 void ReverbComponent::paint (juce::Graphics& g)
 {
-    g.setColour (juce::Colours::white);
+    g.setColour (juce::Colours::dimgrey);
     g.drawRect (getLocalBounds(), 3);   // draw an outline around the component
 
     /*

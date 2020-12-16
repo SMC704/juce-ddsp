@@ -60,7 +60,7 @@ ModulationComponent::ModulationComponent(juce::AudioProcessorValueTreeState& vts
 
     delaySlider.setSliderStyle(juce::Slider::SliderStyle::RotaryHorizontalVerticalDrag);
     delaySlider.setTextBoxStyle(juce::Slider::NoTextBox, true, 0, 0);
-    delaySlider.setPopupDisplayEnabled(true, true, this);
+    //delaySlider.setPopupDisplayEnabled(true, true, this);
     //delaySlider.setTextValueSuffix (" Mod Amount");
     delaySlider.setRange(0.0f, 10.0f, 0.1f);
     delaySlider.setValue(5.0f);
@@ -77,7 +77,7 @@ ModulationComponent::ModulationComponent(juce::AudioProcessorValueTreeState& vts
 
     rateSlider.setSliderStyle(juce::Slider::SliderStyle::RotaryHorizontalVerticalDrag);
     rateSlider.setTextBoxStyle(juce::Slider::NoTextBox, true, 0, 0);
-    rateSlider.setPopupDisplayEnabled(true, true, this);
+    //rateSlider.setPopupDisplayEnabled(true, true, this);
     //rateSlider.setTextValueSuffix (" Mod Rate");
     rateSlider.setRange(0.0f, 10.0f, 0.1f);
     rateSlider.setValue(5.0f);
@@ -100,7 +100,7 @@ ModulationComponent::~ModulationComponent()
 
 void ModulationComponent::paint(juce::Graphics& g)
 {
-    g.setColour(juce::Colours::white);
+    g.setColour(juce::Colours::dimgrey);
     g.drawRect(getLocalBounds(), 3);   // draw an outline around the component
 
     /*
