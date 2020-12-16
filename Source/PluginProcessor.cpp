@@ -300,17 +300,16 @@ void DdspsynthAudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, juc
         if (!adsr.isActive()) 
             shouldSynthesize = false;
 
-        adsrVelocity = adsr.getNextSample();
-        tf_f0 = midiNoteHz;
-        tf_amps = log10(juce::jmax(midiVelocity * adsrVelocity, 0.000001f)) * 20.0f;
         for (int i = 0; i < numSamples && adsr.isActive(); i++)
         {
             f0[i] = midiNoteHz;
         }
         for (int i = 0; i < numSamples-1 && adsr.isActive(); i++)
         {
-            adsr.getNextSample();
+            adsrVelocity = adsr.getNextSample();
         }
+        tf_f0 = midiNoteHz;
+        tf_amps = log10(juce::jmax(midiVelocity * adsrVelocity, 0.000001f)) * 20.0f;
     }
 
 
