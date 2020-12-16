@@ -38,6 +38,7 @@ public:
     void timerCallback() override;
 
     void setNumberOfHarmonics(int numberOfHarmonics);
+    void resetParameters();
 
 private:
     AdditiveComponent* additive;
@@ -56,6 +57,8 @@ private:
     
     OtherLookAndFeel otherLookAndFeel;
     
+    juce::ValueTree defaultTreeState;
+
     
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (DdspsynthAudioProcessorEditor)
 

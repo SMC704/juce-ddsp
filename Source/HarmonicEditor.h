@@ -41,6 +41,7 @@ public:
 
     void setNumberOfHarmonicSliders(int nHarmonicsNew);
     void createHarmonicSliders();
+    void resetSliders();
 
 private:
 
