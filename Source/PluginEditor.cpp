@@ -32,6 +32,8 @@ DdspsynthAudioProcessorEditor::DdspsynthAudioProcessorEditor (DdspsynthAudioProc
     setSize (900, 600);
     
     mainComponent.setLookAndFeel(&otherLookAndFeel);
+
+    defaultTreeState = vts.copyState();
 }
 
 DdspsynthAudioProcessorEditor::~DdspsynthAudioProcessorEditor()
@@ -73,6 +75,13 @@ void DdspsynthAudioProcessorEditor::setNumberOfHarmonics(int numberOfHarmonics)
     {
         harmEditor->setNumberOfHarmonicSliders(numberOfHarmonics);
     }
+}
+
+void DdspsynthAudioProcessorEditor::resetParameters()
+{
+    harmEditor->resetSliders();
+    //valueTreeState.replaceState(defaultTreeState);
+    //defaultTreeState = valueTreeState.copyState();
 }
 
 

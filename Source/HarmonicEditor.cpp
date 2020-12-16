@@ -63,6 +63,20 @@ void HarmonicEditor::createHarmonicSliders()
     resized();
 }
 
+void HarmonicEditor::resetSliders()
+{
+    for (int i = 0; i < nHarmonics; i++)
+    {
+        harmonicSliders[i]->setValue(0.5);
+        harmonicValues[i] = 0.5;
+    }
+
+    repaint();
+    if (pListener != NULL) {
+        pListener->onHarmonicsChange(harmonicValues, nHarmonics);
+    }
+}
+
 void HarmonicEditor::resized()
 {
     juce::Grid grid;
