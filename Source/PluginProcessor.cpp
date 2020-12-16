@@ -110,6 +110,7 @@ DdspsynthAudioProcessor::DdspsynthAudioProcessor()
     releaseParameter = parameters.getRawParameterValue("release");
 
     parameters.addParameterListener("modelSelect", this);
+    parameters.addParameterListener("modelOn", this);
 
     for (int i = 0; i < 65; i++) {
         magnitudes[i] = 6;
@@ -322,7 +323,7 @@ void DdspsynthAudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, juc
     double amps_copy[4096];
     for (int i = 0; i < n_harmonics; i++) {
         if (*modelOnParameter)
-            harms_copy[i] = harmonics[i] * userHarmonics[i] * 2;
+            harms_copy[i] = harmonics[i] * (1 - userHarmonics[i]) * 2;
         else
             harms_copy[i] = 10 * (1 - userHarmonics[i]) - 5;
     }
@@ -424,6 +425,8 @@ int DdspsynthAudioProcessor::getNumberOfHarmonics()
 
 void DdspsynthAudioProcessor::parameterChanged(const juce::String & parameterID, float newValue)
 {
+    DBG(parameterID);
+    
     if (parameterID == "modelSelect")
     {
         // getRawParameterValue is "not guaranteed" to contain up-to-date value
@@ -439,6 +442,13 @@ void DdspsynthAudioProcessor::parameterChanged(const juce::String & parameterID,
         else
         {
             juce::AlertWindow::showMessageBox(juce::AlertWindow::AlertIconType::WarningIcon, "Model not found!", "The plugin expected to find the " + modelName + " model in this path:\n" + modelPath);
+        }
+    }
+    if (parameterID == "modelSelect" || parameterID == "modelOn")
+    {
+        if (hasEditor())
+        {
+            ((DdspsynthAudioProcessorEditor*)getActiveEditor())->resetParameters();
         }
     }
 }
