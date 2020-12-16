@@ -37,7 +37,7 @@ AdditiveComponent::AdditiveComponent(juce::AudioProcessorValueTreeState& vts)
     addAndMakeVisible(nameLabel);
     nameLabel.setColour(juce::Label::textColourId, juce::Colours::white);
     nameLabel.setJustificationType(juce::Justification::topLeft);
-    nameLabel.setText("Additive", juce::NotificationType::dontSendNotification);
+    nameLabel.setText("Harmonic Oscillator", juce::NotificationType::dontSendNotification);
     nameLabel.setFont(20.0f);
 
 	addChildAndSetID(&harmonicEditor, "harmonicEditor");
@@ -142,7 +142,7 @@ void AdditiveComponent::resized()
 
     grid.items = {
 
-        juce::GridItem(nameLabel).withSize(100.0f, 30.0f)
+        juce::GridItem(nameLabel).withSize(200.0f, 30.0f)
             .withAlignSelf(juce::GridItem::AlignSelf::start)
             .withJustifySelf(juce::GridItem::JustifySelf::start)
             .withMargin(juce::GridItem::Margin(10.0f))

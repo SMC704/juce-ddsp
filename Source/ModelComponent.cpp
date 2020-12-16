@@ -150,6 +150,12 @@ ModelComponent::ModelComponent(juce::AudioProcessorValueTreeState& vts)
     addAndMakeVisible(extra4Label);
     extra4Label.setColour(juce::Label::textColourId, juce::Colours::white);
     extra4Label.setJustificationType(juce::Justification::centred);
+    
+    // Grey out not implemented models
+    extra1Button.setEnabled(false);
+    extra2Button.setEnabled(false);
+    extra3Button.setEnabled(false);
+    extra4Button.setEnabled(false);
 
 }
 

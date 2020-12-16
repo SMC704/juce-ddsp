@@ -1,4 +1,8 @@
 {
   "n_harmonics":60,
-  "initial_bias":-5.0
+  "initial_bias":-5.0,
+  "attack":1,
+  "decay":0.3,
+  "sustain":0.5,
+  "release":0.5
 }

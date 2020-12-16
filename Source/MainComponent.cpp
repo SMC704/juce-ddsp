@@ -33,6 +33,10 @@ MainComponent::MainComponent(juce::AudioProcessorValueTreeState& svts, juce::Aud
     reverbComponent.setBounds(0, 0, 200, 200);
     spectogramComponent.setBounds(0, 0, 200, 200);
     outputComponent.setBounds(0, 0, 200, 200);
+    
+    // Grey out not implemented components
+    modulationComponent.setEnabled(false);
+    reverbComponent.setEnabled(false);
 }
 
 MainComponent::~MainComponent()
