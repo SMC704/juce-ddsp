@@ -12,10 +12,10 @@
 #include "MainComponent.h"
 
 //==============================================================================
-MainComponent::MainComponent(juce::AudioProcessorValueTreeState& vts)
-    : inputComponent(vts), modelComponent(vts), additiveComponent(vts), 
-    subtractiveComponent(vts), modulationComponent(vts), reverbComponent(vts),
-    outputComponent(vts)
+MainComponent::MainComponent(juce::AudioProcessorValueTreeState& svts, juce::AudioProcessorValueTreeState& mvts)
+    : inputComponent(svts), modelComponent(mvts), additiveComponent(svts), 
+    subtractiveComponent(svts), modulationComponent(svts), reverbComponent(svts),
+    outputComponent(svts)
 {
     addChildAndSetID(&inputComponent, "input");
     addChildAndSetID(&modelComponent, "model");

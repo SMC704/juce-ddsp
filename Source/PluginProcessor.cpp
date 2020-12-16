@@ -46,13 +46,10 @@ DdspsynthAudioProcessor::DdspsynthAudioProcessor()
 
 #endif
     : forwardFFT(fftOrder),
-    parameters(*this, nullptr, juce::Identifier("DDSPSynth"),
+    synthParameters(*this, nullptr, juce::Identifier("DDSPSynth"),
         {
             // Input
            std::make_unique<juce::AudioParameterBool>("inputIsLine", "Input is line in", false),
-           // Model
-           std::make_unique<juce::AudioParameterBool>("modelOn", "Use model", false),
-           std::make_unique<juce::AudioParameterChoice>("modelSelect", "Model select", juce::StringArray({ "violin", "flute", "tenorsax", "trumpet" }), 0),
            // Additive
            std::make_unique<juce::AudioParameterBool>("additiveOn", "Additive synth on", true),
            std::make_unique<juce::AudioParameterFloat>("additiveShift", "Shift amount", -12.0f, 12.0f, 0.0f),
@@ -79,38 +76,45 @@ DdspsynthAudioProcessor::DdspsynthAudioProcessor()
            std::make_unique<juce::AudioParameterFloat>("decay", "Decay", 0.0f, 2.0f, 0.1f),
            std::make_unique<juce::AudioParameterFloat>("sustain", "Sustain", 0.0f, 1.0f, 0.1f),
            std::make_unique<juce::AudioParameterFloat>("release", "Release", 0.0f, 2.0f, 0.1f),
-        })/*,
-        tfHandler(*this)*/
+        }),
+    modelParameters(*this, nullptr, juce::Identifier("DDSPModels"),
+        {
+            // Model
+            std::make_unique<juce::AudioParameterBool>("modelOn", "Use model", false),
+            std::make_unique<juce::AudioParameterChoice>("modelSelect", "Model select", juce::StringArray({ "violin", "flute", "tenorsax", "trumpet" }), 0),
+        })
 {
     modelDir = juce::File::getSpecialLocation(juce::File::SpecialLocationType::currentApplicationFile).getParentDirectory().getChildFile("Models");
     jassert(modelDir.exists()); // Check that the Models folder exists in the same path as the plugin
 
-    inputSelectParameter = parameters.getRawParameterValue("inputIsLine");
-    modelOnParameter = parameters.getRawParameterValue("modelOn");
-    modelChoiceParameter = parameters.getRawParameterValue("modelSelect");
-    additiveOnParameter = parameters.getRawParameterValue("additiveOn");
-    additiveShiftParameter = parameters.getRawParameterValue("additiveShift");
-    additiveStretchParameter = parameters.getRawParameterValue("additiveStretch");
-    additiveGainParameter = parameters.getRawParameterValue("additiveGain");
-    noiseOnParameter = parameters.getRawParameterValue("noiseOn");
-    noiseColorParameter = parameters.getRawParameterValue("noiseColor");
-    noiseGainParameter = parameters.getRawParameterValue("noiseGain");
-    modulationOnParameter = parameters.getRawParameterValue("modulationOn");
-    modulationRateParameter = parameters.getRawParameterValue("modulationRate");
-    modulationDelayParameter = parameters.getRawParameterValue("modulationDelay");
-    modulationAmountParameter = parameters.getRawParameterValue("modulationAmount");
-    reverbOnParameter = parameters.getRawParameterValue("reverbOn");
-    reverbMixParameter = parameters.getRawParameterValue("reverbMix");
-    reverbSizeParameter = parameters.getRawParameterValue("reverbSize");
-    reverbGlowParameter = parameters.getRawParameterValue("reverbGlow");
-    outputGainParameter = parameters.getRawParameterValue("outputGain");
-    attackParameter = parameters.getRawParameterValue("attack");
-    decayParameter = parameters.getRawParameterValue("decay");
-    sustainParameter = parameters.getRawParameterValue("sustain");
-    releaseParameter = parameters.getRawParameterValue("release");
+    inputSelectParameter = synthParameters.getRawParameterValue("inputIsLine");
 
-    parameters.addParameterListener("modelSelect", this);
-    parameters.addParameterListener("modelOn", this);
+    additiveOnParameter = synthParameters.getRawParameterValue("additiveOn");
+    additiveShiftParameter = synthParameters.getRawParameterValue("additiveShift");
+    additiveStretchParameter = synthParameters.getRawParameterValue("additiveStretch");
+    additiveGainParameter = synthParameters.getRawParameterValue("additiveGain");
+    noiseOnParameter = synthParameters.getRawParameterValue("noiseOn");
+    noiseColorParameter = synthParameters.getRawParameterValue("noiseColor");
+    noiseGainParameter = synthParameters.getRawParameterValue("noiseGain");
+    modulationOnParameter = synthParameters.getRawParameterValue("modulationOn");
+    modulationRateParameter = synthParameters.getRawParameterValue("modulationRate");
+    modulationDelayParameter = synthParameters.getRawParameterValue("modulationDelay");
+    modulationAmountParameter = synthParameters.getRawParameterValue("modulationAmount");
+    reverbOnParameter = synthParameters.getRawParameterValue("reverbOn");
+    reverbMixParameter = synthParameters.getRawParameterValue("reverbMix");
+    reverbSizeParameter = synthParameters.getRawParameterValue("reverbSize");
+    reverbGlowParameter = synthParameters.getRawParameterValue("reverbGlow");
+    outputGainParameter = synthParameters.getRawParameterValue("outputGain");
+    attackParameter = synthParameters.getRawParameterValue("attack");
+    decayParameter = synthParameters.getRawParameterValue("decay");
+    sustainParameter = synthParameters.getRawParameterValue("sustain");
+    releaseParameter = synthParameters.getRawParameterValue("release");
+
+    modelOnParameter = modelParameters.getRawParameterValue("modelOn");
+    modelChoiceParameter = modelParameters.getRawParameterValue("modelSelect");
+
+    modelParameters.addParameterListener("modelSelect", this);
+    modelParameters.addParameterListener("modelOn", this);
 
     for (int i = 0; i < 65; i++) {
         magnitudes[i] = 6;
@@ -198,7 +202,7 @@ void DdspsynthAudioProcessor::changeProgramName(int index, const juce::String& n
 void DdspsynthAudioProcessor::prepareToPlay(double sampleRate, int samplesPerBlock)
 {
     tfHandler.setAsyncUpdater(this);
-    auto param = (juce::AudioParameterChoice*) parameters.getParameter("modelSelect");
+    auto param = (juce::AudioParameterChoice*) modelParameters.getParameter("modelSelect");
     juce::String modelName = param->getCurrentChoiceName();
     juce::String modelPath = modelDir.getChildFile(modelName).getFullPathName();
     parseModelConfigJSON(modelPath);
@@ -433,7 +437,7 @@ void DdspsynthAudioProcessor::parameterChanged(const juce::String & parameterID,
     if (parameterID == "modelSelect")
     {
         // getRawParameterValue is "not guaranteed" to contain up-to-date value
-        auto param = (juce::AudioParameterChoice*) parameters.getParameter("modelSelect");
+        auto param = (juce::AudioParameterChoice*) modelParameters.getParameter("modelSelect");
         juce::String modelName = param->getCurrentChoiceName();
         DBG("Processor notified to select model " + modelName);
         juce::String modelPath = modelDir.getChildFile(modelName).getFullPathName();
@@ -474,7 +478,7 @@ bool DdspsynthAudioProcessor::hasEditor() const
 
 juce::AudioProcessorEditor* DdspsynthAudioProcessor::createEditor()
 {
-    return new DdspsynthAudioProcessorEditor(*this, parameters);
+    return new DdspsynthAudioProcessorEditor(*this, synthParameters, modelParameters);
 }
 
 //==============================================================================
