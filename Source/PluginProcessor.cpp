@@ -57,23 +57,23 @@ DdspsynthAudioProcessor::DdspsynthAudioProcessor()
            std::make_unique<juce::AudioParameterBool>("additiveOn", "Additive synth on", true),
            std::make_unique<juce::AudioParameterFloat>("additiveShift", "Shift amount", -12.0f, 12.0f, 0.0f),
            std::make_unique<juce::AudioParameterFloat>("additiveStretch", "Stretch amount", -1.0f, 1.0f, 0.0f),
-           std::make_unique<juce::AudioParameterFloat>("additiveGain", "Additive gain", -60.0f, 0.0f, 0.0f),
+           std::make_unique<juce::AudioParameterFloat>("additiveGain", "Additive gain", -12.0f, 6.0f, 0.0f),
            // Subtractive
            std::make_unique<juce::AudioParameterBool>("noiseOn", "Noise synth on", true),
            std::make_unique<juce::AudioParameterFloat>("noiseColor", "Noise color", -1.0f, 1.0f, 0.0f),
-           std::make_unique<juce::AudioParameterFloat>("noiseGain", "Noise gain", -60.0f, 0.0f, 0.0f),
+           std::make_unique<juce::AudioParameterFloat>("noiseGain", "Noise gain", -12.0f, 6.0f, 0.0f),
            // Modulation
            std::make_unique<juce::AudioParameterBool>("modulationOn", "Modulation on", false),
-           std::make_unique<juce::AudioParameterFloat>("modulationRate", "Rate", 0.0f, 10.0f, 1.0f),
-           std::make_unique<juce::AudioParameterFloat>("modulationDelay", "Delay", 0.01f, 0.5f, 0.03f),
-           std::make_unique<juce::AudioParameterFloat>("modulationAmount", "Amount", 0.0f, 100.0f, 50.0f),
+           std::make_unique<juce::AudioParameterFloat>("modulationRate", "Rate", 0.0f, 10.0f, 0.0f),
+           std::make_unique<juce::AudioParameterFloat>("modulationDelay", "Delay", 0.01f, 0.5f, 0.0f),
+           std::make_unique<juce::AudioParameterFloat>("modulationAmount", "Amount", 0.0f, 100.0f, 0.0f),
            // Reverb
            std::make_unique<juce::AudioParameterBool>("reverbOn", "Reverb on", false),
-           std::make_unique<juce::AudioParameterFloat>("reverbMix", "Mix", 0.0f, 10.0f, 1.0f),
-           std::make_unique<juce::AudioParameterFloat>("reverbSize", "Size", 0.10f, 2.0f, 1.0f),
+           std::make_unique<juce::AudioParameterFloat>("reverbMix", "Mix", 0.0f, 10.0f, 0.0f),
+           std::make_unique<juce::AudioParameterFloat>("reverbSize", "Size", 0.10f, 2.0f, 0.0f),
            std::make_unique<juce::AudioParameterFloat>("reverbGlow", "Glow", 0.0f, 100.0f, 0.0f),
            // Output
-           std::make_unique<juce::AudioParameterFloat>("outputGain", "Output gain", -60.0f, 0.0f, -6.0f),
+           std::make_unique<juce::AudioParameterFloat>("outputGain", "Output gain", -12.0f, 6.0f, 0.0f),
            // Midi
            std::make_unique<juce::AudioParameterFloat>("attack", "Attack", 0.0f, 2.0f, 0.1f),
            std::make_unique<juce::AudioParameterFloat>("decay", "Decay", 0.0f, 2.0f, 0.1f),
