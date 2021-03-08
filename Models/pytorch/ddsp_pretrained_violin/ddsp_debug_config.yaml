@@ -1,0 +1,26 @@
+data:
+  data_location: ./preprocessed.wav
+  extension: wav
+  mean_loudness: 73.95390637715658
+  std_loudness: 9.61014986038208
+model:
+  block_size: 512
+  hidden_size: 512
+  n_bands: 65
+  n_harmonic: 64
+  sampling_rate: 48000
+preprocess:
+  block_size: 512
+  oneshot: false
+  out_dir: ./preprocessed/
+  sampling_rate: 48000
+  signal_length: 192000
+train:
+  overlap: 0.75
+  scales:
+  - 4096
+  - 2048
+  - 1024
+  - 512
+  - 256
+  - 128

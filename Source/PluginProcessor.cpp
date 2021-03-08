@@ -133,7 +133,7 @@ DdspsynthAudioProcessor::DdspsynthAudioProcessor()
 
 DdspsynthAudioProcessor::~DdspsynthAudioProcessor()
 {
-    tfHandler.stopThread(100);
+    //tfHandler.stopThread(100);
 }
 
 //==============================================================================
@@ -201,12 +201,14 @@ void DdspsynthAudioProcessor::changeProgramName(int index, const juce::String& n
 //==============================================================================
 void DdspsynthAudioProcessor::prepareToPlay(double sampleRate, int samplesPerBlock)
 {
-    tfHandler.setAsyncUpdater(this);
+    //tfHandler.setAsyncUpdater(this);
     auto param = (juce::AudioParameterChoice*) modelParameters.getParameter("modelSelect");
     juce::String modelName = param->getCurrentChoiceName();
     juce::String modelPath = modelDir.getChildFile(modelName).getFullPathName();
     parseModelConfigJSON(modelPath);
-    tfHandler.loadModel(modelPath.getCharPointer());
+    //tfHandler.loadModel(modelPath.getCharPointer());
+    //std::string ddsppath = "C:\\Users\\david\\OneDrive - Aalborg Universitet\\DDSP\\juce - ddsp\\Models\\pytorch\\ddsp_pretrained_violin\\ddsp_debug_pretrained.ts";
+    //ddspmodel.load(ddsppath);
 
     adsr.setSampleRate(sampleRate);
     adsr.setParameters(adsrParams);
@@ -251,6 +253,14 @@ bool DdspsynthAudioProcessor::isBusesLayoutSupported(const BusesLayout& layouts)
 
 void DdspsynthAudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, juce::MidiBuffer& midiMessages)
 {
+
+    float loudness_ddsp[4096];
+
+    for (int i = 0; i < 4096; i++)
+    {
+        loudness_ddsp[i] = 60;
+    }
+
     shouldSynthesize = true;
     const float* in_l = buffer.getReadPointer(0);
     numSamples = buffer.getNumSamples();
@@ -271,6 +281,7 @@ void DdspsynthAudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, juc
         DBG(aubioResults.confidence);
         f0_in = aubioResults.pitch;
         tf_f0 = f0_in;
+        DBG(f0_in);
         for (int i = 0; i < 4096; i++)
         {
             f0[i] = f0_in;
@@ -313,19 +324,24 @@ void DdspsynthAudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, juc
             adsrVelocity = adsr.getNextSample();
         }
         tf_f0 = midiNoteHz;
-        tf_amps = log10(juce::jmax(midiVelocity * adsrVelocity, 0.000001f)) * 20.0f;
+        tf_amps = log10(juce::jmax(midiVelocity, 0.000001f)) * 20.0f;
+        DBG(midiVelocity);
+        for (int i = 0; i < 4096; i++)
+        {
+            loudness_ddsp[i] = 74;
+        }
     }
 
 
     if (*modelOnParameter) {
-        if (!tfHandler.isThreadRunning())
-        {
-            tfHandler.setInputs(tf_f0, tf_amps);
-            tfHandler.startThread();
-        }
+        //if (!tfHandler.isThreadRunning())
+        //{
+        //    tfHandler.setInputs(tf_f0, tf_amps);
+        //    tfHandler.startThread();
+        //}
     }
 
-    double harms_copy[max_n_harmonics];
+    /*double harms_copy[max_n_harmonics];
     double mags_copy[65];
     double amps_copy[4096];
     for (int i = 0; i < n_harmonics; i++) {
@@ -367,23 +383,23 @@ void DdspsynthAudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, juc
     }
     for (int i = 0; i < max_n_harmonics; ++i) {
         phaseBuffer_in[i] = phaseBuffer_out[i];
-    }
+    }*/
 
     auto outL = buffer.getWritePointer(0);
     auto outR = buffer.getWritePointer(1);
 
+    ddspmodel.perform(f0, loudness_ddsp, outL, numSamples);
+
     for (int i = 0; i < buffer.getNumSamples(); i++) {
-        float additiveGain = pow(10.0f, (*additiveGainParameter / 20));
-        float noiseGain = pow(10.0f, (*noiseGainParameter / 20));
-        float outGain = pow(10.0f, (*outputGainParameter / 20));
+        //float additiveGain = pow(10.0f, (*additiveGainParameter / 20));
+        //float noiseGain = pow(10.0f, (*noiseGainParameter / 20));
+        //float outGain = pow(10.0f, (*outputGainParameter / 20));
 
-        if (!(*modelOnParameter)) // workaround to prevent MIDI-related hearing damage
-            outGain *= 0.02;
+        //if (!(*modelOnParameter)) // workaround to prevent MIDI-related hearing damage
+        //    outGain *= 0.02;
 
-        float out = (addBuffer[i] * additiveGain + subBuffer[i] * noiseGain) * outGain;
-        pushNextSampleIntoFifo(out);
-        outL[i] = out;
-        outR[i] = out;
+        pushNextSampleIntoFifo(outL[i]);
+        outR[i] = outL[i];
     }
 }
 
@@ -444,7 +460,7 @@ void DdspsynthAudioProcessor::parameterChanged(const juce::String & parameterID,
         if (modelDir.getChildFile(modelName).exists()) 
         {
             parseModelConfigJSON(modelPath);
-            tfHandler.loadModel(modelPath.getCharPointer());
+            //tfHandler.loadModel(modelPath.getCharPointer());
         }
         else
         {
@@ -466,7 +482,7 @@ void DdspsynthAudioProcessor::parameterChanged(const juce::String & parameterID,
 
 void DdspsynthAudioProcessor::handleAsyncUpdate()
 {
-    setModelOutput(tfHandler.getOutputs());
+    //setModelOutput(tfHandler.getOutputs());
 }
 
 

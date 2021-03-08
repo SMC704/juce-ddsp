@@ -15,6 +15,7 @@
 #include "AdditiveComponent.h"
 #include "TensorflowHandler.h"
 #include "AubioHandler.h"
+#include "acids-realtime/ddsp_model.h"
 
 //==============================================================================
 /**
@@ -124,7 +125,7 @@ private:
     double ld;
     double f0_in;
     double f0_out;
-    double f0[4096];
+    float f0[4096];
     double n_harmonics = 60;
     double harmonics[max_n_harmonics];
 	double userHarmonics[max_n_harmonics];
@@ -151,8 +152,8 @@ private:
     bool nextFFTBlockReady = false;
 
     // Tensorflow 
-	TensorflowHandler tfHandler;
-    TensorflowHandler::ModelResults tfResults;
+    DDSPModel ddspmodel;
+
     // TF test
     float tf_f0;
     float tf_amps;

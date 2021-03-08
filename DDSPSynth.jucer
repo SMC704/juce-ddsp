@@ -116,6 +116,10 @@
             file="Source/PluginProcessor.cpp"/>
       <FILE id="UoMyoT" name="PluginProcessor.h" compile="0" resource="0"
             file="Source/PluginProcessor.h"/>
+      <GROUP id="{D049D343-0A9A-E3FD-E0E4-AAA5F64E18F3}" name="acids-realtime">
+        <FILE id="UK3vkk" name="ddsp_model.cpp" compile="1" resource="0" file="Source/acids-realtime/ddsp_model.cpp"/>
+        <FILE id="OekCu4" name="ddsp_model.h" compile="0" resource="0" file="Source/acids-realtime/ddsp_model.h"/>
+      </GROUP>
       <FILE id="yjxycp" name="PluginEditor.cpp" compile="1" resource="0"
             file="Source/PluginEditor.cpp"/>
       <FILE id="Xrk64D" name="PluginEditor.h" compile="0" resource="0" file="Source/PluginEditor.h"/>
@@ -260,10 +264,10 @@
         </MODULEPATHS>
       </VS2019>
     </VS2017>
-    <VS2019 targetFolder="Builds/VisualStudio2019" externalLibraries="..\..\Libraries\tensorflow_c_win\tensorflow.lib&#10;..\..\Libraries\aubio_win\lib\libaubio.a&#10;..\..\Libraries\aubio_win\lib\aubio.dll.a"
-            extraCompilerFlags="/I ..\..\Libraries\aubio_win\include\aubio">
+    <VS2019 targetFolder="Builds/VisualStudio2019" externalLibraries="..\..\Libraries\tensorflow_c_win\tensorflow.lib&#10;..\..\Libraries\aubio_win\lib\libaubio.a&#10;..\..\Libraries\aubio_win\lib\aubio.dll.a&#10;..\..\Libraries\libtorchdbg\lib\torch.lib&#10;..\..\Libraries\libtorchdbg\lib\c10.lib&#10;..\..\Libraries\libtorchdbg\lib\torch_cpu.lib"
+            extraCompilerFlags="/I ..\..\Libraries\aubio_win\include\aubio&#10;/I ..\..\Libraries\libtorchdbg\include\&#10;/I ..\..\Libraries\libtorchdbg\include\torch\csrc\api\include">
       <CONFIGURATIONS>
-        <CONFIGURATION isDebug="1" name="Debug" postbuildCommand="copy &quot;..\..\Libraries\tensorflow_c_win\tensorflow.*&quot; &quot;x64\Debug\Standalone Plugin\&quot; &amp;&amp; copy &quot;..\..\Libraries\aubio_win\bin\libaubio-5.dll&quot; &quot;x64\Debug\Standalone Plugin\&quot; &amp;&amp; Xcopy /E /I /Y &quot;..\..\Models&quot; &quot;x64\Debug\Standalone Plugin\Models&quot;"/>
+        <CONFIGURATION isDebug="1" name="Debug" postbuildCommand="copy &quot;..\..\Libraries\tensorflow_c_win\tensorflow.*&quot; &quot;x64\Debug\Standalone Plugin\&quot; &amp;&amp; copy &quot;..\..\Libraries\aubio_win\bin\libaubio-5.dll&quot; &quot;x64\Debug\Standalone Plugin\&quot; &amp;&amp; Xcopy /E /I /Y &quot;..\..\Models&quot; &quot;x64\Debug\Standalone Plugin\Models&quot; &amp;&amp; copy &quot;..\..\Libraries\libtorchdbg\lib\*.dll&quot; &quot;x64\Debug\Standalone Plugin\&quot;"/>
         <CONFIGURATION isDebug="0" name="Release" postbuildCommand="copy &quot;..\..\Libraries\tensorflow_c_win\tensorflow.*&quot; &quot;x64\Release\Standalone Plugin\&quot; &amp;&amp; copy &quot;..\..\Libraries\aubio_win\bin\libaubio-5.dll&quot; &quot;x64\Release\Standalone Plugin\&quot; &amp;&amp; Xcopy /E /I /Y &quot;..\..\Models&quot; &quot;x64\Release\Standalone Plugin\Models&quot;"
                        useRuntimeLibDLL="0"/>
       </CONFIGURATIONS>
