@@ -19,7 +19,8 @@ The Visual Studio solution consists of three projects:
 The plugins are dependent on the tensorflow.dll, libaubio-5.dll and Models folder being in the same folder path.
 
 ### Compiling using XCode
-TODO
+After re-exporting the project with the Projucer, SharedCode, Standalone and VST3 Plugin can be compiled using XCode.
+Before running the plugin, make sure the Models folder is located in the same directory as the plugin. The plugins are dependent on the tensorflow library, located in /Libraries/tensorflow_c_mac. This path should not be changed.
 
 ## MATLAB generated code
 The functions additive, subtractive, getPitch, compute_loudness and scale_f0 are generated using the MATLAB coder plugin and located in [Source/codegen](Source/codegen). 
